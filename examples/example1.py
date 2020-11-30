@@ -27,7 +27,7 @@ nob.plot(template='MNI152NLin2009cAsym', templatestyle='glass',
                     view='R', 
                     nodes=nodes, nodesize='centrality',
                     edges=edges)
-plt.savefig('./examples/figures/singleview.png', dpi=300)
+plt.savefig('./examples/figures/singleview.png', dpi=150)
 
 ### Plot different styles
 
@@ -35,13 +35,13 @@ nob.plot(template='MNI152NLin2009cAsym', templatestyle='filled',
                     view='R', 
                     nodes=nodes, nodesize='centrality',
                     edges=edges)
-plt.savefig('./examples/figures/styles1.png', dpi=300)
+plt.savefig('./examples/figures/styles1.png', dpi=150)
 
 nob.plot(template='MNI152NLin2009cAsym', templatestyle='glass',
                     view='R', 
                     nodes=nodes, nodesize='centrality',
                     edges=edges)
-plt.savefig('./examples/figures/styles2.png', dpi=300)
+plt.savefig('./examples/figures/styles2.png', dpi=150)
 
 ### Plot sequence
 nob.plot(template='MNI152NLin2009cAsym', templatestyle='glass',
