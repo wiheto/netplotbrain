@@ -1,0 +1,53 @@
+import numpy as np
+import nibabel as nib
+import os
+import templateflow.api as tf
+from scipy.ndimage import rotate, sobel
+from scipy.ndimage.interpolation import spline_filter1d
+from nibabel.processing import resample_to_output
+
+def _plot_template_style_glass(ax, data, azim, elev):
+    # If the viewpoint is not at 0,0, rotate the image so the edge thresholding occurs at approriate angle
+    if azim != 0:
+        data = rotate(data, -azim, axes=[0, 1], reshape=False)
+    if elev != 0:
+        data = rotate(data, -elev, axes=[0, 2], reshape=False)
+    # Apply sobel filter to ax1 and ax2 (viewpoint will be relative to rorated ax0)
+    sdata_ax1, sdata_ax2 = [sobel(data, axis=n) for n in range(1, 3)]
+    # Interpolation
+    # sdata_ax1 = interpolation.spline_filter(sdata_ax1)
+    # sdata_ax2 = interpolation.spline_filter(sdata_ax2)
+    # Combine edge thresholding
+    sdata = np.hypot(sdata_ax1, sdata_ax2)
+    sdata = spline_filter1d(sdata, axis=0)
+    # Rotate back
+    if elev != 0:
+        sdata = rotate(sdata, elev, axes=[0, 2], reshape=False)
+    if azim != 0:
+        sdata = rotate(sdata, azim, axes=[0, 1], reshape=False)
+    # Binarize sobel filter in relation to threshold
+    bdata = np.abs(sdata) > np.max(np.abs(sdata)) * 0.75
+    # Plot resulting edges as a scatter
+    x, y, z = np.where(bdata==1)
+    # ax.voxels(bdata, alpha=0.2, edgecolor=None, facecolor='lightgray')
+    ax.scatter(x,y,z, alpha=0.1, s=5, facecolor='lightgray', edgecolors=None, marker='s')
+
+def _plot_template_style_filled(ax, data, alpha, templatecolor):
+    ax.voxels(data, alpha=alpha, zorder=-100, facecolor=templatecolor, edgecolor=None, shade=False)
+
+
+def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', alpha=0.2, voxsize=5, azim=0, elev=0):
+    if isinstance(template, str):
+        if not os.path.exists(template):
+            template = tf.get(template=template, resolution=1, desc='brain', suffix='T1w', extension='.nii.gz')
+        img = nib.load(template)
+    elif isinstance(template, (nib.Nifti1Image, nib.Nifti2Image)):
+        img = template
+    img = resample_to_output(img, [voxsize] * 3)
+    data = img.get_fdata()
+    if style == 'filled':
+        _plot_template_style_filled(ax, data, alpha, templatecolor)
+    elif style == 'glass':
+        _plot_template_style_glass(ax, data, azim, elev)
+    return img.affine
+
