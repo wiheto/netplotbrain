@@ -4,6 +4,8 @@ A package to create simple 3D network visualizations with a brain background.
 
 (Name is a work in progress)
 
+![]('./examples/seq2.png')
+
 ## Installation
 
 `pip install git+https://www.github.com/wiheto/netonbrian`
@@ -111,7 +113,7 @@ nob.plot(template='MNI152NLin2009cAsym', templatestyle='filled',
                     edges=edges)
 plt.show()
 ```
-![](./examples/figures/styles2.png)
+![](./examples/figures/styles1.png)
 
 ```python
 nob.plot(template='MNI152NLin2009cAsym', templatestyle='glass',
@@ -131,7 +133,7 @@ nob.plot(template='MNI152NLin2009cAsym', templatestyle='glass',
                     edges=edges, frames=3)
 plt.show()
 ```
-![](./examples/figures/sequence.png)
+![](./examples/figures/seq1.png)
 
 ## Get involved? 
 
