@@ -142,6 +142,8 @@ Please feel free to get in touch about what feature you want/would like to imple
 
 ## Features to be added. 
 
+- Dynamicly place origin of arrows based on view.
+- Dynamicly choose which arrows are shown 
 - Surfaces.
 - More and improved template styles.
 - Colouring.
