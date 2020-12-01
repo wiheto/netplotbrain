@@ -153,3 +153,4 @@ Please feel free to get in touch about what feature you want/would like to imple
 - Areas as nodes
 - Simple node selection
 - Scaling
+- Nodes spheres
