@@ -1,21 +1,35 @@
 
-# ax.set_proj_type('ortho') # OPTIONAL - default is perspective (shown in image above)
 def _add_axis_arrows(ax, dims=['LR', 'AP'], length=5, origin=[5, 5, 5]):
     """
-    dims: list or string
+    Plots arrows to show the 3d Axis. 
+
+    Parameters 
+    ---------------------
+    ax : matplotlib ax
+    dims : list, string
         LR, AP, DV, 'all'
+    length : int, float
+    origin : list (len of 3) 
+        Origin of center of arrow axes.
+
+    Returns
+    -----------------
+    Nothing 
     """
+    # Check if input is all
     if dims == 'all':
         dims = ['LR', 'AP', 'DV']
+    # Check if input is string, make list
     if isinstance(dims, str):
         dims = [dims]
-
+    # Make null lists
     arrows_dx = []
     arrows_dy = []
     arrows_dz = []
     # Half the arrow size
     l = length/2
     # Go through each dimension and derive arrow coordinates
+    # For each dim, two arrows are plotted going from origin in both directions
     if 'LR' in dims:
         arrows_dx += [-l, l]
         arrows_dy += [0, 0]
@@ -34,10 +48,9 @@ def _add_axis_arrows(ax, dims=['LR', 'AP'], length=5, origin=[5, 5, 5]):
         arrows_dz += [-l, l]
         ax.text(origin[0], origin[1], origin[2] - l - 1, 'V', color='gray')
         ax.text(origin[0], origin[1], origin[2] + l + 1, 'D', color='gray')
-
     # Arrow origins
     arrows_x = [origin[0]] * (len(dims) * 2)
     arrows_y = [origin[1]] * (len(dims) * 2)
     arrows_z = [origin[2]] * (len(dims) * 2)
-
+    # Plot arrows with quicker function
     ax.quiver(arrows_x, arrows_y, arrows_z, arrows_dx, arrows_dy, arrows_dz, color='gray')

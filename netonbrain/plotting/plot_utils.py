@@ -27,6 +27,9 @@ def _set_axes_radius(ax, origin, radius):
 
 
 def _get_view(views='L', frames=1, arrowaxis='auto'):
+    """
+    Gets a or list of azim and elev arguments for viewing of q
+    """
     # Order = LRAPDV
     fromview = views[0]
     toview = views[1] if len(views) == 2 else None

@@ -12,6 +12,9 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
     """
     Plot a network on a brain
 
+    Parameters
+    ---------------------
+
     ax : matplotlib ax with 3D projection
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
@@ -49,10 +52,7 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
         If string, can plot a column 
     nodecolor : matplotlib coloring
         Can be string (default 'black') or list of 3D/4D colors for each edge.
-    azim : int
-        angle to inital view
-    elev : int
-        elevation of initial view,
+
     """
 
     azim, elev, arrowaxis = _get_view(view, frames, arrowaxis=arrowaxis)
