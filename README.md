@@ -142,6 +142,10 @@ Please feel free to get in touch about what feature you want/would like to imple
 
 ## Features to be added. 
 
+- Dynamicly place origin of arrows based on view.
+- Dynamicly choose which arrows are shown 
+- Direction of rotation RP+ or RP- should go different ways.
+- Add lists of directions ['AP+', 'DL-']
 - Surfaces.
 - More and improved template styles.
 - Colouring.
@@ -149,3 +153,4 @@ Please feel free to get in touch about what feature you want/would like to imple
 - Areas as nodes
 - Simple node selection
 - Scaling
+- Nodes spheres
