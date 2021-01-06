@@ -3,6 +3,9 @@ import netonbrain as nob
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from timeit import default_timer as timer
+start = timer()
+
 np.random.seed(2021)
 
 # 8 psudeorandom xyz coordinates
@@ -55,3 +58,7 @@ nob.plot(template='MNI152NLin2009cAsym', templatestyle='filled',
                     nodes=nodes, nodesize='centrality',
                     edges=edges, frames=3)
 plt.savefig('./examples/figures/seq2.png')
+
+
+end = timer()
+print(end - start) #52.613460625998414 sec for plottting all 8 spheres together
