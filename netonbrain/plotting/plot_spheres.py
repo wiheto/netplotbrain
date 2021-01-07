@@ -2,8 +2,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd 
 
-
 def _plot_spheres(ax, nodes, nodecolor='salmon'):
+  
+  """
+  Function that plots spheres in figure
+    
+  Parameters
+  ---------------
+  ax : matplotlib ax
+  nodes : dataframe
+      node dataframe with x, y, z coordinates. 
+  nodecolor : string or matplotlib color
+      if non-color string, must refer to a column in nodes
+    
+  Returns
+  -------------
+  Nothing 
+    
+  """    
     
   if 'centrality' in nodes.keys():
       ss = 'centrality'
@@ -23,6 +39,7 @@ def _plot_spheres(ax, nodes, nodecolor='salmon'):
   else:
         r = 2      
 
+#not running when module is being called
 if __name__=="__main__":
     
     nodex = np.array([42, -42, -40, 40, 12, -12, -18, 18])
@@ -37,6 +54,8 @@ if __name__=="__main__":
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     _plot_spheres(ax, nodes)
-
     
+
+
+
 
