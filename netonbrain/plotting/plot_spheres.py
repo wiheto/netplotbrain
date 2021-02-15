@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd 
+from matplotlib import cm
+import random
 
-def _plot_spheres(ax, nodes, nodecolor='salmon'):
+
+def _plot_spheres(ax, nodes):
   
   """
   Function that plots spheres in figure
@@ -20,7 +23,7 @@ def _plot_spheres(ax, nodes, nodecolor='salmon'):
   Nothing 
     
   """    
-    
+  
   if 'centrality' in nodes.keys():
       ss = 'centrality'
     
@@ -35,7 +38,15 @@ def _plot_spheres(ax, nodes, nodecolor='salmon'):
         y = r*np.sin(u)*np.sin(v)
         z = r*np.cos(v)
         
-        ax.plot_surface(c[0]+x, c[1]+y, c[2]+z, color=nodecolor, alpha=0.5*np.random.random()+0.5)
+        random.seed(row[ss])
+        
+        red = random.random()
+        g = random.random()
+        b = random.random()
+        
+        node_color = [red,g,b]
+                   
+        ax.plot_surface(c[0]+x, c[1]+y, c[2]+z, color=node_color, alpha=0.5*np.random.random()+0.5)
   else:
         r = 2      
 
@@ -47,7 +58,7 @@ if __name__=="__main__":
     nodez = np.array([30, 30, -16, -16, 35, 35, 44, 44])
     
     # Some psuedo_centrality measure to demonstrate size
-    centrality = np.array([30, 30, 50, 15, 20, 10, 5, 25])
+    centrality = np.array([30, 30, 30, 5, 5, 50, 50, 50])
     
     nodes = pd.DataFrame(data={'x': nodex, 'y': nodey, 'z': nodez, 'centrality': centrality})
     

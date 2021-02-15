@@ -86,7 +86,7 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
         if edges is not None: 
             _plot_edges(ax, nodes, edges, edgewidth=edgewidth, edgecolor=edgecolor)
         if nodes is not None: 
-            _plot_spheres(ax, nodes, nodecolor=nodecolor)
+            _plot_spheres(ax, nodes)
         if arrowaxis is not None:
             _add_axis_arrows(ax, dims=arrowaxis, length=arrowlength, origin=arroworigin)
 
