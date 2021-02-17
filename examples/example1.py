@@ -25,11 +25,12 @@ edges = np.zeros([n, n])
 edges[ind[0][eon[:m]], ind[1][eon[:m]]] = 1
 edges += edges.transpose()
 
-# edgesdf = pd.DataFrame()
-# edgesdf["i"],edgesdf["j"] = edges[:,0], edges[:,1]
-# weights = ['0.608', '0.475', '0.456', '0.578', '0.415', '0.953', '0.204', '0.124']
-# edgesdf['weight']=weights
-# edges = edgesdf
+edgesdf = pd.DataFrame()
+edges_list = list(zip(*np.where(edges!=0)))
+edgesdf["i"],edgesdf["j"] = [i[0] for i in edges_list], [i[1] for i in edges_list]
+weights = ['0.608', '0.475', '0.456', '0.578', '0.415', '0.953', '0.204', '0.124', '0.608', '0.475', '0.456', '0.578', '0.415', '0.953', '0.204', '0.124', '0.608', '0.475', '0.456', '0.578', '0.415', '0.953', '0.204', '0.124']
+edgesdf['weight']=weights
+edges = edgesdf
 
 ### Plot single view
 nob.plot(template='MNI152NLin2009cAsym', templatestyle='glass',
