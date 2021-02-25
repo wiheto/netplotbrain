@@ -1,13 +1,12 @@
 import matplotlib.pyplot as plt
 from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_glass,\
-                    _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
-                    _scale_nodes, _add_axis_arrows
-                    
+    _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
+    _scale_nodes, _add_axis_arrows
 
 
 def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
-        templatevoxsize=4, templatecolor='lightgray', templateedgedetection=0.8, arrowaxis='auto', arrowlength=5,
-        arroworigin=[5, 5, 5], edgecolor='k', edgewidth='auto', nodesize=50, nodecolor='salmon'):
+         templatevoxsize=4, templatecolor='lightgray', templateedgedetection=0.8, arrowaxis='auto', arrowlength=5,
+         arroworigin=[5, 5, 5], edgecolor='k', edgewidth='auto', nodesize=50, nodecolor='salmon', nodespheres=True):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -21,7 +20,7 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
         bnv.plot(ax, ...)
     view : string or tuple
         if string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'D' (dorsal), 'V' (ventral)
-        if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.  
+        if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
     nodes : dataframe
         must include x, y, z columns that correspond to coordinates of nodes. Can include additional infomation for node size and color.
     edges : numpy array (other alternatives coming)
@@ -32,16 +31,16 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
         can be filled (a single transparant color) or glass (edges marked)
     templatecolor : str
         If templatestyle=='filled', the color of template voxels
-    templateedgedetection : float 
-        If templatestyle=='glass', can tweak the edges of 
+    templateedgedetection : float
+        If templatestyle=='glass', can tweak the edges of
     templatealpha : float
-        Opacity of template voxels. 
+        Opacity of template voxels.
     templatevoxelsize : int
-        Resize voxels this size. Larger voxels = quicker. 
+        Resize voxels this size. Larger voxels = quicker.
     arrowaxis : list or str
         Adds axis arrows onto plot. Alternatives are: LR, AP, DV, 'all'
     arrowlength : int, float
-        Length of arrow    
+        Length of arrow
     arroworigin : list
         x,y,z coordinates of arrowaxis. Note 0,0,0 is bottom left.
     edgecolor : matplotlib coloring
@@ -49,49 +48,58 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
     edgewidth : int, float
         Specify width of edges. If auto, will plot the value in edge array (if array) or the weight column (if in pandas dataframe), otherwise 2.
     nodesize : str, int, float
-        If string, can plot a column 
+        If string, can plot a column
     nodecolor : matplotlib coloring
         Can be string (default 'black') or list of 3D/4D colors for each edge.
+    nodespheres : bool
+        If True, plots nodes as 3D spheres. If False, plots nodes as flat circles. Flat circles can be quicker.
 
     """
 
     azim, elev, arrowaxis = _get_view(view, frames, arrowaxis=arrowaxis)
     if ax is not None and not isinstance(ax, list) and len(azim) > 1:
-        raise ValueError('Ax input must be a list when requesting multiple frames')
+        raise ValueError(
+            'Ax input must be a list when requesting multiple frames')
     if isinstance(ax, list):
         if len(ax) != len(azim):
             raise ValueError('Ax list, must equal number of frames requested')
-    if ax is None: 
+    if ax is None:
         fig = plt.figure(figsize=(len(azim)*3, 3))
         colnum = len(azim) * 10
-    
+
     ax_in = ax
     ax_out = []
-    for fi, _ in enumerate(azim): 
+    for fi, _ in enumerate(azim):
         if ax_in is None:
             subplotid = 100 + colnum + fi + 1
             ax = fig.add_subplot(subplotid, projection='3d')
-        else: 
+        else:
             ax = ax_in[fi]
 
         affine = None
         if template is not None:
-            affine = _plot_template(ax, templatestyle, template, templatecolor=templatecolor, alpha=templatealpha, voxsize=templatevoxsize, azim=azim[fi], elev=elev[fi])
+            affine = _plot_template(ax, templatestyle, template, templatecolor=templatecolor,
+                                    alpha=templatealpha, voxsize=templatevoxsize, azim=azim[fi], elev=elev[fi])
         # Template voxels will have origin at 0,0,0
         # It is easier to scale the nodes from the image affine
         # Then to rescale the ax.voxels function
-        # So if affine is not None, nodes get scaled in relation to origin and voxelsize, 
+        # So if affine is not None, nodes get scaled in relation to origin and voxelsize,
         if fi == 0:
             nodes = _scale_nodes(nodes, affine)
-        if edges is not None: 
-            _plot_edges(ax, nodes, edges, edgewidth=edgewidth, edgecolor=edgecolor)
-        if nodes is not None: 
-            _plot_spheres(ax, nodes)
+        if edges is not None:
+            _plot_edges(ax, nodes, edges, edgewidth=edgewidth,
+                        edgecolor=edgecolor)
+        if nodes is not None:
+            if nodespheres:
+                _plot_spheres(ax, nodes)
+            else:
+                _plot_nodes(ax, nodes)
         if arrowaxis is not None:
-            _add_axis_arrows(ax, dims=arrowaxis, length=arrowlength, origin=arroworigin)
+            _add_axis_arrows(ax, dims=arrowaxis,
+                             length=arrowlength, origin=arroworigin)
 
-        ax.set_box_aspect([1,1,1]) # IMPORTANT - this is the new, key line
-        _set_axes_equal(ax) # IMPORTANT - this is also required
+        ax.set_box_aspect([1, 1, 1])  # IMPORTANT - this is the new, key line
+        _set_axes_equal(ax)  # IMPORTANT - this is also required
         ax.axis('off')
         ax.view_init(azim=azim[fi], elev=elev[fi])
         ax_out.append(ax)
