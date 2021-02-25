@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_glass,\
-                    _plot_edges, _plot_nodes, _set_axes_equal, _set_axes_radius, _get_view,\
+                    _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
                     _scale_nodes, _add_axis_arrows
                     
 
@@ -86,7 +86,7 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
         if edges is not None: 
             _plot_edges(ax, nodes, edges, edgewidth=edgewidth, edgecolor=edgecolor)
         if nodes is not None: 
-            _plot_nodes(ax, nodes, nodesize=nodesize, nodecolor=nodecolor)
+            _plot_spheres(ax, nodes)
         if arrowaxis is not None:
             _add_axis_arrows(ax, dims=arrowaxis, length=arrowlength, origin=arroworigin)
 

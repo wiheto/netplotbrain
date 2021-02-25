@@ -1,4 +1,3 @@
-
 def _plot_nodes(ax, nodes, nodesize=50, nodecolor='salmon'):
     """
     Function that plots nodes in figure

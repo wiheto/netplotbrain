@@ -23,10 +23,22 @@ def _plot_edges(ax, nodes, edges, edgewidth='auto', edgewidthscale=1, edgecolor=
     Nothing
     """
     # If numpy array.
-    for e in list(zip(*np.where(edges!=0))):
-        if edgewidth != 'auto':
-            ew = edgewidth * edgewidthscale
-        else:
-            ew = edges[e] * edgewidthscale
-        # NOTE CURRENTLY LOC IS FILTERING EDGES. CHECK FOR COMPATIBILITY WITH HOW NODES works elsewhere
-        ax.plot(nodes.loc[list(e)]['x'], nodes.loc[list(e)]['y'], nodes.loc[list(e)]['z'], color=edgecolor, linewidth=ew)
+    # for e in list(zip(*np.where(edges!=0))):
+    #     if edgewidth != 'auto':
+    #         ew = edgewidth * edgewidthscale
+    #     else:
+    #         ew = edges[e] * edgewidthscale
+    #     # NOTE CURRENTLY LOC IS FILTERING EDGES. CHECK FOR COMPATIBILITY WITH HOW NODES works elsewhere
+    #     ax.plot(nodes.loc[list(e)]['x'], nodes.loc[list(e)]['y'], nodes.loc[list(e)]['z'], color=edgecolor, linewidth=ew)
+    
+    #if dataframe
+    for e, row in edges.iterrows():
+        if row['i'] != 0 and row['j'] != 0:
+            if edgewidth != 'auto':
+                ew = edgewidth * edgewidthscale
+            else:
+                ew = row['weight'] * edgewidthscale
+            xp = nodes.loc[list((row['i'], row['j']))]['x']
+            yp = nodes.loc[list((row['i'], row['j']))]['y']
+            zp = nodes.loc[list((row['i'], row['j']))]['z']
+            ax.plot(xp, yp, zp, color=edgecolor, linewidth=ew)
