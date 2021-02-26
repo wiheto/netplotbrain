@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
-from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_glass,\
+import inspect
+from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_cloudy,\
     _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
-    _scale_nodes, _add_axis_arrows
+    _scale_nodes, _add_axis_arrows, _plot_template_style_surface
 
 
 def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
-         templatevoxsize=4, templatecolor='lightgray', templateedgedetection=0.8, arrowaxis='auto', arrowlength=5,
+         templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.8, arrowaxis='auto', arrowlength=5,
          arroworigin=[5, 5, 5], edgecolor='k', edgewidth='auto', nodesize=50, nodecolor='salmon', nodespheres=True):
     # sourcery skip: merge-nested-ifs
     """
@@ -28,15 +29,19 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
     template : str or nibabel nifti
         Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
     templatestyle : str
-        can be filled (a single transparant color) or glass (edges marked)
+        can be 'surface': (a surface is rendered from the template),
+               'filled': (a single transparant color)
+               'cloudy': cloudy (cloudy scatter edges outline the figure)
+    surface_resolution : int
+        If templatestyle=='surface' controls the size of the triangles used in the surface reconstruction (default: 2).
     templatecolor : str
-        If templatestyle=='filled', the color of template voxels
+        If templatestyle=='surface' or 'filled', the color of template voxels
     templateedgedetection : float
-        If templatestyle=='glass', can tweak the edges of
+        If templatestyle=='cloudy', can tweak the edges detection threshold.
     templatealpha : float
         Opacity of template voxels.
     templatevoxelsize : int
-        Resize voxels this size. Larger voxels = quicker.
+        Resize voxels this size. Larger voxels = quicker. Default = 2
     arrowaxis : list or str
         Adds axis arrows onto plot. Alternatives are: LR, AP, DV, 'all'
     arrowlength : int, float
@@ -79,7 +84,10 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
         affine = None
         if template is not None:
             affine = _plot_template(ax, templatestyle, template, templatecolor=templatecolor,
-                                    alpha=templatealpha, voxsize=templatevoxsize, azim=azim[fi], elev=elev[fi])
+                                    alpha=templatealpha, voxsize=templatevoxsize,
+                                    surface_resolution=surface_resolution,
+                                    edgethreshold=templateedgethreshold,
+                                    azim=azim[fi], elev=elev[fi])
         # Template voxels will have origin at 0,0,0
         # It is easier to scale the nodes from the image affine
         # Then to rescale the ax.voxels function
