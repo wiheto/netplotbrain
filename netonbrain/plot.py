@@ -6,7 +6,7 @@ from .plotting import _plot_template, _plot_template_style_filled, _plot_templat
 
 
 def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
-         templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.75, arrowaxis='auto', arrowlength=5,
+         templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=5,
          arroworigin=[5, 5, 5], edgecolor='k', edgewidth='auto', nodesize=50, nodecolor='salmon', nodespheres=True):
     # sourcery skip: merge-nested-ifs
     """

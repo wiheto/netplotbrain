@@ -103,8 +103,8 @@ nob.plot(template='MNI152NLin2009cAsym',
          nodesize='centrality',
          edges=edges)
 plt.show()
-![](./examples/figures/singleview.png)
 ```
+![](./examples/figures/singleview.png)
 
 ### Plot different styles
 
