@@ -34,12 +34,12 @@ The T1w brain mask will then automatically downloaded (if not already present on
 
 ## Template Styles
 
-There are currently two background styles: "filled" and "glass".
+There are currently two background styles: "filled" and "cloudy".
 
 The filled style, plots the template's brain mask as voxels.
 
-The glass style, tries to identify the outline of the mask.
-The glass style is quicker, but the edge detection is run relative to the specified initial view of the plot.
+The cloudy style, tries to identify the outline of the mask.
+The cloudy style is quicker, but the edge detection is run relative to the specified initial view of the plot.
 
 For both templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker
 
@@ -96,7 +96,7 @@ edges += edges.transpose()
 ### Plot single view
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym', templatestyle='glass',
+nob.plot(template='MNI152NLin2009cAsym', templatestyle='cloudy',
                     view='R', 
                     nodes=nodes, nodesize='centrality',
                     edges=edges)
@@ -116,7 +116,7 @@ plt.show()
 ![](./examples/figures/styles1.png)
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym', templatestyle='glass',
+nob.plot(template='MNI152NLin2009cAsym', templatestyle='cloudy',
                     view='R', 
                     nodes=nodes, nodesize='centrality',
                     edges=edges)
@@ -127,7 +127,7 @@ plt.show()
 ### Plot sequence
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym', templatestyle='glass',
+nob.plot(template='MNI152NLin2009cAsym', templatestyle='cloudy',
                     view='RP', 
                     nodes=nodes, nodesize='centrality',
                     edges=edges, frames=3)
