@@ -3,3 +3,4 @@ nibabel>=3.1.0
 templateflow>=0.6.3
 numpy>=1.18.1
 scipy>=1.4.1
+scikit-image>=0.17.2
