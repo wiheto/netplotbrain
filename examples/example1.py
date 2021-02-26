@@ -36,7 +36,7 @@ edges = edgesdf
 
 # Plot single view
 nob.plot(template='MNI152NLin2009cAsym',
-         templatestyle='cloudy',
+         templatestyle='surface',
          view='R',
          nodes=nodes,
          nodesize='centrality',

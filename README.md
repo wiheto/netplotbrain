@@ -96,30 +96,36 @@ edges += edges.transpose()
 ### Plot single view
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym', templatestyle='cloudy',
-                    view='R', 
-                    nodes=nodes, nodesize='centrality',
-                    edges=edges)
+nob.plot(template='MNI152NLin2009cAsym',
+         templatestyle='surface',
+         view='R', 
+         nodes=nodes,
+         nodesize='centrality',
+         edges=edges)
 plt.show()
-```
 ![](./examples/figures/singleview.png)
+```
 
 ### Plot different styles
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym', templatestyle='filled',
-                    view='R', 
-                    nodes=nodes, nodesize='centrality',
-                    edges=edges)
+nob.plot(template='MNI152NLin2009cAsym',
+         templatestyle='filled',
+         view='R', 
+         nodes=nodes,
+         nodesize='centrality',
+         edges=edges)
 plt.show()
 ```
 ![](./examples/figures/styles1.png)
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym', templatestyle='cloudy',
-                    view='R', 
-                    nodes=nodes, nodesize='centrality',
-                    edges=edges)
+nob.plot(template='MNI152NLin2009cAsym',
+         templatestyle='cloudy',
+         view='R', 
+         nodes=nodes,
+         nodesize='centrality',
+         edges=edges)
 plt.show()
 ```
 ![](./examples/figures/styles2.png)
@@ -127,13 +133,16 @@ plt.show()
 ### Plot sequence
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym', templatestyle='cloudy',
-                    view='RP', 
-                    nodes=nodes, nodesize='centrality',
-                    edges=edges, frames=3)
+nob.plot(template='MNI152NLin2009cAsym',
+         templatestyle='cloudy',
+         view='RP', 
+         nodes=nodes, 
+         nodesize='centrality',
+         edges=edges, 
+         frames=3)
 plt.show()
 ```
-![](./examples/figures/seq1.png)
+![](./examples/figures/seq2.png)
 
 ## Get involved? 
 
@@ -146,11 +155,8 @@ Please feel free to get in touch about what feature you want/would like to imple
 - Dynamicly choose which arrows are shown 
 - Direction of rotation RP+ or RP- should go different ways.
 - Add lists of directions ['AP+', 'DL-']
-- Surfaces.
-- More and improved template styles.
 - Colouring.
 - Edge properties.
 - Areas as nodes
 - Simple node selection
 - Scaling
-- Nodes spheres
