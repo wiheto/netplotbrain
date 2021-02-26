@@ -4,7 +4,7 @@ A package to create simple 3D network visualizations with a brain background.
 
 (Name is a work in progress)
 
-![](examples/figures/seq2.png)
+![](examples/figures/seq1.png)
 
 ## Installation
 
