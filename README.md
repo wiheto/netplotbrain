@@ -51,8 +51,8 @@ The view can be a string:
 - Right 'R',
 - Anterior 'A',
 - Posterior 'P'
-- Dorsal 'D'
-- Ventral 'V'
+- Superior 'S'
+- Inferior 'I'
 - Specific rotation (tuple): (xy-rotate, xz-rotate) in degrees. The R view is (0, 0)
 
 ## Rotated view sequences
