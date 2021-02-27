@@ -9,6 +9,9 @@ def _set_axes_equal(ax: plt.Axes):
     Make axes of 3D plot have equal scale so that spheres appear as
     spheres and cubes as cubes.  Required since `ax.axis('equal')`
     and `ax.set_aspect('equal')` don't work on 3D.
+
+    # Credit for code: 
+    https://stackoverflow.com/questions/13685386/matplotlib-equal-unit-length-with-equal-aspect-ratio-z-axis-is-not-equal-to/63625222#63625222
     """
     limits = np.array([
         ax.get_xlim3d(),
@@ -16,7 +19,11 @@ def _set_axes_equal(ax: plt.Axes):
         ax.get_zlim3d(),
     ])
     origin = np.mean(limits, axis=1)
-    radius = 0.5 * np.max(np.abs(limits[:, 1] - limits[:, 0]))
+    # IMPORTANT, this scaling factor (0.3) might needed to be changed
+    # Orginally it was 0.5, and should be checked that all templates
+    # Fit this. A template specific scaling factor is possible, if problems
+    # arise.
+    radius = 0.3 * np.max(np.abs(limits[:, 1] - limits[:, 0]))
     _set_axes_radius(ax, origin, radius)
 
 def _set_axes_radius(ax, origin, radius):
