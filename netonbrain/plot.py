@@ -6,8 +6,8 @@ from .plotting import _plot_template, _plot_template_style_filled, _plot_templat
 
 
 def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
-         templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=5,
-         arroworigin=[5, 5, 5], edgecolor='k', edgewidth='auto', nodesize=50, nodecolor='salmon', nodespheres=True):
+         templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
+         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=50, nodecolor='salmon', nodespheres=True):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -20,7 +20,7 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
         ax = fig.add_subplot(111, projection='3d')
         bnv.plot(ax, ...)
     view : string or tuple
-        if string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'D' (dorsal), 'V' (ventral)
+        if string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior)
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
     nodes : dataframe
         must include x, y, z columns that correspond to coordinates of nodes. Can include additional infomation for node size and color.
@@ -43,7 +43,7 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
     templatevoxelsize : int
         Resize voxels this size. Larger voxels = quicker. Default = 2
     arrowaxis : list or str
-        Adds axis arrows onto plot. Alternatives are: LR, AP, DV, 'all'
+        Adds axis arrows onto plot. Alternatives are: LR, AP, SI, 'all'
     arrowlength : int, float
         Length of arrow
     arroworigin : list
@@ -104,7 +104,8 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
                 _plot_nodes(ax, nodes)
         if arrowaxis is not None:
             _add_axis_arrows(ax, dims=arrowaxis,
-                             length=arrowlength, origin=arroworigin)
+                             length=arrowlength, origin=arroworigin,
+                             azim=azim[fi], elev=elev[fi])
 
         ax.set_box_aspect([1, 1, 1])  # IMPORTANT - this is the new, key line
         _set_axes_equal(ax)  # IMPORTANT - this is also required

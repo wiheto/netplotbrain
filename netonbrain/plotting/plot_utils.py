@@ -35,13 +35,13 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
     toview = views[1] if len(views) == 2 else None
     view_defaults = {'L': (180, 10), 'R': (0, 10),
                     'A': (90, 10), 'P': (-90, 10),
-                    'D': (-90, 90), 'V': (90, 90)}
+                    'S': (-90, 90), 'I': (90, 90)}
     # Set auto arrows for axis depedning on starting view
     if fromview in ['L', 'R']:
         autoarrowaxis = 'AP'
     elif fromview in ['A', 'P']:
         autoarrowaxis = 'LR'
-    elif fromview in ['D', 'V']:
+    elif fromview in ['S', 'I']:
         autoarrowaxis = ['LR','AP']
     if toview is None:
         view = view_defaults[fromview]

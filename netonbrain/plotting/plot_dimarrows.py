@@ -1,5 +1,6 @@
+import numpy as np
 
-def _add_axis_arrows(ax, dims=['LR', 'AP'], length=5, origin=[5, 5, 5]):
+def _add_axis_arrows(ax, dims=['LR', 'AP'], length=10, origin=None, azim=0, elev=0):
     """
     Plots arrows to show the 3d Axis. 
 
@@ -7,18 +8,63 @@ def _add_axis_arrows(ax, dims=['LR', 'AP'], length=5, origin=[5, 5, 5]):
     ---------------------
     ax : matplotlib ax
     dims : list, string
-        LR, AP, DV, 'all'
+        LR, AP, SI, 'all'
     length : int, float
     origin : list (len of 3) 
         Origin of center of arrow axes.
-
+        If none, centers automatically in bottom left.
+    azim : int
+        azim argument, for origin auto calculation
+    elev : int
+        elev argument, for origin auto calculation
     Returns
     -----------------
     Nothing 
     """
+    if origin is None:
+        xlim = ax.get_xlim3d()
+        ylim = ax.get_ylim3d()
+        zlim = ax.get_zlim3d()
+        origin = [xlim[0] + 15, ylim[0] + 15, zlim[0] + 15]
+        if azim > 0:
+            origin[1] = ylim[1] - 15
+        if azim <= 90 and azim > -90:
+            origin[0] = xlim[1] + 15
+    # Check the azim to see the orientation of letters
+    # S/I needs to be added. 
+    # Also this could probably be improved upon
+    # Based on hard coding
+    valign_a = 'center'
+    valign_p = 'center'
+    valign_l = 'center'
+    valign_r = 'center'
+    valign_s = 'bottom'
+    valign_i = 'top'
+    if azim <= 90 and azim > -90:
+        halign_l = 'left'
+        halign_r = 'right'
+        if elev > 45: 
+            valign_a = 'bottom'
+            valign_p = 'top'
+            halign_a = 'center'
+            halign_p = 'center'
+    else:
+        halign_l = 'right'
+        halign_r = 'left'
+        if elev > 45: 
+            valign_p = 'bottom'
+            valign_a = 'top'
+            halign_a = 'center'
+            halign_p = 'center'
+    if azim > 0 and elev <= 45:
+        halign_a = 'left'
+        halign_p = 'right'
+    else:
+        halign_a = 'right'
+        halign_p = 'left'
     # Check if input is all
     if dims == 'all':
-        dims = ['LR', 'AP', 'DV']
+        dims = ['LR', 'AP', 'SI']
     # Check if input is string, make list
     if isinstance(dims, str):
         dims = [dims]
@@ -34,23 +80,23 @@ def _add_axis_arrows(ax, dims=['LR', 'AP'], length=5, origin=[5, 5, 5]):
         arrows_dx += [-l, l]
         arrows_dy += [0, 0]
         arrows_dz += [0, 0]
-        ax.text(origin[0] - l - 1, origin[1], origin[2], 'L', color='gray')
-        ax.text(origin[0] + l + 1, origin[1], origin[2], 'R', color='gray')
+        ax.text(origin[0] - l, origin[1], origin[2], 'L', fontsize='x-small', color='gray', horizontalalignment=halign_l, verticalalignment=valign_l)
+        ax.text(origin[0] + l, origin[1], origin[2], 'R', fontsize='x-small', color='gray', horizontalalignment=halign_r, verticalalignment=valign_r)
     if 'AP' in dims:
         arrows_dx += [0, 0]
         arrows_dy += [-l, l]
         arrows_dz += [0, 0]
-        ax.text(origin[0], origin[1] - l - 1, origin[2], 'P', color='gray')
-        ax.text(origin[0], origin[1] + l + 1, origin[2], 'A', color='gray')
-    if 'DV' in dims:
+        ax.text(origin[0], origin[1] - l, origin[2], 'P', fontsize='x-small', color='gray', horizontalalignment=halign_a, verticalalignment=valign_a)
+        ax.text(origin[0], origin[1] + l, origin[2], 'A', fontsize='x-small', color='gray', horizontalalignment=halign_p, verticalalignment=valign_p)
+    if 'SI' in dims:
         arrows_dx += [0, 0]
         arrows_dy += [0, 0]
         arrows_dz += [-l, l]
-        ax.text(origin[0], origin[1], origin[2] - l - 1, 'V', color='gray')
-        ax.text(origin[0], origin[1], origin[2] + l + 1, 'D', color='gray')
+        ax.text(origin[0], origin[1], origin[2] - l, 'I', fontsize='x-small', color='gray', verticalalignment=valign_i)
+        ax.text(origin[0], origin[1], origin[2] + l, 'S', fontsize='x-small', color='gray', verticalalignment=valign_s)
     # Arrow origins
     arrows_x = [origin[0]] * (len(dims) * 2)
     arrows_y = [origin[1]] * (len(dims) * 2)
     arrows_z = [origin[2]] * (len(dims) * 2)
-    # Plot arrows with quicker function
-    ax.quiver(arrows_x, arrows_y, arrows_z, arrows_dx, arrows_dy, arrows_dz, color='gray')
+    # Plot arrows with quiver function
+    ax.quiver(arrows_x, arrows_y, arrows_z, arrows_dx, arrows_dy, arrows_dz, color='gray', linewidth=0.5, arrow_length_ratio=0.5)
