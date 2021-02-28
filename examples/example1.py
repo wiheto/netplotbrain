@@ -43,6 +43,18 @@ nob.plot(template='MNI152NLin2009cAsym',
          edges=edges)
 plt.savefig('./examples/figures/singleview.png', dpi=150)
 
+# Plot multiple rows
+
+nob.plot(template='MNI152NLin2009cAsym',
+         templatestyle='surface',
+         nodes=nodes,
+         nodesize='centrality',
+         edges=edges,
+         view=['LR', 'AP'],
+         frames=2)
+plt.savefig('./examples/figures/rows1.png', dpi=150)
+
+
 # Plot different styles
 
 nob.plot(template='MNI152NLin2009cAsym',

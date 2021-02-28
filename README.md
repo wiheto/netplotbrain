@@ -55,13 +55,18 @@ The view can be a string:
 - Inferior 'I'
 - Specific rotation (tuple): (xy-rotate, xz-rotate) in degrees. The R view is (0, 0)
 
+Sequences of views are possible.
+
 ## Rotated view sequences
 
 You can also generate a sequence of rotated images.
 
-If the view is two letters, LR, then a sequence will be generated from the L-view to R-view.
-The parameter frames will dictate how many images are generated.
+If the view is two letters, (e.g. `'LR'`), then a sequence will be generated from the L-view to R-view.
+The parameter `frames` will controle how many images are generated.
 Images will then be displayed along a single row.
+
+If you specify a list (e.g. `['LR', 'AP']`) then two different rows will be generated.
+The first, from left to right. The second from anterior to posterior. 
 
 ## Minimal examples
 
@@ -143,6 +148,21 @@ nob.plot(template='MNI152NLin2009cAsym',
 plt.show()
 ```
 ![](./examples/figures/seq2.png)
+
+### Plot multiple rows
+
+```python
+nob.plot(template='MNI152NLin2009cAsym',
+         templatestyle='surface',
+         nodes=nodes,
+         nodesize='centrality',
+         edges=edges,
+         view=['LR', 'AP'],
+         frames=2)
+plt.show()
+```
+![](./examples/figures/rows1.png)
+
 
 ## Get involved? 
 
