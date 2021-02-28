@@ -85,7 +85,7 @@ nodex = np.array([42, -42, -40, 40, 12, -12, -18, 18])
 nodey = np.array([-60, -60, 40, 40, 56, 56, -44, -44])
 nodez = np.array([30, 30, -16, -16, 35, 35, 44, 44])
 # Some psuedo_centrality measure to demonstrate size
-centrality = np.array([30, 30, 50, 15, 20, 10, 5, 25])
+centrality = np.array([0.3, 0.3, 1, 0.15, 0.2, 0.8, 0.4, 0.3])
 nodes = pd.DataFrame(data={'x': nodex, 'y': nodey, 'z': nodez, 'centrality': centrality})
 
 n = 8 # number of nodes
