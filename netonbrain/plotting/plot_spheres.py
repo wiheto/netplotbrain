@@ -4,7 +4,7 @@ import pandas as pd
 import random
 
 
-def _plot_spheres(ax, nodes):
+def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodecols=['x', 'y', 'z'], alpha=None):
     """
     Function that plots spheres in figure
 
@@ -13,8 +13,14 @@ def _plot_spheres(ax, nodes):
     ax : matplotlib ax
     nodes : dataframe
         node dataframe with x, y, z coordinates.
+    nodesize : string or float, int
+        if string, must refer to a column in nodes.
+    nodescale : int
+        factor to scale all nodes by
     nodecolor : string or matplotlib color
         if non-color string, must refer to a column in nodes
+    nodecols : list of string
+        name of node column coordinates in datadrame
 
     Returns
     -------------
@@ -22,30 +28,26 @@ def _plot_spheres(ax, nodes):
 
     """
 
-    if 'centrality' in nodes.keys():
-        ss = 'centrality'
+    # Loop through each node and plot a surface plot
+    for _, row in nodes.iterrows():
+        # Get the xyz coords for the node
+        c = [row[nodecols[0]],
+            row[nodecols[1]],
+            row[nodecols[2]]]
 
-        for _, row in nodes.iterrows():
-            c = [row['x'], row['y'], row['z']]
+        # Check if nodesize is in the dataframe
+        if nodesize in nodes.keys():
+            r = row[nodesize] * nodescale 
+        else: 
+            r = nodesize * nodescale
 
-            r = row[ss]/10
+        u, v = np.mgrid[0:2*np.pi:50j, 0:np.pi:50j]
 
-            u, v = np.mgrid[0:2*np.pi:50j, 0:np.pi:50j]
+        # Calculate the x,y,z coordinates of each sphere
+        x = r*np.cos(u)*np.sin(v)
+        y = r*np.sin(u)*np.sin(v)
+        z = r*np.cos(v)
 
-            x = r*np.cos(u)*np.sin(v)
-            y = r*np.sin(u)*np.sin(v)
-            z = r*np.cos(v)
-
-            random.seed(row[ss])
-
-            red = random.random()
-            g = random.random()
-            b = random.random()
-
-            node_color = [red, g, b]
-
-            ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
-                            color=node_color, 
-                            alpha=0.5*np.random.random()+0.5)
-    else:
-        r = 2
+        ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
+                        color=nodecolor, 
+                        alpha=alpha)

@@ -7,7 +7,8 @@ from .plotting import _plot_template, _plot_template_style_filled, _plot_templat
 
 def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
-         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=50, nodecolor='salmon', nodespheres=True):
+         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodespheres=True,
+         weightcol='weights', nodecols=['x', 'y', 'z']):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -99,9 +100,9 @@ def plot(nodes, fig=None, ax=None, view='L', frames=1, edges=None, template=None
                         edgecolor=edgecolor)
         if nodes is not None:
             if nodespheres:
-                _plot_spheres(ax, nodes)
+                _plot_spheres(ax, nodes, nodecolor=nodecolor, nodesize=nodesize, nodecols=nodecols, nodescale=nodescale)
             else:
-                _plot_nodes(ax, nodes)
+                _plot_nodes(ax, nodes, nodecolor=nodecolor, nodesize=nodesize, nodecols=nodecols)
         if arrowaxis is not None:
             _add_axis_arrows(ax, dims=arrowaxis,
                              length=arrowlength, origin=arroworigin,

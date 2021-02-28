@@ -1,4 +1,4 @@
-def _plot_nodes(ax, nodes, nodesize=50, nodecolor='salmon'):
+def _plot_nodes(ax, nodes, nodesize=20, nodecolor='salmon', nodecols=['x', 'y', 'z']):
     """
     Function that plots nodes in figure
 
@@ -6,11 +6,14 @@ def _plot_nodes(ax, nodes, nodesize=50, nodecolor='salmon'):
     ---------------
     ax : matplotlib ax
     nodes : dataframe
-        node dataframe with x, y, z coordinates. 
+        node dataframe with x, y, z coordinates, must include nodecols. 
     nodesize : string or float, int
         if string, must refer to a column in nodes.
     nodecolor : string or matplotlib color
         if non-color string, must refer to a column in nodes
+    nodecols : list of string
+        name of node column coordinates in datadrame
+
 
     Returns
     -------------
@@ -24,7 +27,7 @@ def _plot_nodes(ax, nodes, nodesize=50, nodecolor='salmon'):
         ns = nodesize
     # Set colormap
     nc = nodecolor
-    ax.scatter(nodes['x'], nodes['y'], nodes['z'], s=ns, color=nc)
+    ax.scatter(nodes[nodecols[0]], nodes[nodecols[1]], nodes[nodecols[2]], s=ns, color=nc)
 
 def _scale_nodes(nodes, affine=None):
     """
