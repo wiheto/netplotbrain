@@ -131,7 +131,7 @@ nob.plot(nodeimg={'atlas': 'Schaefer2018',
          templatestyle='surface',
          view=['LSR'],
          nodetype='circles')
-plt.savefig('./examples/figures/atlas_cirtlcs.png', dpi=150)
+plt.savefig('./examples/figures/atlas_circles.png', dpi=150)
 
 # Plot atlas as parcels
 

@@ -221,7 +221,7 @@ nob.plot(nodeimg={'atlas': 'Schaefer2018',
          nodetype='circles')
 plt.show()
 ```
-![](./examples/figures/atlas_nodes.png)
+![](./examples/figures/atlas_circles.png)
 
 
 # plot atlas (as parcels) from templateflow
