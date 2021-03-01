@@ -1,4 +1,4 @@
-def _plot_nodes(ax, nodes, nodesize=20, nodecolor='salmon', nodecols=['x', 'y', 'z']):
+def _plot_nodes(ax, nodes, nodecolor='salmon', nodesize=20, nodecols=['x', 'y', 'z']):
     """
     Function that plots nodes in figure
 
@@ -6,7 +6,7 @@ def _plot_nodes(ax, nodes, nodesize=20, nodecolor='salmon', nodecols=['x', 'y', 
     ---------------
     ax : matplotlib ax
     nodes : dataframe
-        node dataframe with x, y, z coordinates, must include nodecols. 
+        node dataframe with x, y, z coordinates, must include nodecols.
     nodesize : string or float, int
         if string, must refer to a column in nodes.
     nodecolor : string or matplotlib color
@@ -17,7 +17,7 @@ def _plot_nodes(ax, nodes, nodesize=20, nodecolor='salmon', nodecols=['x', 'y', 
 
     Returns
     -------------
-    Nothing 
+    Nothing
 
     """
     # Check if nodesize input is column in node data
@@ -27,23 +27,25 @@ def _plot_nodes(ax, nodes, nodesize=20, nodecolor='salmon', nodecols=['x', 'y', 
         ns = nodesize
     # Set colormap
     nc = nodecolor
-    ax.scatter(nodes[nodecols[0]], nodes[nodecols[1]], nodes[nodecols[2]], s=ns, color=nc)
+    ax.scatter(nodes[nodecols[0]], nodes[nodecols[1]],
+               nodes[nodecols[2]], s=ns, color=nc)
+
 
 def _scale_nodes(nodes, affine=None):
     """
     Scales nodes from MNI coordinates to ax with origin of 0.
-    
+
     Parameters
     ---------------
     nodes : dataframe
-        node dataframe with x, y, z coordinates. 
+        node dataframe with x, y, z coordinates.
     affine : array
-        3x4 array from img.affine (nibabel image). 
+        3x4 array from img.affine (nibabel image).
 
     Returns
     ----------------
     nodes : dataframe
-        node dataframe with recaled x, y, z coordinates to account for affine matrix. 
+        node dataframe with recaled x, y, z coordinates to account for affine matrix.
 
     """
     nodes_scaled = nodes.copy()

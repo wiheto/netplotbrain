@@ -1,0 +1,104 @@
+import nibabel as nib
+import templateflow.api as tf
+import numpy as np
+import pandas as pd
+from nibabel.processing import resample_to_output
+import matplotlib.cm as cm
+from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+from skimage import measure
+
+
+def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
+    """
+    Returns xyz coordinates from node input.
+
+    Parameters
+    ------------------------
+    img : str, nibabel image or dict
+        If string, link to the image.
+        If img, a nifti where each roi is its own number.
+        If dict, templateflow dictionary to one single nifti image
+    nodes : dataframe
+        Node dataframe.
+    voxsize : int
+        if not, None, the size of voxels in cord system.
+
+    Returns
+    -----------------------
+    nodes : dataframe with x,y,z cordinates of nodes
+    img : loaded nifti image.
+    """
+    # Get templateflow image, if dict
+    if isinstance(img, dict):
+        # Add template to dict
+        if template is not None and 'template' not in img:
+            img['template'] = template
+        # If extension not included in img, add it.
+        # Could be some instances where this is not wanted
+        if 'extension' not in img:
+            img['extension'] = '.nii.gz'
+        imgpath = tf.get(**img)
+        img = nib.load(imgpath)
+    # load image, if string
+    if isinstance(img, str):
+        img = img.load(str)
+
+    # Resize img to desired output resolution
+    # Will be same as template
+    if voxsize is not None:
+        img = resample_to_output(img, [voxsize] * 3)
+
+    # Get each roi
+    imgdata = img.get_fdata()
+    rois = np.unique(imgdata)
+    # remove 0 roi (i.e. background)
+    rois = rois[rois != 0]
+    x_coord = []
+    y_coord = []
+    z_coord = []
+    for r in rois:
+        allcoords = np.where(imgdata == r)
+        x_coord.append(np.median(allcoords[0]))
+        y_coord.append(np.median(allcoords[1]))
+        z_coord.append(np.median(allcoords[2]))
+
+    # If nodes is None, define the dataframe
+    if nodes is None:
+        nodes = pd.DataFrame()
+
+    # Add the median coordinates into dataframe
+    # Origin is at 0,0,0, but scale affine diag for voxel spacing.
+    # Scaling affine should be checked in future as general solution
+    nodes['x'] = x_coord
+    nodes['y'] = y_coord
+    nodes['z'] = z_coord
+
+    return nodes, img
+
+
+def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1):
+    # Get data
+    data = img.get_fdata()
+    # Get the number of nodes (subtract 1 for 0)
+    nnodes = len(np.unique(data)) - 1
+    # Create a nnode length (or longer) array which repeats colormap
+    colors = cm.get_cmap(cmap).colors
+    colors = colors * int(np.ceil(nnodes / len(colors)))
+    # loop through each node and plot verticies as different color
+    # Possible improvement: could be made without for loop
+    # And vals is used to plot color
+    for r in range(nnodes):
+        dtmp = np.zeros(data.shape)
+        dtmp[data == r+1] = 1
+        verts, faces, s, vals = measure.marching_cubes(
+            dtmp, step_size=parcel_surface_resolution)
+        vertices = verts[faces]
+        # for n in np.unique(vals):
+        mesh = Poly3DCollection(vertices)
+        mesh.set_facecolor(colors[r])
+        mesh.set_alpha(alpha)
+        ax.add_collection3d(mesh)
+
+    ax.set_xlim(0, data.shape[0])
+    ax.set_ylim(0, data.shape[1])
+    ax.set_zlim(0, data.shape[2])

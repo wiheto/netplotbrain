@@ -32,13 +32,13 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodec
     for _, row in nodes.iterrows():
         # Get the xyz coords for the node
         c = [row[nodecols[0]],
-            row[nodecols[1]],
-            row[nodecols[2]]]
+             row[nodecols[1]],
+             row[nodecols[2]]]
 
         # Check if nodesize is in the dataframe
         if nodesize in nodes.keys():
-            r = row[nodesize] * nodescale 
-        else: 
+            r = row[nodesize] * nodescale
+        else:
             r = nodesize * nodescale
 
         u, v = np.mgrid[0:2*np.pi:50j, 0:np.pi:50j]
@@ -49,5 +49,5 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodec
         z = r*np.cos(v)
 
         ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
-                        color=nodecolor, 
+                        color=nodecolor,
                         alpha=alpha)

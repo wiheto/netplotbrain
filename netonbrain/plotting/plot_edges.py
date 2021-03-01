@@ -1,20 +1,21 @@
 import numpy as np
 
+
 def _plot_edges(ax, nodes, edges, edgewidth='auto', edgewidthscale=1, edgecolor='k'):
     """
     Plots the edges on the plot
 
-    Parameters 
+    Parameters
     ----------------------------
     ax : matplotlib ax
     nodes : dataframe
-        node dataframe with x, y, z coordinates (at least). 
+        node dataframe with x, y, z coordinates (at least).
     edges : array or dataframe
-        numpy array (adj matrix) or edgelist (df.columns = ['i', 'j', 'weight']) 
+        numpy array (adj matrix) or edgelist (df.columns = ['i', 'j', 'weight'])
     edgewidth : 'auto', float, int
-        Width of edges. If auto, uses weights from array or dataframes. 
+        Width of edges. If auto, uses weights from array or dataframes.
     edgewidthscale : float, int
-        For display purposes, scale edges by value. 
+        For display purposes, scale edges by value.
     edgecolor : matplotlib color
         Colour of edges
 
@@ -30,8 +31,8 @@ def _plot_edges(ax, nodes, edges, edgewidth='auto', edgewidthscale=1, edgecolor=
     #         ew = edges[e] * edgewidthscale
     #     # NOTE CURRENTLY LOC IS FILTERING EDGES. CHECK FOR COMPATIBILITY WITH HOW NODES works elsewhere
     #     ax.plot(nodes.loc[list(e)]['x'], nodes.loc[list(e)]['y'], nodes.loc[list(e)]['z'], color=edgecolor, linewidth=ew)
-    
-    #if dataframe
+
+    # if dataframe
     for e, row in edges.iterrows():
         if row['i'] != 0 and row['j'] != 0:
             if edgewidth != 'auto':

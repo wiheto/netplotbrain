@@ -42,7 +42,7 @@ def _plot_template_style_filled(ax, data, alpha, templatecolor):
               facecolor=templatecolor, edgecolor=None, shade=False)
 
 
-def _plot_template_style_surface(ax, data, alpha, templatecolor, surface_resolution=2):
+def _plot_template_style_surface(ax, data, alpha, templatecolor='gray', surface_resolution=2):
     verts, faces, _, _ = measure.marching_cubes(
         data, step_size=surface_resolution)
     mesh = Poly3DCollection(verts[faces])
@@ -59,21 +59,21 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatec
         if not os.path.exists(template):
             tf_kwargs = {}
             # Add kwargs to specify specific templates
-            if 'MNI152' in template:
+            if 'MNI152' in template or 'OASIS' in template:
                 tf_kwargs = {
                     'suffix': 'T1w',
-                    'resolution': 1
+                    'resolution': 1,
                 }
             if 'WHS' in template:
                 tf_kwargs = {
-                    'resolution': 1
-                }                
-            template = tf.get(template=template, desc='brain', 
+                    'resolution': 1,
+                }
+            template = tf.get(template=template, desc='brain',
                               extension='.nii.gz', **tf_kwargs)
             # If multiple templates still remain, take the first
             # This may lead to suboptimal performence for some templates
             if isinstance(template, list):
-                template = template[0] 
+                template = template[0]
         img = nib.load(template)
     elif isinstance(template, (nib.Nifti1Image, nib.Nifti2Image)):
         img = template

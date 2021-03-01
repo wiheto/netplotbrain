@@ -1,2 +1,2 @@
-from . import plotting 
+from . import plotting
 from .plot import plot
