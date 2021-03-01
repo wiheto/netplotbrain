@@ -13,7 +13,7 @@ nodez = np.array([30, 30, -16, -16, 35, 35, 44, 44])
 # Some psuedo_strength measure to demonstrate size
 strength = np.array([0.3, 0.3, 1, 0.15, 0.2, 0.8, 0.4, 0.3])
 betweenness = np.array([1, 0.1, 1, 1, 0.5, 0.4, 0.9, 1])
-nodes = pd.DataFrame(data={'x': nodex, 'y': nodey,
+nodesdf = pd.DataFrame(data={'x': nodex, 'y': nodey,
                            'z': nodez, 'strength': strength,
                            'betweenness': betweenness})
 
@@ -40,7 +40,7 @@ edges = edgesdf
 nob.plot(template='MNI152NLin2009cAsym',
          templatestyle='surface',
          view='R',
-         nodes=nodes,
+         nodes=nodesdf,
          nodesize='strength',
          edges=edges)
 plt.savefig('./examples/figures/singleview.png', dpi=150)
@@ -50,31 +50,20 @@ plt.savefig('./examples/figures/singleview.png', dpi=150)
 nob.plot(template='MNI152NLin2009cAsym',
          templatestyle='surface',
          view='R',
-         nodes=nodes,
+         nodes=nodesdf,
          nodesize='betweenness',
          edges=edges)
 plt.savefig('./examples/figures/bet1.png', dpi=150)
-
-
-# Plot other template view
-nob.plot(template='OASIS30ANTs',
-         templatestyle='surface',
-         view='R',
-         nodes=nodes,
-         nodesize='strength',
-         edges=edges)
-plt.savefig('./examples/figures/singleview.png', dpi=150)
 
 
 # Plot multiple rows
 
 nob.plot(template='MNI152NLin2009cAsym',
          templatestyle='surface',
-         nodes=nodes,
+         nodes=nodesdf,
          nodesize='strength',
          edges=edges,
-         view=['LR', 'AP'],
-         frames=2)
+         view=['LSR', 'AIP'])
 plt.savefig('./examples/figures/rows1.png', dpi=150)
 
 
@@ -83,14 +72,14 @@ plt.savefig('./examples/figures/rows1.png', dpi=150)
 nob.plot(template='MNI152NLin2009cAsym',
          templatestyle='filled',
          view='R',
-         nodes=nodes,
+         nodes=nodesdf,
          nodesize='strength',
          edges=edges)
 plt.savefig('./examples/figures/styles1.png', dpi=150)
 
 nob.plot(template='MNI152NLin2009cAsym', templatestyle='cloudy',
          view='R',
-         nodes=nodes, nodesize='strength',
+         nodes=nodesdf, nodesize='strength',
          edges=edges)
 plt.savefig('./examples/figures/styles2.png', dpi=150)
 
@@ -98,14 +87,14 @@ plt.savefig('./examples/figures/styles2.png', dpi=150)
 nob.plot(template='MNI152NLin2009cAsym',
          templatestyle='surface',
          view='RP',
-         nodes=nodes, nodesize='strength',
+         nodes=nodesdf, nodesize='strength',
          edges=edges, frames=3)
 plt.savefig('./examples/figures/seq1.png')
 
 nob.plot(template='MNI152NLin2009cAsym',
          templatestyle='cloudy',
          view='RP',
-         nodes=nodes, nodesize='strength',
+         nodes=nodesdf, nodesize='strength',
          edges=edges, frames=3)
 plt.savefig('./examples/figures/seq2.png')
 
@@ -124,7 +113,7 @@ plt.savefig('./examples/figures/seq2.png')
 # 
 # nob.plot(template='WHS',
 #          templatestyle='surface',
-#          nodes=nodes,
+#          nodes=nodesdf,
 #          nodesize='strength',
 #          edges=edges,
 #          view=['LS'],
