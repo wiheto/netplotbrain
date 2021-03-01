@@ -130,7 +130,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             # Then to rescale the ax.voxels function
             # So if affine is not None, nodes get scaled in relation to origin and voxelsize,
             # If node coords are derived from nodeimg, this has already been taken care of.
-            if nodes is not None and nodeimg is None:
+            if nodes is not None and nodeimg is None and axind == 0:
                 nodes = _scale_nodes(nodes, affine)
             if edges is not None:
                 _plot_edges(ax, nodes, edges, edgewidth=edgewidth,
