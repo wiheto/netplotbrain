@@ -249,6 +249,19 @@ plt.show()
 ```
 ![](./examples/figures/atlas_parcels.png)
 
+# Plot individual hemispheres
+
+```python
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['SSS'],
+                  hemisphere=['L', 'R', ''],
+                  nodes=nodesdf,
+                  nodesize='centrality_measure1',
+                  edges=edges)
+```
+![](./examples/figures/hemi.png)
+
 # Get involved?
 
 We hope to develop this package.

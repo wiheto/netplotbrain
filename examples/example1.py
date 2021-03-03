@@ -142,3 +142,14 @@ netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
          nodealpha=0.5,
          nodecolor='Set3')
 plt.savefig('./examples/figures/atlas_parcels.png', dpi=150)
+
+# Plot individual hemispheres
+
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+         templatestyle='surface',
+         view=['SSS'],
+         hemisphere=['L', 'R', ''],
+         nodes=nodesdf,
+         nodesize='centrality_measure1',
+         edges=edges)
+plt.savefig('./examples/figures/hemi.png', dpi=150)
