@@ -1,9 +1,5 @@
 # netplotbrain: visualizing networks on a brain
 
-import matplotlib.pyplot as plt
-import pandas as pd
-import netplotbrain
-import numpy as np
 A package to create simple 3D network visualizations of networks on a brain.
 
 (Name is a work in progress)
