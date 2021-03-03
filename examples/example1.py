@@ -1,67 +1,64 @@
 import numpy as np
-import netonbrain as nob
+import netplotbrain
 import pandas as pd
 import matplotlib.pyplot as plt
 
 
 np.random.seed(2021)
 
-# 8 psudeorandom xyz coordinates
-nodex = np.array([42, -42, -40, 40, 12, -12, -18, 18])
-nodey = np.array([-60, -60, 40, 40, 56, 56, -44, -44])
-nodez = np.array([30, 30, -16, -16, 35, 35, 44, 44])
-# Some psuedo_strength measure to demonstrate size
-strength = np.array([0.3, 0.3, 1, 0.15, 0.2, 0.8, 0.4, 0.3])
-betweenness = np.array([1, 0.1, 1, 1, 0.5, 0.4, 0.9, 1])
-nodesdf = pd.DataFrame(data={'x': nodex, 'y': nodey,
-                           'z': nodez, 'strength': strength,
-                           'betweenness': betweenness})
+n = 10  # number of nodes
+m = 20  # number of edges
 
-n = 8  # number of nodes
-m = 12  # number of edges
-# Random edges connecting the 8 nodes
+# CREATE THE NODES
+# 8 psudeorandom xyz coordinates
+X = np.random.uniform(-50, 50, n)
+y = np.random.uniform(-90, 60, n)
+z = np.random.uniform(-40, 50, n)
+# Some random centrality measures to demonstrate size
+centrality_measure1 = np.random.binomial(10, 0.3, n) / 10
+centrality_measure2 = np.random.binomial(10, 0.6, n) / 10
+nodesdf = pd.DataFrame(data={'x': X, 'y': y,
+                           'z': z, 'centrality_measure1': centrality_measure1,
+                           'centrality_measure2': centrality_measure2})
+
+## CREATE THE EDGES.
+# Randomly selet edges 
 ind = np.triu_indices(n, k=1)
 eon = np.random.permutation(len(ind[0]))
 edges = np.zeros([n, n])
-edges[ind[0][eon[:m]], ind[1][eon[:m]]] = 1
+# Generate some random wieghts between 0 and 1
+weights = np.random.binomial(10, 0.25, m) / 10
+edges[ind[0][eon[:m]], ind[1][eon[:m]]] = weights
+# Make symetrical
 edges += edges.transpose()
 
-# Generate weighted edges connecting the nodes
-edgesdf = pd.DataFrame()
-edges_list = list(zip(*np.where(edges != 0)))
-edgesdf["i"], edgesdf["j"] = [i[0]
-                              for i in edges_list], [i[1] for i in edges_list]
-weights = ['0.608', '0.475', '0.456', '0.578', '0.415', '0.953', '0.204', '0.124', '0.608', '0.394', '0.222',
-           '0.178', '0.815', '0.993', '0.199', '0.104', '0.789', '0.233', '0.763', '0.248', '0.195', '0.899', '0.904', '0.424']
-edgesdf['weight'] = weights
-edges = edgesdf
 
 # Plot single view
-nob.plot(template='MNI152NLin2009cAsym',
+netplotbrain.plot(template='MNI152NLin2009cAsym',
          templatestyle='surface',
          view='R',
          nodes=nodesdf,
-         nodesize='strength',
+         nodesize='centrality_measure1',
          edges=edges)
 plt.savefig('./examples/figures/singleview.png', dpi=150)
 
 
 # Plot single view with different size
-nob.plot(template='MNI152NLin2009cAsym',
+netplotbrain.plot(template='MNI152NLin2009cAsym',
          templatestyle='surface',
          view='R',
          nodes=nodesdf,
-         nodesize='betweenness',
+         nodesize='centrality_measure2',
          edges=edges)
 plt.savefig('./examples/figures/bet1.png', dpi=150)
 
 
 # Plot multiple rows
 
-nob.plot(template='MNI152NLin2009cAsym',
+netplotbrain.plot(template='MNI152NLin2009cAsym',
          templatestyle='surface',
          nodes=nodesdf,
-         nodesize='strength',
+         nodesize='centrality_measure1',
          edges=edges,
          view=['LSR', 'AIP'])
 plt.savefig('./examples/figures/rows1.png', dpi=150)
@@ -69,32 +66,32 @@ plt.savefig('./examples/figures/rows1.png', dpi=150)
 
 # Plot different styles
 
-nob.plot(template='MNI152NLin2009cAsym',
+netplotbrain.plot(template='MNI152NLin2009cAsym',
          templatestyle='filled',
          view='R',
          nodes=nodesdf,
-         nodesize='strength',
+         nodesize='centrality_measure1',
          edges=edges)
 plt.savefig('./examples/figures/styles1.png', dpi=150)
 
-nob.plot(template='MNI152NLin2009cAsym', templatestyle='cloudy',
+netplotbrain.plot(template='MNI152NLin2009cAsym', templatestyle='cloudy',
          view='R',
-         nodes=nodesdf, nodesize='strength',
+         nodes=nodesdf, nodesize='centrality_measure1',
          edges=edges)
 plt.savefig('./examples/figures/styles2.png', dpi=150)
 
 # Plot sequence
-nob.plot(template='MNI152NLin2009cAsym',
+netplotbrain.plot(template='MNI152NLin2009cAsym',
          templatestyle='surface',
          view='RP',
-         nodes=nodesdf, nodesize='strength',
+         nodes=nodesdf, nodesize='centrality_measure1',
          edges=edges, frames=3)
 plt.savefig('./examples/figures/seq1.png')
 
-nob.plot(template='MNI152NLin2009cAsym',
+netplotbrain.plot(template='MNI152NLin2009cAsym',
          templatestyle='cloudy',
          view='RP',
-         nodes=nodesdf, nodesize='strength',
+         nodes=nodesdf, nodesize='centrality_measure1',
          edges=edges, frames=3)
 plt.savefig('./examples/figures/seq2.png')
 
@@ -105,16 +102,16 @@ plt.savefig('./examples/figures/seq2.png')
 # nodex = np.array([-4, -3, 2, 0, 4, -1, 3, 5])
 # nodey = np.array([-8, -4, 5, 1, 5, -6, -1, 3])
 # nodez = np.array([1, 2, -1, 2, 2, 4, 1, 0])
-# Some psuedo_strength measure to demonstrate size
-# strength = np.array([0.3, 0.3, 1, 0.15, 0.2, 0.8, 0.4, 0.3])
+# Some psuedo_centrality_measure1 measure to demonstrate size
+# centrality_measure1 = np.array([0.3, 0.3, 1, 0.15, 0.2, 0.8, 0.4, 0.3])
 # nodes = pd.DataFrame(data={'x': nodex, 'y': nodey,
-#                           'z': nodez, 'strength': strength})
+#                           'z': nodez, 'centrality_measure1': centrality_measure1})
 # 
 # 
-# nob.plot(template='WHS',
+# netplotbrain.plot(template='WHS',
 #          templatestyle='surface',
 #          nodes=nodesdf,
-#          nodesize='strength',
+#          nodesize='centrality_measure1',
 #          edges=edges,
 #          view=['LS'],
 #          frames=2,
@@ -124,7 +121,7 @@ plt.savefig('./examples/figures/seq2.png')
 
 # Plot atlas as nodes
 
-nob.plot(nodeimg={'atlas': 'Schaefer2018',
+netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
                   'desc': '400Parcels7Networks',
                   'resolution': 1},
          template='MNI152NLin2009cAsym',
@@ -135,7 +132,7 @@ plt.savefig('./examples/figures/atlas_circles.png', dpi=150)
 
 # Plot atlas as parcels
 
-nob.plot(nodeimg={'atlas': 'Schaefer2018',
+netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
                   'desc': '400Parcels7Networks',
                   'resolution': 1},
          template='MNI152NLin2009cAsym',
