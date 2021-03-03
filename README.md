@@ -1,4 +1,4 @@
-# NetOnBrain: visualizing networks on a brain
+# netplotbrain: visualizing networks on a brain
 
 A package to create simple 3D network visualizations of networks on a brain.
 
@@ -8,7 +8,7 @@ A package to create simple 3D network visualizations of networks on a brain.
 
 # Installation
 
-`pip install git+https: // www.github.com/wiheto/netonbrian`
+`pip install git+https://www.github.com/wiheto/netplotbrain`
 
 # How it works
 
@@ -34,7 +34,7 @@ Other columns can be used to style the node's colour and size(`nodecolor`, `node
 So for example, if you have a column called "communities" in your pandas dataframe
 you can type:
 
-```netonbrain.plot(..., nodecolor='communities')```
+```netplotbrain.plot(..., nodecolor='communities')```
 
 These additional values to specify size and color can be given as a dataframe even
 if you specify your nodes with a nifti image.
@@ -100,40 +100,53 @@ The first, from left to right. The second from anterior to posterior.
 
 # Minimal examples
 
-# Generate some simple data
+# Generate some random data for examples
 
 ```python
 
+import numpy as np
+import netplotbrain
+import pandas as pd
+import matplotlib.pyplot as plt
+# Set random seed
 np.random.seed(2021)
 
-# 8 psudeorandom xyz coordinates
-nodex = np.array([42, -42, -40, 40, 12, -12, -18, 18])
-nodey = np.array([-60, -60, 40, 40, 56, 56, -44, -44])
-nodez = np.array([30, 30, -16, -16, 35, 35, 44, 44])
-# Some psuedo_centrality measure to demonstrate size
-centrality = np.array([0.3, 0.3, 1, 0.15, 0.2, 0.8, 0.4, 0.3])
-nodes = pd.DataFrame(data={'x': nodex, 'y': nodey,
-                           'z': nodez, 'centrality': centrality})
+n = 10  # number of nodes
+m = 20  # number of edges
 
-n = 8  # number of nodes
-m = 12  # number of edges
-# Random edges connecting the 8 nodes
+# CREATE THE NODES
+# 8 psudeorandom xyz coordinates
+X = np.random.uniform(-50, 50, n)
+y = np.random.uniform(-90, 60, n)
+z = np.random.uniform(-40, 50, n)
+# Some random centrality measures to demonstrate size
+centrality_measure1 = np.random.binomial(10, 0.3, n) / 10
+centrality_measure2 = np.random.binomial(10, 0.6, n) / 10
+nodesdf = pd.DataFrame(data={'x': X, 'y': y,
+                           'z': z, 'centrality_measure1': centrality_measure1,
+                           'centrality_measure2': centrality_measure2})
+
+## CREATE THE EDGES.
+# Randomly selet edges 
 ind = np.triu_indices(n, k=1)
 eon = np.random.permutation(len(ind[0]))
 edges = np.zeros([n, n])
-edges[ind[0][eon[:m]], ind[1][eon[:m]]] = 1
+# Generate some random wieghts between 0 and 1
+weights = np.random.binomial(10, 0.25, m) / 10
+edges[ind[0][eon[:m]], ind[1][eon[:m]]] = weights
+# Make symetrical
 edges += edges.transpose()
 ```
 
 # Plot single view
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym',
-         templatestyle='surface',
-         view='R',
-         nodes=nodes,
-         nodesize='centrality',
-         edges=edges)
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view='R',
+                  nodes=nodes,
+                  nodesize='centrality',
+                  edges=edges)
 plt.show()
 ```
 ![](./examples/figures/singleview.png)
@@ -141,13 +154,13 @@ plt.show()
 # Specify column names to specify size
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym',
-         templatestyle='surface',
-         view='R',
-         nodes=nodes,
-         nodesize='betweenness',
-         nodecolor='blue',
-         edges=edges)
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view='R',
+                  nodes=nodes,
+                  nodesize='betweenness',
+                  nodecolor='blue',
+                  edges=edges)
 plt.show()
 ```
 ![](./examples/figures/bet1.png)
@@ -156,23 +169,23 @@ plt.show()
 # Plot different styles
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym',
-         templatestyle='filled',
-         view='R',
-         nodes=nodes,
-         nodesize='centrality',
-         edges=edges)
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='filled',
+                  view='R',
+                  nodes=nodes,
+                  nodesize='centrality',
+                  edges=edges)
 plt.show()
 ```
 ![](./examples/figures/styles1.png)
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym',
-         templatestyle='cloudy',
-         view='R',
-         nodes=nodes,
-         nodesize='centrality',
-         edges=edges)
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='cloudy',
+                  view='R',
+                  nodes=nodes,
+                  nodesize='centrality',
+                  edges=edges)
 plt.show()
 ```
 ![](./examples/figures/styles2.png)
@@ -180,13 +193,13 @@ plt.show()
 # Plot sequence
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym',
-         templatestyle='cloudy',
-         view='RP',
-         nodes=nodes,
-         nodesize='centrality',
-         edges=edges,
-         frames=3)
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='cloudy',
+                  view='RP',
+                  nodes=nodes,
+                  nodesize='centrality',
+                  edges=edges,
+                  frames=3)
 plt.show()
 ```
 ![](./examples/figures/seq2.png)
@@ -194,13 +207,13 @@ plt.show()
 # Plot multiple rows
 
 ```python
-nob.plot(template='MNI152NLin2009cAsym',
-         templatestyle='surface',
-         nodes=nodes,
-         nodesize='centrality',
-         edges=edges,
-         view=['LSR', 'AIP'],
-         frames=2)
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  nodes=nodes,
+                  nodesize='centrality',
+                  edges=edges,
+                  view=['LSR', 'AIP'],
+                  frames=2)
 plt.show()
 ```
 ![](./examples/figures/rows1.png)
@@ -208,13 +221,13 @@ plt.show()
 # Plot atlas (as nodes) from templateflow
 
 ```python
-nob.plot(nodeimg={'atlas': 'Schaefer2018',
-                  'desc': '400Parcels7Networks',
-                  'resolution': 1},
-         template='MNI152NLin2009cAsym',
-         templatestyle='surface',
-         view=['LSR'],
-         nodetype='circles')
+netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+                            'desc': '400Parcels7Networks',
+                            'resolution': 1},
+                  template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['LSR'],
+                  nodetype='circles')
 plt.show()
 ```
 ![](./examples/figures/atlas_circles.png)
@@ -223,15 +236,15 @@ plt.show()
 # plot atlas (as parcels) from templateflow
 
 ```python
-nob.plot(nodeimg={'atlas': 'Schaefer2018',
-                  'desc': '400Parcels7Networks',
-                  'resolution': 1},
-         template='MNI152NLin2009cAsym',
-         templatestyle=None,
-         view=['LSR'],
-         nodetype='parcels',
-         nodealpha=0.5,
-         nodecolor='Set3')
+netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+                            'desc': '400Parcels7Networks',
+                            'resolution': 1},
+                  template='MNI152NLin2009cAsym',
+                  templatestyle=None,
+                  view=['LSR'],
+                  nodetype='parcels',
+                  nodealpha=0.5,
+                  nodecolor='Set3')
 plt.show()
 ```
 ![](./examples/figures/atlas_parcels.png)
@@ -243,12 +256,8 @@ Please feel free to get in touch about what feature you want/would like to imple
 
 # Features to be added.
 
-- Dynamicly place origin of arrows based on view.
 - Dynamicly choose which arrows are shown
-- Direction of rotation RP + or RP - should go different ways.
-- Add lists of directions['AP+', 'DL-']
 - Colouring.
 - Edge properties.
-- Areas as nodes
 - Simple node selection
 - Scaling
