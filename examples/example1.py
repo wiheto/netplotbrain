@@ -13,9 +13,11 @@ nodez = np.array([30, 30, -16, -16, 35, 35, 44, 44])
 # Some psuedo_strength measure to demonstrate size
 strength = np.array([0.3, 0.3, 1, 0.15, 0.2, 0.8, 0.4, 0.3])
 betweenness = np.array([1, 0.1, 1, 1, 0.5, 0.4, 0.9, 1])
+communities = np.array([1, 1, 5, 5, 5, 7, 7, 8])
 nodesdf = pd.DataFrame(data={'x': nodex, 'y': nodey,
                            'z': nodez, 'strength': strength,
-                           'betweenness': betweenness})
+                           'betweenness': betweenness,
+                           'communities': communities})
 
 n = 8  # number of nodes
 m = 12  # number of edges
