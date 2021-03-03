@@ -54,7 +54,20 @@ def _plot_template_style_surface(ax, data, alpha, templatecolor='gray', surface_
     ax.set_zlim(0, data.shape[2])
 
 
-def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', alpha=0.2, voxsize=2, azim=0, elev=0, surface_resolution=2, edgethreshold=0.8):
+def _select_single_hemisphere_template(data, hemisphere):
+    """
+    Selects the left or right hemispehre by using the midway point on the x-axis.
+    This assumes left hemispehre is orientated on the left.
+    """
+    midpoint = int(data.shape[0] / 2)
+    if hemisphere == 'right' or hemisphere == 'R':
+        data[:midpoint] = 0
+    elif hemisphere == 'left' or hemisphere == 'L':
+        data[midpoint:] = 0
+    return data
+
+
+def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', alpha=0.2, voxsize=2, azim=0, elev=0, surface_resolution=2, edgethreshold=0.8, hemisphere='both'):
     if isinstance(template, str):
         if not os.path.exists(template):
             tf_kwargs = {}
@@ -79,6 +92,7 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatec
         img = template
     img = resample_to_output(img, [voxsize] * 3)
     data = img.get_fdata()
+    data = _select_single_hemisphere_template(data, hemisphere)
     if style == 'filled':
         _plot_template_style_filled(ax, data, alpha, templatecolor)
     elif style == 'cloudy':

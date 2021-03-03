@@ -1,14 +1,16 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import inspect
 from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_cloudy,\
     _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
-    _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels
+    _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels,\
+    _select_single_hemisphere_nodes, _npedges2dfedges
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
          arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres',
-         weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1):
+         weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both'):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -72,6 +74,12 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         This value will indicate the number of rotations to get from L to R.
         For any other view specification, (e.g. specifying string such as 'LSR')
         then this value is not needed.
+    hemisphere: string or list
+        If string, can be left, right or both to specify hemisphere to include.
+        If list, should match the size of views and contain strings to specify hemisphere.
+        Can be abbreviated to L, R and B.  
+        Between hemispehre edges are deleted.
+        
 
     """
 
@@ -91,11 +99,15 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     if isinstance(ax, list):
         if len(ax) != n_subplots:
             raise ValueError('Ax list, must equal number of frames requested')
+    # Init figure, if not given as input
     if ax is None:
         fig = plt.figure(figsize=(frames * 3, 3 * nrows))
         colnum = frames * 10
         rows = nrows * 100
-
+    # Check input, if numpy array, make dataframe
+    if type(edges) is np.ndarray:
+        edges = _npedges2dfedges(edges)
+    # Load the nifti node file
     if nodeimg is not None:
         nodes, nodeimg = _get_nodes_from_nii(
             nodeimg, voxsize=templatevoxsize, template=template)
@@ -111,6 +123,14 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             view[ri], frames, arrowaxis=arrowaxis)
         for fi in range(frames):
             axind += 1
+            # Get hemisphere for this frame
+            if isinstance(hemisphere, str):
+                hemi_frame = hemisphere
+            elif isinstance(hemisphere[0], str): 
+                hemi_frame = hemisphere[axind]
+            else: 
+                hemi_frame = hemisphere[ri][fi]
+            # Set up subplot                
             if ax_in is None:
                 subplotid = rows + colnum + axind + 1
                 ax = fig.add_subplot(subplotid, projection='3d')
@@ -124,27 +144,35 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                                         alpha=templatealpha, voxsize=templatevoxsize,
                                         surface_resolution=surface_resolution,
                                         edgethreshold=templateedgethreshold,
-                                        azim=azim[fi], elev=elev[fi])
+                                        azim=azim[fi], elev=elev[fi],
+                                        hemisphere=hemi_frame)
             # Template voxels will have origin at 0,0,0
             # It is easier to scale the nodes from the image affine
             # Then to rescale the ax.voxels function
             # So if affine is not None, nodes get scaled in relation to origin and voxelsize,
             # If node coords are derived from nodeimg, this has already been taken care of.
             if nodes is not None and nodeimg is None and axind == 0:
-                nodes = _scale_nodes(nodes, affine)
-            if edges is not None:
-                _plot_edges(ax, nodes, edges, edgewidth=edgewidth,
-                            edgecolor=edgecolor)
+                nodes = _scale_nodes(nodes, affine, nodecols)
+            # nodes and subplot may change for each frame/subplot
+            # e.g. if hemisphere is specified      
+            nodes_frame = None     
             if nodes is not None:
+                nodes_frame = nodes.copy()
+                nodes_frame = _select_single_hemisphere_nodes(nodes_frame, affine, hemi_frame, nodecols)
                 if nodetype == 'spheres':
-                    _plot_spheres(ax, nodes, nodecolor=nodecolor,
+                    _plot_spheres(ax, nodes_frame, nodecolor=nodecolor,
                                   nodesize=nodesize, nodecols=nodecols, nodescale=nodescale)
                 elif nodetype == 'circles':
-                    _plot_nodes(ax, nodes, nodecolor=nodecolor,
+                    _plot_nodes(ax, nodes_frame, nodecolor=nodecolor,
                                 nodesize=nodesize, nodecols=nodecols)
                 elif nodetype == 'parcels':
                     _plot_parcels(ax, nodeimg, alpha=nodealpha,
-                                  cmap=nodecolor, parcel_surface_resolution=1)
+                                  cmap=nodecolor, parcel_surface_resolution=1,
+                                  hemisphere=hemi_frame)
+            if edges is not None:
+                edges_frame = edges.copy()
+                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgewidth,
+                            edgecolor=edgecolor)
             if arrowaxis_row is not None:
                 _add_axis_arrows(ax, dims=arrowaxis_row,
                                  length=arrowlength, origin=arroworigin,

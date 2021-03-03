@@ -46,10 +46,6 @@ def _plot_edges(ax, nodes, edges, edgewidth='auto', edgewidthscale=1, edgecolor=
     ----------------------
     Nothing
     """
-    # Check input, if numpy array, make dataframe
-    if type(edges) is np.ndarray:
-        edges = _npedges2dfedges(edges)
-
     # if dataframe
     for _, row in edges.iterrows():
         #if row[edgecol[0]] != 0 and row[edgecol[1]] != 0:
@@ -57,7 +53,8 @@ def _plot_edges(ax, nodes, edges, edgewidth='auto', edgewidthscale=1, edgecolor=
             ew = edgewidth * edgewidthscale
         else:
             ew = row[edgecol[2]] * edgewidthscale
-        xp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['x']
-        yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['y']
-        zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['z']
-        ax.plot(xp, yp, zp, color=edgecolor, linewidth=ew)
+        if row[edgecol[0]] in nodes.index and row[edgecol[1]] in nodes.index:
+            xp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['x']
+            yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['y']
+            zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['z']
+            ax.plot(xp, yp, zp, color=edgecolor, linewidth=ew)
