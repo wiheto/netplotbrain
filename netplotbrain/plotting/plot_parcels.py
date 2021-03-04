@@ -46,7 +46,7 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     # Resize img to desired output resolution
     # Will be same as template
     if voxsize is not None:
-        img = resample_to_output(img, [voxsize] * 3)
+        img = resample_to_output(img, [voxsize] * 3, mode='nearest')
 
     # Get each roi
     imgdata = img.get_fdata(caching='unchanged')

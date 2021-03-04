@@ -111,31 +111,41 @@ import matplotlib.pyplot as plt
 # Set random seed
 np.random.seed(2021)
 
+def create_random_data(n, m, xlim, ylim, zlim):
+    """
+    Function to generate random data
+
+    n, m : number of nodes (n) and edges (m)
+    xlim, ylim, zlim : coordinate limites for random data
+    """
+    # CREATE THE NODES
+    # 8 psudeorandom xyz coordinates
+    X = np.random.uniform(xlim[0], xlim[1], n)
+    y = np.random.uniform(ylim[0], ylim[1], n)
+    z = np.random.uniform(zlim[0], zlim[1], n)
+    # Some random centrality measures to demonstrate size
+    centrality_measure1 = np.random.binomial(10, 0.3, n) / 10
+    centrality_measure2 = np.random.binomial(10, 0.6, n) / 10
+    nodesdf = pd.DataFrame(data={'x': X, 'y': y,
+                            'z': z, 'centrality_measure1': centrality_measure1,
+                            'centrality_measure2': centrality_measure2})
+    ## CREATE THE EDGES.
+    # Randomly selet edges 
+    ind = np.triu_indices(n, k=1)
+    eon = np.random.permutation(len(ind[0]))
+    edges = np.zeros([n, n])
+    # Generate some random wieghts between 0 and 1
+    weights = np.random.binomial(10, 0.25, m) / 10
+    edges[ind[0][eon[:m]], ind[1][eon[:m]]] = weights
+    # Make symetrical
+    edges += edges.transpose()
+    return nodesdf, edges
+    
+
 n = 10  # number of nodes
 m = 20  # number of edges
 
-# CREATE THE NODES
-# 8 psudeorandom xyz coordinates
-X = np.random.uniform(-50, 50, n)
-y = np.random.uniform(-90, 60, n)
-z = np.random.uniform(-40, 50, n)
-# Some random centrality measures to demonstrate size
-centrality_measure1 = np.random.binomial(10, 0.3, n) / 10
-centrality_measure2 = np.random.binomial(10, 0.6, n) / 10
-nodesdf = pd.DataFrame(data={'x': X, 'y': y,
-                           'z': z, 'centrality_measure1': centrality_measure1,
-                           'centrality_measure2': centrality_measure2})
-
-## CREATE THE EDGES.
-# Randomly selet edges 
-ind = np.triu_indices(n, k=1)
-eon = np.random.permutation(len(ind[0]))
-edges = np.zeros([n, n])
-# Generate some random wieghts between 0 and 1
-weights = np.random.binomial(10, 0.25, m) / 10
-edges[ind[0][eon[:m]], ind[1][eon[:m]]] = weights
-# Make symetrical
-edges += edges.transpose()
+nodes, edges = create_random_data(n, m, [-50, 50], [-90, 60], [-40, 50])    
 ```
 
 # Plot single view
@@ -165,8 +175,94 @@ plt.show()
 ```
 ![](./examples/figures/bet1.png)
 
+## Plot multiple rows
 
-# Plot different styles
+```python
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  nodes=nodes,
+                  nodesize='centrality',
+                  edges=edges,
+                  view=['LSR', 'AIP'],
+                  frames=2)
+plt.show()
+```
+![](./examples/figures/rows1.png)
+
+## Plot atlas (as nodes) from templateflow
+
+```python
+netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+                            'desc': '400Parcels7Networks',
+                            'resolution': 1},
+                  template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['LSR'],
+                  nodetype='circles')
+plt.show()
+```
+![](./examples/figures/atlas_circles.png)
+
+## Plot different templates
+
+
+## plot atlas (as parcels) from templateflow
+
+```python
+netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+                            'desc': '400Parcels7Networks',
+                            'resolution': 1},
+                  template='MNI152NLin2009cAsym',
+                  templatestyle=None,
+                  view=['LSR'],
+                  nodetype='parcels',
+                  nodealpha=0.5,
+                  nodecolor='Set3')
+plt.show()
+```
+![](./examples/figures/atlas_parcels.png)
+
+## Plot individual hemispheres
+
+```python
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['SSS'],
+                  hemisphere=['L', 'R', ''],
+                  nodes=nodesdf,
+                  nodesize='centrality_measure1',
+                  edges=edges)
+```
+![](./examples/figures/hemi.png)
+
+## Plot different templates
+
+```python
+# Generate data for WHS
+xlim = [-6, 6]
+ylim = [-10, 6]
+zlim = [-3, 6]
+nodes_whs, edges_whs = create_random_data(n, m, xlim, ylim, zlim)
+
+# Setting templatevoxsize to 0.2 will make it slightly quicker
+# Due to the voxel size being smaller, the nodes are currently smaller
+# So scaling the nodes is useful.  
+netplotbrain.plot(template='WHS',
+         templatestyle='surface',
+         view='LSR',
+         nodes=nodes_whs,
+         nodesize='centrality_measure1',
+         edges=edges_whs,
+         nodescale=10,
+         templatevoxsize=0.2)
+
+plt.show()
+```
+![](./examples/figures/template_whs.png)
+
+
+
+## Plot different styles
 
 ```python
 netplotbrain.plot(template='MNI152NLin2009cAsym',
@@ -190,77 +286,7 @@ plt.show()
 ```
 ![](./examples/figures/styles2.png)
 
-# Plot sequence
 
-```python
-netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='cloudy',
-                  view='RP',
-                  nodes=nodes,
-                  nodesize='centrality',
-                  edges=edges,
-                  frames=3)
-plt.show()
-```
-![](./examples/figures/seq2.png)
-
-# Plot multiple rows
-
-```python
-netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
-                  nodes=nodes,
-                  nodesize='centrality',
-                  edges=edges,
-                  view=['LSR', 'AIP'],
-                  frames=2)
-plt.show()
-```
-![](./examples/figures/rows1.png)
-
-# Plot atlas (as nodes) from templateflow
-
-```python
-netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
-                            'desc': '400Parcels7Networks',
-                            'resolution': 1},
-                  template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
-                  view=['LSR'],
-                  nodetype='circles')
-plt.show()
-```
-![](./examples/figures/atlas_circles.png)
-
-
-# plot atlas (as parcels) from templateflow
-
-```python
-netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
-                            'desc': '400Parcels7Networks',
-                            'resolution': 1},
-                  template='MNI152NLin2009cAsym',
-                  templatestyle=None,
-                  view=['LSR'],
-                  nodetype='parcels',
-                  nodealpha=0.5,
-                  nodecolor='Set3')
-plt.show()
-```
-![](./examples/figures/atlas_parcels.png)
-
-# Plot individual hemispheres
-
-```python
-netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
-                  view=['SSS'],
-                  hemisphere=['L', 'R', ''],
-                  nodes=nodesdf,
-                  nodesize='centrality_measure1',
-                  edges=edges)
-```
-![](./examples/figures/hemi.png)
 
 # Get involved?
 

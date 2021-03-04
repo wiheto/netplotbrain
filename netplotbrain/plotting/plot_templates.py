@@ -7,7 +7,7 @@ from scipy.ndimage.interpolation import spline_filter1d
 from nibabel.processing import resample_to_output
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure
-
+from ..templatesettings import _get_surface_level_for_template
 
 def _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold):
     # If the viewpoint is not at 0,0, rotate the image so the edge thresholding occurs at approriate angle
@@ -42,9 +42,18 @@ def _plot_template_style_filled(ax, data, alpha, templatecolor):
               facecolor=templatecolor, edgecolor=None, shade=False)
 
 
-def _plot_template_style_surface(ax, data, alpha, templatecolor='gray', surface_resolution=2):
+def _plot_template_style_surface(ax, data, alpha, template, templatecolor='gray', surface_resolution=2, surface_detection=None):
+    """
+    Uses the function skimage.measure.marching_cubes to identify a surface.
+
+    surface_resolution : int
+        The resolution of the surface (see argument step_size in marching_cubes)
+    surface_detection : float
+        The value used to detect the surface boundrary (see argument level in marching_cubes).
+        Some default choices are made for various templates
+    """
     verts, faces, _, _ = measure.marching_cubes(
-        data, step_size=surface_resolution)
+        data, level=surface_detection, step_size=surface_resolution)
     mesh = Poly3DCollection(verts[faces])
     mesh.set_facecolor(templatecolor)
     mesh.set_alpha(alpha)
@@ -67,9 +76,11 @@ def _select_single_hemisphere_template(data, hemisphere):
     return data
 
 
-def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', alpha=0.2, voxsize=2, azim=0, elev=0, surface_resolution=2, edgethreshold=0.8, hemisphere='both'):
+def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', alpha=0.2, voxsize=None, azim=0, elev=0, surface_detection=None, surface_resolution=2, edgethreshold=0.8, hemisphere='both'):
     if isinstance(template, str):
         if not os.path.exists(template):
+            if surface_detection is None and style == 'surface':
+                surface_detection = _get_surface_level_for_template(template)
             tf_kwargs = {}
             # Add kwargs to specify specific templates
             if 'MNI152' in template or 'OASIS' in template:
@@ -90,7 +101,8 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatec
         img = nib.load(template)
     elif isinstance(template, (nib.Nifti1Image, nib.Nifti2Image)):
         img = template
-    img = resample_to_output(img, [voxsize] * 3)
+    if voxsize is not None:
+        img = resample_to_output(img, [voxsize] * 3)
     data = img.get_fdata()
     data = _select_single_hemisphere_template(data, hemisphere)
     if style == 'filled':
@@ -99,5 +111,5 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatec
         _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold)
     elif style == 'surface':
         _plot_template_style_surface(
-            ax, data, alpha, templatecolor, surface_resolution)
+            ax, data, alpha, template, templatecolor, surface_resolution, surface_detection)
     return img.affine

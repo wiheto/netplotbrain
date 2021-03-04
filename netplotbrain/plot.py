@@ -8,7 +8,7 @@ from .plotting import _plot_template, _plot_template_style_filled, _plot_templat
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
-         templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
+         templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
          arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres',
          weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both'):
     # sourcery skip: merge-nested-ifs
@@ -167,7 +167,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                                 nodesize=nodesize, nodecols=nodecols)
                 elif nodetype == 'parcels':
                     _plot_parcels(ax, nodeimg, alpha=nodealpha,
-                                  cmap=nodecolor, parcel_surface_resolution=1,
+                                  cmap=nodecolor, parcel_surface_resolution=surface_resolution,
                                   hemisphere=hemi_frame)
             if edges is not None:
                 edges_frame = edges.copy()
