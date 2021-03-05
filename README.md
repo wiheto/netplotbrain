@@ -1,14 +1,14 @@
-# netneurofig: visualizing networks on a brain
+# netplotbrain: visualizing networks on a brain
 
 Painlessly plot networks on a brian in python.
 
-![](examples/figures/seq1.png)
+![](./examples/figures/showcase.png)
 
 ## Features
 
 1. Easy to specify properties: integration with pandas entails node and edge size/colour can easily be specified. 
 2. Flexibility: multiple node and template styles. Easily create multiple angles to view the figure. 
-3. TemplateFlow integration to download any template or atlas.
+3. [TemplateFlow](https://www.templateflow.org) integration to download any template or atlas.
 
 ## Installation
 
