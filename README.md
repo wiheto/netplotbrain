@@ -196,7 +196,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   edges=edges)
 plt.show()
 ```
-![](./examples/figures/bet1.png)
+![](./examples/figures/measures.png)
 
 ## Plot multiple rows
 
