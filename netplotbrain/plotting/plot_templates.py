@@ -9,7 +9,7 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure
 from ..templatesettings import _get_surface_level_for_template
 
-def _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold):
+def _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold, templatecolor, alpha=1):
     # If the viewpoint is not at 0,0, rotate the image so the edge thresholding occurs at approriate angle
     if azim != 0:
         data = rotate(data, -azim, axes=[0, 1], reshape=False)
@@ -33,8 +33,8 @@ def _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold):
     # Plot resulting edges as a scatter
     x, y, z = np.where(bdata == 1)
     # ax.voxels(bdata, alpha=0.2, edgecolor=None, facecolor='lightgray')
-    ax.scatter(x, y, z, alpha=0.1, s=5, facecolor='lightgray',
-               edgecolors=None, marker='s')
+    ax.scatter(x, y, z, s=5, facecolor=templatecolor,
+               edgecolors=None, marker='s', alpha=alpha)
 
 
 def _plot_template_style_filled(ax, data, alpha, templatecolor):
@@ -108,7 +108,7 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatec
     if style == 'filled':
         _plot_template_style_filled(ax, data, alpha, templatecolor)
     elif style == 'cloudy':
-        _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold)
+        _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold, templatecolor, alpha)
     elif style == 'surface':
         _plot_template_style_surface(
             ax, data, alpha, template, templatecolor, surface_resolution, surface_detection)

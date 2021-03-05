@@ -142,52 +142,18 @@ The first, from left to right. The second from anterior to posterior.
 
 ## Minimal examples
 
-# Generate some random data for examples
+# Import necessary packages and load example data
 
 ```python
 
-import numpy as np
 import netplotbrain
 import pandas as pd
 import matplotlib.pyplot as plt
-# Set random seed
-np.random.seed(2021)
 
-def create_random_data(n, m, xlim, ylim, zlim):
-    """
-    Function to generate random data
+# Example node and edges dataframes included with package
+nodes = pd.read_csv('./examples/example_nodes.tsv', sep='\t', index_col=0)
+edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 
-    n, m : number of nodes (n) and edges (m)
-    xlim, ylim, zlim : coordinate limites for random data
-    """
-    # CREATE THE NODES
-    # 8 psudeorandom xyz coordinates
-    X = np.random.uniform(xlim[0], xlim[1], n)
-    y = np.random.uniform(ylim[0], ylim[1], n)
-    z = np.random.uniform(zlim[0], zlim[1], n)
-    # Some random centrality measures to demonstrate size
-    centrality_measure1 = np.random.binomial(10, 0.3, n) / 10
-    centrality_measure2 = np.random.binomial(10, 0.6, n) / 10
-    nodesdf = pd.DataFrame(data={'x': X, 'y': y,
-                            'z': z, 'centrality_measure1': centrality_measure1,
-                            'centrality_measure2': centrality_measure2})
-    ## CREATE THE EDGES.
-    # Randomly selet edges 
-    ind = np.triu_indices(n, k=1)
-    eon = np.random.permutation(len(ind[0]))
-    edges = np.zeros([n, n])
-    # Generate some random wieghts between 0 and 1
-    weights = np.random.binomial(10, 0.25, m) / 10
-    edges[ind[0][eon[:m]], ind[1][eon[:m]]] = weights
-    # Make symetrical
-    edges += edges.transpose()
-    return nodesdf, edges
-    
-
-n = 10  # number of nodes
-m = 20  # number of edges
-
-nodes, edges = create_random_data(n, m, [-50, 50], [-90, 60], [-40, 50])    
 ```
 
 # Plot single view
@@ -197,7 +163,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',
                   view='R',
                   nodes=nodes,
-                  nodesize='centrality',
+                  nodesize='centrality_measure1',
                   edges=edges)
 plt.show()
 ```
@@ -207,25 +173,25 @@ plt.show()
 
 ```python
 fig = plt.figure()
-ax_centrality = fig.add_subplots(projection='3d')
+ax_m2 = fig.add_subplot(121, projection='3d')
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',
                   fig = fig,
-                  ax = ax_centrality,
-                  view='R',
+                  ax = ax_m2,
+                  view='A',
                   nodes=nodes,
-                  nodesize='centrality',
+                  nodesize='centrality_measure1',
                   nodecolor='blue',
                   edges=edges)
 
-ax_betweenness = fig.add_subplots(projection='3d')
+ax_m2 = fig.add_subplot(122, projection='3d')
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',
                   fig = fig,
-                  ax = ax_betweenness,
-                  view='R',
+                  ax = ax_m2,
+                  view='A',
                   nodes=nodes,
-                  nodesize='betweenness',
+                  nodesize='centrality_measure2',
                   nodecolor='blue',
                   edges=edges)
 plt.show()
@@ -238,7 +204,7 @@ plt.show()
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',
                   nodes=nodes,
-                  nodesize='centrality',
+                  nodesize='centrality_measure1',
                   edges=edges,
                   view=['LSR', 'AIP'],
                   frames=2)
@@ -324,9 +290,9 @@ plt.show()
 ```python
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='filled',
-                  view='R',
+                  view='SPR',
                   nodes=nodes,
-                  nodesize='centrality',
+                  nodesize='centrality_measure1',
                   edges=edges)
 plt.show()
 ```
@@ -335,10 +301,11 @@ plt.show()
 ```python
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='cloudy',
-                  view='R',
+                  view='SPR',
                   nodes=nodes,
-                  nodesize='centrality',
-                  edges=edges)
+                  nodesize='centrality_measure1',
+                  edges=edges,
+                  templatevoxsize=2)
 plt.show()
 ```
 ![](./examples/figures/styles2.png)

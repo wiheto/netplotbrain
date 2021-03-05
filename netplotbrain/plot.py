@@ -195,10 +195,10 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                                  length=arrowlength, origin=arroworigin,
                                  azim=azim[fi], elev=elev[fi])
 
+            ax.view_init(azim=azim[fi], elev=elev[fi])
             # IMPORTANT - this is the new, key line
             ax.set_box_aspect([1, 1, 1])
             _set_axes_equal(ax)  # IMPORTANT - this is also required
-            ax.view_init(azim=azim[fi], elev=elev[fi])
             ax.axis('off')
             ax_out.append(ax)
 

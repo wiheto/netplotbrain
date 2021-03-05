@@ -77,4 +77,20 @@ netplotbrain.plot(template='WHS',
                   fig=fig, ax=ax)
 
 
+
+ax = fig.add_subplot(336, projection='3d')
+
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='cloudy',
+                  view='L',
+                  nodes=nodes,
+                  hemisphere='R',
+                  nodesize='centrality_measure1',
+                  edges=edges,
+                  templatevoxsize=2,
+                  templatealpha=0.025,
+                  templatecolor='darkkhaki',
+                  fig=fig, ax=ax)
+
+
 fig.savefig('./examples/figures/showcase.png', dpi=150)
