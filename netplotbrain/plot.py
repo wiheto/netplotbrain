@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import inspect
+import pandas as pd
 from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_cloudy,\
     _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
     _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels,\
@@ -29,10 +30,16 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         if list: multiple strings (as above) which will create new rows of subplots.
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
         If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the oposite direction
-    nodes : dataframe
-        must include x, y, z columns that correspond to coordinates of nodes. Can include additional infomation for node size and color.
-    edges : numpy array (other alternatives coming)
+    nodes : dataframe, string
+        The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecols to change this).
+        Can include additional infomation for node size and color.
+        If string, can load a tsv file (tab seperator), assumes index column is the 0th column. 
+    edges : dataframe, numpy array, or string
+        If dataframe, must include i, j columns (and weight, for weighted).
+        i and j specify indicies in nodes.
+        See edgecols if you want to change the default column names. 
         if numpy array, square adjacecny array.
+        If string, can load a tsv file (tab seperator), assumes index column is the 0th column. 
     template : str or nibabel nifti
         Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
     templatestyle : str
@@ -79,10 +86,18 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         If list, should match the size of views and contain strings to specify hemisphere.
         Can be abbreviated to L, R and B.  
         Between hemispehre edges are deleted.
+    nodecols : list
+        Node column names in node dataframe. Default is x, y, z (specifying coordinates)
+    edgecols : list
+        Edge columns names in edge dataframe. Default is i and j (specifying nodes).
         
 
     """
-
+    # Load edge and nodes if string is provided. 
+    if isinstance(nodes, str): 
+        nodes = pd.read_csv(nodes, sep='\t', index_col=0)
+    if isinstance(edges, str): 
+        edges = pd.read_csv(nodes, sep='\t', index_col=0)
     # get the number of views
     if isinstance(view, list):
         nrows = len(view)
@@ -134,9 +149,11 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             if ax_in is None:
                 subplotid = rows + colnum + axind + 1
                 ax = fig.add_subplot(subplotid, projection='3d')
-            else:
+            elif isinstance(ax_in, list):
                 # here ax can only be a 1d list, not 2d list.
                 ax = ax_in[axind]
+            else:
+                ax = ax_in
 
             affine = None
             if template is not None:
@@ -181,8 +198,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             # IMPORTANT - this is the new, key line
             ax.set_box_aspect([1, 1, 1])
             _set_axes_equal(ax)  # IMPORTANT - this is also required
-            ax.axis('off')
             ax.view_init(azim=azim[fi], elev=elev[fi])
+            ax.axis('off')
             ax_out.append(ax)
 
     fig.tight_layout()

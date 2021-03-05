@@ -1,75 +1,117 @@
-# netplotbrain: visualizing networks on a brain
+# netneurofig: visualizing networks on a brain
 
-A package to create simple 3D network visualizations of networks on a brain.
-
-(Name is a work in progress)
+Painlessly plot networks on a brian in python.
 
 ![](examples/figures/seq1.png)
 
-# Installation
+## Features
+
+1. Easy to specify properties: integration with pandas entails node and edge size/colour can easily be specified. 
+2. Flexibility: multiple node and template styles. Easily create multiple angles to view the figure. 
+3. TemplateFlow integration to download any template or atlas.
+
+## Installation
 
 `pip install git+https://www.github.com/wiheto/netplotbrain`
 
-# How it works
+## How it works
 
 There are three components: (1) the nodes, (2) the edges, (3) the template
 
 Each component functions independently.
 You do not need to have all of them specified.
 
-# Nodes
+## Nodes
 
-There are three ways to specify nodes.
+There are two ways to specify nodes.
 
-1. a pandas dataframe of cordinates
-2. a 3D nifti image where each node has a different value.
-3. a dictionary to grab an atlas from templateflow.
+1. Nodes: a pandas dataframe of cordinates
+2. Nodeimg: a 3D nifti image where each node has a different value.
+Alternatively, nodeimg can be dictionary to grab an atlas from templateflow.
 
-# Dataframe
+### Nodes (Dataframe)
 
 The Pandas dataframe should have(at least) the columns 'x', 'y', and 'z'.
 These columns should be coordinates in the space of the template(e.g. MNI).
+It will look something like this. 
 
-Other columns can be used to style the node's colour and size(`nodecolor`, `nodesize`).
-So for example, if you have a column called "communities" in your pandas dataframe
-you can type:
+| x       | y     | z     |
+| :-------------:  | :----------: | :-----------: |
+|  40     | 50    | 20    |
+| -10     | 40    | 30    | 
+
+Other columns can be used to style the node's colour and size.
+These just become other columns in the dataframe.
+
+| x       | y     | z     | communities | degree_centrality |
+| :-------------:  | :----------: | :-----------: | :----------: | :-----------: |
+|  40     | 50    | 20    | 1    | 0.8
+| -10     | 40    | 30    | 1    | 0.4
+
+With this information, you can easily specify colour and size arguments by specifying the column name:
 
 ```netplotbrain.plot(..., nodecolor='communities')```
 
 These additional values to specify size and color can be given as a dataframe even
 if you specify your nodes with a nifti image.
 
-# Nifti image
+### Nodeimg (Nifti image)
 
 You can also input a 3D nifti image where each node is a unique value.
 
-# Templateflow atlas
+### Nodeimg (Templateflow atlas)
 
 If you specify the key/value pairs of an atlas on templateflow in a dictionary,
-the atlas will be automatically downloaded.
+the atlas will be automatically downloaded. 
+For example, the following will get the Schaefer2018 atlas.
 
-# For the edges
+```python
+nodeimg={'template': 'MNI152NLin2009cAsym',
+         'atlas': 'Schaefer2018',
+         'desc': '400Parcels7Networks',
+         'resolution': 1}
+```
 
-Edges as a numpy array(adj matrix) or as a pandas dataframe(edgelist) with the columns 'i', 'j', and 'weight' (optional).
+See templateflow.org for more atlases. 
 
-# For the template
+If the template argument is specified in `netplotbrain.plot`,
+then the template argument does not need to be included in the dictionary.
+
+## Edges (dataframe)
+
+Edges as a numpy array (adj matrix) or as a pandas dataframe(edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example: 
+
+| j       | j     | weight     |
+| :-------------:  | :----------: | :-----------: |
+|  0     | 1    | 0.8    |
+|  1     | 2    | 0.5    | 
+
+`i` and `j` reference the indicies in . You can use the argument `edgecol` to specify different column names.
+
+If numpy array, then the array should be a N x N array (where N is number of nodes).
+
+## Template (nifti or string)
 
 For the template you can supply any nifti file.
-However, you can just provide the template name for any template on templateflow.org.
+
+You can also provide the template name for any template on templateflow.org.
 The T1w brain mask will then automatically downloaded(if not already present on your computer) and used as the background.
 
-# Template Styles
+Netplotbrain can render slightly different templates 
 
-There are currently two background styles: "filled" and "cloudy".
+### Template Styles
 
-The filled style, plots the template's brain mask as voxels.
+There are currently three background styles: "surface", "filled" and "cloudy".
 
-The cloudy style, tries to identify the outline of the mask.
-The cloudy style is quicker, but the edge detection is run relative to the specified initial view of the plot.
+The surface, quickly renders a surface from the voxels. Additional arguments can be provided in order to the resolution of the surface.
 
-For both templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker
+The filled style, plots the template's brain mask as voxels. This can be slightly RAM consuming.
 
-# Views
+The cloudy style, tries to identify the outline of the mask and plots points along the edges. The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.
+
+For templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker.
+
+## Views
 
 The view is the angle which the brain is viewed from in the plot.
 You can specify it as a string:
@@ -86,7 +128,7 @@ So setting view = 'LSR' will generate 3 subplots with left, superior, and right 
 
 You can also specify the specific rotation(tuple): (xy-rotate, xz-rotate) in degrees. The R view is (0, 0)
 
-# Rotated view sequences
+### Rotated sequences with frames
 
 You can also generate a sequence of rotated images.
 
@@ -98,7 +140,7 @@ Images will then be displayed along a single row.
 If you specify a list(e.g. `['LR', 'AP']`) then two different rows will be generated.
 The first, from left to right. The second from anterior to posterior.
 
-# Minimal examples
+## Minimal examples
 
 # Generate some random data for examples
 
@@ -161,11 +203,26 @@ plt.show()
 ```
 ![](./examples/figures/singleview.png)
 
-# Specify column names to specify size
+## Specify column names to specify size
 
 ```python
+fig = plt.figure()
+ax_centrality = fig.add_subplots(projection='3d')
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',
+                  fig = fig,
+                  ax = ax_centrality,
+                  view='R',
+                  nodes=nodes,
+                  nodesize='centrality',
+                  nodecolor='blue',
+                  edges=edges)
+
+ax_betweenness = fig.add_subplots(projection='3d')
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  fig = fig,
+                  ax = ax_betweenness,
                   view='R',
                   nodes=nodes,
                   nodesize='betweenness',
