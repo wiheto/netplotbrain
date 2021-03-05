@@ -181,7 +181,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   view='A',
                   nodes=nodes,
                   nodesize='centrality_measure1',
-                  nodecolor='blue',
+                  nodecolor='red',
                   edges=edges)
 
 ax_m2 = fig.add_subplot(122, projection='3d')

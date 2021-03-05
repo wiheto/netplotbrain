@@ -17,8 +17,8 @@ import matplotlib.pyplot as plt
 Load example data included in package.
 """
 # Example node and edges dataframes included with package
-nodes = pd.read_csv('./example_nodes.tsv', sep='\t', index_col=0)
-edges = pd.read_csv('./example_edges.tsv', sep='\t', index_col=0)
+nodes = pd.read_csv('./examples/example_nodes.tsv', sep='\t', index_col=0)
+edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 
 #%%
 # Plot single view
@@ -44,7 +44,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   view='A',
                   nodes=nodes,
                   nodesize='centrality_measure1',
-                  nodecolor='blue',
+                  nodecolor='red',
                   edges=edges)
 
 ax_m2 = fig.add_subplot(122, projection='3d')
