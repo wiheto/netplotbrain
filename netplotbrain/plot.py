@@ -5,13 +5,13 @@ import pandas as pd
 from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_cloudy,\
     _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
     _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels,\
-    _select_single_hemisphere_nodes, _npedges2dfedges
+    _select_single_hemisphere_nodes, _npedges2dfedges, _add_subplot_title, get_frame_input
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
          arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres',
-         weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both'):
+         weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto'):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -82,9 +82,9 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         For any other view specification, (e.g. specifying string such as 'LSR')
         then this value is not needed.
     hemisphere: string or list
-        If string, can be left, right or both to specify hemisphere to include.
+        If string, can be left or right to specify single hemisphere to include.
         If list, should match the size of views and contain strings to specify hemisphere.
-        Can be abbreviated to L, R and B.  
+        Can be abbreviated to L, R and (empty string possible if both hemisphere plotted).  
         Between hemispehre edges are deleted.
     nodecols : list
         Node column names in node dataframe. Default is x, y, z (specifying coordinates)
@@ -97,7 +97,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     if isinstance(nodes, str): 
         nodes = pd.read_csv(nodes, sep='\t', index_col=0)
     if isinstance(edges, str): 
-        edges = pd.read_csv(nodes, sep='\t', index_col=0)
+        edges = pd.read_csv(edges, sep='\t', index_col=0)
     # get the number of views
     if isinstance(view, list):
         nrows = len(view)
@@ -139,12 +139,9 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         for fi in range(frames):
             axind += 1
             # Get hemisphere for this frame
-            if isinstance(hemisphere, str):
-                hemi_frame = hemisphere
-            elif isinstance(hemisphere[0], str): 
-                hemi_frame = hemisphere[axind]
-            else: 
-                hemi_frame = hemisphere[ri][fi]
+            hemi_frame = get_frame_input(hemisphere, axind, ri, fi)
+            # Get title for this frame
+            title_frame = get_frame_input(title, axind, ri, fi)
             # Set up subplot                
             if ax_in is None:
                 subplotid = rows + colnum + axind + 1
@@ -196,10 +193,12 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                                  azim=azim[fi], elev=elev[fi])
 
             ax.view_init(azim=azim[fi], elev=elev[fi])
-            # IMPORTANT - this is the new, key line
+            _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame)
+            # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
-            _set_axes_equal(ax)  # IMPORTANT - this is also required
+            _set_axes_equal(ax)
             ax.axis('off')
+            # Append ax to ax_out to store it.
             ax_out.append(ax)
 
     fig.tight_layout()

@@ -84,3 +84,6 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
     if arrowaxis == 'auto':
         arrowaxis = autoarrowaxis
     return vx, vy, arrowaxis
+
+
+

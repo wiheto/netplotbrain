@@ -6,11 +6,12 @@ from .plot_templates import _plot_template, _plot_template_style_filled, \
     _plot_template_style_cloudy, _plot_template_style_surface
 from .plot_dimarrows import _add_axis_arrows
 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-
+from .plot_title import _add_subplot_title
+from .process_input import get_frame_input
 __all__ = ['_set_axes_equal', '_set_axes_radius', '_get_view',
            '_plot_template', '_plot_template_style_filled',
            '_plot_template_style_cloudy',
            '_scale_nodes', '_plot_nodes', '_plot_spheres',
            '_plot_edges', '_plot_template_style_surface',
            '_add_axis_arrows', '_get_nodes_from_nii', '_plot_parcels',
-           '_select_single_hemisphere_nodes', '_npedges2dfedges']
+           '_select_single_hemisphere_nodes', '_npedges2dfedges', '_add_subplot_title']
