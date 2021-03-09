@@ -185,7 +185,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                 nodes_frame = nodes.copy()
                 nodes_frame = _select_single_hemisphere_nodes(nodes_frame, affine, hemi_frame, nodecols)
                 if nodetype == 'spheres':
-                    _plot_spheres(ax, nodes, nodecolor=nodecolor,
+                    _plot_spheres(ax, nodes_frame, nodecolor=nodecolor,
                                   nodesize=nodesize, nodecols=nodecols, nodescale=nodescale, colorby=colorby)
                 elif nodetype == 'circles':
                     _plot_nodes(ax, nodes_frame, nodecolor=nodecolor,
