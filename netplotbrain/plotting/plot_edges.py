@@ -21,7 +21,7 @@ def _npedges2dfedges(edges, edgethreshold=0):
     return df
 
 
-def _plot_edges(ax, nodes, edges, edgewidth='auto', edgewidthscale=1, edgecolor='k', edgecol=['i', 'j', 'weight']):
+def _plot_edges(ax, nodes, edges, edgewidth=None, edgewidthscale=1, edgecolor='k', edgecol=['i', 'j'], edgealpha=None):
     """
     Plots the edges on the plot
 
@@ -31,17 +31,20 @@ def _plot_edges(ax, nodes, edges, edgewidth='auto', edgewidthscale=1, edgecolor=
     nodes : dataframe
         node dataframe with x, y, z coordinates (at least).
     edges : array or dataframe
-        numpy array (adj matrix) or edgelist (df.columns = ['i', 'j', 'weight'])
-    edgewidth : 'auto', float, int
-        Width of edges. If auto, uses weights from array or dataframes.
+        numpy array (adj matrix) or edgelist (df.columns = ['i', 'j', ...])
+    edgewidth : string
+        Column pointing to edges.
     edgewidthscale : float, int
         For display purposes, scale edges by value.
     edgecolor : matplotlib color
         Colour of edges
-    edgecol : list (2 or 3 elements). Default: ['i', 'j', 'k']
-        list of length 2 or 3.
+    edgecol : list (2 elements). Default: ['i', 'j']
+        list of length 2.
         The first two, reference the node indicies in nodes.
         The third referencees the weights.
+    edgealpha : float
+        Transparency of edges.
+
     Returns
     ----------------------
     Nothing
@@ -49,12 +52,12 @@ def _plot_edges(ax, nodes, edges, edgewidth='auto', edgewidthscale=1, edgecolor=
     # if dataframe
     for _, row in edges.iterrows():
         #if row[edgecol[0]] != 0 and row[edgecol[1]] != 0:
-        if edgewidth != 'auto':
-            ew = edgewidth * edgewidthscale
+        if edgewidth is None:
+            ew = edgewidthscale
         else:
-            ew = row[edgecol[2]] * edgewidthscale
+            ew = row[edgewidth] * edgewidthscale
         if row[edgecol[0]] in nodes.index and row[edgecol[1]] in nodes.index:
             xp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['x']
             yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['y']
             zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['z']
-            ax.plot(xp, yp, zp, color=edgecolor, linewidth=ew)
+            ax.plot(xp, yp, zp, color=edgecolor, linewidth=ew, alpha=edgealpha)

@@ -10,8 +10,9 @@ from .plotting import _plot_template, _plot_template_style_filled, _plot_templat
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
-         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres', nodecolorby=None,
-         nodecmap='Dark2', weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None):
+         arroworigin=None, edgecolor='k', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres', nodecolorby=None,
+         nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
+         edgealpha=1):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -66,6 +67,11 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         Can be string (default 'black') or list of 3D/4D colors for each edge.
     edgewidth : int, float
         Specify width of edges. If auto, will plot the value in edge array (if array) or the weight column (if in pandas dataframe), otherwise 2.
+    edgeweights : string
+        String that specifies column in edge dataframe that contains weights.
+        If numpy array is edge input, can be True (default) to specify edge weights.
+    edgealpha : float
+        Transparency of edges.
     nodesize : str, int, float
         If string, can plot a column
     nodecolorby : str
@@ -137,6 +143,9 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     # Check input, if numpy array, make dataframe
     if type(edges) is np.ndarray:
         edges = _npedges2dfedges(edges)
+    # Set default behaviour of edgeweights
+    if edgeweights is None or edgeweights is True:
+        edgeweights = 'weight'
     # Load the nifti node file
     if nodeimg is not None:
         nodes, nodeimg = _get_nodes_from_nii(
@@ -190,6 +199,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             if nodes is not None:
                 nodes_frame = nodes.copy()
                 nodes_frame = _select_single_hemisphere_nodes(nodes_frame, affine, hemi_frame, nodecols)
+
                 if nodetype == 'spheres':
                     _plot_spheres(ax, nodes_frame, nodecolor=nodecolor,
                                   nodesize=nodesize, nodecols=nodecols, nodescale=nodescale)
@@ -202,8 +212,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                                   hemisphere=hemi_frame)
             if edges is not None:
                 edges_frame = edges.copy()
-                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgewidth,
-                            edgecolor=edgecolor)
+                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights, edgewidthscale=edgescale,
+                            edgecolor=edgecolor, edgealpha=edgealpha)
             if arrowaxis_row is not None:
                 _add_axis_arrows(ax, dims=arrowaxis_row,
                                  length=arrowlength, origin=arroworigin,
