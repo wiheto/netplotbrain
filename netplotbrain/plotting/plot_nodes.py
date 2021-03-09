@@ -1,3 +1,5 @@
+import numpy as np
+
 def _plot_nodes(ax, nodes, nodecolor='salmon', nodesize=20, nodecols=['x', 'y', 'z']):
     """
     Function that plots nodes in figure
@@ -31,7 +33,7 @@ def _plot_nodes(ax, nodes, nodecolor='salmon', nodesize=20, nodecols=['x', 'y', 
                nodes[nodecols[2]], s=ns, color=nc)
 
 
-def _scale_nodes(nodes, affine=None):
+def _scale_nodes(nodes, affine=None, nodecols=['x', 'y', 'z']):
     """
     Scales nodes from MNI coordinates to ax with origin of 0.
 
@@ -50,7 +52,19 @@ def _scale_nodes(nodes, affine=None):
     """
     nodes_scaled = nodes.copy()
     if affine is not None:
-        nodes_scaled['x'] = (nodes_scaled['x'] - affine[0, -1]) / affine[0, 0]
-        nodes_scaled['y'] = (nodes_scaled['y'] - affine[1, -1]) / affine[1, 1]
-        nodes_scaled['z'] = (nodes_scaled['z'] - affine[2, -1]) / affine[2, 2]
+        nodes_scaled[nodecols[0]] = (nodes_scaled[nodecols[0]] - affine[0, -1]) / affine[0, 0]
+        nodes_scaled[nodecols[1]] = (nodes_scaled[nodecols[1]] - affine[1, -1]) / affine[1, 1]
+        nodes_scaled[nodecols[2]] = (nodes_scaled[nodecols[2]] - affine[2, -1]) / affine[2, 2]
     return nodes_scaled
+
+def _select_single_hemisphere_nodes(nodes, affine, hemisphere, nodecols=['x', 'y', 'z']):
+    """
+    Only take nodes from datafrom that match requested hemisphere 
+    """
+    if hemisphere == 'left' or hemisphere == 'L':
+        sel = nodes[nodecols[0]] * affine[0, 0] < np.abs(affine[0, -1])
+        nodes = nodes[sel]
+    elif hemisphere == 'right' or hemisphere == 'R':
+        sel = nodes[nodecols[0]] * affine[0, 0] > np.abs(affine[0, -1])
+        nodes = nodes[sel]
+    return nodes

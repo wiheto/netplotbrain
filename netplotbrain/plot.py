@@ -1,14 +1,17 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import inspect
+import pandas as pd
 from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_cloudy,\
     _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
-    _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels
+    _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels,\
+    _select_single_hemisphere_nodes, _npedges2dfedges, _add_subplot_title, get_frame_input
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
-         templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
-         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres', colorby='communities',
-         weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1):
+         templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
+         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres', colorby=None,
+         weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -27,10 +30,16 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         if list: multiple strings (as above) which will create new rows of subplots.
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
         If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the oposite direction
-    nodes : dataframe
-        must include x, y, z columns that correspond to coordinates of nodes. Can include additional infomation for node size and color.
-    edges : numpy array (other alternatives coming)
+    nodes : dataframe, string
+        The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecols to change this).
+        Can include additional infomation for node size and color.
+        If string, can load a tsv file (tab seperator), assumes index column is the 0th column. 
+    edges : dataframe, numpy array, or string
+        If dataframe, must include i, j columns (and weight, for weighted).
+        i and j specify indicies in nodes.
+        See edgecols if you want to change the default column names. 
         if numpy array, square adjacecny array.
+        If string, can load a tsv file (tab seperator), assumes index column is the 0th column. 
     template : str or nibabel nifti
         Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
     templatestyle : str
@@ -72,9 +81,34 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         This value will indicate the number of rotations to get from L to R.
         For any other view specification, (e.g. specifying string such as 'LSR')
         then this value is not needed.
+    hemisphere: string or list
+        If string, can be left or right to specify single hemisphere to include.
+        If list, should match the size of views and contain strings to specify hemisphere.
+        Can be abbreviated to L, R and (empty string possible if both hemisphere plotted).  
+        Between hemispehre edges are deleted.
+    nodecols : list
+        Node column names in node dataframe. Default is x, y, z (specifying coordinates)
+    edgecols : list
+        Edge columns names in edge dataframe. Default is i and j (specifying nodes).
+    highlightnodes : int, list, dict
+        List or int point out which nodes you want to be highlighted.
+        If dict, should be a single column-value pair.
+        Example: highlight all nodes of that, in the node dataframe, have a community
+        value of 1, the input will be {'community': 1}.    
 
     """
-
+    # Load edge and nodes if string is provided. 
+    if isinstance(nodes, str): 
+        nodes = pd.read_csv(nodes, sep='\t', index_col=0)
+    if isinstance(edges, str): 
+        edges = pd.read_csv(edges, sep='\t', index_col=0)
+    if highlightnodes is not None:
+        if isinstance(highlightnodes, dict):
+            highlight_idx = nodes[highlightnodes.keys()] == highlightnodes.values
+        else:
+            highlight_idx = np.zeros(len(nodes))
+            highlight_idx[highlightnodes] = 1
+        nodes['nbp_highlight'] = highlight_idx
     # get the number of views
     if isinstance(view, list):
         nrows = len(view)
@@ -91,11 +125,15 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     if isinstance(ax, list):
         if len(ax) != n_subplots:
             raise ValueError('Ax list, must equal number of frames requested')
+    # Init figure, if not given as input
     if ax is None:
         fig = plt.figure(figsize=(frames * 3, 3 * nrows))
         colnum = frames * 10
         rows = nrows * 100
-
+    # Check input, if numpy array, make dataframe
+    if type(edges) is np.ndarray:
+        edges = _npedges2dfedges(edges)
+    # Load the nifti node file
     if nodeimg is not None:
         nodes, nodeimg = _get_nodes_from_nii(
             nodeimg, voxsize=templatevoxsize, template=template)
@@ -111,12 +149,19 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             view[ri], frames, arrowaxis=arrowaxis)
         for fi in range(frames):
             axind += 1
+            # Get hemisphere for this frame
+            hemi_frame = get_frame_input(hemisphere, axind, ri, fi)
+            # Get title for this frame
+            title_frame = get_frame_input(title, axind, ri, fi)
+            # Set up subplot                
             if ax_in is None:
                 subplotid = rows + colnum + axind + 1
                 ax = fig.add_subplot(subplotid, projection='3d')
-            else:
+            elif isinstance(ax_in, list):
                 # here ax can only be a 1d list, not 2d list.
                 ax = ax_in[axind]
+            else:
+                ax = ax_in
 
             affine = None
             if template is not None:
@@ -124,37 +169,47 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                                         alpha=templatealpha, voxsize=templatevoxsize,
                                         surface_resolution=surface_resolution,
                                         edgethreshold=templateedgethreshold,
-                                        azim=azim[fi], elev=elev[fi])
+                                        azim=azim[fi], elev=elev[fi],
+                                        hemisphere=hemi_frame)
             # Template voxels will have origin at 0,0,0
             # It is easier to scale the nodes from the image affine
             # Then to rescale the ax.voxels function
             # So if affine is not None, nodes get scaled in relation to origin and voxelsize,
             # If node coords are derived from nodeimg, this has already been taken care of.
             if nodes is not None and nodeimg is None and axind == 0:
-                nodes = _scale_nodes(nodes, affine)
-            if edges is not None:
-                _plot_edges(ax, nodes, edges, edgewidth=edgewidth,
-                            edgecolor=edgecolor)
+                nodes = _scale_nodes(nodes, affine, nodecols)
+            # nodes and subplot may change for each frame/subplot
+            # e.g. if hemisphere is specified      
+            nodes_frame = None     
             if nodes is not None:
+                nodes_frame = nodes.copy()
+                nodes_frame = _select_single_hemisphere_nodes(nodes_frame, affine, hemi_frame, nodecols)
                 if nodetype == 'spheres':
                     _plot_spheres(ax, nodes, nodecolor=nodecolor,
                                   nodesize=nodesize, nodecols=nodecols, nodescale=nodescale, colorby=colorby)
                 elif nodetype == 'circles':
-                    _plot_nodes(ax, nodes, nodecolor=nodecolor,
+                    _plot_nodes(ax, nodes_frame, nodecolor=nodecolor,
                                 nodesize=nodesize, nodecols=nodecols)
                 elif nodetype == 'parcels':
                     _plot_parcels(ax, nodeimg, alpha=nodealpha,
-                                  cmap=nodecolor, parcel_surface_resolution=1)
+                                  cmap=nodecolor, parcel_surface_resolution=surface_resolution,
+                                  hemisphere=hemi_frame)
+            if edges is not None:
+                edges_frame = edges.copy()
+                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgewidth,
+                            edgecolor=edgecolor)
             if arrowaxis_row is not None:
                 _add_axis_arrows(ax, dims=arrowaxis_row,
                                  length=arrowlength, origin=arroworigin,
                                  azim=azim[fi], elev=elev[fi])
 
-            # IMPORTANT - this is the new, key line
-            ax.set_box_aspect([1, 1, 1])
-            _set_axes_equal(ax)  # IMPORTANT - this is also required
-            ax.axis('off')
             ax.view_init(azim=azim[fi], elev=elev[fi])
+            _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame)
+            # Fix the aspect ratio
+            ax.set_box_aspect([1, 1, 1])
+            _set_axes_equal(ax)
+            ax.axis('off')
+            # Append ax to ax_out to store it.
             ax_out.append(ax)
 
     fig.tight_layout()

@@ -6,7 +6,7 @@ from nibabel.processing import resample_to_output
 import matplotlib.cm as cm
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure
-
+from .plot_templates import _select_single_hemisphere_template
 
 def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     """
@@ -46,10 +46,10 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     # Resize img to desired output resolution
     # Will be same as template
     if voxsize is not None:
-        img = resample_to_output(img, [voxsize] * 3)
+        img = resample_to_output(img, [voxsize] * 3, mode='nearest')
 
     # Get each roi
-    imgdata = img.get_fdata()
+    imgdata = img.get_fdata(caching='unchanged')
     rois = np.unique(imgdata)
     # remove 0 roi (i.e. background)
     rois = rois[rois != 0]
@@ -76,26 +76,31 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     return nodes, img
 
 
-def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1):
+def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemisphere='both'):
     # Get data
-    data = img.get_fdata()
+    # Due to only being able to get data once, this leads to problems when LR hemi are specieid
+    data = img.get_fdata(caching='unchanged').copy()
+    # If single hemisphere, get only that side
+    data = _select_single_hemisphere_template(data, hemisphere)  
     # Get the number of nodes (subtract 1 for 0)
-    nnodes = len(np.unique(data)) - 1
+    nodelabels = np.unique(data)
+    if 0 in nodelabels:
+        nodelabels = nodelabels[1:]
     # Create a nnode length (or longer) array which repeats colormap
     colors = cm.get_cmap(cmap).colors
-    colors = colors * int(np.ceil(nnodes / len(colors)))
+    colors = colors * int(np.ceil(len(nodelabels) / len(colors)))
     # loop through each node and plot verticies as different color
     # Possible improvement: could be made without for loop
     # And vals is used to plot color
-    for r in range(nnodes):
+    for ni, r in enumerate(nodelabels):
         dtmp = np.zeros(data.shape)
-        dtmp[data == r+1] = 1
-        verts, faces, s, vals = measure.marching_cubes(
+        dtmp[data == r] = 1
+        verts, faces, _, _ = measure.marching_cubes(
             dtmp, step_size=parcel_surface_resolution)
         vertices = verts[faces]
         # for n in np.unique(vals):
         mesh = Poly3DCollection(vertices)
-        mesh.set_facecolor(colors[r])
+        mesh.set_facecolor(colors[ni])
         mesh.set_alpha(alpha)
         ax.add_collection3d(mesh)
 

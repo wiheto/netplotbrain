@@ -20,7 +20,8 @@ def _add_axis_arrows(ax, dims=['LR', 'AP'], length=10, origin=None, azim=0, elev
         elev argument, for origin auto calculation
     Returns
     -----------------
-    Nothing
+    Nothing (input axis is updated)
+
     """
     if origin is None:
         xlim = ax.get_xlim3d()

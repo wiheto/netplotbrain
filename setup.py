@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-VERSION = "netonbrain/__version__.py"
+VERSION = "netplotbrain/__version.py"
 VERSION = open(VERSION, "rt").read()
 VERSION = VERSION.split('"')[1]
 
