@@ -5,13 +5,13 @@ import pandas as pd
 from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_cloudy,\
     _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
     _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels,\
-    _select_single_hemisphere_nodes, _npedges2dfedges, _add_subplot_title, get_frame_input
+    _select_single_hemisphere_nodes, _npedges2dfedges, _add_subplot_title, get_frame_input, _get_colorby_colors
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
-         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres',
-         weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None):
+         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres', nodecolorby=None,
+         nodecmap='Dark2', weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -68,6 +68,10 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         Specify width of edges. If auto, will plot the value in edge array (if array) or the weight column (if in pandas dataframe), otherwise 2.
     nodesize : str, int, float
         If string, can plot a column
+    nodecolorby : str
+        Column in dataframe that should get different colors (cannot be set with nodecolor)
+    nodecmap : str
+        Matplotlib colormap for node coloring with nodecolorby. 
     nodecolor : matplotlib coloring
         Can be string (default 'black') or list of 3D/4D colors for each edge.
     nodetype : str
@@ -137,7 +141,9 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     if nodeimg is not None:
         nodes, nodeimg = _get_nodes_from_nii(
             nodeimg, voxsize=templatevoxsize, template=template)
-
+    # Set nodecolor to colorby argument
+    if nodecolorby is not None:
+        nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap)
     ax_in = ax
     # Prespecify ouput ax list
     ax_out = []
