@@ -12,7 +12,7 @@ edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 
 fig  = plt.figure()
 
-ax = fig.add_subplot(331, projection='3d')
+ax = fig.add_subplot(341, projection='3d')
 netplotbrain.plot(nodes=nodes,
                   edges=edges,
                   template='MNI152NLin2009cAsym',
@@ -22,9 +22,11 @@ netplotbrain.plot(nodes=nodes,
                   nodealpha=0.5,
                   nodecolor='Salmon',
                   title='Plot networks',
+                  edgeweights='weight',
+                  edgealpha=0.5,
                   fig=fig, ax=ax)
 
-ax = fig.add_subplot(332, projection='3d')
+ax = fig.add_subplot(342, projection='3d')
 
 netplotbrain.plot(nodes=nodes,
                   edges=edges,
@@ -35,10 +37,11 @@ netplotbrain.plot(nodes=nodes,
                   nodealpha=0.5,
                   nodecolor='Salmon',
                   title='Onto brains',
-                  fig=fig, ax=ax)
+                  fig=fig, ax=ax,
+                  edgescale=0.5)
 
 
-ax = fig.add_subplot(333, projection='3d')
+ax = fig.add_subplot(343, projection='3d')
 
 netplotbrain.plot(nodes=nodes,
                   edges=edges,
@@ -49,13 +52,32 @@ netplotbrain.plot(nodes=nodes,
                   nodealpha=0.5,
                   nodecolor='Salmon',
                   title='Multiple viewing angle',
-                  fig=fig, ax=ax)
+                  fig=fig, ax=ax,
+                  edgescale=0.5)
+
+
+ax = fig.add_subplot(344, projection='3d')
+
+netplotbrain.plot(nodes=nodes,
+                  edges=edges,
+                  template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['A'],
+                  nodetype='spheres',
+                  nodealpha=0.5,
+                  nodecolorby='community',
+                  nodesize='centrality_measure2',
+                  title='Let columns set\ncolor + size',
+                  fig=fig, ax=ax,
+                  nodecmap='gnuplot',
+                  edgealpha=0.5,
+                  edgescale=0.5)
 
 
 
 
 
-ax = fig.add_subplot(334, projection='3d')
+ax = fig.add_subplot(345, projection='3d')
 
 netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
                            'desc': '400Parcels7Networks',
@@ -69,7 +91,7 @@ netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
                   nodecolor='Set3',
                   fig=fig, ax=ax)
 
-ax = fig.add_subplot(335, projection='3d')
+ax = fig.add_subplot(346, projection='3d')
 
 netplotbrain.plot(template='WHS',
                   templatestyle='surface',
@@ -80,11 +102,12 @@ netplotbrain.plot(template='WHS',
                   edges=edges,
                   nodescale=80,
                   templatevoxsize=0.2,
-                  fig=fig, ax=ax)
+                  fig=fig, ax=ax,
+                  edgescale=0.5)
 
 
 
-ax = fig.add_subplot(336, projection='3d')
+ax = fig.add_subplot(347, projection='3d')
 
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='cloudy',
@@ -99,7 +122,25 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   title='Different themes',
                   fig=fig, ax=ax)
 
-ax = fig.add_subplot(337, projection='3d')
+ax = fig.add_subplot(348, projection='3d')
+
+netplotbrain.plot(nodes=nodes,
+                  edges=edges,
+                  template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['S'],
+                  hemisphere=['L'],
+                  nodetype='spheres',
+                  nodealpha=0.5,
+                  nodecolorby='community',
+                  nodesize='centrality_measure2',
+                  title='Single hemisphere',
+                  fig=fig, ax=ax,
+                  nodecmap='gnuplot')
+
+
+
+ax = fig.add_subplot(349, projection='3d')
 atlasinfo = tf.get(template='MNI152NLin2009cAsym',
        atlas='Schaefer2018',
        desc='400Parcels7Networks',
