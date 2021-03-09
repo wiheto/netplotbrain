@@ -11,7 +11,7 @@ from .plotting import _plot_template, _plot_template_style_filled, _plot_templat
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
          arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres',
-         weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto'):
+         weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -90,7 +90,11 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         Node column names in node dataframe. Default is x, y, z (specifying coordinates)
     edgecols : list
         Edge columns names in edge dataframe. Default is i and j (specifying nodes).
-        
+    highlightnodes : int, list, dict
+        List or int point out which nodes you want to be highlighted.
+        If dict, should be a single column-value pair.
+        Example: highlight all nodes of that, in the node dataframe, have a community
+        value of 1, the input will be {'community': 1}.    
 
     """
     # Load edge and nodes if string is provided. 
@@ -98,6 +102,13 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         nodes = pd.read_csv(nodes, sep='\t', index_col=0)
     if isinstance(edges, str): 
         edges = pd.read_csv(edges, sep='\t', index_col=0)
+    if highlightnodes is not None:
+        if isinstance(highlightnodes, dict):
+            highlight_idx = nodes[highlightnodes.keys()] == highlightnodes.values
+        else:
+            highlight_idx = np.zeros(len(nodes))
+            highlight_idx[highlightnodes] = 1
+        nodes['nbp_highlight'] = highlight_idx
     # get the number of views
     if isinstance(view, list):
         nrows = len(view)
