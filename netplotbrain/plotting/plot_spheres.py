@@ -49,7 +49,7 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodec
         z = r*np.cos(v)
         
         # Select the node color if string or array
-        if len(nodecolor) == len(nodes):
+        if isinstance(nodecolor, np.ndarray):
             ncolor = nodecolor[index]
         else:
             ncolor = nodecolor
