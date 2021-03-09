@@ -4,7 +4,14 @@ import pandas as pd
 import random
 from matplotlib import cm
 
-
+def _get_color(nodes, colorby='communities', cmap='plasma'):
+    
+    cat = np.unique(nodes[colorby])
+    cmap = cm.get_cmap(cmap)
+    colors = cmap(np.linspace(0, 1, len(cat)))
+    colordict = dict(zip(cat, colors))
+    nodes["Color"] = nodes[colorby].apply(lambda z:colordict[z])
+        
 def _plot_spheres(ax, nodes, nodecolor='salmon', colorby='communities', nodesize=20, nodescale=1, nodecols=['x', 'y', 'z'], alpha=None):
     """
     Function that plots spheres in figure
@@ -54,11 +61,8 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', colorby='communities', nodesize
                             color=nodecolor,
                             alpha=alpha)
         if colorby in nodes.keys():
-            cat = np.unique(nodes[colorby])
-            viridis = cm.get_cmap('viridis', 12)
-            colors = viridis(np.linspace(0, 1, len(cat)))
-            colordict = dict(zip(cat, colors))
-            nodes["Color"] = nodes[colorby].apply(lambda z:colordict[z])
             ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
-                            color=nodes.Color[index],
+                            color=_get_color(nodes),
                             alpha=alpha)
+        
+        

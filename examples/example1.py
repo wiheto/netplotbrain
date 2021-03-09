@@ -17,10 +17,10 @@ z = np.random.uniform(-40, 50, n)
 # Some random centrality measures to demonstrate size
 centrality_measure1 = np.random.binomial(10, 0.3, n) / 10
 centrality_measure2 = np.random.binomial(10, 0.6, n) / 10
-communities = np.array([1, 1, 5, 5, 5, 7, 7, 8])
+communities = np.array([1, 1, 5, 5, 5, 7, 7, 8, 7, 9])
 nodesdf = pd.DataFrame(data={'x': X, 'y': y,
                            'z': z, 'centrality_measure1': centrality_measure1,
-                           'centrality_measure2': centrality_measure2,
+                           'centrality_measure2': centrality_measure2, 
                            'communities': communities})
 
 ## CREATE THE EDGES.
@@ -62,6 +62,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
          nodes=nodesdf,
          nodesize='centrality_measure1',
          edges=edges,
+         colorby='communities',
          view=['LSR', 'AIP'])
 plt.savefig('./examples/figures/rows1.png', dpi=150)
 

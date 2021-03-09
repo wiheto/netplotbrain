@@ -7,7 +7,7 @@ from .plotting import _plot_template, _plot_template_style_filled, _plot_templat
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=2, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
-         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres',
+         arroworigin=None, edgecolor='k', edgewidth='auto', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres', colorby='communities',
          weightcol='weights', nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1):
     # sourcery skip: merge-nested-ifs
     """
@@ -138,7 +138,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             if nodes is not None:
                 if nodetype == 'spheres':
                     _plot_spheres(ax, nodes, nodecolor=nodecolor,
-                                  nodesize=nodesize, nodecols=nodecols, nodescale=nodescale)
+                                  nodesize=nodesize, nodecols=nodecols, nodescale=nodescale, colorby=colorby)
                 elif nodetype == 'circles':
                     _plot_nodes(ax, nodes, nodecolor=nodecolor,
                                 nodesize=nodesize, nodecols=nodecols)
