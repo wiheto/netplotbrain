@@ -2,18 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import random
-from matplotlib import cm
-import mplcursors
 
-def _get_color(nodes, colorby='communities', cmap='plasma'):
-    
-    cat = np.unique(nodes[colorby])
-    cmap = cm.get_cmap(cmap)
-    colors = cmap(np.linspace(0, 1, len(cat)))
-    colordict = dict(zip(cat, colors))
-    nodes["Color"] = nodes[colorby].apply(lambda z:colordict[z])
-        
-def _plot_spheres(ax, nodes, nodecolor='salmon', colorby='communities', nodesize=20, nodescale=1, nodecols=['x', 'y', 'z'], alpha=None):
+
+def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodecols=['x', 'y', 'z'], alpha=None):
     """
     Function that plots spheres in figure
 
@@ -57,13 +48,12 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', colorby='communities', nodesize
         y = r*np.sin(u)*np.sin(v)
         z = r*np.cos(v)
         
-        if colorby is None:
-            ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
-                            color=nodecolor,
-                            alpha=alpha)
-        if colorby in nodes.keys():
-            mplcursors.cursor((ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
-                            color=_get_color(nodes),
-                            alpha=alpha))
-        
-        
+        # Select the node color if string or array
+        if len(nodecolor) == len(nodes):
+            ncolor = nodecolor[index]
+        else:
+            ncolor = nodecolor
+            
+        ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
+                        color=ncolor,
+                        alpha=alpha)

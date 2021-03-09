@@ -1,10 +1,35 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import cm
 
 # equal scaling solution from @AndrewCox from https://stackoverflow.com/a/63625222
 # Functions from @Mateen Ulhaq and @karlo
 
+def _get_colorby_colors(df, colorby=None, cmap='plasma'):
+    """
+    Get array of different colors by some column 
 
+    Parameters
+    -------------------
+    df : dataframe
+        dataframe to look in for colorby argument (nodes or edges dataframe)
+    colorby : str
+        column in dataframe
+    cmap : colormap
+
+    Returns
+    -------------------
+    color_array : numpy array 
+        A N x 4 list of matplotlib colours for each node  
+    """
+    cat = np.unique(df[colorby])
+    cmap = cm.get_cmap(cmap)
+    colors = cmap(np.linspace(0, 1, len(cat)))
+    colordict = dict(zip(cat, colors))
+    color_array = df[colorby].apply(lambda z:colordict[z])
+    color_array = np.vstack(color_array.values)
+    return color_array
+        
 def _set_axes_equal(ax: plt.Axes):
     """Set 3D plot axes to equal scale.
 

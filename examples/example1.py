@@ -24,11 +24,11 @@ edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 # Plot single view
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',
-                  view='R',
+                  view='SLR',
                   nodes=nodes,
                   nodesize='centrality_measure1',
                   edges=edges,
-                  colorby='communities')
+                  nodecolorby='community')
 
 plt.savefig('./examples/figures/singleview.png', dpi=150)
 
@@ -70,6 +70,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodes=nodes,
                   nodesize='centrality_measure1',
                   edges=edges,
+                  nodecolorby='community',
                   view=['LSR', 'AIP'],
                   frames=2)
                   
@@ -130,7 +131,7 @@ netplotbrain.plot(template='WHS',
          nodes=nodes / 8,
          nodesize='centrality_measure1',
          edges=edges,
-         colorby='communities',
+         nodecolorby='community',
          nodescale=80,
          templatevoxsize=0.2)
 
