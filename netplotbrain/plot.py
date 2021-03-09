@@ -140,7 +140,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     # Load the nifti node file
     if nodeimg is not None:
         nodes, nodeimg = _get_nodes_from_nii(
-            nodeimg, voxsize=templatevoxsize, template=template)
+            nodeimg, voxsize=templatevoxsize, template=template, nodes=nodes)
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap)

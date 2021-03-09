@@ -77,7 +77,6 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
 
 
 def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemisphere='both'):
-    # Get data
     # Due to only being able to get data once, this leads to problems when LR hemi are specieid
     data = img.get_fdata(caching='unchanged').copy()
     # If single hemisphere, get only that side
@@ -87,8 +86,12 @@ def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemi
     if 0 in nodelabels:
         nodelabels = nodelabels[1:]
     # Create a nnode length (or longer) array which repeats colormap
-    colors = cm.get_cmap(cmap).colors
-    colors = colors * int(np.ceil(len(nodelabels) / len(colors)))
+    if isinstance(cmap, str):
+        colors = cm.get_cmap(cmap).colors
+        colors = colors * int(np.ceil(len(nodelabels) / len(colors)))
+    else:
+        # If colors has already been defined prior to calling this function
+        colors = cmap
     # loop through each node and plot verticies as different color
     # Possible improvement: could be made without for loop
     # And vals is used to plot color
