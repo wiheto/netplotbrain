@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import random
 from matplotlib import cm
+import mplcursors
 
 def _get_color(nodes, colorby='communities', cmap='plasma'):
     
@@ -61,8 +62,8 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', colorby='communities', nodesize
                             color=nodecolor,
                             alpha=alpha)
         if colorby in nodes.keys():
-            ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
+            mplcursors.cursor((ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
                             color=_get_color(nodes),
-                            alpha=alpha)
+                            alpha=alpha))
         
         
