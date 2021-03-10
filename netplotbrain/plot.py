@@ -1,13 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import inspect
 import pandas as pd
-from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_cloudy,\
+from .plotting import _plot_template, \
     _plot_edges, _plot_nodes, _plot_spheres,\
-    _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels,\
+    _scale_nodes, _add_axis_arrows, _get_nodes_from_nii, _plot_parcels,\
     _select_single_hemisphere_nodes, _npedges2dfedges, _add_subplot_title, get_frame_input
 
-from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _set_axes_radius, _get_view
+from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
@@ -16,8 +15,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
          nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
          edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both'):
     # sourcery skip: merge-nested-ifs
-    """
-    Plot a network on a brain
+    """Plot a network on a brain
 
     Parameters
     ---------------------
