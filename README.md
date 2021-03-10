@@ -328,7 +328,7 @@ Suggestion of text in methods section:
 
 >### Methods
 >
->Network plots were generated using netplotbrain, which utilizes templateflow (Ciric et al 2021), matplotlib (Hunter 2007), pandas (McKinney 2011), numpy (Harris et al 2020), scipy (Harris et al 2020), nibabel (Brett et al 2020), and scikit-image (van der Walt et al 2014).  
+>Network plots were generated using netplotbrain (Thompson & Fanton 2021), which utilizes templateflow (Ciric et al 2021), matplotlib (Hunter 2007), pandas (McKinney 2011), numpy (Harris et al 2020), scipy (Harris et al 2020), nibabel (Brett et al 2020), and scikit-image (van der Walt et al 2014).  
 >
 >### References
 >
@@ -342,6 +342,9 @@ Suggestion of text in methods section:
 >
 >McKinney, W. (2011). pandas: a foundational Python library for data analysis and statistics. Python for High Performance and Scientific Computing, 14(9), 1-9.
 >
+>Thompson WH, & Fanton S. (2021, 10 March). wiheto/netplotbrain:. Zenodo. doi :10.5281/zenodo.4593837
+>
 >Van der Walt, S., Schönberger, J. L., Nunez-Iglesias, J., Boulogne, F., Warner, J. D., Yager, N., ... & Yu, T. (2014). scikit-image: image processing in Python. PeerJ, 2, e453.
 >
 >Virtanen, P., Gommers, R., Oliphant, T. E., Haberland, M., Reddy, T., Cournapeau, D., ... & van Mulbregt, P. (2020). SciPy 1.0: fundamental algorithms for scientific computing in Python. Nature methods, 17(3), 261-272.
+
