@@ -1,1 +1,4 @@
 theme: jekyll-theme-tactile
+defaults:
+      scope:
+            path: "netplotbrain" 
