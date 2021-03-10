@@ -3,21 +3,21 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d2c620d4be8047989e7b91ac3bbbba97)](https://www.codacy.com/gh/wiheto/netplotbrain/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wiheto/netplotbrain&amp;utm_campaign=Badge_Grade)
 [![DOI](https://zenodo.org/badge/317297000.svg)](https://zenodo.org/badge/latestdoi/317297000)
 
-Painlessly plot networks on a brain in python. The package is still in early development and better documentation/tutorials/examples are in the works. 
+Painlessly plot networks on a brain in python. The package is still in early development and better documentation/tutorials/examples are in the works.
 
 ![](./examples/figures/showcase.png)
 
 ## Features
 
-1. Easy to specify properties: integration with pandas entails node and edge size/colour can easily be specified. 
-2. Flexibility: multiple node and template styles. Easily create multiple angles to view the figure. 
-3. [TemplateFlow](https://www.templateflow.org) integration to download any template or atlas.
+ 1. Easy to specify properties: integration with pandas entails node and edge size/colour can easily be specified.
+ 2. Flexibility: multiple node and template styles. Easily create multiple angles to view the figure.
+ 3. [TemplateFlow](https://www.templateflow.org) integration to download any template or atlas.
 
 ## Installation
 
 `pip install git+https://www.github.com/wiheto/netplotbrain`
 
-Note: We will release on pypi soon. 
+Note: We will release on pypi soon.
 
 ## How it works
 
@@ -30,20 +30,20 @@ You do not need to have all of them specified.
 
 There are two ways to specify nodes.
 
-1. Nodes: a pandas dataframe of cordinates
-2. Nodeimg: a 3D nifti image where each node has a different value.
+ 1. Nodes: a pandas dataframe of cordinates
+ 2. Nodeimg: a 3D nifti image where each node has a different value.
 Alternatively, nodeimg can be dictionary to grab an atlas from templateflow.
 
 ### Nodes (Dataframe)
 
 The Pandas dataframe should have (at least) the columns 'x', 'y', and 'z'.
 These columns should be coordinates in the space of the template (e.g. MNI).
-It will look something like this. 
+It will look something like this.
 
 | x       | y     | z     |
 | :-------------:  | :----------: | :-----------: |
 |  40     | 50    | 20    |
-| -10     | 40    | 30    | 
+| -10     | 40    | 30    |
 
 Other columns can be used to style the node's colour and size.
 These just become other columns in the dataframe.
@@ -67,7 +67,7 @@ You can also input a 3D nifti image where each node is a unique value.
 ### Nodeimg (Templateflow atlas)
 
 If you specify the key/value pairs of an atlas on templateflow in a dictionary,
-the atlas will be automatically downloaded. 
+the atlas will be automatically downloaded.
 For example, the following will get the Schaefer2018 atlas.
 
 ```python
@@ -77,19 +77,19 @@ nodeimg={'template': 'MNI152NLin2009cAsym',
          'resolution': 1}
 ```
 
-See templateflow.org for more atlases. 
+See templateflow.org for more atlases.
 
 If the template argument is specified in `netplotbrain.plot`,
 then the template argument does not need to be included in the dictionary.
 
 ## Edges (dataframe)
 
-Edges as a numpy array (adj matrix) or as a pandas dataframe (edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example: 
+Edges as a numpy array (adj matrix) or as a pandas dataframe (edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example:
 
 | j       | j     | weight     |
 | :-------------:  | :----------: | :-----------: |
 |  0     | 1    | 0.8    |
-|  1     | 2    | 0.5    | 
+|  1     | 2    | 0.5    |
 
 `i` and `j` reference the indicies in . You can use the argument `edgecol` to specify different column names.
 
@@ -102,7 +102,7 @@ For the template you can supply any nifti file.
 You can also provide the template name for any template on templateflow.org.
 The T1w brain mask will then automatically downloaded (if not already present on your computer) and used as the background.
 
-Netplotbrain can render slightly different templates 
+Netplotbrain can render slightly different templates
 
 ### Template Styles
 
@@ -274,7 +274,7 @@ nodes_whs, edges_whs = create_random_data(n, m, xlim, ylim, zlim)
 
 # Setting templatevoxsize to 0.2 will make it slightly quicker
 # Due to the voxel size being smaller, the nodes are currently smaller
-# So scaling the nodes is useful.  
+# So scaling the nodes is useful.
 netplotbrain.plot(template='WHS',
          templatestyle='surface',
          view='LSR',
@@ -325,13 +325,13 @@ Please feel free to get in touch about what feature you want/would like to imple
 
 ## Citation
 
-If using netplotbrain in an academic article, please cite the package and the libraries it relies on. 
+If using netplotbrain in an academic article, please cite the package and the libraries it relies on.
 
-Suggestion of text in methods section: 
+Suggestion of text in methods section:
 
 >### Methods
 >
->Network plots were generated using netplotbrain (Thompson & Fanton 2021), which utilizes templateflow (Ciric et al 2021), matplotlib (Hunter 2007), pandas (McKinney 2011), numpy (Harris et al 2020), scipy (Virtanen et al 2020), nibabel (Brett et al 2020), and scikit-image (van der Walt et al 2014).  
+>Network plots were generated using netplotbrain (Thompson & Fanton 2021), which utilizes templateflow (Ciric et al 2021), matplotlib (Hunter 2007), pandas (McKinney 2011), numpy (Harris et al 2020), scipy (Virtanen et al 2020), nibabel (Brett et al 2020), and scikit-image (van der Walt et al 2014).
 >
 >### References
 >
