@@ -232,9 +232,6 @@ plt.show()
 ```
 ![](./examples/figures/atlas_circles.png)
 
-### Plot different templates
-
-
 ### plot atlas (as parcels) from templateflow
 
 ```python
@@ -289,8 +286,6 @@ plt.show()
 ```
 ![](./examples/figures/template_whs.png)
 
-
-
 ### Plot different styles
 
 ```python
@@ -316,13 +311,10 @@ plt.show()
 ```
 ![](./examples/figures/styles2.png)
 
-
-
-## Get involved?
+## Get involved
 
 We hope to develop this package.
 Please feel free to get in touch about what feature you want/would like to implement/would like to contribute to.
-
 
 ## Citation
 
