@@ -1,4 +1,4 @@
-# In these examples we demonstrate how different templates 
+# In these examples we demonstrate how different templates
 
 import numpy as np
 import netplotbrain

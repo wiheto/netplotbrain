@@ -59,7 +59,7 @@ def _scale_nodes(nodes, affine=None, nodecols=['x', 'y', 'z']):
 
 def _select_single_hemisphere_nodes(nodes, affine, hemisphere, nodecols=['x', 'y', 'z']):
     """
-    Only take nodes from datafrom that match requested hemisphere 
+    Only take nodes from datafrom that match requested hemisphere
     """
     if hemisphere == 'left' or hemisphere == 'L':
         sel = nodes[nodecols[0]] * affine[0, 0] < np.abs(affine[0, -1])

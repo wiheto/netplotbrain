@@ -5,8 +5,8 @@ def get_frame_input(inputvar, axind, ri, fi):
     """
     if isinstance(inputvar, str):
         var_frame = inputvar
-    elif isinstance(inputvar[0], str): 
+    elif isinstance(inputvar[0], str):
         var_frame = inputvar[axind]
-    else: 
+    else:
         var_frame = inputvar[ri][fi]
     return var_frame

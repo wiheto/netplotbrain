@@ -1,7 +1,7 @@
 #%% md
 """
-## The basics. 
-# This notebook goes through a showcase of netplotbrain examples. 
+## The basics.
+# This notebook goes through a showcase of netplotbrain examples.
 """
 #%% md
 """
@@ -59,7 +59,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodesize='centrality_measure2',
                   nodecolor='blue',
                   edges=edges)
-                  
+
 plt.savefig('./examples/figures/measures.png', dpi=150)
 
 #%%
@@ -73,7 +73,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodecolorby='community',
                   view=['LSR', 'AIP'],
                   frames=2)
-                  
+
 plt.savefig('./examples/figures/rows1.png', dpi=150)
 
 #%%
@@ -87,7 +87,7 @@ netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
                   templatestyle='surface',
                   view=['LSR'],
                   nodetype='circles')
-                  
+
 plt.savefig('./examples/figures/atlas_circles.png', dpi=150)
 
 #%%
@@ -103,7 +103,7 @@ netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
                   nodetype='parcels',
                   nodealpha=0.5,
                   nodecolor='Set3')
-                  
+
 plt.savefig('./examples/figures/atlas_parcels.png', dpi=150)
 
 #%%
@@ -116,14 +116,14 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodes=nodes,
                   nodesize='centrality_measure1',
                   edges=edges)
-                  
+
 plt.savefig('./examples/figures/hemi.png', dpi=150)
 
 ## Plot different templates
 
 # Setting templatevoxsize to 0.2 will make it slightly quicker
 # Due to the voxel size being smaller, the nodes are currently smaller
-# So scaling the nodes is useful.  
+# So scaling the nodes is useful.
 netplotbrain.plot(template='WHS',
          templatestyle='surface',
          title='Multiple templates possible',
@@ -146,7 +146,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodes=nodes,
                   nodesize='centrality_measure1',
                   edges=edges)
-                  
+
 plt.savefig('./examples/figures/styles1.png', dpi=150)
 
 
@@ -159,5 +159,5 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodesize='centrality_measure1',
                   edges=edges,
                   templatevoxsize=2)
-                  
+
 plt.savefig('./examples/figures/styles2.png', dpi=150)

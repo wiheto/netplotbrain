@@ -1,4 +1,4 @@
-# In these examples we demonstrate how different templates 
+# In these examples we demonstrate how different templates
 
 import numpy as np
 import netplotbrain
@@ -26,7 +26,7 @@ def create_random_data(n, m, xlim, ylim, zlim):
                             'z': z, 'centrality_measure1': centrality_measure1,
                             'centrality_measure2': centrality_measure2})
     ## CREATE THE EDGES.
-    # Randomly selet edges 
+    # Randomly selet edges
     ind = np.triu_indices(n, k=1)
     eon = np.random.permutation(len(ind[0]))
     edges = np.zeros([n, n])
@@ -62,7 +62,7 @@ nodes, edges = create_random_data(n, m, xlim, ylim, zlim)
 
 # Setting templatevoxsize to 0.2 will make it slightly quicker
 # Due to the voxel size being smaller, the nodes are currently smaller
-# So scaling the nodes is useful.  
+# So scaling the nodes is useful.
 netplotbrain.plot(template='WHS',
          templatestyle='surface',
          view='LSR',

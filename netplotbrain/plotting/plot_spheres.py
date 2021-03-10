@@ -1,7 +1,4 @@
-import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-import random
 
 
 def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodecols=['x', 'y', 'z'], alpha=None):
