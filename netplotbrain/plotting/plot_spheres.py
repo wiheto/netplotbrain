@@ -2,8 +2,7 @@ import numpy as np
 
 
 def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodecols=['x', 'y', 'z'], alpha=None):
-    """
-    Function that plots spheres in figure
+    """Function that plots spheres in figure
 
     Parameters
     ---------------
