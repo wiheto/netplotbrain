@@ -82,26 +82,26 @@ def _add_axis_arrows(ax, dims=['LR', 'AP'], length=10, origin=None, azim=0, elev
         arrows_dx += [-l, l]
         arrows_dy += [0, 0]
         arrows_dz += [0, 0]
-        ax.text(origin[0] - l, origin[1], origin[2], 'L', fontsize='x-small',
+        ax.text(origin[0] - l, origin[1], origin[2], 'L', fontsize='xx-small',
                 color='gray', horizontalalignment=halign_l, verticalalignment=valign_l)
-        ax.text(origin[0] + l, origin[1], origin[2], 'R', fontsize='x-small',
+        ax.text(origin[0] + l, origin[1], origin[2], 'R', fontsize='xx-small',
                 color='gray', horizontalalignment=halign_r, verticalalignment=valign_r)
     if 'AP' in dims:
         arrows_dx += [0, 0]
         arrows_dy += [-l, l]
         arrows_dz += [0, 0]
-        ax.text(origin[0], origin[1] - l, origin[2], 'P', fontsize='x-small',
+        ax.text(origin[0], origin[1] - l, origin[2], 'P', fontsize='xx-small',
                 color='gray', horizontalalignment=halign_a, verticalalignment=valign_a)
-        ax.text(origin[0], origin[1] + l, origin[2], 'A', fontsize='x-small',
+        ax.text(origin[0], origin[1] + l, origin[2], 'A', fontsize='xx-small',
                 color='gray', horizontalalignment=halign_p, verticalalignment=valign_p)
     if 'SI' in dims:
         arrows_dx += [0, 0]
         arrows_dy += [0, 0]
         arrows_dz += [-l, l]
         ax.text(origin[0], origin[1], origin[2] - l, 'I',
-                fontsize='x-small', color='gray', verticalalignment=valign_i)
+                fontsize='xx-small', color='gray', verticalalignment=valign_i)
         ax.text(origin[0], origin[1], origin[2] + l, 'S',
-                fontsize='x-small', color='gray', verticalalignment=valign_s)
+                fontsize='xx-small', color='gray', verticalalignment=valign_s)
     # Arrow origins
     arrows_x = [origin[0]] * (len(dims) * 2)
     arrows_y = [origin[1]] * (len(dims) * 2)
