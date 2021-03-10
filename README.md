@@ -121,12 +121,12 @@ For templates, you can change the voxelsize of the template. Larger voxels means
 The view is the angle which the brain is viewed from in the plot.
 You can specify it as a string:
 
-- Left 'L',
-- Right 'R',
-- Anterior 'A',
-- Posterior 'P'
-- Superior 'S'
-- Inferior 'I'
+  - Left 'L',
+  - Right 'R',
+  - Anterior 'A',
+  - Posterior 'P'
+  - Superior 'S'
+  - Inferior 'I'
 
 Sequences of views are possible.
 So, setting view = 'LSR' will generate 3 subplots with left, superior, and right views
