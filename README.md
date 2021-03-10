@@ -31,6 +31,7 @@ You do not need to have all of them specified.
 There are two ways to specify nodes.
 
 1. Nodes: a pandas dataframe of cordinates
+
 2. Nodeimg: a 3D nifti image where each node has a different value.
 Alternatively, nodeimg can be dictionary to grab an atlas from templateflow.
 
@@ -121,12 +122,12 @@ For templates, you can change the voxelsize of the template. Larger voxels means
 The view is the angle which the brain is viewed from in the plot.
 You can specify it as a string:
 
-  - Left 'L',
-  - Right 'R',
-  - Anterior 'A',
-  - Posterior 'P'
-  - Superior 'S'
-  - Inferior 'I'
+- Left 'L',
+- Right 'R',
+- Anterior 'A',
+- Posterior 'P'
+- Superior 'S'
+- Inferior 'I'
 
 Sequences of views are possible.
 So, setting view = 'LSR' will generate 3 subplots with left, superior, and right views
@@ -147,7 +148,7 @@ The first from left to right. The second from anterior to posterior.
 
 ## Minimal examples
 
-# Import necessary packages and load example data
+### Import necessary packages and load example data
 
 ```python
 
@@ -161,7 +162,7 @@ edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 
 ```
 
-# Plot single view
+### Plot single view
 
 ```python
 netplotbrain.plot(template='MNI152NLin2009cAsym',
@@ -174,7 +175,7 @@ plt.show()
 ```
 ![](./examples/figures/singleview.png)
 
-## Specify column names to specify size
+### Specify column names to specify size
 
 ```python
 fig = plt.figure()
@@ -203,7 +204,7 @@ plt.show()
 ```
 ![](./examples/figures/measures.png)
 
-## Plot multiple rows
+### Plot multiple rows
 
 ```python
 netplotbrain.plot(template='MNI152NLin2009cAsym',
@@ -217,7 +218,7 @@ plt.show()
 ```
 ![](./examples/figures/rows1.png)
 
-## Plot atlas (as nodes) from templateflow
+### Plot atlas (as nodes) from templateflow
 
 ```python
 netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
@@ -231,10 +232,10 @@ plt.show()
 ```
 ![](./examples/figures/atlas_circles.png)
 
-## Plot different templates
+### Plot different templates
 
 
-## plot atlas (as parcels) from templateflow
+### plot atlas (as parcels) from templateflow
 
 ```python
 netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
@@ -250,7 +251,7 @@ plt.show()
 ```
 ![](./examples/figures/atlas_parcels.png)
 
-## Plot individual hemispheres
+### Plot individual hemispheres
 
 ```python
 netplotbrain.plot(template='MNI152NLin2009cAsym',
@@ -263,7 +264,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 ```
 ![](./examples/figures/hemi.png)
 
-## Plot different templates
+### Plot different templates
 
 ```python
 # Generate data for WHS
@@ -290,7 +291,7 @@ plt.show()
 
 
 
-## Plot different styles
+### Plot different styles
 
 ```python
 netplotbrain.plot(template='MNI152NLin2009cAsym',
@@ -317,7 +318,7 @@ plt.show()
 
 
 
-# Get involved?
+## Get involved?
 
 We hope to develop this package.
 Please feel free to get in touch about what feature you want/would like to implement/would like to contribute to.
