@@ -329,7 +329,7 @@ Suggestion of text in methods section:
 
 >### Methods
 >
->Network plots were generated using netplotbrain (Thompson & Fanton 2021), which utilizes templateflow (Ciric et al 2021), matplotlib (Hunter 2007), pandas (McKinney 2011), numpy (Harris et al 2020), scipy (Harris et al 2020), nibabel (Brett et al 2020), and scikit-image (van der Walt et al 2014).  
+>Network plots were generated using netplotbrain (Thompson & Fanton 2021), which utilizes templateflow (Ciric et al 2021), matplotlib (Hunter 2007), pandas (McKinney 2011), numpy (Harris et al 2020), scipy (Virtanen et al 2020), nibabel (Brett et al 2020), and scikit-image (van der Walt et al 2014).  
 >
 >### References
 >
