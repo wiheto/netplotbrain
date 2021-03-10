@@ -1,0 +1,8 @@
+docs_dir: content
+mkdocs_config:
+  site_name: My Project
+  theme: readthedocs
+nav:
+- Home: index.md
+- API Documentation: api-documentation.md
+site_name: My Project
