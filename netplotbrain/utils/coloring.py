@@ -3,11 +3,8 @@ import matplotlib.colors as pltcol
 import numpy as np
 
 
-
 def _colorarray_from_string(cmap, ncolors):
-    """
-    Get colormap array from string that loops through colors
-    """
+    """Get colormap array from string that loops through colors"""
     if cmap in pltcol.cnames or cmap[0] == '#':
         colors = pltcol.to_rgba_array(cmap)
         colors = np.vstack([colors] * ncolors)
@@ -28,11 +25,11 @@ def _highlight_nodes(nodes, nodecolor, nodealpha, highlightnodes, highlightlevel
     if isinstance(nodecolor, str):
         nodecolor = _colorarray_from_string(nodecolor, len(nodes))
     if nodecolor.shape[1] == 3:
-        nodecolor = np.hstack([nodecolor, np.vstack([nodealpha]*len(nodecolor))])
+        nodecolor = np.hstack(
+            [nodecolor, np.vstack([nodealpha]*len(nodecolor))])
     # dim the non-highlighted nodes
-    nodecolor[highlight_idx==0, 3] = nodealpha * (1 - highlightlevel)
+    nodecolor[highlight_idx == 0, 3] = nodealpha * (1 - highlightlevel)
     return nodecolor, highlight_idx
-
 
 
 def _get_colorby_colors(df, colorby=None, cmap='plasma'):
@@ -56,6 +53,6 @@ def _get_colorby_colors(df, colorby=None, cmap='plasma'):
     cmap = cm.get_cmap(cmap)
     colors = cmap(np.linspace(0, 1, len(cat)))
     colordict = dict(zip(cat, colors))
-    color_array = df[colorby].apply(lambda z:colordict[z])
+    color_array = df[colorby].apply(lambda z: colordict[z])
     color_array = np.vstack(color_array.values)
     return color_array
