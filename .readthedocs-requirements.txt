@@ -1,1 +1,2 @@
 readthedocs-custom-steps
+pydoc-markdown
