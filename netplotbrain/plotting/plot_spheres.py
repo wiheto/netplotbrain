@@ -23,7 +23,7 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodec
     Nothing
 
     """
-    
+
     # Loop through each node and plot a surface plot
     for index, row in nodes.iterrows():
         # Get the xyz coords for the node
@@ -43,13 +43,13 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodec
         x = r*np.cos(u)*np.sin(v)
         y = r*np.sin(u)*np.sin(v)
         z = r*np.cos(v)
-        
+
         # Select the node color if string or array
         if isinstance(nodecolor, np.ndarray):
             ncolor = nodecolor[index]
         else:
             ncolor = nodecolor
-            
+
         ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
                         color=ncolor,
                         alpha=alpha)
