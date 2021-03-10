@@ -7,6 +7,7 @@ import matplotlib.cm as cm
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure
 from .plot_templates import _select_single_hemisphere_template
+from ..utils import _colorarray_from_string
 
 def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     """
@@ -87,8 +88,7 @@ def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemi
         nodelabels = nodelabels[1:]
     # Create a nnode length (or longer) array which repeats colormap
     if isinstance(cmap, str):
-        colors = cm.get_cmap(cmap).colors
-        colors = colors * int(np.ceil(len(nodelabels) / len(colors)))
+        colors = _colorarray_from_string(cmap, len(nodelabels))
     else:
         # If colors has already been defined prior to calling this function
         colors = cmap
@@ -104,7 +104,10 @@ def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemi
         # for n in np.unique(vals):
         mesh = Poly3DCollection(vertices)
         mesh.set_facecolor(colors[ni])
-        mesh.set_alpha(alpha)
+        if isinstance(colors, str): 
+            mesh.set_alpha(alpha)
+        elif colors.shape[1] != 4: 
+            mesh.set_alpha(alpha)
         ax.add_collection3d(mesh)
 
     ax.set_xlim(0, data.shape[0])

@@ -149,6 +149,9 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   
 plt.savefig('./examples/figures/styles1.png', dpi=150)
 
+
+
+
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='cloudy',
                   view='SPR',

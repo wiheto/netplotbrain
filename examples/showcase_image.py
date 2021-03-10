@@ -67,11 +67,12 @@ netplotbrain.plot(nodes=nodes,
                   nodealpha=0.5,
                   nodecolorby='community',
                   nodesize='centrality_measure2',
-                  title='Let columns set\ncolor + size',
+                  title='Easily set color\n and size',
                   fig=fig, ax=ax,
                   nodecmap='gnuplot',
                   edgealpha=0.5,
-                  edgescale=0.5)
+                  edgescale=0.5,
+                  nodescale=10)
 
 
 
@@ -164,6 +165,72 @@ netplotbrain.plot(nodes=atlasinfo,
                   nodecolorby='yeo7networks',
                   fig=fig, ax=ax,
                   title='Show communities')
+
+
+ax = fig.add_subplot(3, 4, 10, projection='3d')
+netplotbrain.plot(nodes=atlasinfo,
+                  nodeimg={'atlas': 'Schaefer2018',
+                           'desc': '400Parcels7Networks',
+                           'resolution': 1},
+                  template='MNI152NLin2009cAsym',
+                  templatestyle=None,
+                  view=['S'],
+                  nodetype='parcels',
+                  nodecmap='Dark2',
+                  nodecolorby='yeo7networks',
+                  nodealpha = 0.8,
+                  title = 'Highlight communities',
+                  highlightnodes={'yeo7networks': 'Cont'},
+                  highlightlevel=0.95,
+                  fig=fig, ax=ax)
+
+
+
+ax = fig.add_subplot(3, 4, 11, projection='3d')
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view='L',
+                  nodes='./examples/example_nodes.tsv',
+                  hemisphere=['R'],
+                  nodescale=5,
+                  edges='./examples/example_edges.tsv',
+                  templatealpha=0.05,
+                  title='Highlight nodes',
+                  templatecolor='gray',
+                  highlightnodes=[6, 8, 25, 29],
+                  fig=fig, ax=ax)
+
+
+ax = fig.add_subplot(3, 4, 12, projection='3d')
+
+
+edgedf = pd.DataFrame()
+edgedf['i'] = [60, 95]
+edgedf['j'] = [95, 51]
+edgedf['weight'] = [1, 0.75]
+nodes_col = np.zeros([100])
+nodes_col[95] = 1
+nodes_col[[51, 60]] = 2
+nodes = pd.DataFrame(data={'seed_roi': nodes_col})
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view='S',
+                  nodeimg={'atlas': 'Schaefer2018',
+                           'desc': '100Parcels7Networks',
+                           'resolution': 1},
+                  nodetype='parcels',
+                  edges=edgedf,
+                  nodes=nodes,
+                  templatealpha=0.03,
+                  title='Nodes as parcels',
+                  templatecolor='gray',
+                  nodecolor='Pastel1',
+                  highlightnodes=[60, 95, 51],
+                  highlightlevel=1,
+                  fig=fig, ax=ax,
+                  edgescale=3,
+                  nodecolorby='seed_roi',
+                  edgecolor='darkred')
 
 
 fig.savefig('./examples/figures/showcase.png', dpi=150)

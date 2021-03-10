@@ -3,16 +3,18 @@ import numpy as np
 import inspect
 import pandas as pd
 from .plotting import _plot_template, _plot_template_style_filled, _plot_template_style_cloudy,\
-    _plot_edges, _plot_nodes, _plot_spheres, _set_axes_equal, _set_axes_radius, _get_view,\
+    _plot_edges, _plot_nodes, _plot_spheres,\
     _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels,\
-    _select_single_hemisphere_nodes, _npedges2dfedges, _add_subplot_title, get_frame_input, _get_colorby_colors
+    _select_single_hemisphere_nodes, _npedges2dfedges, _add_subplot_title, get_frame_input
+    
+from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _set_axes_radius, _get_view
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
          arroworigin=None, edgecolor='k', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres', nodecolorby=None,
          nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
-         edgealpha=1):
+         edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both'):
     # sourcery skip: merge-nested-ifs
     """
     Plot a network on a brain
@@ -104,7 +106,18 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         List or int point out which nodes you want to be highlighted.
         If dict, should be a single column-value pair.
         Example: highlight all nodes of that, in the node dataframe, have a community
-        value of 1, the input will be {'community': 1}.    
+        value of 1, the input will be {'community': 1}.   
+    highlightlevel : float
+        Intensity of the highlighting (opposite of alpha).
+        Value between 0 and 1, if 1, non-highlighted nodes are fully transparent.
+        If 0, non-highlighted nodes are same alpha level as highlighted nodes.
+        Default 0.85. 
+    edgehighlightbehaviour : str
+        Alternatives "both" or "any" or None.
+        Governs edge dimming when highlightnodes is on
+        If both, then highlights only edges between highlighted nodes.
+        If any, then only edges connecting any of the nodes are highlighted.
+
 
     """
     # Load edge and nodes if string is provided. 
@@ -112,13 +125,6 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         nodes = pd.read_csv(nodes, sep='\t', index_col=0)
     if isinstance(edges, str): 
         edges = pd.read_csv(edges, sep='\t', index_col=0)
-    if highlightnodes is not None:
-        if isinstance(highlightnodes, dict):
-            highlight_idx = nodes[highlightnodes.keys()] == highlightnodes.values
-        else:
-            highlight_idx = np.zeros(len(nodes))
-            highlight_idx[highlightnodes] = 1
-        nodes['nbp_highlight'] = highlight_idx
     # get the number of views
     if isinstance(view, list):
         nrows = len(view)
@@ -153,6 +159,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap)
+    if highlightnodes is not None:
+        nodecolor, highlightnodes = _highlight_nodes(nodes, nodecolor, nodealpha, highlightnodes, highlightlevel)
     ax_in = ax
     # Prespecify ouput ax list
     ax_out = []
@@ -213,7 +221,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             if edges is not None:
                 edges_frame = edges.copy()
                 _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights, edgewidthscale=edgescale,
-                            edgecolor=edgecolor, edgealpha=edgealpha)
+                            edgecolor=edgecolor, edgealpha=edgealpha, highlightnodes=highlightnodes, highlightlevel=highlightlevel,
+                            edgehighlightbehaviour=edgehighlightbehaviour)
             if arrowaxis_row is not None:
                 _add_axis_arrows(ax, dims=arrowaxis_row,
                                  length=arrowlength, origin=arroworigin,
