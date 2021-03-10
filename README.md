@@ -31,8 +31,8 @@ Alternatively, nodeimg can be dictionary to grab an atlas from templateflow.
 
 ### Nodes (Dataframe)
 
-The Pandas dataframe should have(at least) the columns 'x', 'y', and 'z'.
-These columns should be coordinates in the space of the template(e.g. MNI).
+The Pandas dataframe should have (at least) the columns 'x', 'y', and 'z'.
+These columns should be coordinates in the space of the template (e.g. MNI).
 It will look something like this. 
 
 | x       | y     | z     |
@@ -79,7 +79,7 @@ then the template argument does not need to be included in the dictionary.
 
 ## Edges (dataframe)
 
-Edges as a numpy array (adj matrix) or as a pandas dataframe(edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example: 
+Edges as a numpy array (adj matrix) or as a pandas dataframe (edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example: 
 
 | j       | j     | weight     |
 | :-------------:  | :----------: | :-----------: |
@@ -95,7 +95,7 @@ If numpy array, then the array should be a N x N array (where N is number of nod
 For the template you can supply any nifti file.
 
 You can also provide the template name for any template on templateflow.org.
-The T1w brain mask will then automatically downloaded(if not already present on your computer) and used as the background.
+The T1w brain mask will then automatically downloaded (if not already present on your computer) and used as the background.
 
 Netplotbrain can render slightly different templates 
 
@@ -103,11 +103,11 @@ Netplotbrain can render slightly different templates
 
 There are currently three background styles: "surface", "filled" and "cloudy".
 
-The surface, quickly renders a surface from the voxels. Additional arguments can be provided in order to the resolution of the surface.
+The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to the resolution of the surface.
 
-The filled style, plots the template's brain mask as voxels. This can be slightly RAM consuming.
+The filled style plots the template's brain mask as voxels. This can be slightly RAM consuming.
 
-The cloudy style, tries to identify the outline of the mask and plots points along the edges. The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.
+The cloudy style tries to identify the outline of the mask and plots points along the edges. The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.
 
 For templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker.
 
@@ -124,9 +124,9 @@ You can specify it as a string:
 - Inferior 'I'
 
 Sequences of views are possible.
-So setting view = 'LSR' will generate 3 subplots with left, superior, and right views
+So, setting view = 'LSR' will generate 3 subplots with left, superior, and right views
 
-You can also specify the specific rotation(tuple): (xy-rotate, xz-rotate) in degrees. The R view is (0, 0)
+You can also specify the specific rotation (tuple): (xy-rotate, xz-rotate) in degrees. The R view is (0, 0)
 
 ### Rotated sequences with frames
 
@@ -134,11 +134,11 @@ You can also generate a sequence of rotated images.
 
 If the view is two letters, (e.g. `'LR'`), then a sequence will be generated from the L-view to R-view.
 
-The parameter `frames` will controle how many images are generated.
+The parameter `frames` will control how many images are generated.
 Images will then be displayed along a single row.
 
-If you specify a list(e.g. `['LR', 'AP']`) then two different rows will be generated.
-The first, from left to right. The second from anterior to posterior.
+If you specify a list (e.g. `['LR', 'AP']`) then two different rows will be generated.
+The first from left to right. The second from anterior to posterior.
 
 ## Minimal examples
 
@@ -316,14 +316,6 @@ plt.show()
 
 We hope to develop this package.
 Please feel free to get in touch about what feature you want/would like to implement/would like to contribute to.
-
-# Features to be added.
-
-- Dynamicly choose which arrows are shown
-- Colouring.
-- Edge properties.
-- Simple node selection
-- Scaling
 
 
 ## Citation
