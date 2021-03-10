@@ -92,7 +92,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatevoxsize=2,
                   templatealpha=0.025,
                   templatecolor='darkkhaki',
-                  title='Or different brain themes',
+                  title='Different brain themes',
                   fig=fig, ax=ax)
 
 ax = fig.add_subplot(345, projection='3d')
