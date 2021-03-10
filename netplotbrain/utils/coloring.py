@@ -4,7 +4,7 @@ import numpy as np
 
 
 def _colorarray_from_string(cmap, ncolors):
-    """Get colormap array from string that loops through colors"""
+    """Get colormap array from string that loops through colors."""
     if cmap in pltcol.cnames or cmap[0] == '#':
         colors = pltcol.to_rgba_array(cmap)
         colors = np.vstack([colors] * ncolors)

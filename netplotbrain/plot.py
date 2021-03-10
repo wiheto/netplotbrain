@@ -15,7 +15,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
          nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols='auto', nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
          edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both'):
     # sourcery skip: merge-nested-ifs
-    """Plot a network on a brain
+    """
+    Plot a network on a brain
 
     Parameters
     ---------------------
@@ -123,7 +124,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         nodes = pd.read_csv(nodes, sep='\t', index_col=0)
     if isinstance(edges, str):
         edges = pd.read_csv(edges, sep='\t', index_col=0)
-    # set nodecols if no explicit input 
+    # set nodecols if no explicit input
     if nodecols == 'auto':
         nodecols = ['x', 'y', 'z']
     # get the number of views
@@ -161,7 +162,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap)
     if highlightnodes is not None:
-        nodecolor, highlightnodes = _highlight_nodes(nodes, nodecolor, nodealpha, highlightnodes, highlightlevel)
+        nodecolor, highlightnodes = _highlight_nodes(
+            nodes, nodecolor, nodealpha, highlightnodes, highlightlevel)
     ax_in = ax
     # Prespecify ouput ax list
     ax_out = []
@@ -207,7 +209,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             nodes_frame = None
             if nodes is not None:
                 nodes_frame = nodes.copy()
-                nodes_frame = _select_single_hemisphere_nodes(nodes_frame, affine, hemi_frame, nodecols)
+                nodes_frame = _select_single_hemisphere_nodes(
+                    nodes_frame, affine, hemi_frame, nodecols)
 
                 if nodetype == 'spheres':
                     _plot_spheres(ax, nodes_frame, nodecolor=nodecolor,
