@@ -6,7 +6,7 @@ from .plotting import _plot_template, _plot_template_style_filled, _plot_templat
     _plot_edges, _plot_nodes, _plot_spheres,\
     _scale_nodes, _add_axis_arrows, _plot_template_style_surface, _get_nodes_from_nii, _plot_parcels,\
     _select_single_hemisphere_nodes, _npedges2dfedges, _add_subplot_title, get_frame_input
-    
+
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _set_axes_radius, _get_view
 
 
@@ -36,13 +36,13 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     nodes : dataframe, string
         The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecols to change this).
         Can include additional infomation for node size and color.
-        If string, can load a tsv file (tab seperator), assumes index column is the 0th column. 
+        If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
     edges : dataframe, numpy array, or string
         If dataframe, must include i, j columns (and weight, for weighted).
         i and j specify indicies in nodes.
-        See edgecols if you want to change the default column names. 
+        See edgecols if you want to change the default column names.
         if numpy array, square adjacecny array.
-        If string, can load a tsv file (tab seperator), assumes index column is the 0th column. 
+        If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
     template : str or nibabel nifti
         Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
     templatestyle : str
@@ -79,7 +79,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     nodecolorby : str
         Column in dataframe that should get different colors (cannot be set with nodecolor)
     nodecmap : str
-        Matplotlib colormap for node coloring with nodecolorby. 
+        Matplotlib colormap for node coloring with nodecolorby.
     nodecolor : matplotlib coloring
         Can be string (default 'black') or list of 3D/4D colors for each edge.
     nodetype : str
@@ -96,7 +96,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     hemisphere: string or list
         If string, can be left or right to specify single hemisphere to include.
         If list, should match the size of views and contain strings to specify hemisphere.
-        Can be abbreviated to L, R and (empty string possible if both hemisphere plotted).  
+        Can be abbreviated to L, R and (empty string possible if both hemisphere plotted).
         Between hemispehre edges are deleted.
     nodecols : list
         Node column names in node dataframe. Default is x, y, z (specifying coordinates)
@@ -106,12 +106,12 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         List or int point out which nodes you want to be highlighted.
         If dict, should be a single column-value pair.
         Example: highlight all nodes of that, in the node dataframe, have a community
-        value of 1, the input will be {'community': 1}.   
+        value of 1, the input will be {'community': 1}.
     highlightlevel : float
         Intensity of the highlighting (opposite of alpha).
         Value between 0 and 1, if 1, non-highlighted nodes are fully transparent.
         If 0, non-highlighted nodes are same alpha level as highlighted nodes.
-        Default 0.85. 
+        Default 0.85.
     edgehighlightbehaviour : str
         Alternatives "both" or "any" or None.
         Governs edge dimming when highlightnodes is on
@@ -120,10 +120,10 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
 
 
     """
-    # Load edge and nodes if string is provided. 
-    if isinstance(nodes, str): 
+    # Load edge and nodes if string is provided.
+    if isinstance(nodes, str):
         nodes = pd.read_csv(nodes, sep='\t', index_col=0)
-    if isinstance(edges, str): 
+    if isinstance(edges, str):
         edges = pd.read_csv(edges, sep='\t', index_col=0)
     # get the number of views
     if isinstance(view, list):
@@ -147,7 +147,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         colnum = frames * 10
         rows = nrows * 100
     # Check input, if numpy array, make dataframe
-    if type(edges) is np.ndarray:
+    if isinstance(edges, np.ndarray):
         edges = _npedges2dfedges(edges)
     # Set default behaviour of edgeweights
     if edgeweights is None or edgeweights is True:
@@ -176,7 +176,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             hemi_frame = get_frame_input(hemisphere, axind, ri, fi)
             # Get title for this frame
             title_frame = get_frame_input(title, axind, ri, fi)
-            # Set up subplot                
+            # Set up subplot
             if ax_in is None:
                 subplotid = rows + colnum + axind + 1
                 ax = fig.add_subplot(subplotid, projection='3d')
@@ -202,8 +202,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             if nodes is not None and nodeimg is None and axind == 0:
                 nodes = _scale_nodes(nodes, affine, nodecols)
             # nodes and subplot may change for each frame/subplot
-            # e.g. if hemisphere is specified      
-            nodes_frame = None     
+            # e.g. if hemisphere is specified
+            nodes_frame = None
             if nodes is not None:
                 nodes_frame = nodes.copy()
                 nodes_frame = _select_single_hemisphere_nodes(nodes_frame, affine, hemi_frame, nodecols)

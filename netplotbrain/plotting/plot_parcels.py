@@ -3,7 +3,6 @@ import templateflow.api as tf
 import numpy as np
 import pandas as pd
 from nibabel.processing import resample_to_output
-import matplotlib.cm as cm
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure
 from .plot_templates import _select_single_hemisphere_template
@@ -81,7 +80,7 @@ def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemi
     # Due to only being able to get data once, this leads to problems when LR hemi are specieid
     data = img.get_fdata(caching='unchanged').copy()
     # If single hemisphere, get only that side
-    data = _select_single_hemisphere_template(data, hemisphere)  
+    data = _select_single_hemisphere_template(data, hemisphere)
     # Get the number of nodes (subtract 1 for 0)
     nodelabels = np.unique(data)
     if 0 in nodelabels:
@@ -104,9 +103,9 @@ def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemi
         # for n in np.unique(vals):
         mesh = Poly3DCollection(vertices)
         mesh.set_facecolor(colors[ni])
-        if isinstance(colors, str): 
+        if isinstance(colors, str):
             mesh.set_alpha(alpha)
-        elif colors.shape[1] != 4: 
+        elif colors.shape[1] != 4:
             mesh.set_alpha(alpha)
         ax.add_collection3d(mesh)
 

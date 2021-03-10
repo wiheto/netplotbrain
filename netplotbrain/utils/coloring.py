@@ -8,7 +8,7 @@ def _colorarray_from_string(cmap, ncolors):
     """
     Get colormap array from string that loops through colors
     """
-    if cmap in pltcol.cnames or cmap[0] == '#': 
+    if cmap in pltcol.cnames or cmap[0] == '#':
         colors = pltcol.to_rgba_array(cmap)
         colors = np.vstack([colors] * ncolors)
     else:
@@ -25,7 +25,7 @@ def _highlight_nodes(nodes, nodecolor, nodealpha, highlightnodes, highlightlevel
     else:
         highlight_idx = np.zeros(len(nodes))
         highlight_idx[highlightnodes] = 1
-    if isinstance(nodecolor, str): 
+    if isinstance(nodecolor, str):
         nodecolor = _colorarray_from_string(nodecolor, len(nodes))
     if nodecolor.shape[1] == 3:
         nodecolor = np.hstack([nodecolor, np.vstack([nodealpha]*len(nodecolor))])
@@ -37,7 +37,7 @@ def _highlight_nodes(nodes, nodecolor, nodealpha, highlightnodes, highlightlevel
 
 def _get_colorby_colors(df, colorby=None, cmap='plasma'):
     """
-    Get array of different colors by some column 
+    Get array of different colors by some column
 
     Parameters
     -------------------
@@ -49,8 +49,8 @@ def _get_colorby_colors(df, colorby=None, cmap='plasma'):
 
     Returns
     -------------------
-    color_array : numpy array 
-        A N x 4 list of matplotlib colours for each node  
+    color_array : numpy array
+        A N x 4 list of matplotlib colours for each node
     """
     cat = np.unique(df[colorby])
     cmap = cm.get_cmap(cmap)
