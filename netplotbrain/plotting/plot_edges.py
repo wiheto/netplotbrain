@@ -4,8 +4,9 @@ import pandas as pd
 
 def _npedges2dfedges(edges, edgethreshold=0):
     """
-    A function which transforms numpy array edges into dataframe to be compatible
-    with all functionality.
+    A function which transforms numpy array edges into dataframe.
+    
+    This function is required for compatiblity with other functions.
 
     Parameters
     ---------------------
@@ -35,7 +36,7 @@ def _get_edge_highlight_alpha(node_i, node_j, highlightnodes, highlightlevel, ed
 
 def _plot_edges(ax, nodes, edges, edgewidth=None, edgewidthscale=1, edgecolor='k', edgecol=['i', 'j'], edgealpha=None, highlightnodes=None, highlightlevel=None, edgehighlightbehaviour='both'):
     """
-    Plots the edges on the plot
+    Plots the edges on the plot.
 
     Parameters
     ----------------------------
@@ -58,15 +59,13 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgewidthscale=1, edgecolor='k
         Transparency of edges.
     highlightnodes : list
         See netplotbrain.plot
-    highlightlevel : float 
+    highlightlevel : float
         See netplotbrain.plot
     edgehighlightbehaviour : str
         alternatives "both" or "any" or None.
         Governs edge dimming when highlightnodes is on
         If both, then highlights only edges between highlighted nodes.
         If any, then only edges connecting any of the nodes are highlighted.
-
-
 
     Returns
     ----------------------

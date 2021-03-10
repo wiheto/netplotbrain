@@ -1,3 +1,4 @@
+"""Main plotting functoins in package."""
 from .plot_edges import _plot_edges, _npedges2dfedges
 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
 from .plot_spheres import _plot_spheres
