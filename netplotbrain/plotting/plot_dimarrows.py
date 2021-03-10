@@ -1,7 +1,5 @@
-import numpy as np
 
-
-def _add_axis_arrows(ax, dims=['LR', 'AP'], length=10, origin=None, azim=0, elev=0):
+def _add_axis_arrows(ax, dims=None, length=10, origin=None, azim=0, elev=0):
     """
     Plots arrows to show the 3d Axis.
 
@@ -9,7 +7,7 @@ def _add_axis_arrows(ax, dims=['LR', 'AP'], length=10, origin=None, azim=0, elev
     ---------------------
     ax : matplotlib ax
     dims : list, string
-        LR, AP, SI, 'all'
+        LR, AP, SI, 'all', None
     length : int, float
     origin : list (len of 3)
         Origin of center of arrow axes.
@@ -23,6 +21,7 @@ def _add_axis_arrows(ax, dims=['LR', 'AP'], length=10, origin=None, azim=0, elev
     Nothing (input axis is updated)
 
     """
+    # Set default
     if origin is None:
         xlim = ax.get_xlim3d()
         ylim = ax.get_ylim3d()

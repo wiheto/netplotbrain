@@ -12,7 +12,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
          arroworigin=None, edgecolor='k', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres', nodecolorby=None,
-         nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols=['x', 'y', 'z'], nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
+         nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols='auto', nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
          edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both'):
     # sourcery skip: merge-nested-ifs
     """Plot a network on a brain
@@ -97,7 +97,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         Can be abbreviated to L, R and (empty string possible if both hemisphere plotted).
         Between hemispehre edges are deleted.
     nodecols : list
-        Node column names in node dataframe. Default is x, y, z (specifying coordinates)
+        Node column names in node dataframe. 'auto' entails the columsn are ['x', 'y', 'z'] (specifying coordinates)
     edgecols : list
         Edge columns names in edge dataframe. Default is i and j (specifying nodes).
     highlightnodes : int, list, dict
@@ -123,6 +123,9 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         nodes = pd.read_csv(nodes, sep='\t', index_col=0)
     if isinstance(edges, str):
         edges = pd.read_csv(edges, sep='\t', index_col=0)
+    # set nodecols if no explicit input 
+    if nodecols == 'auto':
+        nodecols = ['x', 'y', 'z']
     # get the number of views
     if isinstance(view, list):
         nrows = len(view)
