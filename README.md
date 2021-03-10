@@ -1,5 +1,7 @@
 # netplotbrain: visualizing networks in 3D on a brain
 
+[![DOI](https://zenodo.org/badge/317297000.svg)](https://zenodo.org/badge/latestdoi/317297000)
+
 Painlessly plot networks on a brain in python.
 
 ![](./examples/figures/showcase.png)
