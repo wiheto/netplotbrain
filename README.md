@@ -1,4 +1,4 @@
-# netplotbrain: visualizing networks on a brain
+# netplotbrain: visualizing networks in 3D on a brain
 
 Painlessly plot networks on a brain in python.
 
