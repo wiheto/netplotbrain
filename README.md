@@ -1,6 +1,6 @@
 # netplotbrain: visualizing networks on a brain
 
-Painlessly plot networks on a brian in python.
+Painlessly plot networks on a brain in python.
 
 ![](./examples/figures/showcase.png)
 
