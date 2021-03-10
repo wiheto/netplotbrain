@@ -77,6 +77,11 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
 
 
 def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemisphere='both'):
+    """
+    Plot each 3D parcels as a rendered surface.
+
+    See plot for input arguments.
+    """
     # Due to only being able to get data once, this leads to problems when LR hemi are specieid
     data = img.get_fdata(caching='unchanged').copy()
     # If single hemisphere, get only that side

@@ -4,9 +4,7 @@
 # This notebook goes through a showcase of netplotbrain examples.
 """
 #%% md
-"""
-Import all necessary packages
-"""
+"""Import all necessary packages."""
 #%%
 import netplotbrain
 import pandas as pd

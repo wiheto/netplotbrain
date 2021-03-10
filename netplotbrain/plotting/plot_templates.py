@@ -64,7 +64,7 @@ def _plot_template_style_surface(ax, data, alpha, template, templatecolor='gray'
 
 def _select_single_hemisphere_template(data, hemisphere):
     """Selects the left or right hemispehre by using the midway point on the x-axis.
-    
+
     This assumes left hemispehre is orientated on the left.
     """
     midpoint = int(data.shape[0] / 2)
