@@ -33,7 +33,7 @@ def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20):
                nodes[nodecols[2]], s=ns, color=nc)
 
 
-def _scale_nodes(nodes, nodecols, affine=None):
+def _scale_nodes(nodes, nodecols, affine=None):    
     """
     Scales nodes from MNI coordinates to ax with origin of 0.
 

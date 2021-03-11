@@ -1,9 +1,28 @@
 site_name: netplotbrain
+
+
 nav:
-    - Home: index.md
-    - API: netplotbrain/index.html
+    - index.md
+    - Tutorial: 
+        tutorial.md
+    - Gallary:
+        gallary.md
+    - API: 
+        api.md
 
 theme: readthedocs
 
+sitedir: docs
+
 plugins:
     - search
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - jetblack_markdown.autodoc:
+      ignore_all: false
+      ignore_inherited: true
+      prefer_docstring: true
+      follow_module_tree: False
+
