@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import random
+import mplcursors
 
 
 def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodecols=['x', 'y', 'z'], alpha=None):
@@ -54,6 +55,6 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodec
         else:
             ncolor = nodecolor
             
-        ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
+        mplcursors.cursor(ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
                         color=ncolor,
-                        alpha=alpha)
+                        alpha=alpha))
