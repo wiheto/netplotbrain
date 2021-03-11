@@ -203,14 +203,14 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             # So if affine is not None, nodes get scaled in relation to origin and voxelsize,
             # If node coords are derived from nodeimg, this has already been taken care of.
             if nodes is not None and nodeimg is None and axind == 0:
-                nodes = _scale_nodes(nodes, affine, nodecols)
+                nodes = _scale_nodes(nodes, nodecols, affine)
             # nodes and subplot may change for each frame/subplot
             # e.g. if hemisphere is specified
             nodes_frame = None
             if nodes is not None:
                 nodes_frame = nodes.copy()
                 nodes_frame = _select_single_hemisphere_nodes(
-                    nodes_frame, affine, hemi_frame, nodecols)
+                    nodes_frame, nodecols[0], affine, hemi_frame)
 
                 if nodetype == 'spheres':
                     _plot_spheres(ax, nodes_frame, nodecolor=nodecolor,
