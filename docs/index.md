@@ -5,7 +5,7 @@
 
 Painlessly plot networks on a brain in python. The package is still in early development and better documentation/tutorials/examples are in the works.
 
-![](https://github.com/wiheto/netplotbrain/blob/main/examples/figures/showcase.png)
+![](../examples/figures/showcase.png)
 
 ## Features
 
