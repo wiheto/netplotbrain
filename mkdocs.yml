@@ -12,8 +12,6 @@ nav:
 
 theme: readthedocs
 
-sitedir: docs
-
 plugins:
     - search
 
