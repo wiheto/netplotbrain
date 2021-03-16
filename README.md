@@ -30,7 +30,7 @@ You do not need to have all of them specified.
 
 There are two ways to specify nodes.
 
-1. Nodes: a pandas dataframe of cordinates
+1. Nodes: a pandas dataframe of coordinates
 
 2. Nodeimg: a 3D nifti image where each node has a different value.
 Alternatively, nodeimg can be dictionary to grab an atlas from templateflow.
