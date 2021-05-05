@@ -3,8 +3,10 @@ import numpy as np
 import pandas as pd
 from .plotting import _plot_template, \
     _plot_edges, _plot_nodes, _plot_spheres,\
-    _scale_nodes, _add_axis_arrows, _get_nodes_from_nii, _plot_parcels,\
-    _select_single_hemisphere_nodes, _npedges2dfedges, _add_subplot_title, get_frame_input
+    _scale_nodes, _add_axis_arrows, _plot_parcels,\
+    _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
+    _setup_legend, _process_edge_input, _process_node_input
+
 
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view
 
@@ -13,8 +15,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
          templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
          arroworigin=None, edgecolor='k', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='spheres', nodecolorby=None,
          nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols='auto', nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
-         edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both'):
-    # sourcery skip: merge-nested-ifs
+         edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both', nodecolorlegend=True, nodesizelegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -119,14 +120,10 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
 
 
     """
-    # Load edge and nodes if string is provided.
-    if isinstance(nodes, str):
-        nodes = pd.read_csv(nodes, sep='\t', index_col=0)
-    if isinstance(edges, str):
-        edges = pd.read_csv(edges, sep='\t', index_col=0)
-    # set nodecols if no explicit input
-    if nodecols == 'auto':
-        nodecols = ['x', 'y', 'z']
+    # Check and load the input of nodes and edges
+    nodes, nodeimg, nodecols = _process_node_input(nodes, nodeimg, nodecols, template, templatevoxsize)
+    edges, edgeweights = _process_edge_input(edges, edgeweights)
+    # TODO add function for subplot creation here
     # get the number of views
     if isinstance(view, list):
         nrows = len(view)
@@ -136,7 +133,12 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     # If specific views are given, calculate value of frames.
     if len(view[0]) > 2:
         frames = len(view[0])
-    n_subplots = nrows * frames
+    # Set up legend row
+    legend = None
+    legend = _setup_legend(nodecolorby, nodecolorlegend, 'nodecolor', legend)
+    legend = _setup_legend(nodesize, nodesizelegend, 'nodesize', legend)
+    # Total number of subplots
+    n_subplots = (nrows * frames) + len(legend)
     if ax is not None and not isinstance(ax, list) and n_subplots > 1:
         raise ValueError(
             'Ax input must be a list when requesting multiple frames')
@@ -145,19 +147,13 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             raise ValueError('Ax list, must equal number of frames requested')
     # Init figure, if not given as input
     if ax is None:
-        fig = plt.figure(figsize=(frames * 3, 3 * nrows))
+        if legend is None: 
+            legendrow = 1
+        else: 
+            legendrow = 0
+        fig = plt.figure(figsize=(frames * 3, 3 * (nrows + legendrow)))
         colnum = frames * 10
-        rows = nrows * 100
-    # Check input, if numpy array, make dataframe
-    if isinstance(edges, np.ndarray):
-        edges = _npedges2dfedges(edges)
-    # Set default behaviour of edgeweights
-    if edgeweights is None or edgeweights is True:
-        edgeweights = 'weight'
-    # Load the nifti node file
-    if nodeimg is not None:
-        nodes, nodeimg = _get_nodes_from_nii(
-            nodeimg, voxsize=templatevoxsize, template=template, nodes=nodes)
+        rows = (nrows + legendrow) * 100    
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap)
