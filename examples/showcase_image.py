@@ -72,12 +72,9 @@ netplotbrain.plot(nodes=nodes,
                   nodecmap='gnuplot',
                   edgealpha=0.5,
                   edgescale=0.5,
-                  nodescale=10)
-
-
-
-
-
+                  nodescale=10,
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
 
 
 ax = fig.add_subplot(348, projection='3d')
@@ -93,7 +90,9 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatealpha=0.025,
                   templatecolor='darkkhaki',
                   title='Different brain themes',
-                  fig=fig, ax=ax)
+                  fig=fig, ax=ax,
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
 
 ax = fig.add_subplot(345, projection='3d')
 
@@ -109,7 +108,9 @@ netplotbrain.plot(nodes=nodes,
                   nodesize='centrality_measure2',
                   title='Show one hemisphere',
                   fig=fig, ax=ax,
-                  nodecmap='gnuplot')
+                  nodecmap='gnuplot',
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
 
 
 ax = fig.add_subplot(3, 4, 6, projection='3d')
@@ -141,7 +142,9 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   fig=fig, ax=ax,
                   edgescale=3,
                   nodecolorby='seed_roi',
-                  edgecolor='darkred')
+                  edgecolor='darkred',
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
 
 
 
@@ -158,7 +161,9 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatecolor='gray',
                   highlightlevel=0.9,
                   highlightnodes=[6, 8, 25, 29],
-                  fig=fig, ax=ax)
+                  fig=fig, ax=ax,
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
 
 
 
@@ -201,7 +206,9 @@ netplotbrain.plot(nodes=atlasinfo,
                   nodecmap='Dark2',
                   nodecolorby='yeo7networks',
                   fig=fig, ax=ax,
-                  title='Community templates')
+                  title='Community templates',
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
 
 
 ax = fig.add_subplot(3, 4, 11, projection='3d')
@@ -219,22 +226,29 @@ netplotbrain.plot(nodes=atlasinfo,
                   title = 'Highlight a community',
                   highlightnodes={'yeo7networks': 'Cont'},
                   highlightlevel=0.95,
-                  fig=fig, ax=ax)
+                  fig=fig, ax=ax,
+                  nodecolorlegend=False,
+                  nodesizelegend=False)
 
 
 ax = fig.add_subplot(3, 4, 12, projection='3d')
-
+nodes_whs = nodes.copy()
+nodes_whs['x'] = nodes_whs['x'] / 8
+nodes_whs['y'] = nodes_whs['y'] / 8
+nodes_whs['z'] = nodes_whs['z'] / 8
 netplotbrain.plot(template='WHS',
                   templatestyle='surface',
                   view='S',
-                  nodes=nodes / 8,
+                  nodes=nodes_whs,
                   nodesize='centrality_measure1',
                   title='TemplateFlow integration',
                   edges=edges,
                   nodescale=80,
                   templatevoxsize=0.2,
                   fig=fig, ax=ax,
-                  edgescale=0.5)
+                  edgescale=0.5,
+                  nodecolorlegend=False,
+                  nodesizelegend=False)
 
 
 

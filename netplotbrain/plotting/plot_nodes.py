@@ -1,6 +1,6 @@
 import numpy as np
 
-def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20):
+def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, nodescale=1):
     """
     Function that plots nodes in figure
 
@@ -15,6 +15,8 @@ def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20):
         if string, must refer to a column in nodes.
     nodecolor : string or matplotlib color
         if non-color string, must refer to a column in nodes
+    nodescale : float
+        Scaling factor applied to nodesize.
 
 
     Returns
@@ -22,18 +24,21 @@ def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20):
     Nothing
 
     """
+    # If half hemisphere is plotted, then cut the right
+    nc = nodecolor
+    if isinstance(nodecolor, np.ndarray):
+        if len(nodes) < nodecolor.shape[0]:
+            nc = nodecolor[nodes.index, :]
     # Check if nodesize input is column in node data
     if isinstance(nodesize, str) and nodesize in nodes.columns:
-        ns = nodes[nodesize]
+        ns = nodes[nodesize] * nodescale
     else:
-        ns = nodesize
-    # Set colormap
-    nc = nodecolor
+        ns = nodesize * nodescale
     ax.scatter(nodes[nodecols[0]], nodes[nodecols[1]],
                nodes[nodecols[2]], s=ns, color=nc)
 
 
-def _scale_nodes(nodes, nodecols, affine=None):    
+def _scale_nodes(nodes, nodecols, affine=None):
     """
     Scales nodes from MNI coordinates to ax with origin of 0.
 

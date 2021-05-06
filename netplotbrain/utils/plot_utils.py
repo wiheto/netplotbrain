@@ -22,7 +22,7 @@ def _set_axes_equal(ax: plt.Axes):
         ax.get_zlim3d(),
     ])
     origin = np.mean(limits, axis=1)
-    # IMPORTANT, this scaling factor (0.3) might needed to be changed
+    # NOTE, this scaling factor (0.3) might needed to be changed
     # Orginally it was 0.5, and should be checked that all templates
     # Fit this. A template specific scaling factor is possible, if problems
     # arise.

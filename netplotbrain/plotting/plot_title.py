@@ -1,6 +1,6 @@
 
 
-def _add_subplot_title(ax, azim, elev, title='auto', hemisphere='both', titlefont='Sawasdee', titlefontsize='medium', titleloc='center', titleweight='regular', titlecolor='gray'):
+def _add_subplot_title(ax, azim=None, elev=None, title='auto', hemisphere='both', titlefont='Sawasdee', titlefontsize='medium', titleloc='center', titleweight='regular', titlecolor='gray'):
 
     if title == 'auto':
         viewcoord = (azim, elev)

@@ -45,10 +45,11 @@ zlim = [-180, -60]
 nodes, edges = create_random_data(n, m, xlim, ylim, zlim)
 
 # Plot single view
-netplotbrain.plot(template='OASIS30ANTs',
-         templatestyle='surface',
+netplotbrain.plot(template=None,
+         templatestyle=None,
          view='LSR',
          nodes=nodes,
+         nodescale=60,
          nodesize='centrality_measure1',
          edges=edges)
 

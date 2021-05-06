@@ -21,8 +21,9 @@ edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 # Plot single view
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',
-                  view='SLR',
+                  view='LSR',
                   nodes=nodes,
+                  nodescale=40,
                   nodesize='centrality_measure1',
                   edges=edges,
                   nodecolorby='community')
@@ -43,7 +44,8 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   title='Centrality Measure 1',
                   nodesize='centrality_measure1',
                   nodecolor='red',
-                  edges=edges)
+                  edges=edges,
+                  showlegend=False)
 
 ax_m2 = fig.add_subplot(122, projection='3d')
 netplotbrain.plot(template='MNI152NLin2009cAsym',
@@ -55,7 +57,8 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   title='Centrality Measure 2',
                   nodesize='centrality_measure2',
                   nodecolor='blue',
-                  edges=edges)
+                  edges=edges,
+                  showlegend=False)
 
 plt.savefig('./examples/figures/measures.png', dpi=150)
 
@@ -121,11 +124,15 @@ plt.savefig('./examples/figures/hemi.png', dpi=150)
 # Setting templatevoxsize to 0.2 will make it slightly quicker
 # Due to the voxel size being smaller, the nodes are currently smaller
 # So scaling the nodes is useful.
+nodes_whs = nodes.copy()
+nodes_whs['x'] = nodes_whs['x'] / 8
+nodes_whs['y'] = nodes_whs['y'] / 8
+nodes_whs['z'] = nodes_whs['z'] / 8
 netplotbrain.plot(template='WHS',
          templatestyle='surface',
          title='Multiple templates possible',
          view='LSR',
-         nodes=nodes / 8,
+         nodes=nodes_whs,
          nodesize='centrality_measure1',
          edges=edges,
          nodecolorby='community',
