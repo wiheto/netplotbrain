@@ -1,6 +1,4 @@
-import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 from .plotting import _plot_template, \
     _plot_edges, _plot_nodes, _plot_spheres,\
     _scale_nodes, _add_axis_arrows, _plot_parcels,\
@@ -9,12 +7,12 @@ from .plotting import _plot_template, \
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput
 
 
-from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view
+from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
          templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
-         arroworigin=None, edgecolor='k', nodesize=1, nodescale=5, nodecolor='salmon', nodetype='circles', nodecolorby=None,
+         arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
          nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols='auto', nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
          edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both', showlegend=True, **kwargs):
     """
@@ -77,6 +75,9 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         Column in dataframe that should get different colors (cannot be set with nodecolor)
     nodesize : str, int, float
         If string, can plot a column
+    title : str or list
+        Default auto, will describe the view settings.
+        Otherwise string or list of for subplot titles
 
     NODE KWARGS
 
@@ -125,7 +126,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
 
     LEGENDKWARGS
 
-    nodecolorlegend=True, 
+    nodecolorlegend=True,
     nodesizelegend=True
 
     ARROW KWARGS
@@ -146,9 +147,20 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         netplotbrain.plot(ax, ...)
     fig : matplotlib figure
 
+
+    OTHER KWARGS
+
+    profile : str
+        path or name of file in netplotbrain/profiles/<filename>.json, specifies default kwargs.
+        Default points to netplotbrain/profiles/default.json
+
     """
+    # Load default settings, then update with kwargs
+    profile = _load_profile(**kwargs)
+
     # Check and load the input of nodes and edges
-    nodes, nodeimg, nodecols = _process_node_input(nodes, nodeimg, nodecols, template, templatevoxsize)
+    nodes, nodeimg, nodecols = _process_node_input(
+        nodes, nodeimg, nodecols, template, templatevoxsize)
     edges, edgeweights = _process_edge_input(edges, edgeweights)
     # TODO add function for subplot creation here
     # get the number of views
@@ -165,23 +177,25 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     legendrows = 0
     if isinstance(showlegend, list):
         legends = showlegend
-        legendrows = len(legends) 
+        legendrows = len(legends)
     if showlegend is True:
-        nodesizelegend = kwargs.get('nodesizelegend', True)
-        nodecolorlegend = kwargs.get('nodecolorlegend', True)
         # Only plot size legend is sphere/circle and string or list input
+        # TODO setup_legend is a little clunky and could be fized
         if nodetype != 'parcel' and not isinstance(nodesize, (float, int)):
-            legends = _setup_legend(nodesize, nodesizelegend, 'nodesize', legends)
+            nodesizelegend = profile['nodesizelegend']
+            legends = _setup_legend(
+                nodesize, nodesizelegend, 'nodesize', legends)
         # Only plot color legend if colorby
         if nodecolorby is not None:
-            legends = _setup_legend(nodecolorby, nodecolorlegend, 'nodecolor', legends)
+            nodecolorlegend = profile['nodecolorlegend']
+            legends = _setup_legend(
+                nodecolorby, nodecolorlegend, 'nodecolor', legends)
         if legends is not None:
             legendrows = len(legends)
-    # Total number of subplots
     # Init figure, if not given as input
     if ax is None:
         fig, gridspec = _init_figure(frames, nrows, legendrows)
-    else: 
+    else:
         expected_ax_len = (nrows * frames) + legendrows
         _check_axinput(ax, expected_ax_len)
     # Set nodecolor to colorby argument
@@ -233,14 +247,15 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             nodes_frame = None
             if nodes is not None:
                 nodes_frame = nodes.copy()
-                nodes_frame = _select_single_hemisphere_nodes(nodes_frame, nodecols[0], affine, hemi_frame)
+                nodes_frame = _select_single_hemisphere_nodes(
+                    nodes_frame, nodecols[0], affine, hemi_frame)
 
                 if nodetype == 'spheres':
                     _plot_spheres(ax, nodes_frame, nodecolor=nodecolor,
-                                  nodesize=nodesize, nodecols=nodecols, nodescale=nodescale)
+                                  nodesize=nodesize, nodecols=nodecols, **profile)
                 elif nodetype == 'circles':
                     _plot_nodes(ax, nodes_frame, nodecolor=nodecolor,
-                                nodesize=nodesize, nodecols=nodecols, nodescale=nodescale)
+                                nodesize=nodesize, nodecols=nodecols, **profile)
                 elif nodetype == 'parcels':
                     _plot_parcels(ax, nodeimg, alpha=nodealpha,
                                   cmap=nodecolor, parcel_surface_resolution=surface_resolution,
@@ -275,9 +290,10 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             ax = fig.add_subplot(gridspec[nrows + li, legend_subplotp_colind])
 
             if legend == 'nodesize':
-                ax = _add_nodesize_legend(ax, nodes, nodesize, nodescale, **kwargs)
+                ax = _add_nodesize_legend(ax, nodes, nodesize, **profile)
             if legend == 'nodecolor':
-                ax = _add_nodecolor_legend(ax, nodes, nodecolorby, nodecolor, nodescale)
+                ax = _add_nodecolor_legend(
+                    ax, nodes, nodecolorby, nodecolor, **profile)
             ax.axis('off')
             #ax = _add_size_legend(ax, nodes, nodesize, nodescale)
             ax_out.append(ax)

@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, nodescale=1, alpha=None):
+def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, alpha=None, **kwargs):
     """
     Function that plots spheres in figure.
 
@@ -14,8 +14,6 @@ def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, nodescal
         name of node column coordinates in datadrame to correspond with x,y,z.
     nodesize : string or float, int
         if string, must refer to a column in nodes.
-    nodescale : int
-        factor to scale all nodes by
     nodecolor : string or matplotlib color
         if non-color string, must refer to a column in nodes
 
@@ -24,7 +22,8 @@ def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, nodescal
     Nothing
 
     """
-
+    # Get relevant kwargs
+    nodescale = kwargs.get('nodescale')
     # Loop through each node and plot a surface plot
     for index, row in nodes.iterrows():
         # Get the xyz coords for the node

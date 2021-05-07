@@ -1,6 +1,7 @@
 import numpy as np
 
-def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, nodescale=1):
+
+def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, **kwargs):
     """
     Function that plots nodes in figure
 
@@ -24,6 +25,8 @@ def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, nodescale=
     Nothing
 
     """
+    # Get relevant kwargs
+    nodescale = kwargs.get('nodescale')
     # If half hemisphere is plotted, then cut the right
     nc = nodecolor
     if isinstance(nodecolor, np.ndarray):
@@ -59,10 +62,14 @@ def _scale_nodes(nodes, nodecols, affine=None):
     """
     nodes_scaled = nodes.copy()
     if affine is not None:
-        nodes_scaled[nodecols[0]] = (nodes_scaled[nodecols[0]] - affine[0, -1]) / affine[0, 0]
-        nodes_scaled[nodecols[1]] = (nodes_scaled[nodecols[1]] - affine[1, -1]) / affine[1, 1]
-        nodes_scaled[nodecols[2]] = (nodes_scaled[nodecols[2]] - affine[2, -1]) / affine[2, 2]
+        nodes_scaled[nodecols[0]] = (
+            nodes_scaled[nodecols[0]] - affine[0, -1]) / affine[0, 0]
+        nodes_scaled[nodecols[1]] = (
+            nodes_scaled[nodecols[1]] - affine[1, -1]) / affine[1, 1]
+        nodes_scaled[nodecols[2]] = (
+            nodes_scaled[nodecols[2]] - affine[2, -1]) / affine[2, 2]
     return nodes_scaled
+
 
 def _select_single_hemisphere_nodes(nodes, nodecol, affine, hemisphere):
     """

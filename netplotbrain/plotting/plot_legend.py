@@ -6,7 +6,7 @@ from ..plotting import _add_subplot_title
 def _setup_legend(property, legend, legendname, currentlegend=None):
     # If the condition has been specified
     # And if the legend for that property is true
-    if isinstance(property, str) and legend == True:
+    if isinstance(property, str) and legend != False:
         # If currentlegend is None, initailize
         if currentlegend is None:
             currentlegend = []
@@ -14,12 +14,14 @@ def _setup_legend(property, legend, legendname, currentlegend=None):
     return currentlegend
 
 
-def _add_nodesize_legend(ax, nodes, nodesize, nodescale, **kwargs):
+def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
     """
     Adds node size legend to bottom of figure
     """
-    nodesizelegend = kwargs.get('nodesizelegend', None)
-    if nodesizelegend is None:
+    # Get relevant kwargs
+    nodescale = kwargs.get('nodescale')
+    nodesizelegend = kwargs.get('nodesizelegend')
+    if nodesizelegend is True:
         if isinstance(nodesize, str) and nodesize in nodes.columns:
             ns = nodes[nodesize] * nodescale
             ns_min = np.floor(np.min(ns))
@@ -48,10 +50,12 @@ def _add_nodesize_legend(ax, nodes, nodesize, nodescale, **kwargs):
     return ax
 
 
-def _add_nodecolor_legend(ax, nodes, nodecolorby, nodecolor, nodescale):
+def _add_nodecolor_legend(ax, nodes, nodecolorby, nodecolor, **kwargs):
     """
     Add node color legend to bottom of figure
     """
+    # Get relevant kwargs
+    nodescale = kwargs.get('nodescale')
     uniquenodecolorby = set(nodes[nodecolorby].values)
     uniquenodecolors_idx = [nodes[nodes[nodecolorby] ==
                                   x].first_valid_index() for x in uniquenodecolorby]
