@@ -5,7 +5,7 @@ import pandas as pd
 def _npedges2dfedges(edges, edgethreshold=0):
     """
     A function which transforms numpy array edges into dataframe.
-    
+
     This function is required for compatiblity with other functions.
 
     Parameters

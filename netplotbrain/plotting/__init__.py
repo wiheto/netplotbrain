@@ -16,6 +16,6 @@ __all__ = ['_plot_template', '_plot_template_style_filled',
            '_plot_edges', '_plot_template_style_surface',
            '_add_axis_arrows', '_get_nodes_from_nii', '_plot_parcels',
            '_select_single_hemisphere_nodes', '_npedges2dfedges', '_add_subplot_title',
-           '_add_color_legend', 'add_size_legend', '_setup_legend',
+           'add_size_legend', '_setup_legend',
            '_process_edge_input', '_process_node_input', '_add_nodesize_legend',
            '_add_nodecolor_legend']

@@ -68,7 +68,7 @@ def _init_figure(frames, nrows, legendrow):
                                 nrows=nrows+legendrow,
                                 width_ratios=widths,
                                 height_ratios=heights)
-    return fig, gridspec 
+    return fig, gridspec
 
 def _check_axinput(ax, expected_ax_len):
     if not isinstance(ax, list) and expected_ax_len > 1:
