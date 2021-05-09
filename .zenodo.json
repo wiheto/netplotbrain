@@ -1,0 +1,32 @@
+{
+  "title": "Netplotbrain: plot neworks on a brain",
+  "description": "<p>An easy-to-use python package to plot nodes and edges onto a brain, with different styles, different templates, and can highlight results.</p>",
+  "contributors": [
+    {
+    }
+  ],
+  "creators": [
+        {
+        "affiliation": "Department of Clinical Neuroscience, Karolinska Institutet",
+        "name": "Fanton, Silvia",
+        "orcid": "0000-0002-1853-2588"
+      },
+      {
+        "affiliation": "Department of Clinical Neuroscience, Karolinska Institutet",
+        "name": "Thompson, William H.",
+        "orcid": "0000-0002-0533-6035"
+      }
+  ],
+  "keywords": [
+    "neuroimaging",
+    "networks",
+    "visualization",
+    "brains",
+    "fMRI",
+    "nodes"
+  ],
+  "license": "GPL-3.0 License",
+  "upload_type": "software"
+}
+  
+  

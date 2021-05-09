@@ -1,4 +1,4 @@
-# In these examples we demonstrate how different templates 
+# In these examples we demonstrate how different templates
 
 import numpy as np
 import netplotbrain
@@ -21,7 +21,7 @@ netplotbrain.plot(nodes=nodes,
                   nodetype='spheres',
                   nodealpha=0.5,
                   nodecolor='Salmon',
-                  title='Plot networks',
+                  title='Netplotbrain: plot networks',
                   edgeweights='weight',
                   edgealpha=0.5,
                   fig=fig, ax=ax)
@@ -51,7 +51,7 @@ netplotbrain.plot(nodes=nodes,
                   nodetype='spheres',
                   nodealpha=0.5,
                   nodecolor='Salmon',
-                  title='Multiple viewing angle',
+                  title='At any viewing angle',
                   fig=fig, ax=ax,
                   edgescale=0.5)
 
@@ -67,48 +67,17 @@ netplotbrain.plot(nodes=nodes,
                   nodealpha=0.5,
                   nodecolorby='community',
                   nodesize='centrality_measure2',
-                  title='Easily set color\n and size',
+                  title='Easily set color and size',
                   fig=fig, ax=ax,
                   nodecmap='gnuplot',
                   edgealpha=0.5,
                   edgescale=0.5,
-                  nodescale=10)
+                  nodescale=10,
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
 
 
-
-
-
-ax = fig.add_subplot(345, projection='3d')
-
-netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
-                           'desc': '400Parcels7Networks',
-                           'resolution': 1},
-                  template='MNI152NLin2009cAsym',
-                  templatestyle=None,
-                  view=['S'],
-                  title='Show parcellations',
-                  nodetype='parcels',
-                  nodealpha=0.5,
-                  nodecolor='Set3',
-                  fig=fig, ax=ax)
-
-ax = fig.add_subplot(346, projection='3d')
-
-netplotbrain.plot(template='WHS',
-                  templatestyle='surface',
-                  view='S',
-                  nodes=nodes / 8,
-                  nodesize='centrality_measure1',
-                  title='Different brain templates',
-                  edges=edges,
-                  nodescale=80,
-                  templatevoxsize=0.2,
-                  fig=fig, ax=ax,
-                  edgescale=0.5)
-
-
-
-ax = fig.add_subplot(347, projection='3d')
+ax = fig.add_subplot(348, projection='3d')
 
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='cloudy',
@@ -120,10 +89,12 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatevoxsize=2,
                   templatealpha=0.025,
                   templatecolor='darkkhaki',
-                  title='Different themes',
-                  fig=fig, ax=ax)
+                  title='Different brain themes',
+                  fig=fig, ax=ax,
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
 
-ax = fig.add_subplot(348, projection='3d')
+ax = fig.add_subplot(345, projection='3d')
 
 netplotbrain.plot(nodes=nodes,
                   edges=edges,
@@ -135,13 +106,84 @@ netplotbrain.plot(nodes=nodes,
                   nodealpha=0.5,
                   nodecolorby='community',
                   nodesize='centrality_measure2',
-                  title='Single hemisphere',
+                  title='Show one hemisphere',
                   fig=fig, ax=ax,
-                  nodecmap='gnuplot')
+                  nodecmap='gnuplot',
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
+
+
+ax = fig.add_subplot(3, 4, 6, projection='3d')
+
+
+edgedf = pd.DataFrame()
+edgedf['i'] = [60, 95]
+edgedf['j'] = [95, 51]
+edgedf['weight'] = [1, 0.75]
+nodes_col = np.zeros([100])
+nodes_col[95] = 1
+nodes_col[[51, 60]] = 2
+nodes_seed = pd.DataFrame(data={'seed_roi': nodes_col})
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view='S',
+                  nodeimg={'atlas': 'Schaefer2018',
+                           'desc': '100Parcels7Networks',
+                           'resolution': 1},
+                  nodetype='parcels',
+                  edges=edgedf,
+                  nodes=nodes_seed,
+                  templatealpha=0.03,
+                  title='Different node styles',
+                  templatecolor='gray',
+                  nodecolor='Pastel1',
+                  highlightnodes=[60, 95, 51],
+                  highlightlevel=1,
+                  fig=fig, ax=ax,
+                  edgescale=3,
+                  nodecolorby='seed_roi',
+                  edgecolor='darkred',
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
+
+
+
+ax = fig.add_subplot(3, 4, 7, projection='3d')
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view='L',
+                  nodes='./examples/example_nodes.tsv',
+                  hemisphere=['R'],
+                  nodescale=5,
+                  edges='./examples/example_edges.tsv',
+                  templatealpha=0.05,
+                  title='Highlight results',
+                  templatecolor='gray',
+                  highlightlevel=0.9,
+                  highlightnodes=[6, 8, 25, 29],
+                  fig=fig, ax=ax,
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
+
 
 
 
 ax = fig.add_subplot(349, projection='3d')
+
+netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+                           'desc': '400Parcels7Networks',
+                           'resolution': 1},
+                  template='MNI152NLin2009cAsym',
+                  templatestyle=None,
+                  view=['S'],
+                  title='Plot a parcellation',
+                  nodetype='parcels',
+                  nodealpha=0.5,
+                  nodecolor='Set3',
+                  fig=fig, ax=ax)
+
+
+ax = fig.add_subplot(3, 4, 10, projection='3d')
 atlasinfo = tf.get(template='MNI152NLin2009cAsym',
        atlas='Schaefer2018',
        desc='400Parcels7Networks',
@@ -164,10 +206,12 @@ netplotbrain.plot(nodes=atlasinfo,
                   nodecmap='Dark2',
                   nodecolorby='yeo7networks',
                   fig=fig, ax=ax,
-                  title='Show communities')
+                  title='Community templates',
+                  nodecolorlegend=False,
+                  nodesizelegend=False,)
 
 
-ax = fig.add_subplot(3, 4, 10, projection='3d')
+ax = fig.add_subplot(3, 4, 11, projection='3d')
 netplotbrain.plot(nodes=atlasinfo,
                   nodeimg={'atlas': 'Schaefer2018',
                            'desc': '400Parcels7Networks',
@@ -179,58 +223,33 @@ netplotbrain.plot(nodes=atlasinfo,
                   nodecmap='Dark2',
                   nodecolorby='yeo7networks',
                   nodealpha = 0.8,
-                  title = 'Highlight communities',
+                  title = 'Highlight a community',
                   highlightnodes={'yeo7networks': 'Cont'},
                   highlightlevel=0.95,
-                  fig=fig, ax=ax)
-
-
-
-ax = fig.add_subplot(3, 4, 11, projection='3d')
-netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
-                  view='L',
-                  nodes='./examples/example_nodes.tsv',
-                  hemisphere=['R'],
-                  nodescale=5,
-                  edges='./examples/example_edges.tsv',
-                  templatealpha=0.05,
-                  title='Highlight nodes',
-                  templatecolor='gray',
-                  highlightnodes=[6, 8, 25, 29],
-                  fig=fig, ax=ax)
+                  fig=fig, ax=ax,
+                  nodecolorlegend=False,
+                  nodesizelegend=False)
 
 
 ax = fig.add_subplot(3, 4, 12, projection='3d')
-
-
-edgedf = pd.DataFrame()
-edgedf['i'] = [60, 95]
-edgedf['j'] = [95, 51]
-edgedf['weight'] = [1, 0.75]
-nodes_col = np.zeros([100])
-nodes_col[95] = 1
-nodes_col[[51, 60]] = 2
-nodes = pd.DataFrame(data={'seed_roi': nodes_col})
-netplotbrain.plot(template='MNI152NLin2009cAsym',
+nodes_whs = nodes.copy()
+nodes_whs['x'] = nodes_whs['x'] / 8
+nodes_whs['y'] = nodes_whs['y'] / 8
+nodes_whs['z'] = nodes_whs['z'] / 8
+netplotbrain.plot(template='WHS',
                   templatestyle='surface',
                   view='S',
-                  nodeimg={'atlas': 'Schaefer2018',
-                           'desc': '100Parcels7Networks',
-                           'resolution': 1},
-                  nodetype='parcels',
-                  edges=edgedf,
-                  nodes=nodes,
-                  templatealpha=0.03,
-                  title='Nodes as parcels',
-                  templatecolor='gray',
-                  nodecolor='Pastel1',
-                  highlightnodes=[60, 95, 51],
-                  highlightlevel=1,
+                  nodes=nodes_whs,
+                  nodesize='centrality_measure1',
+                  title='TemplateFlow integration',
+                  edges=edges,
+                  nodescale=80,
+                  templatevoxsize=0.2,
                   fig=fig, ax=ax,
-                  edgescale=3,
-                  nodecolorby='seed_roi',
-                  edgecolor='darkred')
+                  edgescale=0.5,
+                  nodecolorlegend=False,
+                  nodesizelegend=False)
+
 
 
 fig.savefig('./examples/figures/showcase.png', dpi=150)

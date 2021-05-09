@@ -2,9 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # equal scaling solution from @AndrewCox from https://stackoverflow.com/a/63625222
-# Functions from @Mateen Ulhaq and @karlo      
+# Functions from @Mateen Ulhaq and @karlo
+
+
 def _set_axes_equal(ax: plt.Axes):
-    """Set 3D plot axes to equal scale.
+    """
+    Set 3D plot axes to equal scale.
 
     Make axes of 3D plot have equal scale so that spheres appear as
     spheres and cubes as cubes.  Required since `ax.axis('equal')`
@@ -19,7 +22,7 @@ def _set_axes_equal(ax: plt.Axes):
         ax.get_zlim3d(),
     ])
     origin = np.mean(limits, axis=1)
-    # IMPORTANT, this scaling factor (0.3) might needed to be changed
+    # NOTE, this scaling factor (0.3) might needed to be changed
     # Orginally it was 0.5, and should be checked that all templates
     # Fit this. A template specific scaling factor is possible, if problems
     # arise.
@@ -82,6 +85,3 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
     if arrowaxis == 'auto':
         arrowaxis = autoarrowaxis
     return vx, vy, arrowaxis
-
-
-

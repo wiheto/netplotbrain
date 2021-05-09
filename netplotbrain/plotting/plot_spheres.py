@@ -1,34 +1,30 @@
-import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-import random
-import mplcursors
 
 
-def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodecols=['x', 'y', 'z'], alpha=None):
+
+def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, alpha=None, **kwargs):
     """
-    Function that plots spheres in figure
+    Function that plots spheres in figure.
 
     Parameters
     ---------------
     ax : matplotlib ax
     nodes : dataframe
         node dataframe with x, y, z coordinates.
+    nodecols : list of string
+        name of node column coordinates in datadrame to correspond with x,y,z.
     nodesize : string or float, int
         if string, must refer to a column in nodes.
-    nodescale : int
-        factor to scale all nodes by
     nodecolor : string or matplotlib color
         if non-color string, must refer to a column in nodes
-    nodecols : list of string
-        name of node column coordinates in datadrame
 
     Returns
     -------------
     Nothing
 
     """
-    
+    # Get relevant kwargs
+    nodescale = kwargs.get('nodescale')
     # Loop through each node and plot a surface plot
     for index, row in nodes.iterrows():
         # Get the xyz coords for the node
@@ -48,13 +44,13 @@ def _plot_spheres(ax, nodes, nodecolor='salmon', nodesize=20, nodescale=1, nodec
         x = r*np.cos(u)*np.sin(v)
         y = r*np.sin(u)*np.sin(v)
         z = r*np.cos(v)
-        
+
         # Select the node color if string or array
         if isinstance(nodecolor, np.ndarray):
             ncolor = nodecolor[index]
         else:
             ncolor = nodecolor
-            
-        mplcursors.cursor(ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
+
+        ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
                         color=ncolor,
-                        alpha=alpha))
+                        alpha=alpha)
