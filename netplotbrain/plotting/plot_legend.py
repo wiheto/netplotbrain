@@ -1,6 +1,7 @@
 """Legend plots"""
 import numpy as np
 from ..plotting import _add_subplot_title
+from ..utils import _node_scale_vminvmax
 
 
 def _setup_legend(property, legend, legendname, currentlegend=None):
@@ -23,13 +24,17 @@ def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
     nodesizelegend = kwargs.get('nodesizelegend')
     if nodesizelegend is True:
         if isinstance(nodesize, str) and nodesize in nodes.columns:
-            ns = nodes[nodesize] * nodescale
+            ns = _node_scale_vminvmax(nodes, nodesize, **kwargs)
             ns_min = np.floor(np.min(ns))
             ns_max = np.ceil(np.max(ns))
             # TODO could add nodsizelegendtick here.
             inc = (ns_max - ns_min) / 4
             nodesizelegend = np.arange(ns_min, ns_max + inc, inc)
-            nodesizelegendlabels = nodesizelegend / nodescale
+            ns_min_legend = nodes[nodesize].min()
+            ns_max_legend = nodes[nodesize].max()
+            legend_inc = (ns_max_legend - ns_min_legend) / 4
+            nodesizelegendlabels = np.arange(ns_min_legend, ns_max_legend + legend_inc/2, legend_inc)
+            nodesizelegendlabels = nodesizelegendlabels.round(3)
         else:
             raise ValueError(
                 'Unable to plot size legend (nodesize specification issue)')

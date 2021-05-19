@@ -6,7 +6,8 @@ from nibabel.processing import resample_to_output
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure
 from .plot_templates import _select_single_hemisphere_template
-from ..utils import _colorarray_from_string
+from ..utils import _colorarray_from_string, _rotate_data_to_viewingangle
+
 
 def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     """
@@ -76,7 +77,7 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     return nodes, img
 
 
-def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemisphere='both'):
+def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemisphere='both', **kwargs):
     """
     Plot each 3D parcels as a rendered surface.
 
@@ -117,3 +118,51 @@ def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemi
     ax.set_xlim(0, data.shape[0])
     ax.set_ylim(0, data.shape[1])
     ax.set_zlim(0, data.shape[2])
+
+
+def _plot_parcel_disks(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemisphere='both', **kwargs):
+    """
+    Plot rendered surface as disk.
+
+    See netplotbrain.plot for input arguments.
+
+    Currently being tested and contains an angle bug
+    """
+    # Due to only being able to get data once, this leads to problems when LR hemi are specieid
+    data = img.get_fdata(caching='unchanged').copy()
+    # If single hemisphere, get only that side
+    data = _select_single_hemisphere_template(data, hemisphere)
+    # Get the number of nodes (subtract 1 for 0)
+    nodelabels = np.unique(data)
+    if 0 in nodelabels:
+        nodelabels = nodelabels[1:]
+    # Create a nnode length (or longer) array which repeats colormap
+    if isinstance(cmap, str):
+        colors = _colorarray_from_string(cmap, len(nodelabels))
+    else:
+        # If colors has already been defined prior to calling this function
+        colors = cmap
+    # Rotate data
+    data = _rotate_data_to_viewingangle(data, kwargs['azim'], kwargs['elev'])
+    # loop through each node and plot verticies as different color
+    # Possible improvement: could be made without for loop
+    # And vals is used to plot color
+    for ni, r in enumerate(nodelabels):
+        dtmp = np.zeros(data.shape)
+        dtmp[data == r] = 1
+        verts, faces, _, _ = measure.marching_cubes(
+            dtmp, step_size=parcel_surface_resolution)
+        vertices = verts[faces]
+        # for n in np.unique(vals):
+        mesh = Poly3DCollection(vertices)
+        mesh.set_facecolor(colors[ni])
+        if isinstance(colors, str):
+            mesh.set_alpha(alpha)
+        elif colors.shape[1] != 4:
+            mesh.set_alpha(alpha)
+        ax.add_collection3d(mesh)
+
+    ax.set_xlim(0, data.shape[0])
+    ax.set_ylim(0, data.shape[1])
+    ax.set_zlim(0, data.shape[2])
+

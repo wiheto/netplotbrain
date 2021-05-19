@@ -1,5 +1,6 @@
 {
     "nodescale": 5,
     "nodecolorlegend": true,
-    "nodesizelegend": true
+    "nodesizelegend": true,
+    "nodevminvmax": "minmax"
 }

@@ -91,6 +91,12 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         Specify the transparency of the nodes
     nodecols : list
         Node column names in node dataframe. 'auto' entails the columsn are ['x', 'y', 'z'] (specifying coordinates)
+    nodevminvmax : str, list
+        Scaling alternatives if nodesize is given.
+        Alternatives: 'absolute' (default) 'minmax', or 2-tuple list of [min, max].
+        If minmax, node sizes are scaled between (0 and 1) * nodescale.
+        If absolute, then the default values are used.
+        Absolute can lead to problems with, for example, negative values.
 
     EDGE KWARGS
 
@@ -229,8 +235,10 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
 
             affine = None
             if template is not None:
-                affine = _plot_template(ax, templatestyle, template, templatecolor=templatecolor,
-                                        alpha=templatealpha, voxsize=templatevoxsize,
+                affine = _plot_template(ax, templatestyle, template,
+                                        templatecolor=templatecolor,
+                                        alpha=templatealpha,
+                                        voxsize=templatevoxsize,
                                         surface_resolution=surface_resolution,
                                         edgethreshold=templateedgethreshold,
                                         azim=azim[fi], elev=elev[fi],
@@ -259,7 +267,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                 elif nodetype == 'parcels':
                     _plot_parcels(ax, nodeimg, alpha=nodealpha,
                                   cmap=nodecolor, parcel_surface_resolution=surface_resolution,
-                                  hemisphere=hemi_frame)
+                                  hemisphere=hemi_frame, **profile)
             if edges is not None:
                 edges_frame = edges.copy()
                 _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights, edgewidthscale=edgescale,

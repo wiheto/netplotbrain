@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.ndimage import rotate
 
 # equal scaling solution from @AndrewCox from https://stackoverflow.com/a/63625222
 # Functions from @Mateen Ulhaq and @karlo
@@ -85,3 +86,40 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
     if arrowaxis == 'auto':
         arrowaxis = autoarrowaxis
     return vx, vy, arrowaxis
+
+def _rotate_data_to_viewingangle(data, azim=0, elev=0, rotateback=False):
+    """
+    Returns rotated data
+    """
+    if rotateback: 
+        azim = azim * -1
+        elev = elev * -1
+    if azim != 0:
+        data = rotate(data, -azim, axes=[0, 1], reshape=False, prefilter=False)
+    if elev != 0:
+        data = rotate(data, -elev, axes=[0, 2], reshape=False, prefilter=False)
+    return data
+
+def _node_scale_vminvmax(nodes, nodesize, **kwargs):
+    """
+    Scales nodesize in relation to nodescale, vmin and vmax. 
+
+    The parameter nodevminvmax dictates the vmin, vmax behaviour.  
+    """
+    vminvmax = kwargs.get('nodevminvmax')
+    nodescale = kwargs.get('nodescale')
+    nodesizevector = nodes[nodesize].copy()
+    if isinstance(vminvmax, str):
+        if vminvmax == 'absmax': 
+            nodesizevector = np.abs(nodesizevector)
+            vminvmax = 'minmax'
+        if vminvmax == 'minmax':
+            # Add small value to ensure smallest value is not 0.05 and 1.05 to ensure min value is still seen 
+            # TODO this value could be scaled. 
+            nodesizevector = (nodesizevector - nodesizevector.min()) / (nodesizevector.max() - nodesizevector.min()) * (1.05 - 0.05) + 0.05
+    elif isinstance(vminvmax, list):
+        # If outside custom range, set size to zero
+        nodesizevector[nodesizevector < vminvmax[0]] = np.nan
+        nodesizevector[nodesizevector > vminvmax[1]] = np.nan
+    nodesizevector = nodesizevector * nodescale
+    return nodesizevector

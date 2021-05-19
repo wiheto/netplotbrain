@@ -21,6 +21,9 @@ def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, alpha=No
     -------------
     Nothing
 
+    NOTE: During development, this is not being updated as much as _plot_circles.
+    Some functionality from there should be added to this. 
+
     """
     # Get relevant kwargs
     nodescale = kwargs.get('nodescale')
