@@ -91,7 +91,7 @@ def _rotate_data_to_viewingangle(data, azim=0, elev=0, rotateback=False):
     """
     Returns rotated data
     """
-    if rotateback: 
+    if rotateback:
         azim = azim * -1
         elev = elev * -1
     if azim != 0:
@@ -102,9 +102,9 @@ def _rotate_data_to_viewingangle(data, azim=0, elev=0, rotateback=False):
 
 def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
     """
-    Scales nodesize in relation to nodescale, vmin and vmax. 
+    Scales nodesize in relation to nodescale, vmin and vmax.
 
-    The parameter nodevminvmax dictates the vmin, vmax behaviour.  
+    The parameter nodevminvmax dictates the vmin, vmax behaviour.
     """
     vminvmax = kwargs.get('nodevminvmax')
     nodescale = kwargs.get('nodescale')
@@ -116,12 +116,12 @@ def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
         # After removing scale so that vmin and vmax are lowest and highest numbers
         nodesizevector = (nodesizevector - vminvmax[0]) / (vminvmax[1] - vminvmax[0]) * (1.1 - 0.1) + 0.1
     elif isinstance(vminvmax, str):
-        if vminvmax == 'absmax': 
+        if vminvmax == 'absmax':
             nodesizevector = np.abs(nodesizevector)
             vminvmax = 'minmax'
         if vminvmax == 'minmax':
-            # Add small value to ensure smallest value is not 0.1 and 1.1 to ensure min value is still seen 
-            # TODO this value could be scaled. 
+            # Add small value to ensure smallest value is not 0.1 and 1.1 to ensure min value is still seen
+            # TODO this value could be scaled.
             nodesizevector = (nodesizevector - nodesizevector.min()) / (nodesizevector.max() - nodesizevector.min()) * (1.1 - 0.1) + 0.1
 
     nodesizevector = nodesizevector * nodescale
@@ -131,6 +131,6 @@ def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
     # If nodesizevector is nan, make them 0
     nodesizevector[np.isnan(nodesizevector)] = 0
     # If return labels, make output a tuple
-    if return_labels: 
+    if return_labels:
         nodesizevector = (nodesizevector, nodesizelabels)
     return nodesizevector
