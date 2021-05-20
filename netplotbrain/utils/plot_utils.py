@@ -100,7 +100,7 @@ def _rotate_data_to_viewingangle(data, azim=0, elev=0, rotateback=False):
         data = rotate(data, -elev, axes=[0, 2], reshape=False, prefilter=False)
     return data
 
-def _node_scale_vminvmax(nodes, nodesize, **kwargs):
+def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
     """
     Scales nodesize in relation to nodescale, vmin and vmax. 
 
@@ -109,17 +109,28 @@ def _node_scale_vminvmax(nodes, nodesize, **kwargs):
     vminvmax = kwargs.get('nodevminvmax')
     nodescale = kwargs.get('nodescale')
     nodesizevector = nodes[nodesize].copy()
-    if isinstance(vminvmax, str):
+    if isinstance(vminvmax, list):
+        # If outside custom range, set size to zero
+        nodesizevector[nodesizevector < vminvmax[0]] = np.nan
+        nodesizevector[nodesizevector > vminvmax[1]] = np.nan
+        # After removing scale so that vmin and vmax are lowest and highest numbers
+        nodesizevector = (nodesizevector - vminvmax[0]) / (vminvmax[1] - vminvmax[0]) * (1.1 - 0.1) + 0.1
+    elif isinstance(vminvmax, str):
         if vminvmax == 'absmax': 
             nodesizevector = np.abs(nodesizevector)
             vminvmax = 'minmax'
         if vminvmax == 'minmax':
-            # Add small value to ensure smallest value is not 0.05 and 1.05 to ensure min value is still seen 
+            # Add small value to ensure smallest value is not 0.1 and 1.1 to ensure min value is still seen 
             # TODO this value could be scaled. 
-            nodesizevector = (nodesizevector - nodesizevector.min()) / (nodesizevector.max() - nodesizevector.min()) * (1.05 - 0.05) + 0.05
-    elif isinstance(vminvmax, list):
-        # If outside custom range, set size to zero
-        nodesizevector[nodesizevector < vminvmax[0]] = np.nan
-        nodesizevector[nodesizevector > vminvmax[1]] = np.nan
+            nodesizevector = (nodesizevector - nodesizevector.min()) / (nodesizevector.max() - nodesizevector.min()) * (1.1 - 0.1) + 0.1
+
     nodesizevector = nodesizevector * nodescale
+    if return_labels:
+        nodesizelabels = nodes[nodesize].copy()
+        nodesizelabels[np.isnan(nodesizevector)] = np.nan
+    # If nodesizevector is nan, make them 0
+    nodesizevector[np.isnan(nodesizevector)] = 0
+    # If return labels, make output a tuple
+    if return_labels: 
+        nodesizevector = (nodesizevector, nodesizelabels)
     return nodesizevector
