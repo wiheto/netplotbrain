@@ -1,14 +1,13 @@
 """Legend plots"""
 import numpy as np
 import matplotlib.cm as cm
-from ..plotting import _add_subplot_title
 from ..utils import _node_scale_vminvmax
 
 
-def _setup_legend(property, legend, legendname, currentlegend=None):
+def _setup_legend(legendproperty, legend, legendname, currentlegend=None):
     # If the condition has been specified
-    # And if the legend for that property is true
-    if isinstance(property, str) and legend != False:
+    # And if the legend for that legendproperty is true
+    if isinstance(legendproperty, str) and legend is not False:
         # If currentlegend is None, initailize
         if currentlegend is None:
             currentlegend = []
