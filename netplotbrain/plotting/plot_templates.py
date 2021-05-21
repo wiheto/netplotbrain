@@ -9,8 +9,10 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure
 from ..templatesettings import _get_surface_level_for_template
 
-def _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold, templatecolor, **kwargs):
+
+def _plot_template_style_cloudy(ax, data, azim, elev, templatecolor, **kwargs):
     alpha = kwargs.get('templatealpha')
+    edgethreshold = kwargs.get('templateedgethreshold')
     # If the viewpoint is not at 0,0, rotate the image so the edge thresholding occurs at approriate angle
     if azim != 0:
         data = rotate(data, -azim, axes=[0, 1], reshape=False)
@@ -44,7 +46,7 @@ def _plot_template_style_filled(ax, data, templatecolor, **kwargs):
               facecolor=templatecolor, edgecolor=None, shade=False)
 
 
-def _plot_template_style_surface(ax, data, template, templatecolor='gray', surface_detection=None, **kwargs):
+def _plot_template_style_surface(ax, data, templatecolor='gray', surface_detection=None, **kwargs):
     """Uses the function skimage.measure.marching_cubes to identify a surface.
 
     surface_resolution : int
@@ -81,7 +83,7 @@ def _select_single_hemisphere_template(data, hemisphere):
     return data
 
 
-def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', voxsize=None, azim=0, elev=0, surface_detection=None, edgethreshold=0.8, hemisphere='both', **kwargs):
+def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', voxsize=None, azim=0, elev=0, surface_detection=None, hemisphere='both', **kwargs):
     if isinstance(template, str):
         if not os.path.exists(template):
             if surface_detection is None and style == 'surface':
@@ -113,8 +115,9 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatec
     if style == 'filled':
         _plot_template_style_filled(ax, data, templatecolor, **kwargs)
     elif style == 'cloudy':
-        _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold, templatecolor, **kwargs)
+        _plot_template_style_cloudy(
+            ax, data, azim, elev, templatecolor, **kwargs)
     elif style == 'surface':
         _plot_template_style_surface(
-            ax, data, template, templatecolor, surface_detection, **kwargs)
+            ax, data, templatecolor, surface_detection, **kwargs)
     return img.affine

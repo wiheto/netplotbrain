@@ -11,7 +11,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled',
-         templatevoxsize=None, templatecolor='lightgray', templateedgethreshold=0.7, arrowaxis='auto',
+         templatevoxsize=None, templatecolor='lightgray', arrowaxis='auto',
          arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
          nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols='auto', nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
          edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both', showlegend=True, **kwargs):
@@ -121,14 +121,14 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
 
     templatecolor : str
         If templatestyle=='surface' or 'filled', the color of template voxels
-    templateedgedetection : float
-        If templatestyle=='cloudy', can tweak the edges detection threshold.
+    templateedgethreshold : float
+        If templatestyle=='cloudy', can tweak the edges detection threshold. (Default: 0.7)
     templatealpha : float
         Opacity of template voxels.
     templatevoxelsize : int
-        Resize voxels this size. Larger voxels = quicker. Default = 2
+        Resize voxels this size. Larger voxels = quicker. (Default: 2)
     surface_resolution : int
-        If templatestyle=='surface' controls the size of the triangles used in the surface reconstruction (default: 2).
+        If templatestyle=='surface' controls the size of the triangles used in the surface reconstruction. (Default: 2).
 
     LEGENDKWARGS
 
@@ -243,7 +243,6 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                 affine = _plot_template(ax, templatestyle, template,
                                         templatecolor=templatecolor,
                                         voxsize=templatevoxsize,
-                                        edgethreshold=templateedgethreshold,
                                         azim=azim[fi], elev=elev[fi],
                                         hemisphere=hemi_frame,
                                         **profile)
