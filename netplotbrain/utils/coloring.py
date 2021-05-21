@@ -35,7 +35,7 @@ def _highlight_nodes(nodes, nodecolor, nodealpha, highlightnodes, highlightlevel
 def assign_color(row, colordict):
     if pd.isnull(row):
         return np.array([1, 1, 1, 0])
-    else: 
+    else:
         return colordict[row]
 
 def _get_colorby_colors(df, colorby=None, cmap='plasma'):
