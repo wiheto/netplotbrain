@@ -11,8 +11,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled',
-         templatevoxsize=None, templatecolor='lightgray', arrowaxis='auto',
-         arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
+         templatevoxsize=None, arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
          nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols='auto', nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
          edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both', showlegend=True, **kwargs):
     """
@@ -127,6 +126,9 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         Opacity of template voxels.
     templatevoxelsize : int
         Resize voxels this size. Larger voxels = quicker. (Default: 2)
+    surface_detection : float
+        The value used to detect the surface boundrary (see argument level in marching_cubes).
+        Some default choices are made for various templates
     surface_resolution : int
         If templatestyle=='surface' controls the size of the triangles used in the surface reconstruction. (Default: 2).
 
@@ -241,7 +243,6 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             affine = None
             if template is not None:
                 affine = _plot_template(ax, templatestyle, template,
-                                        templatecolor=templatecolor,
                                         voxsize=templatevoxsize,
                                         azim=azim[fi], elev=elev[fi],
                                         hemisphere=hemi_frame,

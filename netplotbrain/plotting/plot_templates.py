@@ -10,9 +10,11 @@ from skimage import measure
 from ..templatesettings import _get_surface_level_for_template
 
 
-def _plot_template_style_cloudy(ax, data, azim, elev, templatecolor, **kwargs):
+def _plot_template_style_cloudy(ax, data, azim, elev, **kwargs):
+    # Get kewyowrd argments relevant for function
     alpha = kwargs.get('templatealpha')
     edgethreshold = kwargs.get('templateedgethreshold')
+    templatecolor = kwargs.get('templatecolor')
     # If the viewpoint is not at 0,0, rotate the image so the edge thresholding occurs at approriate angle
     if azim != 0:
         data = rotate(data, -azim, axes=[0, 1], reshape=False)
@@ -40,14 +42,18 @@ def _plot_template_style_cloudy(ax, data, azim, elev, templatecolor, **kwargs):
                edgecolors=None, marker='s', alpha=alpha)
 
 
-def _plot_template_style_filled(ax, data, templatecolor, **kwargs):
+def _plot_template_style_filled(ax, data, **kwargs):
     alpha = kwargs.get('templatealpha')
+    templatecolor = kwargs.get('templatecolor')
     ax.voxels(data, alpha=alpha, zorder=-100,
               facecolor=templatecolor, edgecolor=None, shade=False)
 
 
-def _plot_template_style_surface(ax, data, templatecolor='gray', surface_detection=None, **kwargs):
+def _plot_template_style_surface(ax, data, template, **kwargs):
     """Uses the function skimage.measure.marching_cubes to identify a surface.
+
+    Relevant kwargs
+    ----------------
 
     surface_resolution : int
         The resolution of the surface (see argument step_size in marching_cubes)
@@ -56,8 +62,12 @@ def _plot_template_style_surface(ax, data, templatecolor='gray', surface_detecti
         Some default choices are made for various templates
     """
     # get kwargs
-    surface_resolution = kwargs.get('surface_resolution')
     alpha = kwargs.get('templatealpha')
+    templatecolor = kwargs.get('templatecolor')
+    surface_detection = kwargs.get('surface_detection')
+    surface_resolution = kwargs.get('surface_resolution')
+    if surface_detection is None:
+        surface_detection = _get_surface_level_for_template(template)
     # detect surface using skimage's marching cubes
     verts, faces, _, _ = measure.marching_cubes(
         data, level=surface_detection, step_size=surface_resolution)
@@ -83,11 +93,9 @@ def _select_single_hemisphere_template(data, hemisphere):
     return data
 
 
-def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', voxsize=None, azim=0, elev=0, surface_detection=None, hemisphere='both', **kwargs):
+def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', voxsize=None, azim=0, elev=0, hemisphere='both', **kwargs):
     if isinstance(template, str):
         if not os.path.exists(template):
-            if surface_detection is None and style == 'surface':
-                surface_detection = _get_surface_level_for_template(template)
             tf_kwargs = {}
             # Add kwargs to specify specific templates
             if 'MNI152' in template or 'OASIS' in template:
@@ -113,11 +121,11 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatec
     data = img.get_fdata()
     data = _select_single_hemisphere_template(data, hemisphere)
     if style == 'filled':
-        _plot_template_style_filled(ax, data, templatecolor, **kwargs)
+        _plot_template_style_filled(ax, data, **kwargs)
     elif style == 'cloudy':
         _plot_template_style_cloudy(
-            ax, data, azim, elev, templatecolor, **kwargs)
+            ax, data, azim, elev, **kwargs)
     elif style == 'surface':
         _plot_template_style_surface(
-            ax, data, templatecolor, surface_detection, **kwargs)
+            ax, data, template, **kwargs)
     return img.affine

@@ -6,6 +6,8 @@
   "nodesizelegend": true,
   "nodevminvmax": "minmax",
   "surface_resolution": 2,
+  "surface_detection": null,
   "templatealpha": 0.2,
-  "templateedgethreshold": 0.7
+  "templateedgethreshold": 0.7,
+  "templatecolor": "lightgray"
 }
