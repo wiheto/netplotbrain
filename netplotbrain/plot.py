@@ -132,8 +132,13 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
 
     LEGENDKWARGS
 
-    nodecolorlegend=True,
-    nodesizelegend=True
+    nodecolorlegend : True
+        If the colorlegend is plotted or not.
+    nodesizelegend : True
+    nodecolorlegendstyle : str
+        Alternatvies: auto (default), discrete, continuious
+        If the color legend should show the entire colormap or discrete colors.
+        If auto, plots discrete if less than 8 unique values are detected.
 
     ARROW KWARGS
 
@@ -301,7 +306,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                 ax = _add_nodesize_legend(ax, nodes, nodesize, **profile)
             if legend == 'nodecolor':
                 ax = _add_nodecolor_legend(
-                    ax, nodes, nodecolorby, nodecolor, **profile)
+                    ax, nodes, nodecolorby, nodecolor, nodecmap, **profile)
             ax.axis('off')
             #ax = _add_size_legend(ax, nodes, nodesize, nodescale)
             ax_out.append(ax)

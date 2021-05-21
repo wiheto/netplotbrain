@@ -109,25 +109,30 @@ def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
     vminvmax = kwargs.get('nodevminvmax')
     nodescale = kwargs.get('nodescale')
     nodesizevector = nodes[nodesize].copy()
+    labelformat = None
     if isinstance(vminvmax, list):
         # If outside custom range, set size to zero
         nodesizevector[nodesizevector < vminvmax[0]] = np.nan
         nodesizevector[nodesizevector > vminvmax[1]] = np.nan
         # After removing scale so that vmin and vmax are lowest and highest numbers
-        nodesizevector = (nodesizevector - vminvmax[0]) / (vminvmax[1] - vminvmax[0]) * (1.1 - 0.1) + 0.1
+        nodesizevector = (nodesizevector - vminvmax[0]) / (vminvmax[1] - vminvmax[0]) * (1.05 - 0.05) + 0.05
     elif isinstance(vminvmax, str):
-        if vminvmax == 'absmax':
+        if vminvmax == 'maxabs':
             nodesizevector = np.abs(nodesizevector)
+            # now make sure behaviour is like minmax scaling but labelformat is maxabs
             vminvmax = 'minmax'
+            labelformat = 'maxabs'
         if vminvmax == 'minmax':
             # Add small value to ensure smallest value is not 0.1 and 1.1 to ensure min value is still seen
             # TODO this value could be scaled.
-            nodesizevector = (nodesizevector - nodesizevector.min()) / (nodesizevector.max() - nodesizevector.min()) * (1.1 - 0.1) + 0.1
+            nodesizevector = (nodesizevector - nodesizevector.min()) / (nodesizevector.max() - nodesizevector.min()) * (1.05 - 0.05) + 0.05
 
     nodesizevector = nodesizevector * nodescale
     if return_labels:
         nodesizelabels = nodes[nodesize].copy()
         nodesizelabels[np.isnan(nodesizevector)] = np.nan
+        if labelformat == 'maxabs':
+            nodesizelabels = np.abs(nodesizelabels)
     # If nodesizevector is nan, make them 0
     nodesizevector[np.isnan(nodesizevector)] = 0
     # If return labels, make output a tuple
