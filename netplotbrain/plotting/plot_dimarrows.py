@@ -1,5 +1,5 @@
 
-def _add_axis_arrows(ax, dims=None, length=10, origin=None, azim=0, elev=0):
+def _add_axis_arrows(ax, dims=None, origin=None, azim=0, elev=0, **kwargs):
     """
     Plots arrows to show the 3d Axis.
 
@@ -8,7 +8,6 @@ def _add_axis_arrows(ax, dims=None, length=10, origin=None, azim=0, elev=0):
     ax : matplotlib ax
     dims : list, string
         LR, AP, SI, 'all', None
-    length : int, float
     origin : list (len of 3)
         Origin of center of arrow axes.
         If none, centers automatically in bottom left.
@@ -16,11 +15,17 @@ def _add_axis_arrows(ax, dims=None, length=10, origin=None, azim=0, elev=0):
         azim argument, for origin auto calculation
     elev : int
         elev argument, for origin auto calculation
+
+    kwags
+    --------------------
+    arrowlength : int, float
+
     Returns
     -----------------
     Nothing (input axis is updated)
 
     """
+    length = kwargs.get('arrowlength')
     # Set default
     if origin is None:
         xlim = ax.get_xlim3d()

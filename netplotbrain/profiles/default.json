@@ -1,7 +1,10 @@
 {
-    "nodescale": 5,
-    "nodecolorlegend": true,
-    "nodesizelegend": true,
-    "nodevminvmax": "minmax",
-    "nodecolorlegendstyle": "auto"
+  "arrowlength": 10,
+  "nodecolorlegend": true,
+  "nodecolorlegendstyle": "auto",
+  "nodescale": 5,
+  "nodesizelegend": true,
+  "nodevminvmax": "minmax",
+  "surface_resolution": 2,
+  "templatealpha": 0.2
 }

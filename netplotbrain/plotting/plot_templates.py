@@ -9,7 +9,8 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure
 from ..templatesettings import _get_surface_level_for_template
 
-def _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold, templatecolor, alpha=1):
+def _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold, templatecolor, **kwargs):
+    alpha = kwargs.get('templatealpha')
     # If the viewpoint is not at 0,0, rotate the image so the edge thresholding occurs at approriate angle
     if azim != 0:
         data = rotate(data, -azim, axes=[0, 1], reshape=False)
@@ -37,12 +38,13 @@ def _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold, templatecol
                edgecolors=None, marker='s', alpha=alpha)
 
 
-def _plot_template_style_filled(ax, data, alpha, templatecolor):
+def _plot_template_style_filled(ax, data, templatecolor, **kwargs):
+    alpha = kwargs.get('templatealpha')
     ax.voxels(data, alpha=alpha, zorder=-100,
               facecolor=templatecolor, edgecolor=None, shade=False)
 
 
-def _plot_template_style_surface(ax, data, alpha, template, templatecolor='gray', surface_resolution=2, surface_detection=None):
+def _plot_template_style_surface(ax, data, template, templatecolor='gray', surface_detection=None, **kwargs):
     """Uses the function skimage.measure.marching_cubes to identify a surface.
 
     surface_resolution : int
@@ -51,6 +53,10 @@ def _plot_template_style_surface(ax, data, alpha, template, templatecolor='gray'
         The value used to detect the surface boundrary (see argument level in marching_cubes).
         Some default choices are made for various templates
     """
+    # get kwargs
+    surface_resolution = kwargs.get('surface_resolution')
+    alpha = kwargs.get('templatealpha')
+    # detect surface using skimage's marching cubes
     verts, faces, _, _ = measure.marching_cubes(
         data, level=surface_detection, step_size=surface_resolution)
     mesh = Poly3DCollection(verts[faces])
@@ -75,7 +81,7 @@ def _select_single_hemisphere_template(data, hemisphere):
     return data
 
 
-def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', alpha=0.2, voxsize=None, azim=0, elev=0, surface_detection=None, surface_resolution=2, edgethreshold=0.8, hemisphere='both'):
+def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatecolor='lightgray', voxsize=None, azim=0, elev=0, surface_detection=None, edgethreshold=0.8, hemisphere='both', **kwargs):
     if isinstance(template, str):
         if not os.path.exists(template):
             if surface_detection is None and style == 'surface':
@@ -105,10 +111,10 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', templatec
     data = img.get_fdata()
     data = _select_single_hemisphere_template(data, hemisphere)
     if style == 'filled':
-        _plot_template_style_filled(ax, data, alpha, templatecolor)
+        _plot_template_style_filled(ax, data, templatecolor, **kwargs)
     elif style == 'cloudy':
-        _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold, templatecolor, alpha)
+        _plot_template_style_cloudy(ax, data, azim, elev, edgethreshold, templatecolor, **kwargs)
     elif style == 'surface':
         _plot_template_style_surface(
-            ax, data, alpha, template, templatecolor, surface_resolution, surface_detection)
+            ax, data, template, templatecolor, surface_detection, **kwargs)
     return img.affine

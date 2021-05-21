@@ -77,12 +77,14 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     return nodes, img
 
 
-def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemisphere='both', **kwargs):
+def _plot_parcels(ax, img, alpha, cmap='Set2', hemisphere='both', **kwargs):
     """
     Plot each 3D parcels as a rendered surface.
 
     See plot for input arguments.
     """
+    # get kwargs 
+    surface_resolution = kwargs.get('surface_resolution')
     # Due to only being able to get data once, this leads to problems when LR hemi are specieid
     data = img.get_fdata(caching='unchanged').copy()
     # If single hemisphere, get only that side
@@ -104,7 +106,7 @@ def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemi
         dtmp = np.zeros(data.shape)
         dtmp[data == r] = 1
         verts, faces, _, _ = measure.marching_cubes(
-            dtmp, step_size=parcel_surface_resolution)
+            dtmp, step_size=surface_resolution)
         vertices = verts[faces]
         # for n in np.unique(vals):
         mesh = Poly3DCollection(vertices)
@@ -120,7 +122,7 @@ def _plot_parcels(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemi
     ax.set_zlim(0, data.shape[2])
 
 
-def _plot_parcel_disks(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1, hemisphere='both', **kwargs):
+def _plot_parcel_disks(ax, img, alpha, cmap='Set2', hemisphere='both', **kwargs):
     """
     Plot rendered surface as disk.
 
@@ -128,6 +130,8 @@ def _plot_parcel_disks(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1,
 
     Currently being tested and contains an angle bug
     """
+    # get kwargs 
+    surface_resolution = kwargs.get('surface_resolution')
     # Due to only being able to get data once, this leads to problems when LR hemi are specieid
     data = img.get_fdata(caching='unchanged').copy()
     # If single hemisphere, get only that side
@@ -151,7 +155,7 @@ def _plot_parcel_disks(ax, img, alpha, cmap='Set2', parcel_surface_resolution=1,
         dtmp = np.zeros(data.shape)
         dtmp[data == r] = 1
         verts, faces, _, _ = measure.marching_cubes(
-            dtmp, step_size=parcel_surface_resolution)
+            dtmp, step_size=surface_resolution)
         vertices = verts[faces]
         # for n in np.unique(vals):
         mesh = Poly3DCollection(vertices)

@@ -10,8 +10,8 @@ from .plotting import _plot_template, \
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile
 
 
-def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
-         templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
+def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled',
+         templatevoxsize=None, templatecolor='lightgray', templateedgethreshold=0.7, arrowaxis='auto',
          arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
          nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols='auto', nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
          edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both', showlegend=True, **kwargs):
@@ -242,12 +242,11 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             if template is not None:
                 affine = _plot_template(ax, templatestyle, template,
                                         templatecolor=templatecolor,
-                                        alpha=templatealpha,
                                         voxsize=templatevoxsize,
-                                        surface_resolution=surface_resolution,
                                         edgethreshold=templateedgethreshold,
                                         azim=azim[fi], elev=elev[fi],
-                                        hemisphere=hemi_frame)
+                                        hemisphere=hemi_frame,
+                                        **profile)
             # Template voxels will have origin at 0,0,0
             # It is easier to scale the nodes from the image affine
             # Then to rescale the ax.voxels function
@@ -271,8 +270,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                                 nodesize=nodesize, nodecols=nodecols, **profile)
                 elif nodetype == 'parcels':
                     _plot_parcels(ax, nodeimg, alpha=nodealpha,
-                                  cmap=nodecolor, parcel_surface_resolution=surface_resolution,
-                                  hemisphere=hemi_frame, **profile)
+                                  cmap=nodecolor, hemisphere=hemi_frame, **profile)
             if edges is not None:
                 edges_frame = edges.copy()
                 _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights, edgewidthscale=edgescale,
@@ -280,8 +278,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                             edgehighlightbehaviour=edgehighlightbehaviour)
             if arrowaxis_row is not None:
                 _add_axis_arrows(ax, dims=arrowaxis_row,
-                                 length=arrowlength, origin=arroworigin,
-                                 azim=azim[fi], elev=elev[fi])
+                                 origin=arroworigin,
+                                 azim=azim[fi], elev=elev[fi], **kwargs)
 
             ax.view_init(azim=azim[fi], elev=elev[fi])
             _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame)
