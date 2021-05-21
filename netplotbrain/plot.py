@@ -279,7 +279,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             if arrowaxis_row is not None:
                 _add_axis_arrows(ax, dims=arrowaxis_row,
                                  origin=arroworigin,
-                                 azim=azim[fi], elev=elev[fi], **kwargs)
+                                 azim=azim[fi], elev=elev[fi], **profile)
 
             ax.view_init(azim=azim[fi], elev=elev[fi])
             _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame)
