@@ -184,6 +184,10 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         path or name of file in netplotbrain/profiles/<filename>.json, specifies default kwargs.
         Default points to netplotbrain/profiles/default.json
 
+    Returns
+    --------
+    fig, ax - matplotlib figure and ax handles.
+
     """
     # Load default settings, then update with kwargs
     profile = _load_profile(**kwargs)
@@ -324,4 +328,4 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             ax_out.append(ax)
     fig.tight_layout()
 
-    return ax_out
+    return (fig, ax_out)

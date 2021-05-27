@@ -60,7 +60,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   edges=edges,
                   showlegend=False)
 
-plt.savefig('./examples/figures/measures.png', dpi=150)
+fig.savefig('./examples/figures/measures.png', dpi=150)
 
 #%%
 ## Plot multiple rows
