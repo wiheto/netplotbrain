@@ -47,11 +47,6 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: pytest --mpl
-
-    docker:
-      - image: 'circleci/node:10.0.0'
-    steps:
-      - checkout
       - run:
           name: Install and Make
           command: npm install && make test-coverage
