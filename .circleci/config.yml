@@ -45,10 +45,6 @@ jobs:
     docker:
       - image: 'circleci/node:10.0.0'
     steps:
-      - checkout
-      - run:
-          name: Install and Make
-          command: npm install && make test-coverage
       - coveralls/upload
 
 
