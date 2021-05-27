@@ -2,6 +2,7 @@ from netplotbrain import plot as npbplot
 import pytest
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Example node and edges dataframes included with package
 nodes = pd.read_csv('./examples/example_nodes.tsv', sep='\t', index_col=0)
@@ -13,8 +14,6 @@ edge_array = np.zeros([nnodes, nnodes])
 edge_array[edges['i'].values, edges['j'].values] = 1
 
 # Simplest image
-
-
 @pytest.mark.mpl_image_compare
 def test_simple():
     fig, ax = npbplot(template='MNI152NLin2009cAsym',
@@ -28,8 +27,6 @@ def test_simple():
     return fig
 
 # Nodes as spheres
-
-
 @pytest.mark.mpl_image_compare
 def test_spheres():
     fig, ax = npbplot(nodes=nodes,
@@ -43,3 +40,19 @@ def test_spheres():
                   title='Sphere test')
     return fig
 
+# Figure that receives own ax
+
+def test_customax():
+    fig = plt.figure()
+    ax = []
+    for axind in range(3):
+        ax.append(fig.add_subplot(231+axind, projection='3d'))
+    fig, ax = npbplot(template=None,
+                      view=['SLP'],
+                      nodes=nodes,
+                      nodescale=40,
+                      nodesize='centrality_measure1',
+                      edges=edges,
+                      fig=fig,
+                      ax=ax)
+    return fig

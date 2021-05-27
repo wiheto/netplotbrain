@@ -186,7 +186,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
 
     Returns
     --------
-    fig, ax - matplotlib figure and ax handles.
+    fig, ax - matplotlib figure and ax handles. 
+        Legend handles should not be included but there should be an empty row in the figure size for each legend needed.
 
     """
     # Load default settings, then update with kwargs
@@ -226,8 +227,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     if ax is None:
         fig, gridspec = _init_figure(frames, nrows, legendrows)
     else:
-        expected_ax_len = (nrows * frames) + legendrows
-        _check_axinput(ax, expected_ax_len)
+        expected_ax_len = (nrows * frames)
+        ax, gridspec = _check_axinput(ax, expected_ax_len)
 
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
@@ -310,6 +311,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     # Add legends to plot
     if legends is not None:
         for li, legend in enumerate(legends):
+            print(legend)
             # setup legend subplot. Goes in centre or centre2 subplots
             spind = gridspec.ncols
             if np.remainder(spind, 2) == 0:
@@ -317,7 +319,6 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             else:
                 legend_subplotp_colind = int(np.round(spind / 2) - 1)
             ax = fig.add_subplot(gridspec[nrows + li, legend_subplotp_colind])
-
             if legend == 'nodesize':
                 ax = _add_nodesize_legend(ax, nodes, nodesize, **profile)
             if legend == 'nodecolor':
