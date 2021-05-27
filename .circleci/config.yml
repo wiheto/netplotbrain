@@ -7,6 +7,7 @@ orbs:
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
   python: circleci/python@1.2
   coveralls: coveralls/coveralls@1.0.6
+  node: circleci/node@4.4.0
 
 workflows:
   sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
