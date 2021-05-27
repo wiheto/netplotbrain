@@ -16,7 +16,7 @@ edge_array[edges['i'].values, edges['j'].values] = 1
 # Simplest image
 @pytest.mark.mpl_image_compare
 def test_simple():
-    fig, ax = npbplot(template='MNI152NLin2009cAsym',
+    fig, _ = npbplot(template='MNI152NLin2009cAsym',
                       templatestyle='surface',
                       view='S',
                       nodes=nodes,
@@ -29,7 +29,7 @@ def test_simple():
 # Nodes as spheres
 @pytest.mark.mpl_image_compare
 def test_spheres():
-    fig, ax = npbplot(nodes=nodes,
+    fig, _ = npbplot(nodes=nodes,
                   edges=edge_array,
                   template='MNI152NLin2009cAsym',
                   templatestyle=None,
@@ -47,7 +47,7 @@ def test_customax():
     ax = []
     for axind in range(3):
         ax.append(fig.add_subplot(231+axind, projection='3d'))
-    fig, ax = npbplot(template=None,
+    fig, _ = npbplot(template=None,
                       view=['SLP'],
                       nodes=nodes,
                       nodescale=40,
