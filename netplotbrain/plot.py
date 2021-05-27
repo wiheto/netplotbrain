@@ -186,7 +186,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
 
     Returns
     --------
-    fig, ax - matplotlib figure and ax handles. 
+    fig, ax - matplotlib figure and ax handles.
         Legend handles should not be included but there should be an empty row in the figure size for each legend needed.
 
     """

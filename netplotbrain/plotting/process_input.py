@@ -81,4 +81,4 @@ def _check_axinput(ax, expected_ax_len):
         ax = [ax]
     gridspec = ax[0].get_gridspec()
     return ax, gridspec
-    
+

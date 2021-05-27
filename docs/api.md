@@ -1,1 +1,1 @@
-@[netplotbrain.plot]
+@[jetblack_markdown.autodoc]
