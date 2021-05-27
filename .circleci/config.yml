@@ -32,7 +32,7 @@ jobs:
       - run:
           name: additional pip install
           command: |
-            pip install pytest pytest-mpl
+            pip install pytest pytest-mpl coveralls
       - run:
           name: install netplotbrain
           command: |
@@ -40,12 +40,11 @@ jobs:
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
-          command: pytest --mpl
-  done:
-    docker:
-      - image: 'circleci/node:10.0.0'
-    steps:
-      - coveralls/upload
+          command: coverage run --source=netplotbrain -m pytest --mpl
+      - run:
+          name: Coveralls
+          # This assumes pytest is installed via the install-package step above
+          command: coveralls
 
 workflows:
   sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
@@ -53,7 +52,3 @@ workflows:
     # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows 
     jobs:
       - build-and-test
-      - done:
-          requires:
-            - build-and-test
-            
