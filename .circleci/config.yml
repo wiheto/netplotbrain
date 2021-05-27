@@ -8,15 +8,6 @@ orbs:
   python: circleci/python@1.2
   coveralls: coveralls/coveralls@1.0.6
 
-workflows:
-  sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run. 
-    # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows 
-    jobs:
-      - build-and-test
-      - done:
-        requires:
-          - build-and-test
 
 jobs:
   build-and-test:  # This is the name of the job, feel free to change it to better match what you're trying to do!
@@ -60,3 +51,14 @@ jobs:
           name: Install and Make
           command: npm install && make test-coverage
       - coveralls/upload
+
+
+workflows:
+  sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run. 
+    # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows 
+    jobs:
+      - build-and-test
+      - done:
+        requires:
+          - build-and-test
