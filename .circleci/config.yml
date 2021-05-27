@@ -38,7 +38,7 @@ jobs:
       - run:
           name: additional pip install
           command: |
-            pip install pytest pytest-plt
+            pip install pytest pytest-mpl
       - run:
           name: install netplotbrain
           command: |
