@@ -1,6 +1,7 @@
 {
     "arrowlength": 10,
     "edgealpha": 1,
+    "edgecolumnnames": ["i", "j"],
     "edgewidthscale": 1,
     "edgehighlightbehaviour": "both",
     "font": "Sawasdee",
