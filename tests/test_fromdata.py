@@ -40,6 +40,19 @@ def test_spheres():
                   title='Sphere test')
     return fig
 
+# Only plot a single hemisephere
+@pytest.mark.mpl_image_compare
+def test_singlehemisphere():
+    fig, _ = npbplot(nodes=nodes,
+                  edges=edges,
+                  template='MNI152NLin2009cAsym',
+                  templatestyle=None,
+                  view=['SSS'],
+                  hemisphere=['L', 'R', ''],
+                  nodealpha=0.5,
+                  nodecolor='Salmon')
+    return fig
+
 # Figure that receives own ax
 
 def test_customax():

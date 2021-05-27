@@ -1,5 +1,4 @@
 [report]
 omit = 
-	*__init__*
 	tests/*
-    __version.py
+    netplotbrain/__version.py
