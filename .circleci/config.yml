@@ -45,9 +45,7 @@ jobs:
     docker:
       - image: 'circleci/node:10.0.0'
     steps:
-      - coveralls/upload:
-        path_to_lcov: .coverage/lcov.info
-
+      - coveralls/upload
 
 workflows:
   sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
