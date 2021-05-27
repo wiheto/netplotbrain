@@ -40,10 +40,6 @@ jobs:
           command: |
             pip install pytest pytest-plt
       - run:
-          name: install netplotbrain
-          command: |
-            pip install ./project
-      - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: pytest --plots examples/tests
