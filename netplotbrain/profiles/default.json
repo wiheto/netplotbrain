@@ -3,7 +3,11 @@
     "edgealpha": 1,
     "edgewidthscale": 1,
     "edgehighlightbehaviour": "both",
+    "font": "Sawasdee",
+    "fontcolor": "gray",
     "highlightlevel": 0.85,
+    "legendtickfontsize": "xx-small",
+    "legendtitilefontsize": "medium",
     "nodealpha": 1,
     "nodecolorlegend": true,
     "nodecolorlegendstyle": "auto",
@@ -14,5 +18,8 @@
     "surface_detection": null,
     "templatealpha": 0.2,
     "templateedgethreshold": 0.7,
-    "templatecolor": "lightgray"
+    "templatecolor": "lightgray",
+    "titlefontsize": "medium", 
+    "titleloc": "center", 
+    "titleweight": "regular"
 }

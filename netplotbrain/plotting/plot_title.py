@@ -1,22 +1,26 @@
 
 
-def _add_subplot_title(ax, azim=None, elev=None, title='auto', hemisphere='both', titlefont='Sawasdee', titlefontsize='medium', titleloc='center', titleweight='regular', titlecolor='gray'):
-
+def _add_subplot_title(ax, azim=None, elev=None, title='auto', hemisphere='both', **kwargs):
+    titlefont = kwargs.get('font')
+    titlecolor = kwargs.get('fontcolor') 
+    titlefontsize = kwargs.get('titlefontsize')
+    titleloc = kwargs.get('titleloc')
+    titleweight = kwargs.get('titleweight')
     if title == 'auto':
         viewcoord = (azim, elev)
         title = ''
         if viewcoord == (180, 10):
-            title = 'View: Left'
+            title = 'Left'
         elif viewcoord == (0, 10):
-            title = 'View: Right'
+            title = 'Right'
         elif viewcoord == (90, 10):
-            title = 'View: Anterior'
+            title = 'Anterior'
         elif viewcoord == (-90, 10):
-            title = 'View: Posterior'
+            title = 'Posterior'
         elif viewcoord == (-90, 90):
-            title = 'View: Superior'
+            title = 'Superior'
         elif viewcoord == (90, 90):
-            title = 'View: Inferior'
+            title = 'Inferior'
         # Add hemisphere
         if hemisphere == 'L' or hemisphere == 'left':
             title += ' (left hemisphere)'

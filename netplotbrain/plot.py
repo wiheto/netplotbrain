@@ -139,9 +139,13 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         If the colorlegend is plotted or not.
     nodesizelegend : True
     nodecolorlegendstyle : str
-        Alternatvies: auto (default), discrete, continuious
+        Alternatives: auto (default), discrete, continuious
         If the color legend should show the entire colormap or discrete colors.
         If auto, plots discrete if less than 8 unique values are detected.
+    legendtickfontsize : str, int
+        Matplotlib fontsize for title in figure legends
+    legendtitlefontsize : str, int
+        Matplotlib fontsize for ticks in figure legends
 
     ARROW KWARGS
 
@@ -152,7 +156,6 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     arroworigin : list
         x,y,z coordinates of arrowaxis. Note 0,0,0 is bottom left.
 
-
     FIGURE KWARGS
 
     ax : matplotlib ax with 3D projection
@@ -162,7 +165,20 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     fig : matplotlib figure
 
 
-    OTHER KWARGS
+    TEXT KWARGS
+
+    font : str
+        font for all text in figure.
+    fontcolor : str, list, tuple
+        font color for all text in figure
+    titlefontsize : str
+        Size of title font (default: medium). See matplotlib "fontsize"
+    titleloc : str,
+        Location of title (defualt: center). See matplotlib "loc"
+    titleweight : str
+        Font weight of title (default: regular). See matplotlib "fontweight"
+
+    STYLE KWARGS
 
     profile : str
         path or name of file in netplotbrain/profiles/<filename>.json, specifies default kwargs.
@@ -279,7 +295,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                                  azim=azim[fi], elev=elev[fi], **profile)
 
             ax.view_init(azim=azim[fi], elev=elev[fi])
-            _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame)
+            _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame, **profile)
             # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
             _set_axes_equal(ax)

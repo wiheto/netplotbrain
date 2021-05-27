@@ -23,6 +23,10 @@ def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
     nodescale = kwargs.get('nodescale')
     nodesizelegend = kwargs.get('nodesizelegend')
     nodevminvmax = kwargs.get('nodevminvmax')
+    font = kwargs.get('font')
+    fontcolor = kwargs.get('fontcolor')
+    legendtickfontsize = kwargs.get('legendtickfontsize')
+    legendtitlefontsize = kwargs.get('legendtitlefontsize')
     if nodesizelegend is True:
         if isinstance(nodesize, str) and nodesize in nodes.columns:
             _, nl = _node_scale_vminvmax(
@@ -56,10 +60,10 @@ def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
     ax.scatter(np.arange(len(nodesizelegend)), np.ones(
         len(nodesizelegend)), s=nodesizelegend, color='gray')
     for x, label in enumerate(nodesizelegendlabels):
-        ax.text(x, 0.925, label, color='Gray', ha='center',
-                font='Sawasdee', fontsize='xx-small')
+        ax.text(x, 0.925, label, color=fontcolor, ha='center',
+                font=font, fontsize=legendtickfontsize)
     ax.text(np.mean(np.arange(len(nodesizelegendlabels))), 1.05, nodesize,
-            color='Gray', ha='center', font='Sawasdee', fontsize='medium')
+            color=fontcolor, ha='center', font=font, fontsize=legendtitlefontsize)
     ax.set_ylim([0.925, 1.1])
     ax.set_xlim([-2, len(nodesizelegendlabels) + 1])
     return ax
@@ -72,6 +76,11 @@ def _add_nodecolor_legend_discrete(ax, nodes, nodecolorby, nodecolor, **kwargs):
     """
     # Get relevant kwargs
     nodescale = kwargs.get('nodescale')
+    font = kwargs.get('font')
+    fontcolor = kwargs.get('fontcolor')
+    legendtickfontsize = kwargs.get('legendtickfontsize')
+    legendtitlefontsize = kwargs.get('legendtitlefontsize')
+    # Create list of discrete colors
     uniquenodecolorby = set(nodes[nodecolorby].dropna().values)
     uniquenodecolors_idx = [nodes[nodes[nodecolorby] ==
                                   x].first_valid_index() for x in uniquenodecolorby]
@@ -79,21 +88,27 @@ def _add_nodecolor_legend_discrete(ax, nodes, nodecolorby, nodecolor, **kwargs):
     ax.scatter(np.arange(len(uniquenodecolorby)), np.ones(
         len(uniquenodecolorby)), color=uniquenodecolors, s=nodescale)
     for x, label in enumerate(uniquenodecolorby):
-        ax.text(x, 0.925, label, color='Gray', ha='center',
-                font='Sawasdee', fontsize='xx-small')
+        ax.text(x, 0.925, label, color=fontcolor, ha='center',
+                font=font, fontsize=legendtickfontsize)
     ax.set_ylim([0.85, 1.1])
     ax.set_xlim([-2, len(uniquenodecolorby) + 1])
     # Plot title
     ax.text(np.mean(np.arange(len(uniquenodecolorby))), 1.05, nodecolorby,
-            color='Gray', ha='center', font='Sawasdee', fontsize='medium')
+            color=fontcolor, ha='center', font=font, fontsize=legendtitlefontsize)
     return ax
 
 
-def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap):
+def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap, **kwargs):
     """
     Add node color legend to bottom of figure.
     This is for continuous colours.
-    """
+    """    
+    # Get relevant kwargs
+    font = kwargs.get('font')
+    fontcolor = kwargs.get('fontcolor')
+    legendtickfontsize = kwargs.get('legendtickfontsize')
+    legendtitlefontsize = kwargs.get('legendtitlefontsize')
+    # Create continuous scale
     nc_min = nodes[nodecolorby].min()
     nc_max = nodes[nodecolorby].max()
     inc = (nc_max - nc_min) / 100
@@ -105,11 +120,11 @@ def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap):
     xticklabels = np.arange(nc_min, nc_max + (inc / 2), inc)
     for i, xtick in enumerate(np.arange(-3, 3.01, 1.5)):
         ax.plot([xtick, xtick], [0.94, 0.99], linewidth=1, color='lightgray')
-        ax.text(xtick, 0.75, np.round(xticklabels[i], 3), color='Gray', ha='center',
-                font='Sawasdee', fontsize='xx-small', transform=ax.transData)
+        ax.text(xtick, 0.75, np.round(xticklabels[i], 3), color=fontcolor, ha='center',
+                font=font, fontsize=legendtickfontsize, transform=ax.transData)
     # Plot title
     ax.text(0, 1.4, nodecolorby,
-            color='Gray', ha='center', font='Sawasdee', fontsize='medium')
+            color=fontcolor, ha='center', font=font, fontsize=legendtitlefontsize)
     return ax
 
 
@@ -129,6 +144,6 @@ def _add_nodecolor_legend(ax, nodes, nodecolorby, nodecolor, nodecmap, **kwargs)
         ax = _add_nodecolor_legend_discrete(
             ax, nodes, nodecolorby, nodecolor, **kwargs)
     else:
-        ax = add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap)
+        ax = add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap, **kwargs)
 
     return ax
