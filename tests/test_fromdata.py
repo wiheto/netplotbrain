@@ -13,6 +13,8 @@ edge_array = np.zeros([nnodes, nnodes])
 edge_array[edges['i'].values, edges['j'].values] = 1
 
 # Simplest image
+
+
 @pytest.mark.mpl_image_compare
 def test_simple():
     fig, ax = npbplot(template='MNI152NLin2009cAsym',
@@ -26,6 +28,8 @@ def test_simple():
     return fig
 
 # Nodes as spheres
+
+
 @pytest.mark.mpl_image_compare
 def test_spheres():
     fig, ax = npbplot(nodes=nodes,
@@ -38,3 +42,4 @@ def test_spheres():
                   nodecolor='Salmon',
                   title='Sphere test')
     return fig
+
