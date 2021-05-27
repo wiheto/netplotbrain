@@ -8,11 +8,6 @@ import matplotlib.pyplot as plt
 nodes = pd.read_csv('./examples/example_nodes.tsv', sep='\t', index_col=0)
 edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 
-# Create an edge array input as well
-nnodes = edges[['i', 'j']].max().max() + 1
-edge_array = np.zeros([nnodes, nnodes])
-edge_array[edges['i'].values, edges['j'].values] = 1
-
 # Simplest image
 @pytest.mark.mpl_image_compare
 def test_simple():
@@ -26,19 +21,6 @@ def test_simple():
                       nodecolorby='community')
     return fig
 
-# Nodes as spheres
-@pytest.mark.mpl_image_compare
-def test_spheres():
-    fig, _ = npbplot(nodes=nodes,
-                  edges=edge_array,
-                  template='MNI152NLin2009cAsym',
-                  templatestyle=None,
-                  view=['A'],
-                  nodetype='spheres',
-                  nodealpha=0.5,
-                  nodecolor='Salmon',
-                  title='Sphere test')
-    return fig
 
 # Only plot a single hemisephere
 @pytest.mark.mpl_image_compare
@@ -54,7 +36,6 @@ def test_singlehemisphere():
     return fig
 
 # Figure that receives own ax
-
 def test_customax():
     fig = plt.figure()
     ax = []
