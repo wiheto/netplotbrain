@@ -35,6 +35,7 @@ def test_singlehemisphere():
     return fig
 
 # Figure that receives own ax
+@pytest.mark.mpl_image_compare
 def test_customax():
     fig = plt.figure()
     ax = []
