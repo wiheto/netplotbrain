@@ -22,7 +22,10 @@ def _npedges2dfedges(edges, edgethreshold=0):
     return df
 
 
-def _get_edge_highlight_alpha(node_i, node_j, highlightnodes, highlightlevel, edgehighlightbehaviour, edgealpha):
+def _get_edge_highlight_alpha(node_i, node_j, highlightnodes, **kwargs):
+    edgealpha = kwargs.get('edgealpha')
+    highlightlevel = kwargs.get('highlightlevel')
+    edgehighlightbehaviour = kwargs.get('edgehighlightbehaviour')
     if highlightnodes is None or edgehighlightbehaviour is None:
         pass
     elif node_i in highlightnodes and node_j in highlightnodes and edgehighlightbehaviour == 'both':
@@ -34,7 +37,7 @@ def _get_edge_highlight_alpha(node_i, node_j, highlightnodes, highlightlevel, ed
     return edgealpha
 
 
-def _plot_edges(ax, nodes, edges, edgewidth=None, edgewidthscale=1, edgecolor='k', edgecol=['i', 'j'], edgealpha=None, highlightnodes=None, highlightlevel=None, edgehighlightbehaviour='both'):
+def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', edgecol=['i', 'j'], highlightnodes=None, **kwargs):
     """
     Plots the edges on the plot.
 
@@ -55,8 +58,6 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgewidthscale=1, edgecolor='k
         list of length 2.
         The first two, reference the node indicies in nodes.
         The third referencees the weights.
-    edgealpha : float
-        Transparency of edges.
     highlightnodes : list
         See netplotbrain.plot
     highlightlevel : float
@@ -67,12 +68,18 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgewidthscale=1, edgecolor='k
         If both, then highlights only edges between highlighted nodes.
         If any, then only edges connecting any of the nodes are highlighted.
 
+    kwargs
+    ---------------------
+    edgealpha : float
+        Transparency of edges.
+
     Returns
     ----------------------
     Nothing
     """
+    edgewidthscale = kwargs.get('edgewidthscale')
     # Convert highlightnodes binary list to index list
-    hl_idx = np.where(np.array(highlightnodes)==1)[0]
+    hl_idx = np.where(np.array(highlightnodes) == 1)[0]
     # if dataframe
     for _, row in edges.iterrows():
         # if row[edgecol[0]] != 0 and row[edgecol[1]] != 0:
@@ -82,7 +89,7 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgewidthscale=1, edgecolor='k
             ew = row[edgewidth] * edgewidthscale
         if row[edgecol[0]] in nodes.index and row[edgecol[1]] in nodes.index:
             ea = _get_edge_highlight_alpha(
-                row[edgecol[0]], row[edgecol[1]], hl_idx, highlightlevel, edgehighlightbehaviour, edgealpha)
+                row[edgecol[0]], row[edgecol[1]], hl_idx, **kwargs)
             xp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['x']
             yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['y']
             zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['z']

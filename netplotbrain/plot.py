@@ -7,13 +7,12 @@ from .plotting import _plot_template, \
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput
 
 
-from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile
+from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile, _nrows_in_fig
 
 
 def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled',
          templatevoxsize=None, arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols='auto', nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
-         edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both', showlegend=True, **kwargs):
+         nodecmap='Dark2', edgeweights=True, nodecols='auto', nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -109,12 +108,14 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         String that specifies column in edge dataframe that contains weights.
         If numpy array is edge input, can be True (default) to specify edge weights.
     edgealpha : float
-        Transparency of edges.
+        Transparency of edges (default: 1).
     edgehighlightbehaviour : str
         Alternatives "both" or "any" or None.
         Governs edge dimming when highlightnodes is on
         If both, then highlights only edges between highlighted nodes.
         If any, then only edges connecting any of the nodes are highlighted.
+    edgewidthscale : int, float
+        Scale the width of all edges by a factor (default: 1)
 
     TEMPLATE KWARGS
 
@@ -175,23 +176,15 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     nodes, nodeimg, nodecols = _process_node_input(
         nodes, nodeimg, nodecols, template, templatevoxsize)
     edges, edgeweights = _process_edge_input(edges, edgeweights)
-    # TODO add function for subplot creation here
-    # get the number of views
-    if isinstance(view, list):
-        nrows = len(view)
-    else:
-        nrows = 1
-        view = [view]
-    # If specific views are given, calculate value of frames.
-    if len(view[0]) > 2:
-        frames = len(view[0])
+
     # Set up legend row
+    # TODO compact code into subfunction
     legends = None
     legendrows = 0
     if isinstance(showlegend, list):
         legends = showlegend
         legendrows = len(legends)
-    if showlegend is True:
+    elif showlegend is True:
         # Only plot size legend is sphere/circle and string or list input
         # TODO setup_legend is a little clunky and could be fized
         if nodetype != 'parcel' and not isinstance(nodesize, (float, int)):
@@ -205,20 +198,26 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                 nodecolorby, nodecolorlegend, 'nodecolor', legends)
         if legends is not None:
             legendrows = len(legends)
+
+    # Figure setup
+    # Get number of non-legend rows
+    nrows, view, frames = _nrows_in_fig(view, frames)
     # Init figure, if not given as input
     if ax is None:
         fig, gridspec = _init_figure(frames, nrows, legendrows)
     else:
         expected_ax_len = (nrows * frames) + legendrows
         _check_axinput(ax, expected_ax_len)
+
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap)
     if highlightnodes is not None:
         nodecolor, highlightnodes = _highlight_nodes(
-            nodes, nodecolor, nodealpha, highlightnodes, highlightlevel)
+            nodes, nodecolor, highlightnodes, **profile)
+
+    # Rename ax as ax_in and prespecfiy ax_out before forloop
     ax_in = ax
-    # Prespecify ouput ax list
     ax_out = []
     # TODO remove double forloop and make single forloop by running over nrows and frames
     for ri in range(nrows):
@@ -239,7 +238,6 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                 ax = ax_in[axind]
             else:
                 ax = ax_in
-
             affine = None
             if template is not None:
                 affine = _plot_template(ax, templatestyle, template,
@@ -269,13 +267,12 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                     _plot_nodes(ax, nodes_frame, nodecolor=nodecolor,
                                 nodesize=nodesize, nodecols=nodecols, **profile)
                 elif nodetype == 'parcels':
-                    _plot_parcels(ax, nodeimg, alpha=nodealpha,
-                                  cmap=nodecolor, hemisphere=hemi_frame, **profile)
+                    _plot_parcels(ax, nodeimg, cmap=nodecolor,
+                                  hemisphere=hemi_frame, **profile)
             if edges is not None:
                 edges_frame = edges.copy()
-                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights, edgewidthscale=edgescale,
-                            edgecolor=edgecolor, edgealpha=edgealpha, highlightnodes=highlightnodes, highlightlevel=highlightlevel,
-                            edgehighlightbehaviour=edgehighlightbehaviour)
+                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights,
+                            edgecolor=edgecolor, highlightnodes=highlightnodes, **profile)
             if arrowaxis_row is not None:
                 _add_axis_arrows(ax, dims=arrowaxis_row,
                                  origin=arroworigin,
@@ -289,6 +286,7 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             ax.axis('off')
             # Append ax to ax_out to store it.
             ax_out.append(ax)
+
     # Add legends to plot
     if legends is not None:
         for li, legend in enumerate(legends):

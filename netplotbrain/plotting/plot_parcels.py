@@ -77,13 +77,14 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     return nodes, img
 
 
-def _plot_parcels(ax, img, alpha, cmap='Set2', hemisphere='both', **kwargs):
+def _plot_parcels(ax, img, cmap='Set2', hemisphere='both', **kwargs):
     """
     Plot each 3D parcels as a rendered surface.
 
     See plot for input arguments.
     """
     # get kwargs
+    alpha = kwargs.get('nodealpha')
     surface_resolution = kwargs.get('surface_resolution')
     # Due to only being able to get data once, this leads to problems when LR hemi are specieid
     data = img.get_fdata(caching='unchanged').copy()
@@ -169,4 +170,3 @@ def _plot_parcels(ax, img, alpha, cmap='Set2', hemisphere='both', **kwargs):
 #     ax.set_xlim(0, data.shape[0])
 #     ax.set_ylim(0, data.shape[1])
 #     ax.set_zlim(0, data.shape[2])
-

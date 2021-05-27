@@ -3,6 +3,7 @@ import matplotlib.colors as pltcol
 import numpy as np
 import pandas as pd
 
+
 def _colorarray_from_string(cmap, ncolors):
     """Get colormap array from string that loops through colors."""
     if cmap in pltcol.cnames or cmap[0] == '#':
@@ -15,7 +16,9 @@ def _colorarray_from_string(cmap, ncolors):
     return colors[:ncolors]
 
 
-def _highlight_nodes(nodes, nodecolor, nodealpha, highlightnodes, highlightlevel=0.75):
+def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
+    highlightlevel = kwargs.get('highlightlevel')
+    nodealpha = kwargs.get('nodealpha')
     if isinstance(highlightnodes, dict):
         highlight_idx = nodes[highlightnodes.keys()] == highlightnodes.values()
         highlight_idx = np.squeeze(highlight_idx.values)
@@ -37,6 +40,7 @@ def assign_color(row, colordict):
         return np.array([1, 1, 1, 0])
     else:
         return colordict[row]
+
 
 def _get_colorby_colors(df, colorby=None, cmap='plasma'):
     """
