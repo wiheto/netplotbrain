@@ -81,7 +81,7 @@ def _add_nodecolor_legend_discrete(ax, nodes, nodecolorby, nodecolor, **kwargs):
     legendtickfontsize = kwargs.get('legendtickfontsize')
     legendtitlefontsize = kwargs.get('legendtitlefontsize')
     # Create list of discrete colors
-    uniquenodecolorby = set(nodes[nodecolorby].dropna().values)
+    uniquenodecolorby = sorted(list(set(nodes[nodecolorby].dropna().values)))
     uniquenodecolors_idx = [nodes[nodes[nodecolorby] ==
                                   x].first_valid_index() for x in uniquenodecolorby]
     uniquenodecolors = nodecolor[uniquenodecolors_idx, :]

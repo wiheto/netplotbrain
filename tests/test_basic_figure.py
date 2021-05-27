@@ -17,6 +17,4 @@ def test_simple():
                       nodesize='centrality_measure1',
                       edges=edges,
                       nodecolorby='community')
-    # Dummy test for now
-    assert 1 == 1
     return fig
