@@ -1,5 +1,6 @@
 # netplotbrain: visualizing networks in 3D on a brain
 
+[![CircleCI](https://circleci.com/gh/wiheto/netplotbrain.svg?style=shield)](https://app.circleci.com/pipelines/github/wiheto/netplotbrain)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d2c620d4be8047989e7b91ac3bbbba97)](https://www.codacy.com/gh/wiheto/netplotbrain/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wiheto/netplotbrain&amp;utm_campaign=Badge_Grade)
 [![DOI](https://zenodo.org/badge/317297000.svg)](https://zenodo.org/badge/latestdoi/317297000)
 
