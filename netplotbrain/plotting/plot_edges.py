@@ -37,7 +37,7 @@ def _get_edge_highlight_alpha(node_i, node_j, highlightnodes, **kwargs):
     return edgealpha
 
 
-def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', edgecol=['i', 'j'], highlightnodes=None, **kwargs):
+def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=None, **kwargs):
     """
     Plots the edges on the plot.
 
@@ -77,6 +77,7 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', edgecol=['i', '
     ----------------------
     Nothing
     """
+    edgecol = kwargs.get('edgecolumnnames')
     edgewidthscale = kwargs.get('edgewidthscale')
     # Convert highlightnodes binary list to index list
     hl_idx = np.where(np.array(highlightnodes) == 1)[0]

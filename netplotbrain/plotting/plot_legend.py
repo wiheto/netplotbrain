@@ -102,7 +102,7 @@ def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap, **kwargs):
     """
     Add node color legend to bottom of figure.
     This is for continuous colours.
-    """    
+    """
     # Get relevant kwargs
     font = kwargs.get('font')
     fontcolor = kwargs.get('fontcolor')

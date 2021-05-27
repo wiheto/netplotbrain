@@ -2,7 +2,7 @@
 
 def _add_subplot_title(ax, azim=None, elev=None, title='auto', hemisphere='both', **kwargs):
     titlefont = kwargs.get('font')
-    titlecolor = kwargs.get('fontcolor') 
+    titlecolor = kwargs.get('fontcolor')
     titlefontsize = kwargs.get('titlefontsize')
     titleloc = kwargs.get('titleloc')
     titleweight = kwargs.get('titleweight')
