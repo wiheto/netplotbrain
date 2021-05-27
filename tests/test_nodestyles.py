@@ -2,7 +2,6 @@ from netplotbrain import plot as npbplot
 import pytest
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
 # Example node and edges dataframes included with package
 nodes = pd.read_csv('./examples/example_nodes.tsv', sep='\t', index_col=0)

@@ -1,7 +1,6 @@
 from netplotbrain import plot as npbplot
 import pytest
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
 # Example node and edges dataframes included with package

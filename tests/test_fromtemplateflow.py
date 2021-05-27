@@ -24,7 +24,7 @@ def test_templateflow_atlas_highlight():
                       templatestyle=None,
                       view=['L'],
                       nodetype='parcels',
-                      nodecmap='Dark2',
+                      nodecolor='Dark2',
                       nodecolorby='yeo7networks',
                       nodealpha=0.8,
                       title='Highlight a community',
