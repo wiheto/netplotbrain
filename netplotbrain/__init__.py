@@ -1,7 +1,7 @@
 """
 .. include:: ../README.md
 
-.. include:: ./documentation.md
+.. include:: ../docs/gallary.md
 .. include:: ../docs/kwargs.rst
 """
 from .plot import plot
