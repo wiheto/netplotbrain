@@ -5,15 +5,20 @@
 
 Painlessly plot networks on a brain in python. The package is still in early development and better documentation/tutorials/examples are in the works.
 
-![](../examples/figures/showcase.png)
+![](https://www.github.com/wiheto/netplotbrain/examples/figures/showcase.png)
 
 ## Features
 
-1. Easy to specify properties: integration with pandas entails node and edge size/colour can easily be specified.
-2. Flexibility: multiple node and template styles. Easily create multiple angles to view the figure.
-3. [TemplateFlow](https://www.templateflow.org) integration to download any template or atlas.
+1. **Easy to use**. Integration with pandas entails node and edge size/colour can easily be specified.
+2. **Flexibility**. multiple node and template styles. Easily create multiple angles to view the figure.
+3. **Integration**. [TemplateFlow](https://www.templateflow.org) integration to download any template or atlas.
 
 ## Installation
 
 `pip install git+https://www.github.com/wiheto/netplotbrain`
 
+## Learn netplotbrain
+
+[Check out the tutorial](tutorial.md)
+
+[Check out gallary of examples](gallary.md)
