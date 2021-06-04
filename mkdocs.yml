@@ -10,5 +10,9 @@ theme: readthedocs
 
 plugins:
     - search
-
+    - mktheapidocs:
+        modules: 
+            netplotbrain:
+                section: API 
+                hidden: ["utils"]
 
