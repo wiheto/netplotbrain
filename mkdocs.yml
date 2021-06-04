@@ -1,7 +1,8 @@
 site_name: netplotbrain
 
 nav:
-    - Home: index.md
+    - Home:
+        ../README.md
     - Tutorial: 
         tutorial.md
     - Gallary: gallary.md
@@ -11,9 +12,9 @@ theme: readthedocs
 plugins:
     - search
     - mktheapidocs:
-        modules: 
+        modules:
             netplotbrain:
-                section: API 
-                source_repo: https://github.com/wiheto/netplotbrain/netplotbrain/
+                section: API
+                source_repo: ./netplotbrain/plot.py
                 hidden: ["utils"]
 
