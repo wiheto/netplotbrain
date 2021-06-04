@@ -1,26 +1,21 @@
 site_name: netplotbrain
 
-
 nav:
-    - index.md
+    - Home: index.md
     - Tutorial: 
         tutorial.md
-    - Gallary:
-        gallary.md
-    - API: 
-        api.md
+    - Gallary: gallary.md
+    - API: API/netplotbrain/plot/index.html
 
 theme: readthedocs
 
 plugins:
+    - include-markdown
     - search
-
-markdown_extensions:
-  - admonition
-  - codehilite
-  - jetblack_markdown.autodoc:
-      ignore_all: false
-      ignore_inherited: true
-      prefer_docstring: true
-      follow_module_tree: False
+    - mktheapidocs:
+        modules: 
+            netplotbrain:
+                section: API 
+                source_repo: github.com/wiheto/netplotbrain/
+                hidden: ["utils"]
 
