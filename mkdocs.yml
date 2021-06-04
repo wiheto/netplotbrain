@@ -5,7 +5,7 @@ nav:
     - Tutorial: 
         tutorial.md
     - Gallary: gallary.md
-    - API: API/netplotbrain/plot/index.html
+    - API: API
 
 theme: readthedocs
 
