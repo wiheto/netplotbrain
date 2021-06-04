@@ -5,7 +5,6 @@ nav:
     - Tutorial: 
         tutorial.md
     - Gallary: gallary.md
-    - API: API
 
 theme: readthedocs
 
