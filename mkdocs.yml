@@ -14,5 +14,6 @@ plugins:
         modules: 
             netplotbrain:
                 section: API 
+                source_repo: https://github.com/wiheto/netplotbrain/netplotbrain/
                 hidden: ["utils"]
 
