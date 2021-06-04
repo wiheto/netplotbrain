@@ -9,12 +9,6 @@ nav:
 theme: readthedocs
 
 plugins:
-    - include-markdown
     - search
-    - mktheapidocs:
-        modules: 
-            netplotbrain:
-                section: API 
-                source_repo: github.com/wiheto/netplotbrain/
-                hidden: ["utils"]
+
 
