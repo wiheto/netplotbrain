@@ -1,3 +1,2 @@
 scikit-image>=0.17.2
-mktheapidocs
-mkdocs-include-markdown-plugin
+mkdocstrings

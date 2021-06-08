@@ -1,20 +1,26 @@
 site_name: netplotbrain
 
 nav:
-    - Home:
-        ../README.md
     - Tutorial: 
         tutorial.md
     - Gallary: gallary.md
+    - API:
+        api.md
 
-theme: readthedocs
+theme:
+  name: material
+  palette:
+    scheme: preference
+    primary: teal
+    accent: purple
 
 plugins:
     - search
-    - mktheapidocs:
-        modules:
-            netplotbrain:
-                section: API
-                source_repo: ./netplotbrain/plot.py
-                hidden: ["utils"]
-
+    - mkdocstrings:
+        default_handler: python
+        handlers:
+        python:
+            rendering:
+                show_source: true
+        watch:
+            - netplotbrian/
