@@ -1,26 +1,30 @@
 import numpy as np
+import pandas as pd
+from typing import TypeVar, Union, Optional
+import matplotlib.pyplot as plt
 from .plotting import _plot_template, \
     _plot_edges, _plot_nodes, _plot_spheres,\
     _scale_nodes, _add_axis_arrows, _plot_parcels,\
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput
-
-
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile, _nrows_in_fig
 
-
-def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled',
+def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', frames=1, edges=None, template=None, templatestyle='filled',
          templatevoxsize=None, arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
          nodecmap='Dark2', edgeweights=True, nodecols='auto', nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
-    Parameters
-    ---------------------
-    view : str, list, or tuple
-        If string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior)
-        or any combination of these (e.g 'LR', 'AP')
+    Arguments:
+        nodes pd.dataframe, str:  
+            The dataframe must include x, y, z columns that correspond to coordinates of nodes
+            (see nodecols to change this).
+            Can include additional infomation for node size and color.
+        If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
+        fig: matplotlib figure
+        view : str, list, or tuple. If string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior)
+        or any combination of these (e.g 'LR', 'AP').
         The string can contain multiple combinations (e.g. LSR)
         if list: multiple strings (as above) which will create new rows of subplots.
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
@@ -84,6 +88,8 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     --------
     fig, ax - matplotlib figure and ax handles.
         Legend handles should not be included but there should be an empty row in the figure size for each legend needed.
+
+    .. include:: ../docs/kwargs.rst
 
     """
     # Load default settings, then update with kwargs

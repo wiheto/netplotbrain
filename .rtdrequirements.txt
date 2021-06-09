@@ -1,1 +1,2 @@
 scikit-image>=0.17.2
+mkdocstrings>=0.15.0
