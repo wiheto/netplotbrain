@@ -53,9 +53,9 @@ def _detect_nodecolor_type(nodes, nodecolorby, prespecified=None):
             colorpropertytype = 'continuious'
         elif nodes[nodecolorby].nunique() <= 8:
             colorpropertytype = 'discrete'
-    else: 
+    else:
         colorpropertytype = prespecified
-    
+
     return colorpropertytype
 
 
@@ -97,9 +97,9 @@ def _get_colorby_colors(df, colorby, cmap='plasma', **kwargs):
         cat = df[colorby]
         cat = (cat - -np.max(np.abs(cat))) / (np.max(np.abs(cat)) - -np.max(np.abs(cat)))
         color_array = cmap(cat)
-    else: 
+    else:
         print(nodecolortype)
         print(node_color_vminvmax)
-        # This will occur if nodecolorvminvmax is not 
+        # This will occur if nodecolorvminvmax is not
         raise ValueError('Cannot determine color type')
     return color_array

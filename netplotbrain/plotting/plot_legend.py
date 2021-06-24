@@ -115,7 +115,7 @@ def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap, **kwargs):
         nc_max = nodes[nodecolorby].max()
     elif  nodecolorvminvmax == 'maxabs':
         nc_min = -nodes[nodecolorby].abs().max()
-        nc_max = nodes[nodecolorby].abs().max() 
+        nc_max = nodes[nodecolorby].abs().max()
     else:
         nc_min = nodecolorvminvmax[0]
         nc_max = nodecolorvminvmax[1]
