@@ -106,9 +106,9 @@ def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
     """
     Scales nodesize in relation to nodescale, vmin and vmax.
 
-    The parameter nodevminvmax dictates the vmin, vmax behaviour.
+    The parameter nodesizevminvmax dictates the vmin, vmax behaviour.
     """
-    vminvmax = kwargs.get('nodevminvmax')
+    vminvmax = kwargs.get('nodesizevminvmax')
     nodescale = kwargs.get('nodescale')
     nodesizevector = nodes[nodesize].copy()
     labelformat = None

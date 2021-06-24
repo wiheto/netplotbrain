@@ -14,12 +14,17 @@ nodealpha : float
     Specify the transparency of the nodes
 nodecols : list
     Node column names in node dataframe. 'auto' entails the columsn are ['x', 'y', 'z'] (specifying coordinates)
-nodevminvmax : str, list
+nodesizevminvmax : str, list
     Scaling alternatives if nodesize is given.
     Alternatives: 'absolute' (default) 'minmax', or 2-tuple list of [min, max].
     If minmax, node sizes are scaled between (0 and 1) * nodescale.
     If absolute, then the default values are used.
     Absolute can lead to problems with, for example, negative values.
+nodecolorvminvmax : str, list
+    Scales continuous colormap between certain values. 
+    Alternatives: 'minmax' (default), 'absmax', , or 2-tuple list of [min, max].
+    If minmax, colorbar starts at the smallest value to largest value.
+    If absmax, then colorbar goes from -abs(max(value)) to abs(max(value)), enusuring 0 is in the middle.
 
     EDGE KWARGS
 

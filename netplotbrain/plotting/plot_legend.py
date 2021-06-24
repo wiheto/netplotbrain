@@ -1,7 +1,7 @@
 """Legend plots"""
 import numpy as np
 import matplotlib.cm as cm
-from ..utils import _node_scale_vminvmax
+from ..utils import _node_scale_vminvmax, _detect_nodecolor_type
 
 
 def _setup_legend(legendproperty, legend, legendname, currentlegend=None):
@@ -22,7 +22,7 @@ def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
     # Get relevant kwargs
     nodescale = kwargs.get('nodescale')
     nodesizelegend = kwargs.get('nodesizelegend')
-    nodevminvmax = kwargs.get('nodevminvmax')
+    nodesizevminvmax = kwargs.get('nodesizevminvmax')
     font = kwargs.get('font')
     fontcolor = kwargs.get('fontcolor')
     legendtickfontsize = kwargs.get('legendtickfontsize')
@@ -31,11 +31,11 @@ def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
         if isinstance(nodesize, str) and nodesize in nodes.columns:
             _, nl = _node_scale_vminvmax(
                 nodes, nodesize, return_labels=True, **kwargs)
-            # If nodevminvmax is set, use that as the smallest and largest size/labels
+            # If nodesizevminvmax is set, use that as the smallest and largest size/labels
             # otherwise derive from data
-            if isinstance(nodevminvmax, list):
-                ns_min_legend = nodevminvmax[0]
-                ns_max_legend = nodevminvmax[1]
+            if isinstance(nodesizevminvmax, list):
+                ns_min_legend = nodesizevminvmax[0]
+                ns_max_legend = nodesizevminvmax[1]
             else:
                 ns_min_legend = nl.min()
                 ns_max_legend = nl.max()
@@ -108,9 +108,17 @@ def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap, **kwargs):
     fontcolor = kwargs.get('fontcolor')
     legendtickfontsize = kwargs.get('legendtickfontsize')
     legendtitlefontsize = kwargs.get('legendtitlefontsize')
+    nodecolorvminvmax = kwargs.get('nodecolorvminvmax')
     # Create continuous scale
-    nc_min = nodes[nodecolorby].min()
-    nc_max = nodes[nodecolorby].max()
+    if nodecolorvminvmax == 'minmax':
+        nc_min = nodes[nodecolorby].min()
+        nc_max = nodes[nodecolorby].max()
+    elif  nodecolorvminvmax == 'maxabs':
+        nc_min = -nodes[nodecolorby].abs().max()
+        nc_max = nodes[nodecolorby].abs().max() 
+    else:
+        nc_min = nodecolorvminvmax[0]
+        nc_max = nodecolorvminvmax[1]
     inc = (nc_max - nc_min) / 100
     imspan = np.arange(nc_min, nc_max + (inc / 2), inc)
     imsquare = np.outer(np.ones(1), imspan)
@@ -134,11 +142,7 @@ def _add_nodecolor_legend(ax, nodes, nodecolorby, nodecolor, nodecmap, **kwargs)
     This function descites whether a discrete or continuous colorbar is to be added.
     """
     nodecolorlegendstyle = kwargs.get('nodecolorlegendstyle')
-    # First a heuristic if nodecolorlegendstyle is not specified
-    if nodecolorlegendstyle == 'auto' and nodes[nodecolorby].nunique() > 8:
-        nodecolorlegendstyle = 'continuious'
-    elif nodecolorlegendstyle == 'auto' and nodes[nodecolorby].nunique() <= 8:
-        nodecolorlegendstyle = 'discrete'
+    nodecolorlegendstyle = _detect_nodecolor_type(nodes, nodecolorby, nodecolorlegendstyle)
     # Plot whichever legend is wanted
     if nodecolorlegendstyle == 'discrete':
         ax = _add_nodecolor_legend_discrete(

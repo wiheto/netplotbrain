@@ -25,7 +25,7 @@ def test_cont_colormap():
     return fig
 
 @pytest.mark.mpl_image_compare
-def test_nodevminvmax():
+def test_nodesizevminvmax():
     fig, _ = npbplot(template=None,
                       view='S',
                       nodescale=100,
@@ -33,7 +33,7 @@ def test_nodevminvmax():
                       nodesize='centrality_measure1',
                       edges=edges,
                       nodecmap='RdBu',
-                      nodevminvmax=[0.6, 1.1])
+                      nodesizevminvmax=[0.6, 1.1])
     return fig
 
 # Nodes as spheres

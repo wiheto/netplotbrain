@@ -134,7 +134,7 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
 
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
-        nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap)
+        nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap, **profile)
     if highlightnodes is not None:
         nodecolor, highlightnodes = _highlight_nodes(
             nodes, nodecolor, highlightnodes, **profile)
@@ -213,7 +213,6 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
     # Add legends to plot
     if legends is not None:
         for li, legend in enumerate(legends):
-            print(legend)
             # setup legend subplot. Goes in centre or centre2 subplots
             spind = gridspec.ncols
             if np.remainder(spind, 2) == 0:
