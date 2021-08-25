@@ -1,1 +1,1 @@
-@[netplotbrain.plot]
+::: netplotbrain.plot

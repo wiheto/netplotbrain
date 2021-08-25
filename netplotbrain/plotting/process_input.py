@@ -77,3 +77,8 @@ def _check_axinput(ax, expected_ax_len):
     if isinstance(ax, list):
         if len(ax) != expected_ax_len:
             raise ValueError('Ax list, must equal number of frames requested')
+    if not isinstance(ax, list):
+        ax = [ax]
+    gridspec = ax[0].get_gridspec()
+    return ax, gridspec
+

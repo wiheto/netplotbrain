@@ -1,0 +1,4 @@
+[report]
+omit = 
+	tests/*
+    netplotbrain/__version.py

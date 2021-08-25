@@ -1,37 +1,40 @@
 import numpy as np
+import pandas as pd
+from typing import TypeVar, Union, Optional
+import matplotlib.pyplot as plt
 from .plotting import _plot_template, \
     _plot_edges, _plot_nodes, _plot_spheres,\
     _scale_nodes, _add_axis_arrows, _plot_parcels,\
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput
+from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile, _nrows_in_fig
 
-
-from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile
-
-
-def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template=None, templatestyle='filled', templatealpha=0.2,
-         templatevoxsize=None, templatecolor='lightgray', surface_resolution=2, templateedgethreshold=0.7, arrowaxis='auto', arrowlength=10,
-         arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgescale=1, edgeweights=True, nodecols='auto', nodeimg=None, nodealpha=1, hemisphere='both', title='auto', highlightnodes=None,
-         edgealpha=1, highlightlevel=0.85, edgehighlightbehaviour='both', showlegend=True, **kwargs):
+def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', frames=1, edges=None, template=None, templatestyle='filled',
+         templatevoxsize=None, arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
+         nodecmap='Dark2', edgeweights=True, nodecols='auto', nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
-    Parameters
-    ---------------------
-
-    view : string, list, or tuple
-        if string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior)
-        or any combination of these (e.g 'LR', 'AP')
+    Arguments:
+        nodes pd.dataframe, str:  
+            The dataframe must include x, y, z columns that correspond to coordinates of nodes
+            (see nodecols to change this).
+            Can include additional infomation for node size and color.
+        If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
+        fig: matplotlib figure
+        view : str, list, or tuple. If string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior)
+        or any combination of these (e.g 'LR', 'AP').
         The string can contain multiple combinations (e.g. LSR)
         if list: multiple strings (as above) which will create new rows of subplots.
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
         If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the oposite direction
+    
     nodes : dataframe, string
         The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecols to change this).
         Can include additional infomation for node size and color.
         If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
+    
     nodeimg : str or nii
         String to filename or nibabel object that contains nodes as int.
     edges : dataframe, numpy array, or string
@@ -79,80 +82,14 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
         Default auto, will describe the view settings.
         Otherwise string or list of for subplot titles
 
-    NODE KWARGS
+    For more kew word arguments, see `netplotbrain.node-kwargs`
 
-    nodecmap : str
-        Matplotlib colormap for node coloring with nodecolorby.
-    nodecolor : matplotlib coloring
-        Can be string (default 'black') or list of 3D/4D colors for each edge.
-    nodetype : str
-        Can be 'spheres', 'circles', or (if nodeimg is specified) 'parcels'.
-    nodealpha : float
-        Specify the transparency of the nodes
-    nodecols : list
-        Node column names in node dataframe. 'auto' entails the columsn are ['x', 'y', 'z'] (specifying coordinates)
+    Returns
+    --------
+    fig, ax - matplotlib figure and ax handles.
+        Legend handles should not be included but there should be an empty row in the figure size for each legend needed.
 
-    EDGE KWARGS
-
-    edgecols : list
-        Edge columns names in edge dataframe. Default is i and j (specifying nodes).
-    edgecolor : matplotlib coloring
-        Can be string (default 'black') or list of 3D/4D colors for each edge.
-    edgewidth : int, float
-        Specify width of edges. If auto, will plot the value in edge array (if array) or the weight column (if in pandas dataframe), otherwise 2.
-    edgeweights : string
-        String that specifies column in edge dataframe that contains weights.
-        If numpy array is edge input, can be True (default) to specify edge weights.
-    edgealpha : float
-        Transparency of edges.
-    edgehighlightbehaviour : str
-        Alternatives "both" or "any" or None.
-        Governs edge dimming when highlightnodes is on
-        If both, then highlights only edges between highlighted nodes.
-        If any, then only edges connecting any of the nodes are highlighted.
-
-    TEMPLATE KWARGS
-
-    templatecolor : str
-        If templatestyle=='surface' or 'filled', the color of template voxels
-    templateedgedetection : float
-        If templatestyle=='cloudy', can tweak the edges detection threshold.
-    templatealpha : float
-        Opacity of template voxels.
-    templatevoxelsize : int
-        Resize voxels this size. Larger voxels = quicker. Default = 2
-    surface_resolution : int
-        If templatestyle=='surface' controls the size of the triangles used in the surface reconstruction (default: 2).
-
-    LEGENDKWARGS
-
-    nodecolorlegend=True,
-    nodesizelegend=True
-
-    ARROW KWARGS
-
-    arrowaxis : list or str
-        Adds axis arrows onto plot. Alternatives are: LR, AP, SI, 'all'
-    arrowlength : int, float
-        Length of arrow
-    arroworigin : list
-        x,y,z coordinates of arrowaxis. Note 0,0,0 is bottom left.
-
-
-    FIGURE KWARGS
-
-    ax : matplotlib ax with 3D projection
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        netplotbrain.plot(ax, ...)
-    fig : matplotlib figure
-
-
-    OTHER KWARGS
-
-    profile : str
-        path or name of file in netplotbrain/profiles/<filename>.json, specifies default kwargs.
-        Default points to netplotbrain/profiles/default.json
+    .. include:: ../docs/kwargs.rst
 
     """
     # Load default settings, then update with kwargs
@@ -162,23 +99,15 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
     nodes, nodeimg, nodecols = _process_node_input(
         nodes, nodeimg, nodecols, template, templatevoxsize)
     edges, edgeweights = _process_edge_input(edges, edgeweights)
-    # TODO add function for subplot creation here
-    # get the number of views
-    if isinstance(view, list):
-        nrows = len(view)
-    else:
-        nrows = 1
-        view = [view]
-    # If specific views are given, calculate value of frames.
-    if len(view[0]) > 2:
-        frames = len(view[0])
+
     # Set up legend row
+    # TODO compact code into subfunction
     legends = None
     legendrows = 0
     if isinstance(showlegend, list):
         legends = showlegend
         legendrows = len(legends)
-    if showlegend is True:
+    elif showlegend is True:
         # Only plot size legend is sphere/circle and string or list input
         # TODO setup_legend is a little clunky and could be fized
         if nodetype != 'parcel' and not isinstance(nodesize, (float, int)):
@@ -192,20 +121,26 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                 nodecolorby, nodecolorlegend, 'nodecolor', legends)
         if legends is not None:
             legendrows = len(legends)
+
+    # Figure setup
+    # Get number of non-legend rows
+    nrows, view, frames = _nrows_in_fig(view, frames)
     # Init figure, if not given as input
     if ax is None:
         fig, gridspec = _init_figure(frames, nrows, legendrows)
     else:
-        expected_ax_len = (nrows * frames) + legendrows
-        _check_axinput(ax, expected_ax_len)
+        expected_ax_len = (nrows * frames)
+        ax, gridspec = _check_axinput(ax, expected_ax_len)
+
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
-        nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap)
+        nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap, **profile)
     if highlightnodes is not None:
         nodecolor, highlightnodes = _highlight_nodes(
-            nodes, nodecolor, nodealpha, highlightnodes, highlightlevel)
+            nodes, nodecolor, highlightnodes, **profile)
+
+    # Rename ax as ax_in and prespecfiy ax_out before forloop
     ax_in = ax
-    # Prespecify ouput ax list
     ax_out = []
     # TODO remove double forloop and make single forloop by running over nrows and frames
     for ri in range(nrows):
@@ -226,15 +161,13 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                 ax = ax_in[axind]
             else:
                 ax = ax_in
-
             affine = None
             if template is not None:
-                affine = _plot_template(ax, templatestyle, template, templatecolor=templatecolor,
-                                        alpha=templatealpha, voxsize=templatevoxsize,
-                                        surface_resolution=surface_resolution,
-                                        edgethreshold=templateedgethreshold,
+                affine = _plot_template(ax, templatestyle, template,
+                                        voxsize=templatevoxsize,
                                         azim=azim[fi], elev=elev[fi],
-                                        hemisphere=hemi_frame)
+                                        hemisphere=hemi_frame,
+                                        **profile)
             # Template voxels will have origin at 0,0,0
             # It is easier to scale the nodes from the image affine
             # Then to rescale the ax.voxels function
@@ -257,27 +190,26 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
                     _plot_nodes(ax, nodes_frame, nodecolor=nodecolor,
                                 nodesize=nodesize, nodecols=nodecols, **profile)
                 elif nodetype == 'parcels':
-                    _plot_parcels(ax, nodeimg, alpha=nodealpha,
-                                  cmap=nodecolor, parcel_surface_resolution=surface_resolution,
-                                  hemisphere=hemi_frame)
+                    _plot_parcels(ax, nodeimg, cmap=nodecolor,
+                                  hemisphere=hemi_frame, **profile)
             if edges is not None:
                 edges_frame = edges.copy()
-                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights, edgewidthscale=edgescale,
-                            edgecolor=edgecolor, edgealpha=edgealpha, highlightnodes=highlightnodes, highlightlevel=highlightlevel,
-                            edgehighlightbehaviour=edgehighlightbehaviour)
+                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights,
+                            edgecolor=edgecolor, highlightnodes=highlightnodes, **profile)
             if arrowaxis_row is not None:
                 _add_axis_arrows(ax, dims=arrowaxis_row,
-                                 length=arrowlength, origin=arroworigin,
-                                 azim=azim[fi], elev=elev[fi])
+                                 origin=arroworigin,
+                                 azim=azim[fi], elev=elev[fi], **profile)
 
             ax.view_init(azim=azim[fi], elev=elev[fi])
-            _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame)
+            _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame, **profile)
             # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
             _set_axes_equal(ax)
             ax.axis('off')
             # Append ax to ax_out to store it.
             ax_out.append(ax)
+
     # Add legends to plot
     if legends is not None:
         for li, legend in enumerate(legends):
@@ -288,15 +220,14 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             else:
                 legend_subplotp_colind = int(np.round(spind / 2) - 1)
             ax = fig.add_subplot(gridspec[nrows + li, legend_subplotp_colind])
-
             if legend == 'nodesize':
                 ax = _add_nodesize_legend(ax, nodes, nodesize, **profile)
             if legend == 'nodecolor':
                 ax = _add_nodecolor_legend(
-                    ax, nodes, nodecolorby, nodecolor, **profile)
+                    ax, nodes, nodecolorby, nodecolor, nodecmap, **profile)
             ax.axis('off')
             #ax = _add_size_legend(ax, nodes, nodesize, nodescale)
             ax_out.append(ax)
     fig.tight_layout()
 
-    return ax_out, fig
+    return (fig, ax_out)

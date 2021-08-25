@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.ndimage import rotate
 
 # equal scaling solution from @AndrewCox from https://stackoverflow.com/a/63625222
 # Functions from @Mateen Ulhaq and @karlo
@@ -85,3 +86,76 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
     if arrowaxis == 'auto':
         arrowaxis = autoarrowaxis
     return vx, vy, arrowaxis
+
+
+def _rotate_data_to_viewingangle(data, azim=0, elev=0, rotateback=False):
+    """
+    Returns rotated data
+    """
+    if rotateback:
+        azim = azim * -1
+        elev = elev * -1
+    if azim != 0:
+        data = rotate(data, -azim, axes=[0, 1], reshape=False, prefilter=False)
+    if elev != 0:
+        data = rotate(data, -elev, axes=[0, 2], reshape=False, prefilter=False)
+    return data
+
+
+def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
+    """
+    Scales nodesize in relation to nodescale, vmin and vmax.
+
+    The parameter nodesizevminvmax dictates the vmin, vmax behaviour.
+    """
+    vminvmax = kwargs.get('nodesizevminvmax')
+    nodescale = kwargs.get('nodescale')
+    nodesizevector = nodes[nodesize].copy()
+    labelformat = None
+    if isinstance(vminvmax, list):
+        # If outside custom range, set size to zero
+        nodesizevector[nodesizevector < vminvmax[0]] = np.nan
+        nodesizevector[nodesizevector > vminvmax[1]] = np.nan
+        # After removing scale so that vmin and vmax are lowest and highest numbers
+        nodesizevector = (
+            nodesizevector - vminvmax[0]) / (vminvmax[1] - vminvmax[0]) * (1.05 - 0.05) + 0.05
+    elif isinstance(vminvmax, str):
+        if vminvmax == 'maxabs':
+            nodesizevector = np.abs(nodesizevector)
+            # now make sure behaviour is like minmax scaling but labelformat is maxabs
+            vminvmax = 'minmax'
+            labelformat = 'maxabs'
+        if vminvmax == 'minmax':
+            # Add small value to ensure smallest value is not 0.1 and 1.1 to ensure min value is still seen
+            # TODO this value could be scaled.
+            nodesizevector = (nodesizevector - nodesizevector.min()) / \
+                (nodesizevector.max() - nodesizevector.min()) * (1.05 - 0.05) + 0.05
+
+    nodesizevector = nodesizevector * nodescale
+    if return_labels:
+        nodesizelabels = nodes[nodesize].copy()
+        nodesizelabels[np.isnan(nodesizevector)] = np.nan
+        if labelformat == 'maxabs':
+            nodesizelabels = np.abs(nodesizelabels)
+    # If nodesizevector is nan, make them 0
+    nodesizevector[np.isnan(nodesizevector)] = 0
+    # If return labels, make output a tuple
+    if return_labels:
+        nodesizevector = (nodesizevector, nodesizelabels)
+    return nodesizevector
+
+
+def _nrows_in_fig(view, frames):
+    """
+    Return the number of rows and modify the view and frame input
+    """
+    # get the number of views
+    if isinstance(view, list):
+        nrows = len(view)
+    else:
+        nrows = 1
+        view = [view]
+    # If specific views are given, calculate value of frames.
+    if len(view[0]) > 2:
+        frames = len(view[0])
+    return nrows, view, frames

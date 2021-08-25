@@ -1,5 +1,5 @@
 
-def _add_axis_arrows(ax, dims=None, length=10, origin=None, azim=0, elev=0):
+def _add_axis_arrows(ax, dims=None, origin=None, azim=0, elev=0, **kwargs):
     """
     Plots arrows to show the 3d Axis.
 
@@ -8,7 +8,6 @@ def _add_axis_arrows(ax, dims=None, length=10, origin=None, azim=0, elev=0):
     ax : matplotlib ax
     dims : list, string
         LR, AP, SI, 'all', None
-    length : int, float
     origin : list (len of 3)
         Origin of center of arrow axes.
         If none, centers automatically in bottom left.
@@ -16,11 +15,17 @@ def _add_axis_arrows(ax, dims=None, length=10, origin=None, azim=0, elev=0):
         azim argument, for origin auto calculation
     elev : int
         elev argument, for origin auto calculation
+
+    kwags
+    --------------------
+    arrowlength : int, float
+
     Returns
     -----------------
     Nothing (input axis is updated)
 
     """
+    length = kwargs.get('arrowlength')
     # Set default
     if origin is None:
         xlim = ax.get_xlim3d()
@@ -73,33 +78,33 @@ def _add_axis_arrows(ax, dims=None, length=10, origin=None, azim=0, elev=0):
     arrows_dx = []
     arrows_dy = []
     arrows_dz = []
-    # Half the arrow size
-    l = length/2
+    # Half the arrow size forming a radius for an arrow sphere
+    radius = length/2
     # Go through each dimension and derive arrow coordinates
     # For each dim, two arrows are plotted going from origin in both directions
     if 'LR' in dims:
-        arrows_dx += [-l, l]
+        arrows_dx += [-radius, radius]
         arrows_dy += [0, 0]
         arrows_dz += [0, 0]
-        ax.text(origin[0] - l, origin[1], origin[2], 'L', fontsize='xx-small',
+        ax.text(origin[0] - radius, origin[1], origin[2], 'L', fontsize='xx-small',
                 color='gray', horizontalalignment=halign_l, verticalalignment=valign_l)
-        ax.text(origin[0] + l, origin[1], origin[2], 'R', fontsize='xx-small',
+        ax.text(origin[0] + radius, origin[1], origin[2], 'R', fontsize='xx-small',
                 color='gray', horizontalalignment=halign_r, verticalalignment=valign_r)
     if 'AP' in dims:
         arrows_dx += [0, 0]
-        arrows_dy += [-l, l]
+        arrows_dy += [-radius, radius]
         arrows_dz += [0, 0]
-        ax.text(origin[0], origin[1] - l, origin[2], 'P', fontsize='xx-small',
+        ax.text(origin[0], origin[1] - radius, origin[2], 'P', fontsize='xx-small',
                 color='gray', horizontalalignment=halign_a, verticalalignment=valign_a)
-        ax.text(origin[0], origin[1] + l, origin[2], 'A', fontsize='xx-small',
+        ax.text(origin[0], origin[1] + radius, origin[2], 'A', fontsize='xx-small',
                 color='gray', horizontalalignment=halign_p, verticalalignment=valign_p)
     if 'SI' in dims:
         arrows_dx += [0, 0]
         arrows_dy += [0, 0]
-        arrows_dz += [-l, l]
-        ax.text(origin[0], origin[1], origin[2] - l, 'I',
+        arrows_dz += [-radius, radius]
+        ax.text(origin[0], origin[1], origin[2] - radius, 'I',
                 fontsize='xx-small', color='gray', verticalalignment=valign_i)
-        ax.text(origin[0], origin[1], origin[2] + l, 'S',
+        ax.text(origin[0], origin[1], origin[2] + radius, 'S',
                 fontsize='xx-small', color='gray', verticalalignment=valign_s)
     # Arrow origins
     arrows_x = [origin[0]] * (len(dims) * 2)

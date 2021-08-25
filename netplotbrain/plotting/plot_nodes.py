@@ -1,5 +1,5 @@
 import numpy as np
-
+from ..utils import _node_scale_vminvmax
 
 def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, **kwargs):
     """
@@ -34,7 +34,7 @@ def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, **kwargs):
             nc = nodecolor[nodes.index, :]
     # Check if nodesize input is column in node data
     if isinstance(nodesize, str) and nodesize in nodes.columns:
-        ns = nodes[nodesize] * nodescale
+        ns = _node_scale_vminvmax(nodes, nodesize, **kwargs)
     else:
         ns = nodesize * nodescale
     ax.scatter(nodes[nodecols[0]], nodes[nodecols[1]],
