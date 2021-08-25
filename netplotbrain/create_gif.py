@@ -1,7 +1,7 @@
 import io       
 from PIL import Image 
 
-def create_gif(ax, fig, gifname='netplotbrain.gif'):
+def create_gif(fig, ax, gifname='netplotbrain.gif'):
     
     """
     Create a GIF from plot
