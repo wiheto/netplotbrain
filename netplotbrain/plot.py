@@ -299,4 +299,4 @@ def plot(nodes=None, fig=None, ax=None, view='L', frames=1, edges=None, template
             ax_out.append(ax)
     fig.tight_layout()
 
-    return ax_out
+    return ax_out, fig
