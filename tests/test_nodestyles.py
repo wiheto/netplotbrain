@@ -25,7 +25,7 @@ def test_cont_colormap():
     return fig
 
 @pytest.mark.mpl_image_compare
-def test_nodesizevminvmax():
+def test_nodevminvmax():
     fig, _ = npbplot(template=None,
                       view='S',
                       nodescale=100,
