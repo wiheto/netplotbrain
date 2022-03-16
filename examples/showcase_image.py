@@ -38,7 +38,7 @@ netplotbrain.plot(nodes=nodes,
                   nodecolor='Salmon',
                   title='Onto brains',
                   fig=fig, ax=ax,
-                  edgescale=0.5)
+                  edgewidthscale=0.5)
 
 
 ax = fig.add_subplot(343, projection='3d')
@@ -53,7 +53,7 @@ netplotbrain.plot(nodes=nodes,
                   nodecolor='Salmon',
                   title='At any viewing angle',
                   fig=fig, ax=ax,
-                  edgescale=0.5)
+                  edgewidthscale=0.5)
 
 
 ax = fig.add_subplot(344, projection='3d')
@@ -71,7 +71,7 @@ netplotbrain.plot(nodes=nodes,
                   fig=fig, ax=ax,
                   nodecmap='gnuplot',
                   edgealpha=0.5,
-                  edgescale=0.5,
+                  edgewidthscale=0.5,
                   nodescale=10,
                   nodecolorlegend=False,
                   nodesizelegend=False,)
@@ -136,11 +136,10 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatealpha=0.03,
                   title='Different node styles',
                   templatecolor='gray',
-                  nodecolor='Pastel1',
                   highlightnodes=[60, 95, 51],
                   highlightlevel=1,
                   fig=fig, ax=ax,
-                  edgescale=3,
+                  edgewidthscale=3,
                   nodecolorby='seed_roi',
                   edgecolor='darkred',
                   nodecolorlegend=False,
@@ -246,11 +245,9 @@ netplotbrain.plot(template='WHS',
                   nodescale=80,
                   templatevoxsize=0.2,
                   fig=fig, ax=ax,
-                  edgescale=0.5,
+                  edgewidthscale=0.5,
                   nodecolorlegend=False,
                   nodesizelegend=False)
-
-
 
 fig.savefig('./examples/figures/showcase.png', dpi=150)
 
