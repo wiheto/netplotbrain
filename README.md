@@ -266,22 +266,22 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 ### Plot different templates
 
 ```python
-# Generate data for WHS
-xlim = [-6, 6]
-ylim = [-10, 6]
-zlim = [-3, 6]
-nodes_whs, edges_whs = create_random_data(n, m, xlim, ylim, zlim)
-
 # Setting templatevoxsize to 0.2 will make it slightly quicker
 # Due to the voxel size being smaller, the nodes are currently smaller
 # So scaling the nodes is useful.
+nodes_whs = nodes.copy()
+nodes_whs['x'] = nodes_whs['x'] / 8
+nodes_whs['y'] = nodes_whs['y'] / 8
+nodes_whs['z'] = nodes_whs['z'] / 8
 netplotbrain.plot(template='WHS',
          templatestyle='surface',
+         title='Multiple templates possible',
          view='LSR',
          nodes=nodes_whs,
          nodesize='centrality_measure1',
-         edges=edges_whs,
-         nodescale=10,
+         edges=edges,
+         nodecolorby='community',
+         nodescale=80,
          templatevoxsize=0.2)
 
 plt.show()
