@@ -121,6 +121,7 @@ plt.savefig('./examples/figures/hemi.png', dpi=150)
 
 ## Plot different templates
 
+# rat template
 # Setting templatevoxsize to 0.2 will make it slightly quicker
 # Due to the voxel size being smaller, the nodes are currently smaller
 # So scaling the nodes is useful.
@@ -140,6 +141,23 @@ netplotbrain.plot(template='WHS',
          templatevoxsize=0.2)
 
 plt.savefig('./examples/figures/template_whs.png', dpi=150)
+
+#infant template
+nodes_inf = nodes.copy()
+nodes_inf['x'] = nodes_inf['x'] / 1.25
+nodes_inf['y'] = nodes_inf['y'] / 1.25
+nodes_inf['z'] = nodes_inf['z'] / 1.25
+netplotbrain.plot(template='MNIInfant',
+         templatestyle='surface',
+         title='Infant template',
+         view='LSR',
+         nodes=nodes_inf,
+         nodesize='centrality_measure1',
+         nodecolorby='community',
+         nodescale=80,
+         edges=edges)
+
+plt.savefig('./examples/figures/template_inf.png', dpi=150)
 
 #%%
 ## Plot different styles
