@@ -309,6 +309,22 @@ plt.show()
 ```
 ![](./examples/figures/template_inf.png)
 
+### Plotting a rotating GIF
+
+```python
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view='AP',
+                  frames=10,
+                  nodes=nodes,
+                  nodesize='centrality_measure1',
+                  edges=edges,
+                  gif=True,
+                  savename='./examples/figures/gif1')
+```
+![](./examples/figures/gif1.png)
+
+
 ### Plot different styles
 
 ```python
