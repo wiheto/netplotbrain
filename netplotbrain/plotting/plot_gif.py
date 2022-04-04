@@ -2,7 +2,7 @@ import io
 from PIL import Image
 
 
-def create_gif(fig, ax_out, duration, loop, gifname='netplotbrain.gif'):
+def _plot_gif(fig, ax, gifduration, savename=None, gif_loop=0):
 
     """
     Create a GIF from plot
@@ -17,27 +17,33 @@ def create_gif(fig, ax_out, duration, loop, gifname='netplotbrain.gif'):
 
     fig : matplotlib figure
     
-    duration: each frame in ms, int (600 is suggested)
+    gifduration: each frame in ms, int (600 is suggested)
     
-    loop: number of loops, int
+    gif_loop: number of loops, int
     If 0, it becomes an infinite loop
 
-    gifname: str (default 'netplotbrain.gif')
+    savename: str (default 'netplotbrain.gif')
     Name of the saved GIF
 
     """
     
+    #Ensure that savename ends in gif
+    if savename is None: 
+        raise ValueError('savename must be specified to save gif')
+    # Add give to end of the 
+    if savename.endswith('.gif') == False: 
+        savename += '.gif'
+
     #saving matplotlib figures (frame images) to buffer and opening in PIL Image objects
-    
     images = []
     
-    for i, currax in enumerate(ax_out):
-        extent = currax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+    for i, current_ax in enumerate(ax):
+        extent = current_ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
         buf = io.BytesIO()
         fig.savefig(buf, bbox_inches=extent, format='PNG', dpi=300)
         buf.seek(i)
         img = Image.open(buf).convert('RGBA')
         images.append(img)
         
-    images[0].save(gifname,
-                   save_all=True, append_images=images[1:], optimize=False, duration=duration, loop=loop) 
+    images[0].save(savename,
+                   save_all=True, append_images=images[1:], optimize=False, duration=gifduration, loop=gif_loop) 
