@@ -4,8 +4,7 @@ nav:
     - Tutorial: 
         tutorial.md
     - Gallary: gallary.md
-    - API:
-        api.md
+    - KWARGS: api.md
 
 theme:
   name: material
