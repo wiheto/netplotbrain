@@ -322,7 +322,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   gif=True,
                   savename='./examples/figures/gif1')
 ```
-![](./examples/figures/gif1.png)
+![](./examples/figures/gif1.gif)
 
 
 ### Plot different styles
