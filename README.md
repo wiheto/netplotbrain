@@ -311,7 +311,6 @@ plt.show()
 
 ### Plotting a rotating GIF
 
-
 ```python
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',

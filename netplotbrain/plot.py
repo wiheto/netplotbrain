@@ -212,7 +212,7 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
             ax_out.append(ax)
 
     # Add legends to plot
-    if legends is not None and profile['gif'] == False:
+    if legends is not None and profile['gif'] is False:
         for li, legend in enumerate(legends):
             # setup legend subplot. Goes in centre or centre2 subplots
             spind = gridspec.ncols

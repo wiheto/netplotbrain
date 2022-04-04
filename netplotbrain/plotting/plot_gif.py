@@ -16,9 +16,9 @@ def _plot_gif(fig, ax, gifduration, savename=None, gif_loop=0):
     ax : list of subplot axes
 
     fig : matplotlib figure
-    
+
     gifduration: each frame in ms, int (600 is suggested)
-    
+
     gif_loop: number of loops, int
     If 0, it becomes an infinite loop
 
@@ -26,17 +26,17 @@ def _plot_gif(fig, ax, gifduration, savename=None, gif_loop=0):
     Name of the saved GIF
 
     """
-    
+
     #Ensure that savename ends in gif
-    if savename is None: 
+    if savename is None:
         raise ValueError('savename must be specified to save gif')
-    # Add give to end of the 
-    if savename.endswith('.gif') == False: 
+    # Add give to end of the
+    if savename.endswith('.gif') is False:
         savename += '.gif'
 
     #saving matplotlib figures (frame images) to buffer and opening in PIL Image objects
     images = []
-    
+
     for i, current_ax in enumerate(ax):
         extent = current_ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
         buf = io.BytesIO()
@@ -44,6 +44,6 @@ def _plot_gif(fig, ax, gifduration, savename=None, gif_loop=0):
         buf.seek(i)
         img = Image.open(buf).convert('RGBA')
         images.append(img)
-        
+
     images[0].save(savename,
-                   save_all=True, append_images=images[1:], optimize=False, duration=gifduration, loop=gif_loop) 
+                   save_all=True, append_images=images[1:], optimize=False, duration=gifduration, loop=gif_loop)
