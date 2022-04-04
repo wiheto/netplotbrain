@@ -28,7 +28,7 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
         The string can contain multiple combinations (e.g. LSR)
         if list: multiple strings (as above) which will create new rows of subplots.
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
-        If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the oposite direction
+        If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the opposite direction
     
     nodes : dataframe, string
         The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecols to change this).
@@ -39,9 +39,9 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
         String to filename or nibabel object that contains nodes as int.
     edges : dataframe, numpy array, or string
         If dataframe, must include i, j columns (and weight, for weighted).
-        i and j specify indicies in nodes.
+        i and j specify indices in nodes.
         See edgecols if you want to change the default column names.
-        if numpy array, square adjacecny array.
+        if numpy array, square adjacency array.
         If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
     template : str or nibabel nifti
         Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
@@ -58,7 +58,7 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
         If string, can be left or right to specify single hemisphere to include.
         If list, should match the size of views and contain strings to specify hemisphere.
         Can be abbreviated to L, R and (empty string possible if both hemisphere plotted).
-        Between hemispehre edges are deleted.
+        Between hemisphere edges are deleted.
     highlightnodes : int, list, dict
         List or int point out which nodes you want to be highlighted.
         If dict, should be a single column-value pair.
@@ -109,7 +109,7 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
         legendrows = len(legends)
     elif showlegend is True:
         # Only plot size legend is sphere/circle and string or list input
-        # TODO setup_legend is a little clunky and could be fized
+        # TODO setup_legend is a little clunky and could be fixed
         if nodetype != 'parcel' and not isinstance(nodesize, (float, int)):
             nodesizelegend = profile['nodesizelegend']
             legends = _setup_legend(
