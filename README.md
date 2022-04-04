@@ -17,9 +17,9 @@ Painlessly plot networks on a brain in python. The package is still in early dev
 
 ## Installation
 
-`pip install git+https://www.github.com/wiheto/netplotbrain`
+`pip install netplotbrain`
 
-Note: We will release on pypi soon.
+Add the `-U` flag to upgrade from an earlier version.  
 
 ## How it works
 
