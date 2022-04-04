@@ -39,14 +39,14 @@ def _plot_template_style_cloudy(ax, data, azim, elev, **kwargs):
     x, y, z = np.where(bdata == 1)
     # ax.voxels(bdata, alpha=0.2, edgecolor=None, facecolor='lightgray')
     ax.scatter(x, y, z, s=5, facecolor=templatecolor,
-               edgecolors=None, marker='s', alpha=alpha)
+               edgecolors=None, marker='s', alpha=alpha, rasterized=True)
 
 
 def _plot_template_style_filled(ax, data, **kwargs):
     alpha = kwargs.get('templatealpha')
     templatecolor = kwargs.get('templatecolor')
     ax.voxels(data, alpha=alpha, zorder=-100,
-              facecolor=templatecolor, edgecolor=None, shade=False)
+              facecolor=templatecolor, edgecolor=None, shade=False, rasterized=True)
 
 
 def _plot_template_style_surface(ax, data, template, **kwargs):
@@ -71,7 +71,7 @@ def _plot_template_style_surface(ax, data, template, **kwargs):
     # detect surface using skimage's marching cubes
     verts, faces, _, _ = measure.marching_cubes(
         data, level=surface_detection, step_size=surface_resolution)
-    mesh = Poly3DCollection(verts[faces])
+    mesh = Poly3DCollection(verts[faces], rasterized=True)
     mesh.set_facecolor(templatecolor)
     mesh.set_alpha(alpha)
     ax.add_collection3d(mesh)
