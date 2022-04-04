@@ -1,23 +1,23 @@
 import numpy as np
-import pandas as pd
-from typing import TypeVar, Union, Optional
+from typing import Optional
 import matplotlib.pyplot as plt
 from .plotting import _plot_template, \
     _plot_edges, _plot_nodes, _plot_spheres,\
     _scale_nodes, _add_axis_arrows, _plot_parcels,\
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
-    _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput
+    _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
+    _plot_gif
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile, _nrows_in_fig
 
-def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', frames=1, edges=None, template=None, templatestyle='filled',
+def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str='L', frames=1, edges=None, template=None, templatestyle='filled',
          templatevoxsize=None, arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
          nodecmap='Dark2', edgeweights=True, nodecols='auto', nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
     Arguments:
-        nodes pd.dataframe, str:  
+        nodes pd.dataframe, str:
             The dataframe must include x, y, z columns that correspond to coordinates of nodes
             (see nodecols to change this).
             Can include additional infomation for node size and color.
@@ -28,20 +28,20 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
         The string can contain multiple combinations (e.g. LSR)
         if list: multiple strings (as above) which will create new rows of subplots.
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
-        If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the oposite direction
-    
+        If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the opposite direction
+
     nodes : dataframe, string
         The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecols to change this).
         Can include additional infomation for node size and color.
         If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
-    
+
     nodeimg : str or nii
         String to filename or nibabel object that contains nodes as int.
     edges : dataframe, numpy array, or string
         If dataframe, must include i, j columns (and weight, for weighted).
-        i and j specify indicies in nodes.
+        i and j specify indices in nodes.
         See edgecols if you want to change the default column names.
-        if numpy array, square adjacecny array.
+        if numpy array, square adjacency array.
         If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
     template : str or nibabel nifti
         Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
@@ -58,7 +58,7 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
         If string, can be left or right to specify single hemisphere to include.
         If list, should match the size of views and contain strings to specify hemisphere.
         Can be abbreviated to L, R and (empty string possible if both hemisphere plotted).
-        Between hemispehre edges are deleted.
+        Between hemisphere edges are deleted.
     highlightnodes : int, list, dict
         List or int point out which nodes you want to be highlighted.
         If dict, should be a single column-value pair.
@@ -82,7 +82,7 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
         Default auto, will describe the view settings.
         Otherwise string or list of for subplot titles
 
-    For more kew word arguments, see `netplotbrain.node-kwargs`
+    For more key word arguments, see `netplotbrain.kwargs`
 
     Returns
     --------
@@ -109,7 +109,7 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
         legendrows = len(legends)
     elif showlegend is True:
         # Only plot size legend is sphere/circle and string or list input
-        # TODO setup_legend is a little clunky and could be fized
+        # TODO setup_legend is a little clunky and could be fixed
         if nodetype != 'parcel' and not isinstance(nodesize, (float, int)):
             nodesizelegend = profile['nodesizelegend']
             legends = _setup_legend(
@@ -211,7 +211,7 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
             ax_out.append(ax)
 
     # Add legends to plot
-    if legends is not None:
+    if legends is not None and profile['gif'] is False:
         for li, legend in enumerate(legends):
             # setup legend subplot. Goes in centre or centre2 subplots
             spind = gridspec.ncols
@@ -229,5 +229,16 @@ def plot(nodes=None, fig: Optional[plt.Figure]=None, ax=None, view: str='L', fra
             #ax = _add_size_legend(ax, nodes, nodesize, nodescale)
             ax_out.append(ax)
     fig.tight_layout()
+
+    if profile['gif'] is True:
+        _plot_gif(fig, ax_out, profile['gifduration'], profile['savename'], profile['gifloop'])
+    elif profile['savename'] is not None:
+        if profile['savename'].endswith('.png'):
+            fig.savedfig(profile['savename'], dpi=profile['fig_dpi'])
+        elif profile['savename'].endswith('.svg'):
+            fig.savedfig(profile['savename'])
+        else:
+            fig.savedfig(profile['savename'] + '.png', dpi=profile['fig_dpi'])
+            fig.savedfig(profile['savename'] + '.svg')
 
     return (fig, ax_out)

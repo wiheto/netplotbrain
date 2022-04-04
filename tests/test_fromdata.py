@@ -50,3 +50,17 @@ def test_customax():
                       fig=fig,
                       ax=ax)
     return fig
+
+# Figure that receives own ax
+@pytest.mark.mpl_image_compare
+def test_gif_plot():
+    fig, ax = npbplot(template=None,
+                      view=['AP'],
+                      frames=3,
+                      nodes=nodes,
+                      nodescale=40,
+                      nodesize='centrality_measure1',
+                      edges=edges,
+                      gif=True,
+                      savename='/tmp/giftest')
+    return fig
