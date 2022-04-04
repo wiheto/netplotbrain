@@ -51,10 +51,9 @@ def test_customax():
                       ax=ax)
     return fig
 
-# Figure that receives own ax
-@pytest.mark.mpl_image_compare
+# Test gif plot
 def test_gif_plot():
-    fig, ax = npbplot(template=None,
+    fig, _ = npbplot(template=None,
                       view=['AP'],
                       frames=3,
                       nodes=nodes,
