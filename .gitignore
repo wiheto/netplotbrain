@@ -1,6 +1,7 @@
 *__pycache__*
 .DS_Store
 scratch/*
+*.gif
 examples/tests
 *.pytest_cache
 *.ipynb_checkpoints
