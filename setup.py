@@ -11,6 +11,7 @@ setup(name='netplotbrain',
       python_requires='>3.5',
       setup_requires=['pytest-runner'],
       tests_require=['pytest'],
+      license='GNU V3',
       install_requires=[
                         'matplotlib>=3.3.3',
                         'nibabel>=3.1.0',
@@ -23,7 +24,7 @@ setup(name='netplotbrain',
       description='Package to plot networks on brains',
       packages=find_packages(),
       author='wiheto, silviafan',
-      author_email='william.thompson@ki.se',
+      author_email='william.thompson@gu.se',
       url='https://www.github.com/wiheto/netplotbrain',
 
       long_description='netplotbrain. \
