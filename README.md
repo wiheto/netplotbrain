@@ -324,7 +324,6 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 ```
 ![](./examples/figures/gif1.gif)
 
-
 ### Plot different styles
 
 ```python
