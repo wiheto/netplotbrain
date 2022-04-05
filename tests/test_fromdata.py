@@ -61,5 +61,5 @@ def test_gif_plot():
                       nodesize='centrality_measure1',
                       edges=edges,
                       gif=True,
-                      savename='/tmp/giftest')
+                      savename='giftest')
     return fig
