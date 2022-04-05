@@ -149,13 +149,19 @@ def _nrows_in_fig(view, frames):
     """
     Return the number of rows and modify the view and frame input
     """
+    # If frames is None, make length of view.
+    if frames is None:
+        frames = len(view)
     # get the number of views
     if isinstance(view, list):
         nrows = len(view)
     else:
         nrows = 1
         view = [view]
+    # remove +- from when checking length of view
+    view_frame_checker = str(view[0])
+    view_frame_checker = view_frame_checker.replace('+', '').replace('-', '')
     # If specific views are given, calculate value of frames.
-    if len(view[0]) > 2:
-        frames = len(view[0])
+    if len(view_frame_checker) > 2:
+        frames = len(view_frame_checker)
     return nrows, view, frames

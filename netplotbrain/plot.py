@@ -10,7 +10,7 @@ from .plotting import _plot_template, \
     _plot_gif
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile, _nrows_in_fig
 
-def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str='L', frames=1, edges=None, template=None, templatestyle='filled',
+def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str='L', frames=None, edges=None, template=None, templatestyle='filled',
          templatevoxsize=None, arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
          nodecmap='Dark2', edgeweights=True, nodecols='auto', nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, showlegend=True, **kwargs):
     """
