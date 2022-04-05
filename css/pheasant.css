@@ -1,0 +1,354 @@
+/**************************************************
+ Numbering style
+**************************************************/
+.pheasant-header .header .number {
+  opacity: 0.5;
+  margin-right: 5px;
+}
+
+.pheasant-header .header .title {
+}
+
+.pheasant-header div.figure {
+  margin: 0px 0px 12px 0px;
+}
+
+.pheasant-header .figure .content p {
+  margin: 0px;
+}
+
+.pheasant-header .figure .content,
+.pheasant-header .table .content,
+.pheasant-header .figure .caption,
+.pheasant-header .table .caption {
+  display: table;
+  margin: 1px auto 0px auto;
+}
+
+.pheasant-header div.figure p.caption,
+.pheasant-header div.table p.caption,
+.pheasant-header div.other p.caption {
+  font-size: 95%;
+  font-style: normal;
+}
+
+.pheasant-header .other .caption {
+  margin: 1px auto 0px 0px;
+}
+
+.pheasant-header .figure .prefix,
+.pheasant-header .table .prefix,
+.pheasant-header .other .prefix {
+  color: #44f;
+  font-weight: bold;
+  margin-right: 0.2em;
+}
+
+.pheasant-header .figure .number,
+.pheasant-header .table .number,
+.pheasant-header .other .number {
+  color: #44f;
+  font-weight: bold;
+  margin-right: 0.4em;
+}
+
+.pheasant-header .figure .title,
+.pheasant-header .table .title,
+.pheasant-header .other .title {}
+
+.pheasant-header .link a {
+  color: #77d;
+  font-size: 70%;
+}
+
+.pheasant-header .link a::after {
+  margin-left: 10px;
+  content: "\f35d";
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+}
+
+/**************************************************
+ Fenced code style
+**************************************************/
+:root {
+  --input-color: #99b;
+  --output-color: #cc9;
+  --error-color: #f99;
+  --source-color: #beb;
+  --display-color: #ccc;
+}
+
+.pheasant-fenced-code {
+  margin-bottom: 10px;
+}
+
+.pheasant-fenced-code .cell {
+  position: relative;
+  margin: 2px 0px 2px 0px;
+  padding: 0px;
+}
+
+.pheasant-fenced-code .cell.jupyter::before {
+  font-family: serif;
+  content: "";
+  position: absolute;
+  left: -2.6em;
+  font-size: 80%;
+  width: 2.3em;
+  text-align: right;
+  margin-top: 3px;
+  padding-top: 3px;
+}
+
+.pheasant-fenced-code .cell.input::before {
+  content: "In";
+  color: var(--input-color);
+}
+
+.pheasant-fenced-code .cell.output::before {
+  content: "Out";
+  color: var(--output-color);
+}
+
+.pheasant-fenced-code .cell.jupyter.source::before {
+  content: "Src";
+  color: var(--output-color);
+}
+
+.pheasant-fenced-code .cell.stdout::before,
+.pheasant-fenced-code .cell.stderr::before,
+.pheasant-fenced-code .cell.error::before,
+.pheasant-fenced-code .cell.display::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  padding-top: 6px;
+}
+
+.pheasant-fenced-code .cell.stdout::before {
+  content: "\f550";
+  color: var(--output-color);
+}
+
+.pheasant-fenced-code .cell.stderr::before {
+  content: "\f550";
+  color: var(--error-color);
+}
+
+.pheasant-fenced-code .cell.error::before {
+  content: "\f071";
+  color: var(--error-color);
+}
+
+.pheasant-fenced-code .cell.display::before {
+  content: "\f108";
+  color: var(--display-color);
+}
+
+.pheasant-fenced-code .code {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  margin: 0px;
+  padding: 6px 8px;
+}
+
+.pheasant-fenced-code pre {
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  background: transparent;
+}
+
+.pheasant-fenced-code pre code {
+  display: block;
+  color: black;
+  background: transparent;
+  padding: 0px;
+  overflow-x: auto;
+  border: none;
+  font-size: 0.85em;
+  line-height: 1.3em;
+}
+
+.pheasant-fenced-code .input .code {
+  border-color: #ccc;
+  background: #f3f3f3;
+}
+
+.pheasant-fenced-code .stdout .code,
+.pheasant-fenced-code .output .code {
+  border-color: #ddd;
+  background: #fffff9;
+}
+
+.pheasant-fenced-code .stderr .code,
+.pheasant-fenced-code .error .code {
+  border-color: #fcc;
+  background: #fee;
+}
+
+.pheasant-fenced-code .source .code,
+.pheasant-fenced-code .file .code,
+.pheasant-fenced-code .terminal .code,
+.pheasant-fenced-code .docstring .code {
+  border-color: #ddd;
+  background: #fefefe;
+}
+
+.pheasant-fenced-code .input .code,
+.pheasant-fenced-code .error .code {
+  border-radius: 4px 4px 0px 0px;
+}
+
+.pheasant-fenced-code .cell .report {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px 0px 4px 4px;
+  border-top: none;
+  padding: 2px 6px;
+  margin-bottom: 4px;
+  color: #777;
+}
+
+.pheasant-fenced-code .input .report {
+  border-color: #ccc;
+  cursor: default;
+}
+
+.pheasant-fenced-code .error .report {
+  border-color: #fcc;
+}
+
+.pheasant-fenced-code .cell .report p {
+  font-size: 0.7rem;
+  margin: 0px;
+  line-height: normal;
+}
+
+.pheasant-fenced-code .report .count {
+  color: #b88;
+}
+
+.pheasant-fenced-code .report .time,
+.pheasant-fenced-code .report .total {
+  color: #889;
+  font-weight: bold;
+}
+
+.pheasant-fenced-code .report .right {
+  position: absolute;
+  right: 8px;
+}
+
+.pheasant-fenced-code .report .option {
+  color: #aaa;
+}
+
+.pheasant-button-container {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+}
+
+.pheasant-button-container .button {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0px;
+  font-size: 0.8rem;
+}
+
+.pheasant-button-container .button.embed {
+  cursor: default;
+}
+
+.pheasant-button-container .button::before {
+  display: inline-block;
+  width: 20px;
+  height: 16px;
+  margin-top: 3px;
+}
+
+.pheasant-button-container .toggle::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f06e";
+}
+
+.pheasant-button-container .toggle.hide::before {
+  content: "\f070";
+}
+
+.pheasant-button-container .embed::before {
+  color: var(--source-color);
+}
+
+.source .pheasant-button-container .embed::before {
+  width: 24px;
+  content: "</>";
+}
+
+.file .pheasant-button-container .embed::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f15c";
+}
+
+.terminal .pheasant-button-container .embed::before {
+  content: "_>";
+}
+
+.pheasant-button-container .toggle.input {
+  color: var(--input-color);
+}
+
+.pheasant-button-container .toggle.output {
+  color: var(--output-color);
+}
+
+.pheasant-button-container .toggle.error {
+  color: var(--error-color);
+}
+
+.pheasant-fenced-code .cell.hide .code {
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.pheasant-fenced-code .cell.hide .report {
+  display: none;
+}
+
+.pheasant-fenced-code .cell.stdout.hide,
+.pheasant-fenced-code .cell.stderr.hide {
+  display: none;
+}
+
+.pheasant-fenced-code .display .content,
+.pheasant-inline-code .display .content {
+  display: table;
+  margin: 5px auto 5px auto;
+}
+
+/**************************************************
+ HoloViews
+**************************************************/
+.holoform label {
+  color: black;
+}
+
+/**************************************************
+ Media query
+**************************************************/
+@media screen and (max-width: 768px) {
+  .pheasant-fenced-code .report .right {
+    display: none;
+  }
+
+  .pheasant-fenced-code .cell::before {
+    display: none;
+  }
+
+  .pheasant-button-container {
+    display: none;
+  }
+}
