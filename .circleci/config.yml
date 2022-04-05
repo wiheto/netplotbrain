@@ -36,7 +36,7 @@ jobs:
       - run:
           name: doc install
           command: |
-            pip install mkdocs-awesome-pages-plugin pheasant mkdocstrings
+            pip install mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
       - run:
           name: install netplotbrain
           command: |
