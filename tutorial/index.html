@@ -556,16 +556,16 @@
 import netplotbrain
 import pandas as pd
 # Define the nodes
-nodes_df = df.DataFrame({&#39;x&#39;: [40, 10], &#39;y&#39;=[50, 40], &#39;z&#39;=[20, 30]})
+nodes_df = pd.DataFrame({&#39;x&#39;: [40, 10], &#39;y&#39;: [50, 40], &#39;z&#39;: [20, 30]})
 # Call netplotbrain to plot
 netplotbrain.plot(
-    nodes=nodes_df,
-    nodesize=&#39;degree_centrality&#39;
-    nodecolor=&#39;communities&#39;)</code></pre></div>
+    nodes=nodes_df)</code></pre></div>
 <div class="report"><p><span class="count">[1]</span>
-<span class="start">2022-04-08 15:09:00</span> (<span class="time">7.52ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">25.8ms</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (2473262325.py, line 5)</code></pre></div>
-      <div class="report"><pre><code class="nohighlight"></code></pre></div></div></div>
+<span class="start">2022-04-08 15:12:51</span> (<span class="time">1.77s</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">1.81s</span>)</span></p></div></div><div class="cell jupyter output"><div class="code"><pre><code class="nohighlight">(&lt;Figure size 216x216 with 1 Axes&gt;, [&lt;Axes3DSubplot:title={&#39;center&#39;:&#39;Left&#39;}&gt;])</code></pre></div></div>
+
+<div class="cell jupyter display"><div class="content"><p><img alt="image/png" src="data:image/png;base64,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
+"/></p></div></div></div>
 
 <p>The other columns in the dataframe can refer to node related properties (e.g. size and colour). In such cases the dataframe may begin something like this: </p>
 <p>These just become other columns in the dataframe (called node_df).</p>
@@ -601,15 +601,15 @@ netplotbrain.plot(
 import netplotbrain
 import pandas as pd
 # Define the nodes
-nodes_df = df.DataFrame({&#39;x&#39;: [40, 10], &#39;y&#39;=[50, 40], &#39;z&#39;=[20, 30], &#39;communities&#39;=[1, 2], &#39;degree_centrality&#39;=[0.8, 0.4]})
+nodes_df = pd.DataFrame(data={&#39;x&#39;: [40, 10], &#39;y&#39;: [50, 40], &#39;z&#39;: [20, 30], &#39;communities&#39;: [1, 2], &#39;degree_centrality&#39;: [0.8, 0.4]})
 # Call netplotbrain to plot
 netplotbrain.plot(
     nodes=nodes_df,
     nodesize=&#39;degree_centrality&#39;
     nodecolor=&#39;communities&#39;)</code></pre></div>
 <div class="report"><p><span class="count">[2]</span>
-<span class="start">2022-04-08 15:09:00</span> (<span class="time">4.92ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">30.7ms</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (2550273695.py, line 5)</code></pre></div>
+<span class="start">2022-04-08 15:12:53</span> (<span class="time">5.50ms</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">1.81s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (1298308868.py, line 10)</code></pre></div>
       <div class="report"><pre><code class="nohighlight"></code></pre></div></div></div>
 
 <p>Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. </p>
