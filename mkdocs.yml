@@ -1,20 +1,15 @@
 site_name: netplotbrain
 
-nav:
-    - Tutorial: 
-        tutorial.md
-    - Gallary: gallary.md
-    - KWARGS: api.md
-
 theme:
   name: material
   palette:
     scheme: preference
     primary: teal
     accent: purple
-
 plugins:
     - search
+    - pheasant
+    - awesome-pages
     - mkdocstrings:
         default_handler: python
         handlers:

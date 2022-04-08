@@ -32,7 +32,11 @@ jobs:
       - run:
           name: additional pip install
           command: |
-            pip install pytest pytest-mpl coveralls
+            pip install pytest pytest-mpl coveralls      
+      - run:
+          name: doc install
+          command: |
+            pip install mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
       - run:
           name: install netplotbrain
           command: |
@@ -45,6 +49,9 @@ jobs:
           name: Coveralls
           # This assumes pytest is installed via the install-package step above
           command: coveralls
+      - run:
+          name: deploy docs
+          command: mkdocs gh-deploy
 
 workflows:
   sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
