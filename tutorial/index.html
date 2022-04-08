@@ -556,15 +556,15 @@
 import netplotbrain
 import pandas as pd
 # Define the nodes
-nodes_df = df.DataFrame({&#39;x&#39;: [40, 10], &#39;y&#39;=[50, 40], z=[20, 30]})
+nodes_df = df.DataFrame({&#39;x&#39;: [40, 10], &#39;y&#39;=[50, 40], &#39;z&#39;=[20, 30]})
 # Call netplotbrain to plot
 netplotbrain.plot(
     nodes=nodes_df,
     nodesize=&#39;degree_centrality&#39;
     nodecolor=&#39;communities&#39;)</code></pre></div>
 <div class="report"><p><span class="count">[1]</span>
-<span class="start">2022-04-08 14:59:08</span> (<span class="time">7.29ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">30.9ms</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (1888415733.py, line 5)</code></pre></div>
+<span class="start">2022-04-08 15:09:00</span> (<span class="time">7.52ms</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">25.8ms</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (2473262325.py, line 5)</code></pre></div>
       <div class="report"><pre><code class="nohighlight"></code></pre></div></div></div>
 
 <p>The other columns in the dataframe can refer to node related properties (e.g. size and colour). In such cases the dataframe may begin something like this: </p>
@@ -597,15 +597,19 @@ netplotbrain.plot(
 </tbody>
 </table>
 <p>Then the columns <code>nodecolor=communities</code>and <code>nodesize=degree_centrality</code> be specified and each node will automatically be coloured or scaled by the specified column. For example: </p>
-<div class="pheasant-fenced-code"><div class="cell jupyter input"><div class="code"><pre><code class="python">import netplotbrain
-nodes_df = df.DataFrame({&#39;x&#39;: [40, 10], &#39;y&#39;=[50, 40], &#39;z&#39;=[20, 30], &#39;communities&#39;=[1, 2], &#39;degree_centrality&#39;=[0.8, 0.4]}, )
+<div class="pheasant-fenced-code"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes
+nodes_df = df.DataFrame({&#39;x&#39;: [40, 10], &#39;y&#39;=[50, 40], &#39;z&#39;=[20, 30], &#39;communities&#39;=[1, 2], &#39;degree_centrality&#39;=[0.8, 0.4]})
+# Call netplotbrain to plot
 netplotbrain.plot(
     nodes=nodes_df,
     nodesize=&#39;degree_centrality&#39;
     nodecolor=&#39;communities&#39;)</code></pre></div>
 <div class="report"><p><span class="count">[2]</span>
-<span class="start">2022-04-08 14:59:08</span> (<span class="time">5.92ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">36.8ms</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (3517519598.py, line 2)</code></pre></div>
+<span class="start">2022-04-08 15:09:00</span> (<span class="time">4.92ms</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">30.7ms</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (2550273695.py, line 5)</code></pre></div>
       <div class="report"><pre><code class="nohighlight"></code></pre></div></div></div>
 
 <p>Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. </p>
