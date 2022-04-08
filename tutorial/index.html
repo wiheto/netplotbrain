@@ -304,15 +304,28 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#a-pandas-dataframe-argument-nodes_1" class="md-nav__link">
-    A pandas dataframe (Argument: nodes)
-  </a>
+      </ul>
+    </nav>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edges" class="md-nav__link">
+    Edges
+  </a>
+  
+    <nav class="md-nav" aria-label="Edges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-pandas-dataframe-argument-nodes_1" class="md-nav__link">
+    A pandas dataframe (Argument: nodes)
+  </a>
   
 </li>
         
@@ -475,15 +488,28 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#a-pandas-dataframe-argument-nodes_1" class="md-nav__link">
-    A pandas dataframe (Argument: nodes)
-  </a>
+      </ul>
+    </nav>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edges" class="md-nav__link">
+    Edges
+  </a>
+  
+    <nav class="md-nav" aria-label="Edges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-pandas-dataframe-argument-nodes_1" class="md-nav__link">
+    A pandas dataframe (Argument: nodes)
+  </a>
   
 </li>
         
@@ -600,7 +626,7 @@ netplotbrain.plot(nodes=nodes_df, arrowaxis=None)</code></pre></div>
 </tbody>
 </table>
 <p>Then the columns <code>nodecolor=communities</code>and <code>nodesize=degree_centrality</code> be specified and each node will automatically be coloured or scaled by the specified column. For example: </p>
-<div class="pheasant-fenced-code"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
+<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
 import netplotbrain
 import pandas as pd
 # Define the nodes (5 example nodes)
@@ -622,9 +648,61 @@ netplotbrain.plot(
  [&lt;Axes3DSubplot:title={&#39;center&#39;:&#39;Left&#39;}&gt;, &lt;AxesSubplot:&gt;, &lt;AxesSubplot:&gt;])</code></pre></div></div>
 
 <div class="cell jupyter display"><div class="content"><p><img alt="image/png" src="data:image/png;base64,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
-"/></p></div></div></div>
+"/></p></div></div></div></div>
 
 <p>Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added <code>nodescale</code> which just linearly scales all nodes by that factor. We also see that when specifying nodesize and nodecolorby that legends automatically appear.</p>
+<p>At the moment we just have some circles floating in 3D space. Let us add some more information about this network.</p>
+<h2 id="edges">Edges</h2>
+<p>The edges between the nodes can be passed to netplotbrain as either a numpy array (NxN adjacency matrix) or a pandas dataframe (edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example:</p>
+<table>
+<thead>
+<tr>
+<th align="center">j</th>
+<th align="center">j</th>
+<th align="center">weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0.8</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">0.5</td>
+</tr>
+</tbody>
+</table>
+<p><code>i</code> and <code>j</code> reference the inidcies of our nodes defined above. You can use the argument <code>edgecol</code> to specify different column names.</p>
+<p>Let us continue to add to our figure above: </p>
+<div class="pheasant-fenced-code"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes (5 example nodes)
+nodes_df = pd.DataFrame(data={&#39;x&#39;: [40, 10, 30, -15, -25], 
+                              &#39;y&#39;: [50, 40, -10, -20, 20], 
+                              &#39;z&#39;: [20, 30, -10, -15, 30], 
+                              &#39;communities&#39;: [1, 1, 1, 2, 2], 
+                              &#39;degree_centrality&#39;: [1, 1, 0.2, 0.8, 0.4]})
+# Define the edges 
+edges_df = pd.DataFrame(data={&#39;i&#39;: [0, 0, 1, 1, 3], 
+                              &#39;j&#39;: [1, 2, 2, 3, 4]})
+# Call netplotbrain to plot
+netplotbrain.plot(
+    nodes=nodes_df,
+    nodecolorby=&#39;communities&#39;,
+    arrowaxis=None,
+    nodescale=150)</code></pre></div>
+<div class="report"><p><span class="count">[3]</span>
+<span class="start">2022-04-08 15:55:46</span> (<span class="time">1.89s</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">1.91s</span>)</span></p></div></div><div class="cell jupyter output"><div class="code"><pre><code class="nohighlight">(&lt;Figure size 216x252 with 2 Axes&gt;,
+ [&lt;Axes3DSubplot:title={&#39;center&#39;:&#39;Left&#39;}&gt;, &lt;AxesSubplot:&gt;])</code></pre></div></div>
+
+<div class="cell jupyter display"><div class="content"><p><img alt="image/png" src="data:image/png;base64,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
+"/></p></div></div></div>
+
 <h4 id="a-pandas-dataframe-argument-nodes_1">A pandas dataframe (Argument: nodes)</h4>
 <p>Instead of having coordinates of nodes, you can specify images instead.</p>
 <p>If specifying <code>nodeimg</code> for the coordinates of the nodes, then you need can still apply property arguments by supplying a dataframe to the <code>nodes</code>. </p>
