@@ -27,6 +27,7 @@ def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, alpha=No
     """
     # Get relevant kwargs
     nodescale = kwargs.get('nodescale')
+    nodealpha = kwargs.get('nodealpha')
     # Loop through each node and plot a surface plot
     for index, row in nodes.iterrows():
         # Get the xyz coords for the node
@@ -55,4 +56,4 @@ def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, alpha=No
 
         ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
                         color=ncolor,
-                        alpha=alpha)
+                        alpha=nodealpha)
