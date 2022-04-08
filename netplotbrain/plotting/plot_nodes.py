@@ -27,6 +27,7 @@ def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, **kwargs):
     """
     # Get relevant kwargs
     nodescale = kwargs.get('nodescale')
+    nodealpha = kwargs.get('nodealpha')
     # If half hemisphere is plotted, then cut the right
     nc = nodecolor
     if isinstance(nodecolor, np.ndarray):
@@ -38,7 +39,7 @@ def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, **kwargs):
     else:
         ns = nodesize * nodescale
     ax.scatter(nodes[nodecols[0]], nodes[nodecols[1]],
-               nodes[nodecols[2]], s=ns, color=nc)
+               nodes[nodecols[2]], s=ns, color=nc, alpha=nodealpha)
 
 
 def _scale_nodes(nodes, nodecols, affine=None):
