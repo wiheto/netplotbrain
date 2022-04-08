@@ -551,6 +551,22 @@
 </tr>
 </tbody>
 </table>
+<p>If we create this dataframe with the two nodes above, we will just plot two circles onto the figure. </p>
+<div class="pheasant-fenced-code"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes
+nodes_df = df.DataFrame({&#39;x&#39;: [40, 10], &#39;y&#39;=[50, 40], z=[20, 30]})
+# Call netplotbrain to plot
+netplotbrain.plot(
+    nodes=nodes_df,
+    nodesize=&#39;degree_centrality&#39;
+    nodecolor=&#39;communities&#39;)</code></pre></div>
+<div class="report"><p><span class="count">[1]</span>
+<span class="start">2022-04-08 14:59:08</span> (<span class="time">7.29ms</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">30.9ms</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (1888415733.py, line 5)</code></pre></div>
+      <div class="report"><pre><code class="nohighlight"></code></pre></div></div></div>
+
 <p>The other columns in the dataframe can refer to node related properties (e.g. size and colour). In such cases the dataframe may begin something like this: </p>
 <p>These just become other columns in the dataframe (called node_df).</p>
 <table>
@@ -581,13 +597,15 @@
 </tbody>
 </table>
 <p>Then the columns <code>nodecolor=communities</code>and <code>nodesize=degree_centrality</code> be specified and each node will automatically be coloured or scaled by the specified column. For example: </p>
-<div class="pheasant-fenced-code"><div class="cell jupyter input"><div class="code"><pre><code class="python">netplotbrain.plot(
+<div class="pheasant-fenced-code"><div class="cell jupyter input"><div class="code"><pre><code class="python">import netplotbrain
+nodes_df = df.DataFrame({&#39;x&#39;: [40, 10], &#39;y&#39;=[50, 40], &#39;z&#39;=[20, 30], &#39;communities&#39;=[1, 2], &#39;degree_centrality&#39;=[0.8, 0.4]}, )
+netplotbrain.plot(
     nodes=nodes_df,
     nodesize=&#39;degree_centrality&#39;
     nodecolor=&#39;communities&#39;)</code></pre></div>
-<div class="report"><p><span class="count">[1]</span>
-<span class="start">2022-04-08 14:43:10</span> (<span class="time">3.97ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">22.4ms</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (424376187.py, line 4)</code></pre></div>
+<div class="report"><p><span class="count">[2]</span>
+<span class="start">2022-04-08 14:59:08</span> (<span class="time">5.92ms</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">36.8ms</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: invalid syntax (3517519598.py, line 2)</code></pre></div>
       <div class="report"><pre><code class="nohighlight"></code></pre></div></div></div>
 
 <p>Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. </p>
