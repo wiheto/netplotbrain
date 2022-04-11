@@ -11,8 +11,8 @@ from .plotting import _plot_template, \
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile, _nrows_in_fig
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
-         templatevoxsize=None, arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgeweights='auto', nodecols='auto', nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, showlegend=True, **kwargs):
+         arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
+         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -97,7 +97,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
 
     # Check and load the input of nodes and edges
     nodes, nodeimg, nodecols = _process_node_input(
-        nodes, nodeimg, nodecols, template, templatevoxsize)
+        nodes, nodeimg, profile['nodecols'], template, profile['templatevoxsize'])
     edges, edgeweights = _process_edge_input(edges, edgeweights)
 
     # Set up legend row
@@ -164,7 +164,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             affine = None
             if template is not None:
                 affine = _plot_template(ax, templatestyle, template,
-                                        voxsize=templatevoxsize,
+                                        voxsize=profile['templatevoxsize'],
                                         azim=azim[fi], elev=elev[fi],
                                         hemisphere=hemi_frame,
                                         **profile)

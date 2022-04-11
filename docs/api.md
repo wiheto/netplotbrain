@@ -53,6 +53,7 @@ surface_resolution | int | If templatestyle=='surface' controls the size of the 
 
 | Argument | Type | Description |
 | --- | --- | --- |
+nodecols | list | Default is ['x', 'y', 'z']. Column names for node coordinates. 
 nodecolorlegend | Bool | If the colorlegend is plotted or not. Default True.
 nodesizelegend | Bool | If the sizelegend is plotted or not. Default True.
 nodecolorlegendstyle | str | Alternatives: auto (default), discrete, continuous. If the color legend should show the entire colormap or discrete colors. If auto, plots discrete if less than 8 unique values are detected.

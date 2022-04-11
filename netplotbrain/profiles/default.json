@@ -13,6 +13,7 @@
     "legendtickfontsize": "xx-small",
     "legendtitilefontsize": "medium",
     "nodealpha": 1,
+    "nodecols": "auto",
     "nodecolorlegend": true,
     "nodecolorlegendstyle": "auto",
     "nodecolorvminvmax": "minmax",
@@ -25,6 +26,7 @@
     "templatealpha": 0.2,
     "templateedgethreshold": 0.7,
     "templatecolor": "lightgray",
+    "templatevoxsize": null,
     "titlefontsize": "medium", 
     "titleloc": "center", 
     "titleweight": "regular"
