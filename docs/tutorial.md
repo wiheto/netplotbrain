@@ -106,7 +106,7 @@ See templateflow.org for more atlases.
 
 If the template argument is specified in `netplotbrain.plot`, then the template argument does not need to be included in the `nodeimg` dictionary.
 
-Since the nifti image consists of parcels (i.e. regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels over the circles with a single argument `nodestyle`.
+Since the nifti image consists of parcels (i.e. regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels over the circles with a single argument `nodetype`.
 
 ```python
 # import packages
@@ -120,7 +120,7 @@ nodeimg={'template': 'MNI152NLin2009cAsym',
 netplotbrain.plot(
     nodeimg=nodeimg,
     arrowaxis=None,
-    nodestyle='parcels')     
+    nodetype='parcel')     
 ```
 
 ## Edges
@@ -158,11 +158,54 @@ netplotbrain.plot(
     nodescale=150)
 ```
 
-#### A pandas dataframe (Argument: edges) 
+If you have the column `weight` in your edge dataframe, these will be automatically plotted as well. 
+This can be turn off by setting `edgeweights` to False. Also, a list of length 3 can be given to edgecol that specifies alternative names for ['i', 'j', 'weights'].
 
-Instead of having coordinates of nodes, you can specify images instead.
+```python
+# Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes (5 example nodes)
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
+# Define the edges 
+edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3], 
+                              'j': [1, 2, 2, 3, 4]})
+# Call netplotbrain to plot
+netplotbrain.plot(
+    nodes=nodes_df,
+    edges=edges_df,
+    nodecolorby='communities',
+    arrowaxis=None,
+    nodescale=150)
+```
 
-If specifying `nodeimg` for the coordinates of the nodes, then you need can still apply property arguments by supplying a dataframe to the `nodes`. 
+Finally, you can specify a number matrix instead of a pandas dataframe. 
+
+```python
+# Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes (5 example nodes)
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
+# Define the edges 
+edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3], 
+                              'j': [1, 2, 2, 3, 4]})
+# Call netplotbrain to plot
+netplotbrain.plot(
+    nodes=nodes_df,
+    edges=edges_df,
+    nodecolorby='communities',
+    arrowaxis=None,
+    nodescale=150)
+```
 
 ## Section 2: Visualization 
 
@@ -213,18 +256,4 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',
                   view=['AP'],
                   frames=5)
-```
-
-### Making a gif
-
-To create a rotating gif, you just need to specify both the `gif` command (set to true) and specify a path for the gif to be saved using `savename`.
-
-```python
-import netplotbrain
-netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
-                  view=['AP'],
-                  frames=5,
-                  gif=True,
-                  savename='/tmp/gif')
 ```
