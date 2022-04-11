@@ -53,8 +53,14 @@ def _process_edge_input(edges, edgeweights):
     if isinstance(edges, np.ndarray):
         edges = _npedges2dfedges(edges)
     # Set default behaviour of edgeweights
-    if edgeweights is None or edgeweights is True:
-        edgeweights = 'weight'
+    if isinstance(edges, pd.DataFrame):
+        if edgeweights is None or edgeweights is True::
+            edgeweights = 'weight'
+        if 'weight' not in edges:
+            edgeweights = None
+        if edgeweights is not None and edgeweights not in edges:
+            raise ValueError('Edgeweights is specified and not in edges')
+            
     return edges, edgeweights
 
 
