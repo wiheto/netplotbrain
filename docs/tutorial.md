@@ -77,9 +77,35 @@ netplotbrain.plot(
     nodescale=100)
 ```
  
-Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `nodescale` which just linearly scales all nodes by that factor. We also see that when specifying nodesize and nodecolorby that legends automatically appear.
+Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `nodescale` which just linearly scales all nodes by that factor. We also see that when specifying `nodesize` and `nodecolorby` that legends automatically appear.
 
 At the moment we just have some circles floating in 3D space. Let us add some more information about this network.
+
+#### An atlas from templateflow or local file (Argument: nodeimg) 
+
+One of the key benefits with netplotbrain is that it interacts with TemplateFlow, which is a collection of brain templates and atlases.
+The atlases can be used as nodes.
+If you specify the key/value pairs of an atlas on templateflow in a dictionary, the atlas will be automatically downloaded.
+For example, the following will get the 400 Parcels version from the Schaefter atlas.
+
+```python
+# import packages
+import netplotbrain
+# Define the atlas by key value words of TemplateFlow name
+nodeimg={'template': 'MNI152NLin2009cAsym',
+         'atlas': 'Schaefer2018',
+         'desc': '400Parcels7Networks',
+         'resolution': 1}
+# Plot
+netplotbrain.plot(
+    nodeimg=nodeimg,
+    arrowaxis=None)     
+```
+
+See templateflow.org for more atlases.
+
+If the template argument is specified in `netplotbrain.plot`, then the template argument does not need to be included in the `nodeimg` dictionary.
+
 
 ## Edges
 
@@ -90,7 +116,7 @@ The edges between the nodes can be passed to netplotbrain as either a numpy arra
 |  0     | 1    | 0.8    |
 |  1     | 2    | 0.5    |
 
-`i` and `j` reference the inidcies of our nodes defined above. You can use the argument `edgecol` to specify different column names.
+`i` and `j` reference the indices of our nodes defined above. You can use the argument `edgecol` to specify different column names.
 
 Let us continue to add to our figure above: 
 
@@ -116,7 +142,7 @@ netplotbrain.plot(
     nodescale=150)
 ```
 
-#### A pandas dataframe (Argument: nodes) 
+#### A pandas dataframe (Argument: edges) 
 
 Instead of having coordinates of nodes, you can specify images instead.
 
