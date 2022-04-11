@@ -1,5 +1,7 @@
 # Tutorial
 
+__NB: This is under construction/being updated__
+
 In this section there are files on different components of netplotbrain.
 
 The tutorial is split into two section. 
