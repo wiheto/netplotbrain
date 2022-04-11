@@ -106,6 +106,22 @@ See templateflow.org for more atlases.
 
 If the template argument is specified in `netplotbrain.plot`, then the template argument does not need to be included in the `nodeimg` dictionary.
 
+Since the nifti image consists of parcels (i.e. regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels over the circles with a single argument `nodestyle`.
+
+```python
+# import packages
+import netplotbrain
+# Define the atlas by key value words of TemplateFlow name
+nodeimg={'template': 'MNI152NLin2009cAsym',
+         'atlas': 'Schaefer2018',
+         'desc': '400Parcels7Networks',
+         'resolution': 1}
+# Plot
+netplotbrain.plot(
+    nodeimg=nodeimg,
+    arrowaxis=None,
+    nodestyle='parcels')     
+```
 
 ## Edges
 
@@ -148,6 +164,67 @@ Instead of having coordinates of nodes, you can specify images instead.
 
 If specifying `nodeimg` for the coordinates of the nodes, then you need can still apply property arguments by supplying a dataframe to the `nodes`. 
 
-## Section 2: customization 
+## Section 2: Visualization 
 
-In this section, we expand upon the basics knowledge and start to customize the plots. 
+Here we will learn about two 
+
+### Views
+
+The view is the angle which the brain is viewed from in the plot.
+You can specify it as a string:
+
+| Argument | View | 
+| :-------------:  | :----------: | 
+|  'L'     | Left  |
+|  'R'     | Right  |
+|  'A'     | Anterior  |
+|  'P'     | Posterior  |
+|  'S'     | Superior  |
+|  'I'     | Inferior  |
+
+Sequences of views are possible.
+So, setting view = 'LSR' will generate 3 subplots with left, superior, and right views
+
+If you specify a list (e.g. `['LR', 'AP']`) then two different rows will be generated.
+The first from left to right. The second from anterior to posterior.
+
+```python
+import netplotbrain
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['LSR', 'AIP'])
+plt.show()
+```
+
+You can also specify the specific rotation (tuple): (xy-rotation, xz-rotation) in degrees. The R view is (0, 0)
+
+### Rotated sequences with frames
+
+You can also generate a sequence of rotated images.
+
+If the view is two letters, (e.g. `'LR'`), then a sequence will be generated from the L-view to R-view.
+
+The parameter `frames` will control how many images are generated.
+Images will then be displayed along a single row.
+
+```python
+import netplotbrain
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['AP'],
+                  frames=5)
+```
+
+### Making a gif
+
+To create a rotating gif, you just need to specify both the `gif` command (set to true) and specify a path for the gif to be saved using `savename`.
+
+```python
+import netplotbrain
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['AP'],
+                  frames=5,
+                  gif=True,
+                  savename='/tmp/gif')
+```
