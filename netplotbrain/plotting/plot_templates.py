@@ -50,30 +50,30 @@ def _plot_template_style_glass(ax, data, **kwargs):
     Relevant kwargs
 
     template_glass_compactness : float
-        Default 0.2. Going lower will increase the detail. >1 will break the figure. 
+        Default 0.3. Going lower will increase the detail. >1 will break the figure.
     temlate_glass_nsegments : int
-        Approx number of segments. 3 seems to work well. 
-        Increase if not enough detail, reduce if too much detail. 
+        Approx number of segments. 3 seems to work well.
+        Increase if not enough detail, reduce if too much detail.
     template_glass_maxalpha : float
         Default is 0.01. To make the smokey effect the alpha is relative to template intensity value.
         This value sets the alpha scalar factor.
-        The value will be the largest possible alpha value, where all other values scale between 0 and template_glass_max_alpha. 
+        The value will be the largest possible alpha value, where all other values scale between 0 and template_glass_max_alpha.
     templatecolor : string
-        Color of image.   
-     
+        Color of image.
+
     """
-    #Get kwargs
-    template_glass_compactness = 0.3
-    template_glass_nsegments = 3
-    template_glass_maxalpha = 0.01
+    #Get kwargs 
+    template_glass_compactness = kwargs.get('template_glass_compactness')
+    template_glass_nsegments = kwargs.get('template_glass_nsegments')
+    template_glass_maxalpha = kwargs.get('template_glass_maxalpha')
     templatecolor= kwargs.get('templatecolor')
 
     # perform segmentation.
     segments = segmentation.slic(data, template_glass_nsegments, compactness=template_glass_compactness, enforce_connectivity=False, start_label=1, channel_axis=None)
     borders = segmentation.find_boundaries(segments, mode='thick')
 
-    # Scale the alpha of the border values based on template intensity 
-    data[~borders] = 0    
+    # Scale the alpha of the border values based on template intensity
+    data[~borders] = 0
     points = np.where(data!=0)
     border_vals = data[points[0], points[1], points[2]]
     alpha_per_point = (border_vals - border_vals.min()) / (border_vals.max() - border_vals.min())
@@ -168,6 +168,6 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', voxsize=N
     elif style == 'surface':
         _plot_template_style_surface(
             ax, data, template, **kwargs)
-    elif style == 'glass': 
+    elif style == 'glass':
         _plot_template_style_glass(ax, data, **kwargs)
     return img.affine

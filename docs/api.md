@@ -48,6 +48,10 @@ templatealpha | float | Opacity of template voxels.
 templatevoxelsize | int | Resize voxels this size. Larger voxels = quicker. (Default: 2)
 surface_detection | float | The value used to detect the surface boundary (see argument level in marching_cubes). Some default choices are made for various templates
 surface_resolution | int | If templatestyle=='surface' controls the size of the triangles used in the surface reconstruction. (Default: 2).
+template_glass_compactness | float | Default 0.3. Compactness argument for skimage.segmentation.slic for segementation. Going lower will increase the detail. >1 will break the figure.
+temlate_glass_nsegments | int | n_segments argument for skimage.segementations.slic. Approx number of segments. 3 seems to work well. Increase if not enough detail, reduce if too much detail.
+template_glass_maxalpha | float | Default is 0.01. To make the smokey effect the alpha is relative to template intensity value This value sets the alpha scalar factor. The value will be the largest possible alpha value, where all other values scale between 0 and template_glass_max_alpha.
+
 
 ### LEGENDKWARGS
 
