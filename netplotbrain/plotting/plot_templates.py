@@ -6,7 +6,7 @@ from scipy.ndimage import rotate, sobel
 from scipy.ndimage.interpolation import spline_filter1d
 from nibabel.processing import resample_to_output
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-from skimage import measure
+from skimage import measure, segmentation
 from ..templatesettings import _get_surface_level_for_template
 
 
@@ -40,6 +40,46 @@ def _plot_template_style_cloudy(ax, data, azim, elev, **kwargs):
     # ax.voxels(bdata, alpha=0.2, edgecolor=None, facecolor='lightgray')
     ax.scatter(x, y, z, s=5, facecolor=templatecolor,
                edgecolors=None, marker='s', alpha=alpha, rasterized=True)
+
+
+
+def _plot_template_style_glass(ax, data, **kwargs):
+    """
+    This style plots the borders after a quick segmentation resulting in a glass or smokey brain
+
+    Relevant kwargs
+
+    template_glass_compactness : float
+        Default 0.2. Going lower will increase the detail. >1 will break the figure. 
+    temlate_glass_nsegments : int
+        Approx number of segments. 3 seems to work well. 
+        Increase if not enough detail, reduce if too much detail. 
+    template_glass_maxalpha : float
+        Default is 0.01. To make the smokey effect the alpha is relative to template intensity value.
+        This value sets the alpha scalar factor.
+        The value will be the largest possible alpha value, where all other values scale between 0 and template_glass_max_alpha. 
+    templatecolor : string
+        Color of image.   
+     
+    """
+    #Get kwargs
+    template_glass_compactness = 0.3
+    template_glass_nsegments = 3
+    template_glass_maxalpha = 0.01
+    templatecolor= kwargs.get('templatecolor')
+
+    # perform segmentation.
+    segments = segmentation.slic(data, template_glass_nsegments, compactness=template_glass_compactness, enforce_connectivity=False, start_label=1, channel_axis=None)
+    borders = segmentation.find_boundaries(segments, mode='thick')
+
+    # Scale the alpha of the border values based on template intensity 
+    data[~borders] = 0    
+    points = np.where(data!=0)
+    border_vals = data[points[0], points[1], points[2]]
+    alpha_per_point = (border_vals - border_vals.min()) / (border_vals.max() - border_vals.min())
+
+    ax.scatter(points[0], points[1], points[2], s=0.2, alpha=alpha_per_point * template_glass_maxalpha, color=templatecolor)
+
 
 
 def _plot_template_style_filled(ax, data, **kwargs):
@@ -128,4 +168,6 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', voxsize=N
     elif style == 'surface':
         _plot_template_style_surface(
             ax, data, template, **kwargs)
+    elif style == 'glass': 
+        _plot_template_style_glass(ax, data, **kwargs)
     return img.affine

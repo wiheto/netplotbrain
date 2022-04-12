@@ -18,3 +18,12 @@ def test_filledtemplate():
                       view='L',
                       templatevoxsize=5)
     return fig
+
+
+# Plot only filled template
+@pytest.mark.mpl_image_compare
+def test_glasstemplate():
+    fig, _ = npbplot(template='MNI152NLin2009cAsym',
+                     templatestyle='glass',
+                     view=['AP', 'SL'])
+    return fig

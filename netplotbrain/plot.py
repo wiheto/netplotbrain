@@ -47,6 +47,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
     templatestyle : str
         can be 'surface': (a surface is rendered from the template),
+               'glass': a semi-transparanet brain is generated from the template.
                'filled': (a single transparant color)
                'cloudy': cloudy (cloudy scatter edges outline the figure)
     frames : int
