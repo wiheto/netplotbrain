@@ -69,7 +69,11 @@ def _plot_template_style_glass(ax, data, **kwargs):
     templatecolor= kwargs.get('templatecolor')
 
     # perform segmentation.
-    segments = segmentation.slic(data, template_glass_nsegments, compactness=template_glass_compactness, enforce_connectivity=False, start_label=1, channel_axis=None)
+    segments = segmentation.slic(data, template_glass_nsegments,
+                                 compactness=template_glass_compactness,
+                                 enforce_connectivity=False,
+                                 start_label=1,
+                                 channel_axis=None)
     borders = segmentation.find_boundaries(segments, mode='thick')
 
     # Scale the alpha of the border values based on template intensity
@@ -133,7 +137,7 @@ def _select_single_hemisphere_template(data, hemisphere):
     return data
 
 
-def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', 
+def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
                    voxsize=None, azim=0, elev=0, hemisphere='both', **kwargs):
     if isinstance(template, str):
         if not os.path.exists(template):
