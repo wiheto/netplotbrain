@@ -62,7 +62,7 @@ def _plot_template_style_glass(ax, data, **kwargs):
         Color of image.
 
     """
-    #Get kwargs 
+    #Get kwargs
     template_glass_compactness = kwargs.get('template_glass_compactness')
     template_glass_nsegments = kwargs.get('template_glass_nsegments')
     template_glass_maxalpha = kwargs.get('template_glass_maxalpha')
@@ -133,7 +133,8 @@ def _select_single_hemisphere_template(data, hemisphere):
     return data
 
 
-def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', voxsize=None, azim=0, elev=0, hemisphere='both', **kwargs):
+def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym', 
+                   voxsize=None, azim=0, elev=0, hemisphere='both', **kwargs):
     if isinstance(template, str):
         if not os.path.exists(template):
             tf_kwargs = {}

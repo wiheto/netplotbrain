@@ -6,7 +6,7 @@ from nibabel.processing import resample_to_output
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure
 from .plot_templates import _select_single_hemisphere_template
-from ..utils import _colorarray_from_string, _rotate_data_to_viewingangle
+from ..utils import _colorarray_from_string
 
 
 def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
