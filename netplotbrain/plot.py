@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from .plotting import _plot_template, \
     _plot_edges, _plot_nodes, _plot_spheres,\
     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-    _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
+    _select_single_hemisphere_nodes, _add_subplot_title, _title_align, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
     _plot_gif
@@ -12,7 +12,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
          arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, showlegend=True, **kwargs):
+         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='auto', titlealign='L', highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -203,8 +203,8 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                                  azim=azim[fi], elev=elev[fi], **profile)
 
             ax.view_init(azim=azim[fi], elev=elev[fi])
-            if frames >= 2 or nrows > 1:
-                fig.suptitle(title)
+            if frames > 1 or nrows > 1:
+                _title_align(ax, fig, azim[fi], elev[fi], titlealign, title_frame, hemi_frame, **profile)
             else:
                 _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame, **profile)
             # Fix the aspect ratio
