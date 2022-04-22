@@ -203,7 +203,10 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                                  azim=azim[fi], elev=elev[fi], **profile)
 
             ax.view_init(azim=azim[fi], elev=elev[fi])
-            _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame, **profile)
+            if frames >= 2 or nrows > 1:
+                fig.suptitle(title)
+            else:
+                _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame, **profile)
             # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
             _set_axes_equal(ax)
