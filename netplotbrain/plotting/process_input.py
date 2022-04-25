@@ -3,20 +3,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from ..plotting import _npedges2dfedges, _get_nodes_from_nii
 
-
-def get_frame_input(inputvar, axind, ri, fi):
+def get_frame_input(inputvar, axind, ri, fi, exnotlist=True):
     """
-    Gets subplot varible.
+    Gets subplot variable.
 
     The variable depends on whether the
     input is a string, array or 2d array.
     """
-    if isinstance(inputvar, str):
-        var_frame = inputvar
-    elif isinstance(inputvar[0], str):
-        var_frame = inputvar[axind]
-    else:
-        var_frame = inputvar[ri][fi]
+    if exnotlist:
+        if not isinstance(inputvar, list):
+            var_frame = inputvar
+        elif not isinstance(inputvar[0], list):
+            var_frame = inputvar[axind]
+        else:
+            var_frame = inputvar[ri][fi]
     return var_frame
 
 
@@ -40,18 +40,21 @@ def _process_node_input(nodes, nodeimg, nodecols, template, templatevoxsize):
     return nodes, nodeimg, nodecols
 
 
-def _process_edge_input(edges, edgeweights):
+def _process_edge_input(edges, edgeweights, **kwargs):
     """
     Takes the input edges and edgeweight.
     Loads pandas dataframe if edges is string.
     Creates pandas dataframe if edges is numpy array.
-    Sets defauly edgeweight to "weight" if not given.
+    Sets default edgeweight to "weight" if not given.
     """
+    edgethreshold = kwargs.get('edgethreshold')
+    edgethresholddirection = kwargs.get('edgethresholddirection')
     if isinstance(edges, str):
         edges = pd.read_csv(edges, sep='\t', index_col=0)
     # Check input, if numpy array, make dataframe
     if isinstance(edges, np.ndarray):
         edges = _npedges2dfedges(edges)
+        edgeweights = 'weight'
     # Set default behaviour of edgeweights
     if isinstance(edges, pd.DataFrame):
         if edgeweights is None or edgeweights is True:
@@ -60,7 +63,15 @@ def _process_edge_input(edges, edgeweights):
             edgeweights = None
         if edgeweights is not None and edgeweights not in edges:
             raise ValueError('Edgeweights is specified and not in edges')
-
+        # If edgeweight and edgethreshold have been set
+        if edgeweights is not None and edgethreshold is not None:
+            if edgethresholddirection == 'absabove':
+                edges = edges[np.abs(edges[edgeweights]) > edgethreshold]
+            if edgethresholddirection == 'above' or edgethresholddirection == '>':
+                edges = edges[edges[edgeweights] > edgethreshold]
+            if edgethresholddirection == 'below' or edgethresholddirection == '<':
+                edges = edges[edges[edgeweights] < edgethreshold]
+            
     return edges, edgeweights
 
 

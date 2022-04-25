@@ -2,11 +2,15 @@ import matplotlib.cm as cm
 import matplotlib.colors as pltcol
 import numpy as np
 import pandas as pd
+from ..plotting import _npedges2dfedges
 
 
 def _colorarray_from_string(cmap, ncolors):
     """Get colormap array from string that loops through colors."""
-    if cmap in pltcol.cnames or cmap[0] == '#':
+    if cmap in pltcol.ColorConverter.colors.keys():
+        colors = pltcol.to_rgba_array(pltcol.ColorConverter.colors[cmap])
+        colors = np.vstack([colors] * ncolors)
+    elif cmap[0] == '#':
         colors = pltcol.to_rgba_array(cmap)
         colors = np.vstack([colors] * ncolors)
     else:
@@ -17,11 +21,24 @@ def _colorarray_from_string(cmap, ncolors):
 
 
 def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
+    """
+    
+    Returns
+    -------
+    nodecolor : array 
+        a N x 4 color array for colouring of nodes where alpha is set here. 
+    highlight_idx : array
+        Binary array of N index indicating which nodes are highlighted (for edge purposes) 
+    """
     highlightlevel = kwargs.get('highlightlevel')
     nodealpha = kwargs.get('nodealpha')
     if isinstance(highlightnodes, dict):
         highlight_idx = nodes[highlightnodes.keys()] == highlightnodes.values()
         highlight_idx = np.squeeze(highlight_idx.values)
+    elif isinstance(highlightnodes, str):
+        if highlightnodes not in nodes: 
+            raise ValueError('If highlightnodes is a str it must be a column in nodes')
+        highlightnodes = nodes[highlightnodes].values()
     else:
         highlight_idx = np.zeros(len(nodes))
         highlight_idx[highlightnodes] = 1
@@ -32,7 +49,38 @@ def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
             [nodecolor, np.vstack([nodealpha]*len(nodecolor))])
     # dim the non-highlighted nodes
     nodecolor[highlight_idx == 0, 3] = nodealpha * (1 - highlightlevel)
-    return nodecolor, highlight_idx
+    # Nodealpha is now set in nodecolor, so set as None to avoid any later problems
+    nodealpha = None
+    return nodecolor, highlight_idx, nodealpha
+
+
+
+def _highlight_edges(edges, edgecolor, highlightedges, **kwargs):
+    """
+    """
+    highlightlevel = kwargs.get('highlightlevel')
+    edgealpha = kwargs.get('edgealpha')
+    if isinstance(highlightedges, dict):
+        highlight_idx = edges[highlightedges.keys()] == highlightedges.values()
+        highlight_idx = np.squeeze(highlight_idx.values)
+    elif isinstance(highlightedges, str):
+        if highlightedges not in edges: 
+            raise ValueError('If highlightnodes is a str it must be a column in nodes')
+        highlight_idx = np.zeros(len(edges))
+        highlight_idx[edges[highlightedges] != 0] = 1
+    else:
+        highlight_idx = np.zeros(len(edges))
+        highlight_idx[highlightedges] = 1
+    if isinstance(edgecolor, str):
+        edgecolor = _colorarray_from_string(edgecolor, len(edges))
+    if edgecolor.shape[1] == 3:
+        edgecolor = np.hstack(
+            [edgecolor, np.vstack([edgealpha]*len(edgecolor))])
+    # dim the non-highlighted edges
+    edgecolor[highlight_idx == 0, 3] = edgealpha * (1 - highlightlevel)
+    # Nodealpha is now set in nodecolor, so set as None to avoid any later problems
+    edgealpha = None
+    return edgecolor, highlight_idx, edgealpha
 
 
 def assign_color(row, colordict):
