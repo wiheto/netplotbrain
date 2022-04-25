@@ -143,8 +143,8 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap, **profile)
-    if highlightnodes is not None and highlightedges is not None: 
-        raise ValueError('Cannot highlight based on edges and nodes at the same time.') 
+    if highlightnodes is not None and highlightedges is not None:
+        raise ValueError('Cannot highlight based on edges and nodes at the same time.')
     if highlightnodes is not None:
         nodecolor, highlightnodes, profile['nodealpha'] = _highlight_nodes(
             nodes, nodecolor, highlightnodes, **profile)
@@ -162,13 +162,13 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # Insert edge_to_highlight column into edges and set highligtedges to column name
             edges['edge_to_highlight'] = highlightedges['edge_to_highlight']
             highlightedges = 'edge_to_highlight'
-        else: 
+        else:
             raise ValueError('Could not align edge input and highlight edge input')
-    if highlightedges is not None: 
-        edgecolor, highlightedges, profile['edgealpha'] = _highlight_edges(edges, edgecolor, highlightedges, **profile) 
+    if highlightedges is not None:
+        edgecolor, highlightedges, profile['edgealpha'] = _highlight_edges(edges, edgecolor, highlightedges, **profile)
         # Get the nodes that are touched by highlighted edges
         nodes_to_highlight = edges[highlightedges == 1]
-        nodes_to_highlight = np.unique(nodes_to_highlight[profile['edgecolumnnames']].values)     
+        nodes_to_highlight = np.unique(nodes_to_highlight[profile['edgecolumnnames']].values)
         print(nodes_to_highlight)
         nodecolor, highlightnodes, profile['nodealpha'] = _highlight_nodes(
             nodes, nodecolor, nodes_to_highlight, **profile)
@@ -264,7 +264,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax_out.append(ax)
     fig.tight_layout()
 
-    # If gif is requested, create the gif. 
+    # If gif is requested, create the gif.
     if profile['gif'] is True:
         _plot_gif(fig, ax_out, profile['gifduration'], profile['savename'], profile['gifloop'])
     # Save figure if set

@@ -2,7 +2,6 @@ import matplotlib.cm as cm
 import matplotlib.colors as pltcol
 import numpy as np
 import pandas as pd
-from ..plotting import _npedges2dfedges
 
 
 def _colorarray_from_string(cmap, ncolors):
@@ -22,13 +21,13 @@ def _colorarray_from_string(cmap, ncolors):
 
 def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
     """
-    
+
     Returns
     -------
-    nodecolor : array 
-        a N x 4 color array for colouring of nodes where alpha is set here. 
+    nodecolor : array
+        a N x 4 color array for colouring of nodes where alpha is set here.
     highlight_idx : array
-        Binary array of N index indicating which nodes are highlighted (for edge purposes) 
+        Binary array of N index indicating which nodes are highlighted (for edge purposes)
     """
     highlightlevel = kwargs.get('highlightlevel')
     nodealpha = kwargs.get('nodealpha')
@@ -36,7 +35,7 @@ def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
         highlight_idx = nodes[highlightnodes.keys()] == highlightnodes.values()
         highlight_idx = np.squeeze(highlight_idx.values)
     elif isinstance(highlightnodes, str):
-        if highlightnodes not in nodes: 
+        if highlightnodes not in nodes:
             raise ValueError('If highlightnodes is a str it must be a column in nodes')
         highlightnodes = nodes[highlightnodes].values()
     else:
@@ -64,7 +63,7 @@ def _highlight_edges(edges, edgecolor, highlightedges, **kwargs):
         highlight_idx = edges[highlightedges.keys()] == highlightedges.values()
         highlight_idx = np.squeeze(highlight_idx.values)
     elif isinstance(highlightedges, str):
-        if highlightedges not in edges: 
+        if highlightedges not in edges:
             raise ValueError('If highlightnodes is a str it must be a column in nodes')
         highlight_idx = np.zeros(len(edges))
         highlight_idx[edges[highlightedges] != 0] = 1

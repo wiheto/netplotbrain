@@ -71,7 +71,7 @@ def _process_edge_input(edges, edgeweights, **kwargs):
                 edges = edges[edges[edgeweights] > edgethreshold]
             if edgethresholddirection == 'below' or edgethresholddirection == '<':
                 edges = edges[edges[edgeweights] < edgethreshold]
-            
+
     return edges, edgeweights
 
 
