@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from .plotting import _plot_template, \
     _plot_edges, _plot_nodes, _plot_spheres,\
     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-    _select_single_hemisphere_nodes, _add_subplot_title, _title_align, get_frame_input,\
+    _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
     _plot_gif
@@ -12,7 +12,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
          arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='auto', titlealign='L', highlightnodes=None, showlegend=True, **kwargs):
+         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='', subtitles=[], highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -126,13 +126,27 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Figure setup
     # Get number of non-legend rows
     nrows, view, frames = _nrows_in_fig(view, frames)
+    
+    #if subtitles is not specified, give each subplot its view name
+    if subtitles == []:
+        for i in range(0, nrows * frames):
+            subtitles.append('auto')
+    
+    if len(subtitles) != nrows * frames:
+        raise ValueError('Lenght subtitles must be the same as number of subplots')
+    
     # Init figure, if not given as input
     if ax is None:
         fig, gridspec = _init_figure(frames, nrows, legendrows)
     else:
         expected_ax_len = (nrows * frames)
         ax, gridspec = _check_axinput(ax, expected_ax_len)
-
+    
+    # Title on top of the figure
+    fig.suptitle(title)
+         
+    iter=0
+    
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap, **profile)
@@ -153,7 +167,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # Get hemisphere for this frame
             hemi_frame = get_frame_input(hemisphere, axind, ri, fi)
             # Get title for this frame
-            title_frame = get_frame_input(title, axind, ri, fi)
+            #title_frame = get_frame_input(title, axind, ri, fi)
             # Set up subplot
             if ax_in is None:
                 ax = fig.add_subplot(gridspec[ri, fi], projection='3d')
@@ -203,17 +217,24 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                                  azim=azim[fi], elev=elev[fi], **profile)
 
             ax.view_init(azim=azim[fi], elev=elev[fi])
-            if frames > 1 or nrows > 1:
-                _title_align(ax, fig, azim[fi], elev[fi], titlealign, title_frame, hemi_frame, **profile)
+            
+            if nrows * frames != 1:
+                subtitle=subtitles[iter]
+            elif title == '':
+                subtitle = 'auto'
             else:
-                _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame, **profile)
+                subtitle=''
+            
+            _add_subplot_title(ax, azim[fi], elev[fi], subtitle, hemi_frame, **profile)
             # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
             _set_axes_equal(ax)
             ax.axis('off')
             # Append ax to ax_out to store it.
             ax_out.append(ax)
-
+            
+            iter=iter+1
+            
     # Add legends to plot
     if legends is not None and profile['gif'] is False:
         for li, legend in enumerate(legends):
