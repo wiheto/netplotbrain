@@ -12,7 +12,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
          arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='', subtitles=None, highlightnodes=None, showlegend=True, **kwargs):
+         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title=None, subtitles=None, highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -142,11 +142,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     else:
         expected_ax_len = (nrows * frames)
         ax, gridspec = _check_axinput(ax, expected_ax_len)
-    
-    # Title on top of the figure
-    fig.suptitle(title)
-         
-    
+        
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap, **profile)
@@ -221,12 +217,17 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             
             if nrows * frames != 1:
                 subtitle=subtitles[axind]
-            elif title == '':
+            elif title == None:
                 subtitle = 'auto'
             else:
                 subtitle=''
             
             _add_subplot_title(ax, azim[fi], elev[fi], subtitle, hemi_frame, **profile)
+            
+            # Title on top of the figure
+            if title is not None: 
+                fig.suptitle(title)
+            
             # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
             _set_axes_equal(ax)
