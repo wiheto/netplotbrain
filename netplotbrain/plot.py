@@ -12,7 +12,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
          arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='', subtitles=[], highlightnodes=None, showlegend=True, **kwargs):
+         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='', subtitles=None, highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -128,12 +128,13 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     nrows, view, frames = _nrows_in_fig(view, frames)
     
     #if subtitles is not specified, give each subplot its view name
-    if subtitles == []:
+    if subtitles is None:
+        subtitles = []
         for i in range(0, nrows * frames):
             subtitles.append('auto')
     
     if len(subtitles) != nrows * frames:
-        raise ValueError('Lenght subtitles must be the same as number of subplots')
+        raise ValueError('Shape subtitles must be the same as number of subplots')
     
     # Init figure, if not given as input
     if ax is None:
@@ -145,7 +146,6 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Title on top of the figure
     fig.suptitle(title)
          
-    iter=0
     
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
@@ -183,6 +183,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                                         azim=azim[fi], elev=elev[fi],
                                         hemisphere=hemi_frame,
                                         **profile)
+                
             # Template voxels will have origin at 0,0,0
             # It is easier to scale the nodes from the image affine
             # Then to rescale the ax.voxels function
@@ -219,7 +220,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax.view_init(azim=azim[fi], elev=elev[fi])
             
             if nrows * frames != 1:
-                subtitle=subtitles[iter]
+                subtitle=subtitles[axind]
             elif title == '':
                 subtitle = 'auto'
             else:
@@ -232,8 +233,6 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax.axis('off')
             # Append ax to ax_out to store it.
             ax_out.append(ax)
-            
-            iter=iter+1
             
     # Add legends to plot
     if legends is not None and profile['gif'] is False:
