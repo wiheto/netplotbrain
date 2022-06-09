@@ -12,7 +12,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
          arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title=None, subtitles=None, highlightnodes=None, showlegend=True, **kwargs):
+         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title=None, subtitles='auto', highlightnodes=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -128,10 +128,15 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     nrows, view, frames = _nrows_in_fig(view, frames)
     
     #if subtitles is not specified, give each subplot its view name
-    if subtitles is None:
+    if subtitles == 'auto':
         subtitles = []
         for i in range(0, nrows * frames):
             subtitles.append('auto')
+    #if subtitles is None, remove subtitles 
+    elif subtitles == None:
+        subtitles=[]
+        for i in range(0, nrows * frames):
+            subtitles.append('')
     
     if len(subtitles) != nrows * frames:
         raise ValueError('Shape subtitles must be the same as number of subplots')
