@@ -313,9 +313,10 @@ plt.show()
 
 ```python
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
+                  templatestyle='glass',
                   view='AP',
-                  frames=10,
+                  frames=30,
+                  gifduration=125,
                   nodes=nodes,
                   nodesize='centrality_measure1',
                   edges=edges,

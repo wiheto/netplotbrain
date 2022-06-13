@@ -2,6 +2,8 @@
     "arrowlength": 10,
     "edgealpha": 1,
     "edgecolumnnames": ["i", "j"],
+    "edgethreshold": null,
+    "edgethresholddirection": "absabove",
     "edgewidthscale": 1,
     "edgehighlightbehaviour": "both",
     "font": "DejaVu Sans",

@@ -88,7 +88,7 @@ At the moment we just have some circles floating in 3D space. Let us add some mo
 One of the key benefits with netplotbrain is that it interacts with TemplateFlow, which is a collection of brain templates and atlases.
 The atlases can be used as nodes.
 If you specify the key/value pairs of an atlas on templateflow in a dictionary, the atlas will be automatically downloaded.
-For example, the following will get the 400 Parcels version from the Schaefter atlas.
+For example, the following will get the 400 Parcels version from the Schaefer atlas.
 
 ```python
 # import packages
@@ -96,9 +96,27 @@ import netplotbrain
 # Define the atlas by key value words of TemplateFlow name
 nodeimg={'template': 'MNI152NLin2009cAsym',
          'atlas': 'Schaefer2018',
-         'desc': '400Parcels7Networks',
-         'resolution': 1}
-# Plot
+## Template (nifti or string)
+
+For the template you can supply any nifti file.
+
+You can also provide the template name for any template on templateflow.org.
+The T1w brain mask will then automatically downloaded (if not already present on your computer) and used as the background.
+
+Netplotbrain can render slightly different templates
+
+### Template Styles
+
+There are currently three background styles: "surface", "filled" and "cloudy".
+
+The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to the resolution of the surface.
+
+The filled style plots the template's brain mask as voxels. This can be slightly RAM consuming.
+
+The cloudy style tries to identify the outline of the mask and plots points along the edges. The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.
+
+For templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker.
+
 netplotbrain.plot(
     nodeimg=nodeimg,
     arrowaxis=None)     
@@ -125,7 +143,7 @@ netplotbrain.plot(
     nodetype='parcel')     
 ```
 
-## Edges
+## 1.2 Specifying Edges
 
 The edges between the nodes can be passed to netplotbrain as either a numpy array (NxN adjacency matrix) or a pandas dataframe (edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example:
 
@@ -209,6 +227,30 @@ netplotbrain.plot(
     nodescale=150)
 ```
 
+## 1.3 Specifying Templates
+
+
+## Template (nifti or string)
+
+For the template you can supply any nifti file.
+
+You can also provide the template name for any template on templateflow.org.
+The T1w brain mask will then automatically downloaded (if not already present on your computer) and used as the background.
+
+Netplotbrain can render slightly different templates
+
+### Template Styles
+
+There are currently three background styles: "surface", "filled" and "cloudy".
+
+The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to the resolution of the surface.
+
+The filled style plots the template's brain mask as voxels. This can be slightly RAM consuming.
+
+The cloudy style tries to identify the outline of the mask and plots points along the edges. The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.
+
+For templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker.
+
 ## Section 2: Visualization 
 
 Here we will learn about two 
@@ -259,3 +301,19 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   view=['AP'],
                   frames=5)
 ```
+
+### Plot single hemispheres
+
+The hemisphere argument allows you to plot either the left of right hemisphere.
+Doing this entails all nodes on the left and right hemisphere's automatically get 
+
+```python
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['SSS'],
+                  hemisphere=['L', 'R', ''],
+                  nodes=nodesdf,
+                  nodesize='centrality_measure1',
+                  edges=edges)
+```
+![](./examples/figures/hemi.png)
