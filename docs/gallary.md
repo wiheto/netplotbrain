@@ -16,6 +16,13 @@
 ![](./gallary/figures/rows1.png)
 [Source Code](./gallary/two_rows.md)
 
+## Integrations
+
+### Network based statistics (via bctpy) integration
+
+![](./gallary/figures/template_inf.png)
+[Source Code](./gallary/nbs.md)
+
 ## TemplateFLow Atlases
 
 ### MNIInfant 

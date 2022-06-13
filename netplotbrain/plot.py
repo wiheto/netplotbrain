@@ -150,26 +150,25 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             nodes, nodecolor, highlightnodes, **profile)
     # if highlight edges is array, convert to pandas.
     if isinstance(highlightedges, np.ndarray):
-        highlightedges =  _npedges2dfedges(highlightedges)
-        if len(highlightedges != edges):
-            raise ValueError('Edges and highlight array are not compatible (different size matrices)')
-        # Get icol and jcol from profile as they may not be i, j, weight
-        icol, jcol, _ = profile['nodecols']
-        edges.sort_values(by=[icol, jcol], inplace=True)
-        highlightedges.sort_values(by=['i', 'j'], inplace=True)
-        highlightedges.rename(columns = {'weight': 'edge_to_highlight'}, inplace = True)
-        if all(edges[icol] == highlightedges['i']) and all(edges[jcol] == highlightedges['j']):
-            # Insert edge_to_highlight column into edges and set highligtedges to column name
-            edges['edge_to_highlight'] = highlightedges['edge_to_highlight']
-            highlightedges = 'edge_to_highlight'
-        else:
-            raise ValueError('Could not align edge input and highlight edge input')
+        # Convert np input to pd
+        highlightedges = _npedges2dfedges(highlightedges)
+        ecols = profile['edgecolumnnames']
+        # Make sure that the i and j column are the same name
+        # Also rename weight to edge_to_highlight
+        highlightedges.rename(columns = {'weight': 'edge_to_highlight',
+                                         'i': ecols[0],
+                                         'j': ecols[1]}, inplace = True)
+        # Merge dataframes with edges
+        edges = edges.merge(highlightedges, how='outer')
+        # Make nans 0s
+        edges['edge_to_highlight'] = edges['edge_to_highlight'].fillna(0)
+        # Rename highlightedges to new column
+        highlightedges = 'edge_to_highlight'
     if highlightedges is not None:
         edgecolor, highlightedges, profile['edgealpha'] = _highlight_edges(edges, edgecolor, highlightedges, **profile)
         # Get the nodes that are touched by highlighted edges
         nodes_to_highlight = edges[highlightedges == 1]
         nodes_to_highlight = np.unique(nodes_to_highlight[profile['edgecolumnnames']].values)
-        print(nodes_to_highlight)
         nodecolor, highlightnodes, profile['nodealpha'] = _highlight_nodes(
             nodes, nodecolor, nodes_to_highlight, **profile)
 
