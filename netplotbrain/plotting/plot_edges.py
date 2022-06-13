@@ -16,7 +16,7 @@ def _npedges2dfedges(edges, edgethreshold=0, edgethresholddirection='absabove'):
         only find edges over a certain threshold
     edgetype : str
         Can be below, above or absabove. Default is absabove.
-        This argument says if keeping edges<edgethreshold, below(edge<threshold), or abs(edges) above 
+        This argument says if keeping edges<edgethreshold, below(edge<threshold), or abs(edges) above
     """
     if edgethresholddirection == 'above':
         ind = np.where(edges > edgethreshold)
@@ -100,7 +100,7 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
                 ec = edgecolor[i, :]
                 ecset = 1
         if ecset == 0:
-            ec = edgecolor 
+            ec = edgecolor
         if edgewidth is None:
             ew = edgewidthscale
         else:

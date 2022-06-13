@@ -82,7 +82,7 @@ plt.close('all')
 #%%
 ## Plot atlas (as nodes) from templateflow
 
-netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                             'desc': '400Parcels7Networks',
                             'resolution': 1},
                   template='MNI152NLin2009cAsym',
@@ -97,7 +97,7 @@ plt.close('all')
 #%%
 ## plot atlas (as parcels) from templateflow
 
-netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                             'desc': '400Parcels7Networks',
                             'resolution': 1},
                   template='MNI152NLin2009cAsym',

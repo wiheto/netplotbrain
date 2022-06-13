@@ -16,8 +16,8 @@ atlasinfo['yeo7networks'] = networks
 
 @pytest.mark.mpl_image_compare
 def test_templateflow_atlas_highlight():
-    fig, _ = npbplot(nodes=atlasinfo,
-                      nodeimg={'atlas': 'Schaefer2018',
+    fig, _ = npbplot(nodes_df=atlasinfo,
+                      nodes={'atlas': 'Schaefer2018',
                                'desc': '100Parcels7Networks',
                                'resolution': 1},
                       template='MNI152NLin2009cAsym',

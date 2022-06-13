@@ -20,7 +20,7 @@ Here is the full list of keyword arguments (KWARGS) that can be used along with 
 | --- | --- | --- |
 | nodecmap | str | Matplotlib colormap for node coloring with nodecolorby. |
 | nodecolor | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge. |
-nodetype | str | Can be 'spheres', 'circles', or (if nodeimg is specified) 'parcels'. |
+nodetype | str | Can be 'spheres', 'circles', or (if nodes is a nifti image) 'parcels'. |
 nodealpha | float | Specify the transparency of the nodes
 nodecols | list | Node column names in node dataframe. 'auto' entails the columns are ['x', 'y', 'z'] (specifying coordinates)
 nodesizevminvmax | str, list | Scaling alternatives if nodesize is given. Alternatives: 'absolute' (default) 'minmax', or 2-tuple list of [min, max]. If minmax, node sizes are scaled between (0 and 1) * nodescale. If absolute, then the default values are used. Absolute can lead to problems with, for example, negative values.

@@ -13,7 +13,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
          arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
+         nodecmap='Dark2', edgeweights=None, nodes_df=None, hemisphere='both', title='auto', highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -31,13 +31,15 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
         If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the opposite direction
 
-    nodes : dataframe, string
+    nodes : dataframe, string, dict, or nii
         The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecols to change this).
         Can include additional infomation for node size and color.
-        If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
-
-    nodeimg : str or nii
-        String to filename or nibabel object that contains nodes as int.
+        If string, can load a csv file, tsv file (tab seperator), assumes index column is the 0th column.
+        If nodes points to a nifti image, a string to filename or nibabel object that contains nodes as int.
+        Or additionally can point to an atlas on templateflow.
+    nodes_df : dataframe
+        If nodes points to a nifti file, optional dataframe of input for other arguments (e.g. size).
+        Should be in the same order as the node ints in the nifti image.
     edges : dataframe, numpy array, or string
         If dataframe, must include i, j columns (and weight, for weighted).
         i and j specify indices in nodes.
@@ -106,7 +108,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
 
     # Check and load the input of nodes and edges
     nodes, nodeimg, profile['nodecols'] = _process_node_input(
-        nodes, nodeimg, profile['nodecols'], template, profile['templatevoxsize'])
+        nodes, nodes_df, profile['nodecols'], template, profile['templatevoxsize'])
     edges, edgeweights = _process_edge_input(edges, edgeweights, **profile)
     # Set up legend row
     # TODO compact code into subfunction

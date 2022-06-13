@@ -105,7 +105,7 @@ With this information, we can call netplotbrain.
 gdif = np.mean(g2,axis=-1) - np.mean(g1,axis=-1)
 
 fig, ax = netplotbrain.plot(template='MNI152NLin2009cAsym',
-                            nodeimg={'atlas': 'Schaefer2018',
+                            nodes={'atlas': 'Schaefer2018',
                                      'desc': '100Parcels7Networks',
                                      'resolution': 1},
                             edges=gdif,

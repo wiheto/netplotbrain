@@ -127,7 +127,7 @@ nodes_seed = pd.DataFrame(data={'seed_roi': nodes_col})
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='surface',
                   view='S',
-                  nodeimg={'atlas': 'Schaefer2018',
+                  nodes={'atlas': 'Schaefer2018',
                            'desc': '100Parcels7Networks',
                            'resolution': 1},
                   nodetype='parcels',
@@ -169,7 +169,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 
 ax = fig.add_subplot(349, projection='3d')
 
-netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                            'desc': '400Parcels7Networks',
                            'resolution': 1},
                   template='MNI152NLin2009cAsym',
@@ -193,8 +193,8 @@ networks = list(map(lambda x: x.split('_')[2], atlasinfo.name.values))
 atlasinfo['yeo7networks'] = networks
 
 
-netplotbrain.plot(nodes=atlasinfo,
-                  nodeimg={'atlas': 'Schaefer2018',
+netplotbrain.plot(nodes_df=atlasinfo,
+                  nodes={'atlas': 'Schaefer2018',
                            'desc': '400Parcels7Networks',
                            'resolution': 1},
                   template='MNI152NLin2009cAsym',
@@ -211,8 +211,8 @@ netplotbrain.plot(nodes=atlasinfo,
 
 
 ax = fig.add_subplot(3, 4, 11, projection='3d')
-netplotbrain.plot(nodes=atlasinfo,
-                  nodeimg={'atlas': 'Schaefer2018',
+netplotbrain.plot(nodes_df=atlasinfo,
+                  nodes={'atlas': 'Schaefer2018',
                            'desc': '400Parcels7Networks',
                            'resolution': 1},
                   template='MNI152NLin2009cAsym',

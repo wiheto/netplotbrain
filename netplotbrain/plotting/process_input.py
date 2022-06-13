@@ -20,20 +20,32 @@ def get_frame_input(inputvar, axind, ri, fi, exnotlist=True):
     return var_frame
 
 
-def _process_node_input(nodes, nodeimg, nodecols, template, templatevoxsize):
+def _process_node_input(nodes, nodes_df, nodecols, template, templatevoxsize):
     """
-    Takes node input (nodes, nodeimg and nodecols) and processes them.
+    Takes node input (nodes, nodesdf and nodecols) and processes them.
     Loads pandas dataframe if nodes is string.
-    Gets the nodes from the nifti file if nodeimg is set.
+    Gets the nodes from the nifti file if nodes is an img is set.
     Sets defult columns for nodecols.
+    If nodes is an img, then nodes_df passes additional info if wanted.
     """
+    # Preset nodeimg to None
+    nodeimg=None
     # Load nodes if string is provided
-    if isinstance(nodes, str):
-        nodes = pd.read_csv(nodes, sep='\t', index_col=0)
-    # Load the nifti node file
-    if nodeimg is not None:
+    if isinstance(nodes, pd.DataFrame) or nodes is None:
+        pass
+    elif isinstance(nodes, str):
+        if nodes.endswith('.tsv'):
+            nodes = pd.read_csv(nodes, sep='\t', index_col=0)
+        if nodes.endswith('.csv'):
+            nodes = pd.read_csv(nodes, index_col=0)
+        elif nodes.endswith('.nii') or  nodes.endswith('.nii.gz'):
+            nodes, nodeimg = _get_nodes_from_nii(
+                nodes, voxsize=templatevoxsize, template=template, nodes=nodes_df)
+        else:
+            raise ValueError('nodes as str must be a .csv, .tsv, .nii, or .nii.gz')
+    else:
         nodes, nodeimg = _get_nodes_from_nii(
-            nodeimg, voxsize=templatevoxsize, template=template, nodes=nodes)
+            nodes, voxsize=templatevoxsize, template=template, nodes=nodes_df)
     # set nodecols if no explicit input
     if nodecols == 'auto':
         nodecols = ['x', 'y', 'z']

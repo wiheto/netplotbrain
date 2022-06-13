@@ -10,7 +10,7 @@ df_adj = pd.read_csv('./examples/nbstestdata.csv', index_col=[0])
 # Simplest image
 @pytest.mark.mpl_image_compare
 def test_highlightedges_df():
-    fig, _ = npbplot(nodeimg={'atlas': 'Schaefer2018',
+    fig, _ = npbplot(nodes={'atlas': 'Schaefer2018',
                                         'desc': '100Parcels7Networks',
                                         'resolution': 1},
                                 edges=df_adj,
@@ -31,7 +31,7 @@ thadj[thadj<0.5] = 0
 thadj[thadj!=0] = 1
 @pytest.mark.mpl_image_compare
 def test_highlightedges_np():
-    fig, _ = npbplot(nodeimg={'atlas': 'Schaefer2018',
+    fig, _ = npbplot(nodes={'atlas': 'Schaefer2018',
                                         'desc': '100Parcels7Networks',
                                         'resolution': 1},
                                 edges=adj,

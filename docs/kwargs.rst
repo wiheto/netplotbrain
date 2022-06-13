@@ -9,7 +9,7 @@ nodecmap : str
 nodecolor : matplotlib coloring
     Can be string (default 'black') or list of 3D/4D colors for each edge.
 nodetype : str
-    Can be 'spheres', 'circles', or (if nodeimg is specified) 'parcels'.
+    Can be 'spheres', 'circles', or (if nodes is nifti) 'parcels'.
 nodealpha : float
     Specify the transparency of the nodes
 nodecols : list
