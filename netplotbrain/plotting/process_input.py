@@ -36,7 +36,7 @@ def _process_node_input(nodes, nodes_df, nodecols, template, templatevoxsize):
     elif isinstance(nodes, str):
         if nodes.endswith('.tsv'):
             nodes = pd.read_csv(nodes, sep='\t', index_col=0)
-        if nodes.endswith('.csv'):
+        elif nodes.endswith('.csv'):
             nodes = pd.read_csv(nodes, index_col=0)
         elif nodes.endswith('.nii') or  nodes.endswith('.nii.gz'):
             nodes, nodeimg = _get_nodes_from_nii(
