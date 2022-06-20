@@ -4,6 +4,7 @@
     "edgecolumnnames": ["i", "j"],
     "edgewidthscale": 1,
     "edgehighlightbehaviour": "both",
+    "fig_dpi": 300,
     "font": "DejaVu Sans",
     "fontcolor": "gray",
     "gif": false,
@@ -27,10 +28,10 @@
     "templateedgethreshold": 0.7,
     "templatecolor": "lightgray",
     "templatevoxsize": null,
-    "template_glass_compactness": 0.3, 
-    "template_glass_nsegments": 3, 
+    "template_glass_compactness": 0.3,
+    "template_glass_nsegments": 3,
     "template_glass_maxalpha": 0.01,
-    "titlefontsize": "medium", 
-    "titleloc": "center", 
+    "titlefontsize": "medium",
+    "titleloc": "center",
     "titleweight": "regular"
 }
