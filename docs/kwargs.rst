@@ -5,14 +5,15 @@ Full list of KWARGS
 NODE KWARGS
 --------------
 nodecmap : str
-    Matplotlib colormap for node coloring with nodecolorby.
-nodecolor : matplotlib coloring
+    Matplotlib colormap for node coloring when nodecolor points to a dataframe.
+nodecolor : str, matplotlib coloring
+    Can be string to column in nodes or nodes_df input that specifies color column.
     Can be string (default 'black') or list of 3D/4D colors for each edge.
 nodetype : str
     Can be 'spheres', 'circles', or (if nodes is nifti) 'parcels'.
 nodealpha : float
     Specify the transparency of the nodes
-nodecols : list
+nodecolumnnames : list
     Node column names in node dataframe. 'auto' entails the columns are ['x', 'y', 'z'] (specifying coordinates)
 nodesizevminvmax : str, list
     Scaling alternatives if nodesize is given.

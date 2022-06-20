@@ -12,27 +12,22 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
     _load_profile, _nrows_in_fig, _highlight_edges
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
-         arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
+         arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles',
          nodecmap='Dark2', edgecmap='Set2', edgeweights=None, nodes_df=None, hemisphere='both', title='auto', highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
-
+    
     Arguments:
-        nodes pd.dataframe, str:
-            The dataframe must include x, y, z columns that correspond to coordinates of nodes
-            (see nodecols to change this).
-            Can include additional infomation for node size and color.
-        If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
-        fig: matplotlib figure
-        view : str, list, or tuple. If string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior)
+    ------------------
+    fig: matplotlib figure
+    view : str, list, or tuple. If string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior)
         or any combination of these (e.g 'LR', 'AP').
         The string can contain multiple combinations (e.g. LSR)
         if list: multiple strings (as above) which will create new rows of subplots.
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
         If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the opposite direction
-
     nodes : dataframe, string, dict, or nii
-        The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecols to change this).
+        The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecolumnnames to change this).
         Can include additional infomation for node size and color.
         If string, can load a csv file, tsv file (tab seperator), assumes index column is the 0th column.
         If nodes points to a nifti image, a string to filename or nibabel object that contains nodes as int.
@@ -85,10 +80,10 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         If True, plots all the legends that can be plotted.
         If list, can contain 'nodesize' and 'nodecolor' to plot those in the legend.
         See legend kwargs for turning specific legends on/off.
-    nodecolorby : str
-        Column in dataframe that should get different colors (cannot be set with nodecolor)
+    nodecolor : str or RGB value.
+        If string, named matplotlib color or name of column in dataframe
     nodesize : str, int, float
-        If string, can plot a column
+        If string, can plot a column in nodes
     title : str or list
         Default auto, will describe the view settings.
         Otherwise string or list of for subplot titles
@@ -103,15 +98,17 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     .. include:: ../docs/kwargs.rst
 
     """
-    # If nodeimg argument is given, raise an error
+    # Raise Errors for deprecated inputs from version 0.1.x
     if 'nodeimg' in kwargs:
-        raise ValueError('ERROR: recent change in netplotbrain. Use nodes instead of nodeimg. If additional nodeinfo exists as a dataframe, use nodes_df.')
+        raise ValueError('DEPRECATED INPUT (from 0.2.0): Use nodes instead of nodeimg. If additional nodeinfo exists as a dataframe, use nodes_df.')
+    if 'nodecolorby' in kwargs:
+        raise ValueError('DEPRECATED INPUT (from 0.2.0): Use nodecolor instead of nodecolorby    .')
     # Load default settings, then update with kwargs
     profile = _load_profile(**kwargs)
 
     # Check and load the input of nodes and edges
-    nodes, nodeimg, profile['nodecols'] = _process_node_input(
-        nodes, nodes_df, profile['nodecols'], template, profile['templatevoxsize'])
+    nodes, nodeimg, nodecolorby, profile['nodecolumnnames'] = _process_node_input(
+        nodes, nodes_df, nodecolor, profile['nodecolumnnames'], template, profile['templatevoxsize'])
     edges, edgeweights = _process_edge_input(edges, edgeweights, **profile)
     # Set up legend row
     # TODO compact code into subfunction
@@ -215,14 +212,14 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # So if affine is not None, nodes get scaled in relation to origin and voxelsize,
             # If node coords are derived from nodeimg, this has already been taken care of.
             if nodes is not None and nodeimg is None and axind == 0:
-                nodes = _scale_nodes(nodes, profile['nodecols'], affine)
+                nodes = _scale_nodes(nodes, profile['nodecolumnnames'], affine)
             # nodes and subplot may change for each frame/subplot
             # e.g. if hemisphere is specified
             nodes_frame = None
             if nodes is not None:
                 nodes_frame = nodes.copy()
                 nodes_frame = _select_single_hemisphere_nodes(
-                    nodes_frame, profile['nodecols'][0], affine, hemi_frame)
+                    nodes_frame, profile['nodecolumnnames'][0], affine, hemi_frame)
 
                 if nodetype == 'spheres':
                     _plot_spheres(ax, nodes_frame, nodecolor=nodecolor,

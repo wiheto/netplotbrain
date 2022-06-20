@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, alpha=None, **kwargs):
+def _plot_spheres(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, alpha=None, **kwargs):
     """
     Function that plots spheres in figure.
 
@@ -10,7 +10,7 @@ def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, alpha=No
     ax : matplotlib ax
     nodes : dataframe
         node dataframe with x, y, z coordinates.
-    nodecols : list of string
+    nodecolumnnames : list of string
         name of node column coordinates in datadrame to correspond with x,y,z.
     nodesize : string or float, int
         if string, must refer to a column in nodes.
@@ -31,9 +31,9 @@ def _plot_spheres(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, alpha=No
     # Loop through each node and plot a surface plot
     for index, row in nodes.iterrows():
         # Get the xyz coords for the node
-        c = [row[nodecols[0]],
-             row[nodecols[1]],
-             row[nodecols[2]]]
+        c = [row[nodecolumnnames[0]],
+             row[nodecolumnnames[1]],
+             row[nodecolumnnames[2]]]
 
         # Check if nodesize is in the dataframe
         if nodesize in nodes.keys():

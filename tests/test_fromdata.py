@@ -17,7 +17,7 @@ def test_simple():
                       nodescale=40,
                       nodesize='centrality_measure1',
                       edges=edges,
-                      nodecolorby='community')
+                      nodecolor='community')
     return fig
 
 

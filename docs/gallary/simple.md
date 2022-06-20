@@ -16,6 +16,6 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodescale=40,
                   nodesize='centrality_measure1',
                   edges=edges,
-                  nodecolorby='community')
+                  nodecolor='community')
 
 ```

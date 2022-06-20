@@ -283,7 +283,7 @@ netplotbrain.plot(template='WHS',
          nodes=nodes_whs,
          nodesize='centrality_measure1',
          edges=edges,
-         nodecolorby='community',
+         nodecolor='community',
          nodescale=80,
          templatevoxsize=0.2)
 
@@ -303,7 +303,7 @@ netplotbrain.plot(template='MNIInfant',
          view='LSR',
          nodes=nodes_inf,
          nodesize='centrality_measure1',
-         nodecolorby='community',
+         nodecolor='community',
          nodescale=80,
          edges=edges)
 

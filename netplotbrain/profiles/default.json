@@ -17,7 +17,7 @@
     "legendtickfontsize": "xx-small",
     "legendtitilefontsize": "medium",
     "nodealpha": 1,
-    "nodecols": "auto",
+    "nodecolumnnames": "auto",
     "nodecolorlegend": true,
     "nodecolorlegendstyle": "auto",
     "nodecolorvminvmax": "minmax",

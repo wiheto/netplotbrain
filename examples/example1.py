@@ -26,7 +26,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodescale=40,
                   nodesize='centrality_measure1',
                   edges=edges,
-                  nodecolorby='community')
+                  nodecolor='community')
 
 plt.savefig('./examples/figures/singleview.png', dpi=150)
 plt.close('all')
@@ -72,7 +72,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodes=nodes,
                   nodesize='centrality_measure1',
                   edges=edges,
-                  nodecolorby='community',
+                  nodecolor='community',
                   view=['LSR', 'AIP'],
                   frames=2)
 
@@ -142,7 +142,7 @@ netplotbrain.plot(template='WHS',
          nodes=nodes_whs,
          nodesize='centrality_measure1',
          edges=edges,
-         nodecolorby='community',
+         nodecolor='community',
          nodescale=80,
          templatevoxsize=0.2)
 
@@ -160,7 +160,7 @@ netplotbrain.plot(template='MNIInfant',
          view='LSR',
          nodes=nodes_inf,
          nodesize='centrality_measure1',
-         nodecolorby='community',
+         nodecolor='community',
          nodescale=80,
          edges=edges,
          templatevoxsize=5)

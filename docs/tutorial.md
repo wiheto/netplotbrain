@@ -74,12 +74,12 @@ nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25],
 netplotbrain.plot(
     nodes=nodes_df,
     nodesize='degree_centrality',
-    nodecolorby='communities',
+    nodecolor='communities',
     arrowaxis=None,
     nodescale=100)
 ```
  
-Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `nodescale` which just linearly scales all nodes by that factor. We also see that when specifying `nodesize` and `nodecolorby` that legends automatically appear.
+Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `nodescale` which just linearly scales all nodes by that factor. We also see that when specifying `nodesize` and `nodecolor` that legends automatically appear.
 
 At the moment we just have some circles floating in 3D space. Let us add some more information about this network.
 
@@ -153,7 +153,7 @@ edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3],
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolorby='communities',
+    nodecolor='communities',
     arrowaxis=None,
     nodescale=150)
 ```
@@ -178,7 +178,7 @@ edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3],
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolorby='communities',
+    nodecolor='communities',
     arrowaxis=None,
     nodescale=150)
 ```
@@ -202,7 +202,7 @@ edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3],
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolorby='communities',
+    nodecolor='communities',
     arrowaxis=None,
     nodescale=150)
 ```

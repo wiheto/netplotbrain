@@ -20,12 +20,12 @@ def get_frame_input(inputvar, axind, ri, fi, exnotlist=True):
     return var_frame
 
 
-def _process_node_input(nodes, nodes_df, nodecols, template, templatevoxsize):
+def _process_node_input(nodes, nodes_df, nodecolor, nodecolumnnames, template, templatevoxsize):
     """
-    Takes node input (nodes, nodesdf and nodecols) and processes them.
+    Takes node input (nodes, nodesdf and nodecolumnnames) and processes them.
     Loads pandas dataframe if nodes is string.
     Gets the nodes from the nifti file if nodes is an img is set.
-    Sets defult columns for nodecols.
+    Sets defult columns for nodecolumnnames.
     If nodes is an img, then nodes_df passes additional info if wanted.
     """
     # Preset nodeimg to None
@@ -46,10 +46,16 @@ def _process_node_input(nodes, nodes_df, nodecols, template, templatevoxsize):
     else:
         nodes, nodeimg = _get_nodes_from_nii(
             nodes, voxsize=templatevoxsize, template=template, nodes=nodes_df)
-    # set nodecols if no explicit input
-    if nodecols == 'auto':
-        nodecols = ['x', 'y', 'z']
-    return nodes, nodeimg, nodecols
+    # set nodecolumnnames if no explicit input
+    if nodecolumnnames == 'auto':
+        nodecolumnnames = ['x', 'y', 'z']
+    # Check if nodecolor is a string in nodes, if yes, set to nodecolorby to nodecolor
+    # Note: this may not be the most effective way to do this. 
+    nodecolorby = None
+    if isinstance(nodecolor, str): 
+        if nodecolor in nodes:
+            nodecolorby = str(nodecolor)
+    return nodes, nodeimg, nodecolorby, nodecolumnnames
 
 
 def _process_edge_input(edges, edgeweights, **kwargs):
