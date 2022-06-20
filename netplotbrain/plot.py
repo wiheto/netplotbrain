@@ -274,11 +274,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Save figure if set
     elif profile['savename'] is not None:
         if profile['savename'].endswith('.png'):
-            fig.savedfig(profile['savename'], dpi=profile['fig_dpi'])
+            fig.savefig(profile['savename'], dpi=profile['fig_dpi'])
         elif profile['savename'].endswith('.svg'):
-            fig.savedfig(profile['savename'])
+            fig.savefig(profile['savename'])
         else:
-            fig.savedfig(profile['savename'] + '.png', dpi=profile['fig_dpi'])
-            fig.savedfig(profile['savename'] + '.svg')
+            fig.savefig(profile['savename'] + '.png', dpi=profile['fig_dpi'])
+            fig.savefig(profile['savename'] + '.svg')
 
     return (fig, ax_out)

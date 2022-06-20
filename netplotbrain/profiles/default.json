@@ -8,6 +8,7 @@
     "edgewidthscale": 1,
     "edgehighlightbehaviour": "both",
     "edges_df": null,
+    "fig_dpi": 300,
     "font": "DejaVu Sans",
     "fontcolor": "gray",
     "gif": false,
