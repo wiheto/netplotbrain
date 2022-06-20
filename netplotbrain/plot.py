@@ -103,6 +103,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     .. include:: ../docs/kwargs.rst
 
     """
+    # If nodeimg argument is given, raise an error
+    if 'nodeimg' in kwargs:
+        raise ValueError('ERROR: recent change in netplotbrain. Use nodes instead of nodeimg. If additional nodeinfo exists as a dataframe, use nodes_df.') 
     # Load default settings, then update with kwargs
     profile = _load_profile(**kwargs)
 
