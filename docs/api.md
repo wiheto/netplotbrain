@@ -30,13 +30,14 @@ nodecolorvminvmax | str, list | Scales continuous colormap between certain value
 
 | Argument | Type | Description |
 | --- | --- | --- |
-edgecols | list | Edge columns names in edge dataframe. Default is i and j (specifying nodes).
-edgecolor | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge.
-edgewidth | int, float | Specify width of edges. If auto, will plot the value in edge array (if array) or the weight column (if in pandas dataframe), otherwise 2.
-edgeweights | str | String that specifies column in edge dataframe that contains weights. If numpy array is edge input, can be True (default) to specify edge weights.
 edgealpha | float | Transparency of edges (default: 1).
+edgecolumnames | list | Edge columns names in edge dataframe. Default is i and j (specifying nodes).
+edgecolor | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge.
+edgeweights | str | String that specifies column in edge dataframe that contains weights. If numpy array is edge input, can be True (default) to specify edge weights.
 edgehighlightbehaviour | str | Alternatives "both" or "any" or None. Governs edge dimming when highlightnodes is on. If both, then highlights only edges between highlighted nodes. If any, then only edges connecting any of the nodes are highlighted.
-edgewidthscale | int, float | Scale the width of all edges by a factor (default: 1)
+edgewidthscale | int, float | Scale the width of all edges by a factor (default: 1).
+edgethresholddirection | str | can be "absabove", "above" (or ">"), "below" (or "<") to indicate thresholding behaviour. If absabove, then the thresholding behaviour is np.abs(edges) > edgethreshold. 
+edgethreshold | float | Edgeweight value to threshold edges. 
 
 ### TEMPLATE KWARGS
 

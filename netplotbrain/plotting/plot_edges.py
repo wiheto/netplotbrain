@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def _npedges2dfedges(edges, edgethreshold=0):
+def _npedges2dfedges(edges, edgethreshold=0, edgethresholddirection='absabove'):
     """
     A function which transforms numpy array edges into dataframe.
 
@@ -14,8 +14,16 @@ def _npedges2dfedges(edges, edgethreshold=0):
         n x n array of edges
     edgethreshold : float
         only find edges over a certain threshold
+    edgetype : str
+        Can be below, above or absabove. Default is absabove.
+        This argument says if keeping edges<edgethreshold, below(edge<threshold), or abs(edges) above 
     """
-    ind = np.where(edges > edgethreshold)
+    if edgethresholddirection == 'above':
+        ind = np.where(edges > edgethreshold)
+    if edgethresholddirection == 'below':
+        ind = np.where(edges < edgethreshold)
+    if edgethresholddirection == 'absabove':
+        ind = np.where(np.abs(edges) > edgethreshold)
     weights = edges[ind]
     # Create dataframe
     df = pd.DataFrame(data={'i': ind[0], 'j': ind[1], 'weight': weights})
@@ -26,7 +34,9 @@ def _get_edge_highlight_alpha(node_i, node_j, highlightnodes, **kwargs):
     edgealpha = kwargs.get('edgealpha')
     highlightlevel = kwargs.get('highlightlevel')
     edgehighlightbehaviour = kwargs.get('edgehighlightbehaviour')
-    if highlightnodes is None or edgehighlightbehaviour is None:
+    if edgealpha is None:
+        pass
+    elif highlightnodes is None or edgehighlightbehaviour is None:
         pass
     elif node_i in highlightnodes and node_j in highlightnodes and edgehighlightbehaviour == 'both':
         pass
@@ -82,16 +92,24 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
     # Convert highlightnodes binary list to index list
     hl_idx = np.where(np.array(highlightnodes) == 1)[0]
     # if dataframe
-    for _, row in edges.iterrows():
+    ecset = 0
+    for i, row in edges.iterrows():
         # if row[edgecol[0]] != 0 and row[edgecol[1]] != 0:
+        if isinstance(edgecolor, np.ndarray):
+            if edgecolor.shape[0] == len(edges):
+                ec = edgecolor[i, :]
+                ecset = 1
+        if ecset == 0:
+            ec = edgecolor 
         if edgewidth is None:
             ew = edgewidthscale
         else:
             ew = row[edgewidth] * edgewidthscale
+
         if row[edgecol[0]] in nodes.index and row[edgecol[1]] in nodes.index:
             ea = _get_edge_highlight_alpha(
                 row[edgecol[0]], row[edgecol[1]], hl_idx, **kwargs)
             xp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['x']
             yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['y']
             zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['z']
-            ax.plot(xp, yp, zp, color=edgecolor, linewidth=ew, alpha=ea)
+            ax.plot(xp, yp, zp, color=ec, linewidth=ew, alpha=ea)

@@ -4,8 +4,6 @@ from scipy.ndimage import rotate
 
 # equal scaling solution from @AndrewCox from https://stackoverflow.com/a/63625222
 # Functions from @Mateen Ulhaq and @karlo
-
-
 def _set_axes_equal(ax: plt.Axes):
     """
     Set 3D plot axes to equal scale.

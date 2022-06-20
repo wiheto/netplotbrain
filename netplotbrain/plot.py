@@ -7,12 +7,13 @@ from .plotting import _plot_template, \
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-    _plot_gif
-from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, _load_profile, _nrows_in_fig
+    _plot_gif, _npedges2dfedges
+from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
+    _load_profile, _nrows_in_fig, _highlight_edges
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
          arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, showlegend=True, **kwargs):
+         nodecmap='Dark2', edgeweights=None, nodeimg=None, hemisphere='both', title='auto', highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -40,7 +41,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     edges : dataframe, numpy array, or string
         If dataframe, must include i, j columns (and weight, for weighted).
         i and j specify indices in nodes.
-        See edgecols if you want to change the default column names.
+        See edgecolumnames if you want to change the default column names.
         if numpy array, square adjacency array.
         If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
     template : str or nibabel nifti
@@ -60,11 +61,18 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         If list, should match the size of views and contain strings to specify hemisphere.
         Can be abbreviated to L, R and (empty string possible if both hemisphere plotted).
         Between hemisphere edges are deleted.
-    highlightnodes : int, list, dict
+    highlightnodes : int, list, dict, str
         List or int point out which nodes you want to be highlighted.
         If dict, should be a single column-value pair.
         Example: highlight all nodes of that, in the node dataframe, have a community
         value of 1, the input will be {'community': 1}.
+        If string, should point to a column in the nodes dataframe and all non-zero values will be plotted.
+    highlightedges : array, dict, str
+        List or int point out which nodes you want to be highlighted.
+        If dict, should be a single column-value pair.
+        Example: highlight all nodes of that, in the edge dataframe, have a community
+        value of 1, the input will be {'community': 1}.
+        If string, should point to a column in the nodes dataframe and all non-zero values will be plotted.
     highlightlevel : float
         Intensity of the highlighting (opposite of alpha).
         Value between 0 and 1, if 1, non-highlighted nodes are fully transparent.
@@ -99,8 +107,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Check and load the input of nodes and edges
     nodes, nodeimg, profile['nodecols'] = _process_node_input(
         nodes, nodeimg, profile['nodecols'], template, profile['templatevoxsize'])
-    edges, edgeweights = _process_edge_input(edges, edgeweights)
-
+    edges, edgeweights = _process_edge_input(edges, edgeweights, **profile)
     # Set up legend row
     # TODO compact code into subfunction
     legends = None
@@ -124,7 +131,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             legendrows = len(legends)
 
     # Figure setup
-    # Get number of non-legend rows
+    # Get number of non-legend rowsnon
     nrows, view, frames = _nrows_in_fig(view, frames)
     # Init figure, if not given as input
     if ax is None:
@@ -136,9 +143,34 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap, **profile)
+    if highlightnodes is not None and highlightedges is not None:
+        raise ValueError('Cannot highlight based on edges and nodes at the same time.')
     if highlightnodes is not None:
-        nodecolor, highlightnodes = _highlight_nodes(
+        nodecolor, highlightnodes, profile['nodealpha'] = _highlight_nodes(
             nodes, nodecolor, highlightnodes, **profile)
+    # if highlight edges is array, convert to pandas.
+    if isinstance(highlightedges, np.ndarray):
+        # Convert np input to pd
+        highlightedges = _npedges2dfedges(highlightedges)
+        ecols = profile['edgecolumnnames']
+        # Make sure that the i and j column are the same name
+        # Also rename weight to edge_to_highlight
+        highlightedges.rename(columns = {'weight': 'edge_to_highlight',
+                                         'i': ecols[0],
+                                         'j': ecols[1]}, inplace = True)
+        # Merge dataframes with edges
+        edges = edges.merge(highlightedges, how='outer')
+        # Make nans 0s
+        edges['edge_to_highlight'] = edges['edge_to_highlight'].fillna(0)
+        # Rename highlightedges to new column
+        highlightedges = 'edge_to_highlight'
+    if highlightedges is not None:
+        edgecolor, highlightedges, profile['edgealpha'] = _highlight_edges(edges, edgecolor, highlightedges, **profile)
+        # Get the nodes that are touched by highlighted edges
+        nodes_to_highlight = edges[highlightedges == 1]
+        nodes_to_highlight = np.unique(nodes_to_highlight[profile['edgecolumnnames']].values)
+        nodecolor, highlightnodes, profile['nodealpha'] = _highlight_nodes(
+            nodes, nodecolor, nodes_to_highlight, **profile)
 
     # Rename ax as ax_in and prespecfiy ax_out before forloop
     ax_in = ax
@@ -151,9 +183,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         for fi in range(frames):
             axind = (ri * nrows) + fi
             # Get hemisphere for this frame
-            hemi_frame = get_frame_input(hemisphere, axind, ri, fi)
+            hemi_frame = get_frame_input(hemisphere, axind, ri, fi, str)
             # Get title for this frame
-            title_frame = get_frame_input(title, axind, ri, fi)
+            title_frame = get_frame_input(title, axind, ri, fi, str)
             # Set up subplot
             if ax_in is None:
                 ax = fig.add_subplot(gridspec[ri, fi], projection='3d')
@@ -231,8 +263,10 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax_out.append(ax)
     fig.tight_layout()
 
+    # If gif is requested, create the gif.
     if profile['gif'] is True:
         _plot_gif(fig, ax_out, profile['gifduration'], profile['savename'], profile['gifloop'])
+    # Save figure if set
     elif profile['savename'] is not None:
         if profile['savename'].endswith('.png'):
             fig.savefig(profile['savename'], dpi=profile['fig_dpi'])
