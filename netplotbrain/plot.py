@@ -16,7 +16,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
          nodecmap='Dark2', edgecmap='Set2', edgeweights=None, nodes_df=None, hemisphere='both', title='auto', highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
-    
+
     Arguments:
     ------------------
     fig: matplotlib figure

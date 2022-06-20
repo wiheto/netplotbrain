@@ -50,9 +50,9 @@ def _process_node_input(nodes, nodes_df, nodecolor, nodecolumnnames, template, t
     if nodecolumnnames == 'auto':
         nodecolumnnames = ['x', 'y', 'z']
     # Check if nodecolor is a string in nodes, if yes, set to nodecolorby to nodecolor
-    # Note: this may not be the most effective way to do this. 
+    # Note: this may not be the most effective way to do this.
     nodecolorby = None
-    if isinstance(nodecolor, str): 
+    if isinstance(nodecolor, str):
         if nodecolor in nodes:
             nodecolorby = str(nodecolor)
     return nodes, nodeimg, nodecolorby, nodecolumnnames
