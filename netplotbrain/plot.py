@@ -148,7 +148,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap, **profile)
-    if isinstance(edgecolor, str):
+    if isinstance(edgecolor, str) and edges is not None:
         if edgecolor in edges:
             edgecolor = _get_colorby_colors(edges, edgecolor, edgecmap, 'edge', **profile)
     if highlightnodes is not None and highlightedges is not None:
