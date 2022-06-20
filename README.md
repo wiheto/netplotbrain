@@ -30,12 +30,13 @@ You do not need to have all of them specified.
 
 ## Nodes
 
-There are two ways to specify nodes.
+There are three ways to specify nodes.
 
-1. Nodes: a pandas dataframe of coordinates
+1. a pandas dataframe of coordinates (or a string to a csv/tsv file), 
+2. a 3D nifti image where each node has a different value (or a a string to the nifti file), 
+3. a dictionary to grab an atlas from templateflow.
 
-2. Nodeimg: a 3D nifti image where each node has a different value.
-Alternatively, nodeimg can be dictionary to grab an atlas from templateflow.
+For option 2 and 3, it is also possible to supply a dataframe called nodes_df with additional information about each node. 
 
 ### Nodes (Dataframe)
 
@@ -63,18 +64,19 @@ With this information, you can easily specify colour and size arguments by speci
 These additional values to specify size and color can be given as a dataframe even
 if you specify your nodes with a nifti image.
 
-### Nodeimg (Nifti image)
+### Nodes (Nifti image)
 
 You can also input a 3D nifti image where each node is a unique value.
+This input is either a nibael object or a string to the file. 
 
-### Nodeimg (Templateflow atlas)
+### Nodes (Templateflow atlas)
 
 If you specify the key/value pairs of an atlas on templateflow in a dictionary,
 the atlas will be automatically downloaded.
 For example, the following will get the Schaefer2018 atlas.
 
 ```python
-nodeimg={'template': 'MNI152NLin2009cAsym',
+nodes={'template': 'MNI152NLin2009cAsym',
          'atlas': 'Schaefer2018',
          'desc': '400Parcels7Networks',
          'resolution': 1}
@@ -223,7 +225,7 @@ plt.show()
 ### Plot atlas (as nodes) from templateflow
 
 ```python
-netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                             'desc': '400Parcels7Networks',
                             'resolution': 1},
                   template='MNI152NLin2009cAsym',
@@ -237,7 +239,7 @@ plt.show()
 ### plot atlas (as parcels) from templateflow
 
 ```python
-netplotbrain.plot(nodeimg={'atlas': 'Schaefer2018',
+netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                             'desc': '400Parcels7Networks',
                             'resolution': 1},
                   template='MNI152NLin2009cAsym',
@@ -281,7 +283,7 @@ netplotbrain.plot(template='WHS',
          nodes=nodes_whs,
          nodesize='centrality_measure1',
          edges=edges,
-         nodecolorby='community',
+         nodecolor='community',
          nodescale=80,
          templatevoxsize=0.2)
 
@@ -301,7 +303,7 @@ netplotbrain.plot(template='MNIInfant',
          view='LSR',
          nodes=nodes_inf,
          nodesize='centrality_measure1',
-         nodecolorby='community',
+         nodecolor='community',
          nodescale=80,
          edges=edges)
 

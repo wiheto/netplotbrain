@@ -1,7 +1,7 @@
 import numpy as np
 from ..utils import _node_scale_vminvmax
 
-def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, **kwargs):
+def _plot_nodes(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, **kwargs):
     """
     Function that plots nodes in figure
 
@@ -9,8 +9,8 @@ def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, **kwargs):
     ---------------
     ax : matplotlib ax
     nodes : dataframe
-        node dataframe with x, y, z coordinates, must include nodecols.
-    nodecols : list of string
+        node dataframe with x, y, z coordinates, must include nodecolumnnames.
+    nodecolumnnames : list of string
         name of node column coordinates in datadrame.
     nodesize : string or float, int
         if string, must refer to a column in nodes.
@@ -38,11 +38,11 @@ def _plot_nodes(ax, nodes, nodecols, nodecolor='salmon', nodesize=20, **kwargs):
         ns = _node_scale_vminvmax(nodes, nodesize, **kwargs)
     else:
         ns = nodesize * nodescale
-    ax.scatter(nodes[nodecols[0]], nodes[nodecols[1]],
-               nodes[nodecols[2]], s=ns, color=nc, alpha=nodealpha)
+    ax.scatter(nodes[nodecolumnnames[0]], nodes[nodecolumnnames[1]],
+               nodes[nodecolumnnames[2]], s=ns, color=nc, alpha=nodealpha)
 
 
-def _scale_nodes(nodes, nodecols, affine=None):
+def _scale_nodes(nodes, nodecolumnnames, affine=None):
     """
     Scales nodes from MNI coordinates to ax with origin of 0.
 
@@ -50,7 +50,7 @@ def _scale_nodes(nodes, nodecols, affine=None):
     ---------------
     nodes : dataframe
         node dataframe with x, y, z coordinates.
-    nodecols : list of strings
+    nodecolumnnames : list of strings
         column names of x, y, z coordinates
     affine : array
         3x4 array from img.affine (nibabel image).
@@ -63,12 +63,12 @@ def _scale_nodes(nodes, nodecols, affine=None):
     """
     nodes_scaled = nodes.copy()
     if affine is not None:
-        nodes_scaled[nodecols[0]] = (
-            nodes_scaled[nodecols[0]] - affine[0, -1]) / affine[0, 0]
-        nodes_scaled[nodecols[1]] = (
-            nodes_scaled[nodecols[1]] - affine[1, -1]) / affine[1, 1]
-        nodes_scaled[nodecols[2]] = (
-            nodes_scaled[nodecols[2]] - affine[2, -1]) / affine[2, 2]
+        nodes_scaled[nodecolumnnames[0]] = (
+            nodes_scaled[nodecolumnnames[0]] - affine[0, -1]) / affine[0, 0]
+        nodes_scaled[nodecolumnnames[1]] = (
+            nodes_scaled[nodecolumnnames[1]] - affine[1, -1]) / affine[1, 1]
+        nodes_scaled[nodecolumnnames[2]] = (
+            nodes_scaled[nodecolumnnames[2]] - affine[2, -1]) / affine[2, 2]
     return nodes_scaled
 
 

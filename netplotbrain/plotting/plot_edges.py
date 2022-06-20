@@ -16,7 +16,7 @@ def _npedges2dfedges(edges, edgethreshold=0, edgethresholddirection='absabove'):
         only find edges over a certain threshold
     edgetype : str
         Can be below, above or absabove. Default is absabove.
-        This argument says if keeping edges<edgethreshold, below(edge<threshold), or abs(edges) above 
+        This argument says if keeping edges<edgethreshold, below(edge<threshold), or abs(edges) above
     """
     if edgethresholddirection == 'above':
         ind = np.where(edges > edgethreshold)
@@ -91,16 +91,16 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
     edgewidthscale = kwargs.get('edgewidthscale')
     # Convert highlightnodes binary list to index list
     hl_idx = np.where(np.array(highlightnodes) == 1)[0]
-    # if dataframe
-    ecset = 0
-    for i, row in edges.iterrows():
+    # if set as a string
+    ec = edgecolor
+    # Because while edgecolor (when array) and edges can be same size, if edgethreshold is set, indicies can be off due to merge
+    # So eci is a separate counter instead of using the auto index in iterrows (which takes df index).
+    eci = 0
+    for _, row in edges.iterrows():
         # if row[edgecol[0]] != 0 and row[edgecol[1]] != 0:
         if isinstance(edgecolor, np.ndarray):
             if edgecolor.shape[0] == len(edges):
-                ec = edgecolor[i, :]
-                ecset = 1
-        if ecset == 0:
-            ec = edgecolor 
+                ec = edgecolor[eci, :]
         if edgewidth is None:
             ew = edgewidthscale
         else:
@@ -113,3 +113,4 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
             yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['y']
             zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['z']
             ax.plot(xp, yp, zp, color=ec, linewidth=ew, alpha=ea)
+        eci += 1

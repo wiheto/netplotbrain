@@ -76,21 +76,3 @@ netplotbrain.plot(template='WHS',
 plt.savefig('./examples/figures/template_whs.png', dpi=150)
 
 
-
-# NOTE THIS CURRENTLY DOES NOT WORK TOO WELL as atlas (comes out in single colour)
-#netplotbrain.plot(template='WHS',
-#         templatestyle='None',
-#         nodeimg = {
-#             'atlas': 'v3',
-#             'suffix': 'dseg',
-#             'resolution': 1,
-#             'desc': None
-#         },
-#         nodetype='parcels',
-#         view='L',
-#         hemisphere='R',
-#         templatevoxsize=0.5,
-#         nodecolor='Set3',
-#         surface_resolution=1,
-#         nodealpha=1)
-#plt.savefig('./examples/figures/template_whs_atlas_v3.png', dpi=150)

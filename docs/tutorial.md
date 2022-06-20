@@ -74,16 +74,16 @@ nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25],
 netplotbrain.plot(
     nodes=nodes_df,
     nodesize='degree_centrality',
-    nodecolorby='communities',
+    nodecolor='communities',
     arrowaxis=None,
     nodescale=100)
 ```
  
-Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `nodescale` which just linearly scales all nodes by that factor. We also see that when specifying `nodesize` and `nodecolorby` that legends automatically appear.
+Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `nodescale` which just linearly scales all nodes by that factor. We also see that when specifying `nodesize` and `nodecolor` that legends automatically appear.
 
 At the moment we just have some circles floating in 3D space. Let us add some more information about this network.
 
-#### An atlas from templateflow or local file (Argument: nodeimg) 
+#### An atlas from templateflow or local file (Argument: nodes) 
 
 One of the key benefits with netplotbrain is that it interacts with TemplateFlow, which is a collection of brain templates and atlases.
 The atlases can be used as nodes.
@@ -94,37 +94,17 @@ For example, the following will get the 400 Parcels version from the Schaefer at
 # import packages
 import netplotbrain
 # Define the atlas by key value words of TemplateFlow name
-nodeimg={'template': 'MNI152NLin2009cAsym',
+nodes={'template': 'MNI152NLin2009cAsym',
          'atlas': 'Schaefer2018',
 ## Template (nifti or string)
-
-For the template you can supply any nifti file.
-
-You can also provide the template name for any template on templateflow.org.
-The T1w brain mask will then automatically downloaded (if not already present on your computer) and used as the background.
-
-Netplotbrain can render slightly different templates
-
-### Template Styles
-
-There are currently three background styles: "surface", "filled" and "cloudy".
-
-The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to the resolution of the surface.
-
-The filled style plots the template's brain mask as voxels. This can be slightly RAM consuming.
-
-The cloudy style tries to identify the outline of the mask and plots points along the edges. The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.
-
-For templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker.
-
 netplotbrain.plot(
-    nodeimg=nodeimg,
+    nodes=nodes,
     arrowaxis=None)     
 ```
 
 See templateflow.org for more atlases.
 
-If the template argument is specified in `netplotbrain.plot`, then the template argument does not need to be included in the `nodeimg` dictionary.
+If the template argument is specified in `netplotbrain.plot`, then the template argument does not need to be included in the `nodes` dictionary.
 
 Since the nifti image consists of parcels (i.e. regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels over the circles with a single argument `nodetype`.
 
@@ -132,13 +112,13 @@ Since the nifti image consists of parcels (i.e. regions) of the brain instead of
 # import packages
 import netplotbrain
 # Define the atlas by key value words of TemplateFlow name
-nodeimg={'template': 'MNI152NLin2009cAsym',
+nodes={'template': 'MNI152NLin2009cAsym',
          'atlas': 'Schaefer2018',
          'desc': '400Parcels7Networks',
          'resolution': 1}
 # Plot
 netplotbrain.plot(
-    nodeimg=nodeimg,
+    nodes=nodes,
     arrowaxis=None,
     nodetype='parcel')     
 ```
@@ -173,7 +153,7 @@ edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3],
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolorby='communities',
+    nodecolor='communities',
     arrowaxis=None,
     nodescale=150)
 ```
@@ -198,7 +178,7 @@ edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3],
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolorby='communities',
+    nodecolor='communities',
     arrowaxis=None,
     nodescale=150)
 ```
@@ -222,7 +202,7 @@ edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3],
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolorby='communities',
+    nodecolor='communities',
     arrowaxis=None,
     nodescale=150)
 ```

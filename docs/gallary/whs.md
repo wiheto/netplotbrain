@@ -23,7 +23,7 @@ netplotbrain.plot(template='WHS',
          nodes=nodes_whs,
          nodesize='centrality_measure1',
          edges=edges,
-         nodecolorby='community',
+         nodecolor='community',
          nodescale=80,
          templatevoxsize=0.2)
          
