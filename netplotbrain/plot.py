@@ -13,7 +13,7 @@ from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
          arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', nodecolorby=None,
-         nodecmap='Dark2', edgeweights=None, nodes_df=None, hemisphere='both', title='auto', highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
+         nodecmap='Dark2', edgecmap='Set2', edgeweights=None, nodes_df=None, hemisphere='both', title='auto', highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
     """
     Plot a network on a brain
 
@@ -105,7 +105,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     """
     # If nodeimg argument is given, raise an error
     if 'nodeimg' in kwargs:
-        raise ValueError('ERROR: recent change in netplotbrain. Use nodes instead of nodeimg. If additional nodeinfo exists as a dataframe, use nodes_df.') 
+        raise ValueError('ERROR: recent change in netplotbrain. Use nodes instead of nodeimg. If additional nodeinfo exists as a dataframe, use nodes_df.')
     # Load default settings, then update with kwargs
     profile = _load_profile(**kwargs)
 
@@ -148,6 +148,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
         nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap, **profile)
+    if isinstance(edgecolor, str):
+        if edgecolor in edges:
+            edgecolor = _get_colorby_colors(edges, edgecolor, edgecmap, 'edge', **profile)
     if highlightnodes is not None and highlightedges is not None:
         raise ValueError('Cannot highlight based on edges and nodes at the same time.')
     if highlightnodes is not None:
@@ -164,7 +167,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                                          'i': ecols[0],
                                          'j': ecols[1]}, inplace = True)
         # Merge dataframes with edges
-        edges = edges.merge(highlightedges, how='outer')
+        edges = edges.merge(highlightedges, how='left')
         # Make nans 0s
         edges['edge_to_highlight'] = edges['edge_to_highlight'].fillna(0)
         # Rename highlightedges to new column

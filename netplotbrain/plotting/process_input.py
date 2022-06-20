@@ -61,12 +61,16 @@ def _process_edge_input(edges, edgeweights, **kwargs):
     """
     edgethreshold = kwargs.get('edgethreshold')
     edgethresholddirection = kwargs.get('edgethresholddirection')
+    edges_df = kwargs.get('edges_df')
     if isinstance(edges, str):
         edges = pd.read_csv(edges, sep='\t', index_col=0)
     # Check input, if numpy array, make dataframe
     if isinstance(edges, np.ndarray):
         edges = _npedges2dfedges(edges)
         edgeweights = 'weight'
+    # Merge edges_df if it exists.
+    if edges_df is not None:
+        edges = edges.merge(edges_df, how='left')
     # Set default behaviour of edgeweights
     if isinstance(edges, pd.DataFrame):
         if edgeweights is None or edgeweights is True:

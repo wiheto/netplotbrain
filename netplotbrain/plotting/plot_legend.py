@@ -1,7 +1,7 @@
 """Legend plots"""
 import numpy as np
 import matplotlib.cm as cm
-from ..utils import _node_scale_vminvmax, _detect_nodecolor_type
+from ..utils import _node_scale_vminvmax, _detect_coloring_type
 
 
 def _setup_legend(legendproperty, legend, legendname, currentlegend=None):
@@ -142,7 +142,7 @@ def _add_nodecolor_legend(ax, nodes, nodecolorby, nodecolor, nodecmap, **kwargs)
     This function descites whether a discrete or continuous colorbar is to be added.
     """
     nodecolorlegendstyle = kwargs.get('nodecolorlegendstyle')
-    nodecolorlegendstyle = _detect_nodecolor_type(nodes, nodecolorby, nodecolorlegendstyle)
+    nodecolorlegendstyle = _detect_coloring_type(nodes, nodecolorby, nodecolorlegendstyle)
     # Plot whichever legend is wanted
     if nodecolorlegendstyle == 'discrete':
         ax = _add_nodecolor_legend_discrete(
