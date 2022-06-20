@@ -93,9 +93,9 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
     hl_idx = np.where(np.array(highlightnodes) == 1)[0]
     # if set as a string
     ec = edgecolor
-    # Because while edgecolor (when array) and edges can be same size, if edgethreshold is set, indicies can be off due to merge 
-    # So eci is a separate counter instead of using the auto index in iterrows (which takes df index). 
-    eci = 0 
+    # Because while edgecolor (when array) and edges can be same size, if edgethreshold is set, indicies can be off due to merge
+    # So eci is a separate counter instead of using the auto index in iterrows (which takes df index).
+    eci = 0
     for _, row in edges.iterrows():
         # if row[edgecol[0]] != 0 and row[edgecol[1]] != 0:
         if isinstance(edgecolor, np.ndarray):

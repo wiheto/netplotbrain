@@ -1,7 +1,6 @@
 from netplotbrain import plot as npbplot
 import pytest
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
 
 # Create 100 random edges. Setting negative ones to 0 for simplicity
