@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#node-properties-size" class="md-skip">
           Skip to content
         </a>
       
@@ -1305,34 +1305,13 @@ Licensed under the Apache License, Version 2.0.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>""" 
-Template from TemplateFlow: WHS</p>
-<p>To plot different templtes from templateflow, you just need to change the template specification:</p>
-<p>`template='WHS',</p>
-<p>The example nodes are scaled as the template is smalled than regular MNI space.
-"""</p>
-<h1 id="">%<a class="anchor-link" href="#">&#182;</a></h1><p>fig = plt.figure()
-ax_m2 = fig.add_subplot(121, projection='3d')
-netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
-                  fig = fig,
-                  ax = ax_m2,
-                  view='A',
-                  nodes=nodes,
-                  nodesize='centrality_measure1',
-                  nodecolor='red',
-                  edges=edges)</p>
-<p>ax_m2 = fig.add_subplot(122, projection='3d')
-netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
-                  fig = fig,
-                  ax = ax_m2,
-                  view='A',
-                  nodes=nodes,
-                  nodesize='centrality_measure2',
-                  nodecolor='blue',
-                  edges=edges)
-plt.show()</p>
+<h1 id="node-properties-size">Node properties: size<a class="anchor-link" href="#node-properties-size">&#182;</a></h1><p>Netplotbrain allows for specifying different figure properties by only specifyign the column name.</p>
+<p>Below we demonstrate how nodesize can change based on different columns in the nodes dataframe.</p>
+<p>The key lines of code here are when:</p>
+<p><code>nodesize='centrality_measure1'</code></p>
+<p>and</p>
+<p><code>nodesize='centrality_measure2'</code></p>
+<p>These columns could be called anything such as "module_degree_zscore" or "efficiency"</p>
 
 </div>
 </div>
