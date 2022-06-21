@@ -13,7 +13,7 @@
     
     
       
-        <title>Two rows - netplotbrain</title>
+        <title>Nbs - netplotbrain</title>
       
     
     
@@ -70,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#figures-over-multiple-rows" class="md-skip">
+        <a href="#plotting-significant-results-from-network-based-statistics" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Two rows
+              Nbs
             
           </span>
         </div>
@@ -304,11 +304,81 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../nbs/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Nbs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Nbs
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#plotting-significant-results-from-network-based-statistics" class="md-nav__link">
+    Plotting significant results from network based statistics
+  </a>
+  
+    <nav class="md-nav" aria-label="Plotting significant results from network based statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-the-data" class="md-nav__link">
+    Generating the data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-nbs-statistics" class="md-nav__link">
+    Running NBS statistics
+  </a>
+  
+    <nav class="md-nav" aria-label="Running NBS statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plotting-in-netplotbrain" class="md-nav__link">
+    Plotting in netplotbrain
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -332,48 +402,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Two rows
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../two_rows/" class="md-nav__link">
         Two rows
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#figures-over-multiple-rows" class="md-nav__link">
-    Figures over multiple rows
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -424,9 +457,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#figures-over-multiple-rows" class="md-nav__link">
-    Figures over multiple rows
+  <a href="#plotting-significant-results-from-network-based-statistics" class="md-nav__link">
+    Plotting significant results from network based statistics
   </a>
+  
+    <nav class="md-nav" aria-label="Plotting significant results from network based statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-the-data" class="md-nav__link">
+    Generating the data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-nbs-statistics" class="md-nav__link">
+    Running NBS statistics
+  </a>
+  
+    <nav class="md-nav" aria-label="Running NBS statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plotting-in-netplotbrain" class="md-nav__link">
+    Plotting in netplotbrain
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -444,80 +510,161 @@
                 
 
 
-  <h1>Two rows</h1>
+  <h1>Nbs</h1>
 
 
-<h2 id="figures-over-multiple-rows">Figures over multiple rows</h2>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
-import netplotbrain
-import pandas as pd
-
-# Load example data 
-nodes = pd.read_csv(&#39;./example_nodes.tsv&#39;, sep=&#39;\t&#39;, index_col=0)
-edges = pd.read_csv(&#39;./example_edges.tsv&#39;, sep=&#39;\t&#39;, index_col=0)
-
-# Plot figure
-netplotbrain.plot(template=&#39;MNI152NLin2009cAsym&#39;,
-                  templatestyle=&#39;surface&#39;,
-                  nodes=nodes,
-                  nodesize=&#39;centrality_measure1&#39;,
-                  edges=edges,
-                  nodecolor=&#39;community&#39;,
-                  view=[&#39;LSR&#39;, &#39;AIP&#39;],
-                  frames=2)</code></pre></div>
+<h2 id="plotting-significant-results-from-network-based-statistics">Plotting significant results from network based statistics</h2>
+<p>Netplotbrain aims to try and integrate with other tools, minimizing the work needed.</p>
+<p>For this we are going to use bctpy's implementation of network based statistics. </p>
+<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python">import bct
+import numpy as np
+import matplotlib.pyplot as plt
+import netplotbrain</code></pre></div>
 <div class="report"><p><span class="count">[1]</span>
-<span class="start">2022-06-21 10:30:19</span> (<span class="time">50.2ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">2.29s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;nibabel&#39;</code></pre></div>
+<span class="start">2022-06-21 10:30:19</span> (<span class="time">12.8ms</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">2.14s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;bct&#39;</code></pre></div>
       <div class="report"><pre><code class="nohighlight">ModuleNotFoundError                       Traceback (most recent call last)
-Input In [27], in &lt;cell line: 2&gt;()
-      1 # Import packages
-----&gt; 2 import netplotbrain
-      3 import pandas as pd
-      5 # Load example data 
+Input In [20], in &lt;cell line: 1&gt;()
+----&gt; 1 import bct
+      2 import numpy as np
+      3 import matplotlib.pyplot as plt</code></pre></div></div></div></div>
 
-File ~/packages/netplotbrain/netplotbrain/__init__.py:6, in &lt;module&gt;
-      1 &#34;&#34;&#34;
-      2 .. include:: ../README.md
-      3 
-      4 .. include:: ../docs/gallary.md
-      5 &#34;&#34;&#34;
-----&gt; 6 from .plot import plot
-      8 __all__ = [&#39;plot&#39;]
-      9 __pdoc__ = {
-     10     &#34;plotting&#34;: False,
-     11     &#34;utils&#34;: False,
-     12     &#34;templatesettings&#34;: False,
-     13 }
+<h3 id="generating-the-data">Generating the data</h3>
+<p>To run NBS statistics we need connectivity matrices for multiple subjects. 
+The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects. </p>
+<p>In this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.</p>
+<p>We are going to create connectivity matrices with 100 nodes for 50 subjects. 
+The 100 nodes will be split into 6 communities of varying sizes. 
+Edge weights will be sampled from a normal distribution with the standard deviation set to 0.25.
+The mean of the normal distribution for each edge varies. 
+For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups. </p>
+<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python">
+def generate_group_cm(nodes, subjects, community_size, community_str, scale=0.25, seed=2022):
+    &#34;&#34;&#34;
+    Quick way to simulate group differences for visualization purposes. 
 
-File ~/packages/netplotbrain/netplotbrain/plot.py:4, in &lt;module&gt;
-      2 from typing import Optional
-      3 import matplotlib.pyplot as plt
-----&gt; 4 from .plotting import _plot_template, \
-      5     _plot_edges, _plot_nodes, _plot_spheres,\
-      6     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-      7     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
-      8     _setup_legend, _process_edge_input, _process_node_input,\
-      9     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-     10     _plot_gif, _npedges2dfedges
-     11 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-     12     _load_profile, _nrows_in_fig, _highlight_edges
-     14 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = &#39;L&#39;, frames=None, edges=None, template=None, templatestyle=&#39;filled&#39;,
-     15          arrowaxis=&#39;auto&#39;, arroworigin=None, edgecolor=&#39;k&#39;, nodesize=1, nodecolor=&#39;salmon&#39;, nodetype=&#39;circles&#39;,
-     16          nodecmap=&#39;Dark2&#39;, edgecmap=&#39;Set2&#39;, edgeweights=None, nodes_df=None, hemisphere=&#39;both&#39;, title=&#39;auto&#39;, highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
+    Input
+    -----
+    nodes : int 
+        number of nodes
+    subjects : int 
+        number of subjects
+    community_size : list
+        list of number of nodes in each community
+    community_str : list
+        list of mean str for within community connections 
+    scale : float
+        scale (STD) of normal distribution. 
+    &#34;&#34;&#34;
+    np.random.seed(seed)
+    mu = np.zeros([nodes, nodes, 1])
+    np.fill_diagonal(mu[:, :, 0], 1)
+    ci = 0
+    for i, c in enumerate(community_size):
+        mu[ci:ci+c, ci:ci+c, :] = community_str[i]
+        ci += c
 
-File ~/packages/netplotbrain/netplotbrain/plotting/__init__.py:5, in &lt;module&gt;
-      3 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
-      4 from .plot_spheres import _plot_spheres
-----&gt; 5 from .plot_templates import _plot_template, _plot_template_style_filled, \
-      6     _plot_template_style_cloudy, _plot_template_style_surface
-      7 from .plot_dimarrows import _add_axis_arrows
-      8 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
+    # Simulate data
+    g = np.random.normal(mu, scale, size=[nodes, nodes, subjects])
+    # Force to be symmetric
+    ind_i, ind_j = np.triu_indices(g.shape[0], k=1)
+    g[ind_j, ind_i] = g[ind_i, ind_j]
+    return g
 
-File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;module&gt;
-      1 import numpy as np
-----&gt; 2 import nibabel as nib
-      3 import os
-      4 import templateflow.api as tf</code></pre></div></div></div></div>
+# Specify variable for generating data
+nodes = 100
+subjects_per_group = 50
+community_size = [13, 7, 35, 15, 20, 5]
+
+g1_community_str = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+g2_community_str = [0.17, 0.7, 0.13, 0.1, 0.15, 0.6]
+
+g1 = generate_group_cm(nodes, subjects_per_group, community_size, g1_community_str)
+g2 = generate_group_cm(nodes, subjects_per_group, community_size, g2_community_str)</code></pre></div>
+<div class="report"><p><span class="count">[2]</span>
+<span class="start">2022-06-21 10:30:19</span> (<span class="time">23.4ms</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">2.16s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">NameError: name &#39;np&#39; is not defined</code></pre></div>
+      <div class="report"><pre><code class="nohighlight">NameError                                 Traceback (most recent call last)
+Input In [21], in &lt;cell line: 41&gt;()
+     38 g1_community_str = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+     39 g2_community_str = [0.17, 0.7, 0.13, 0.1, 0.15, 0.6]
+---&gt; 41 g1 = generate_group_cm(nodes, subjects_per_group, community_size, g1_community_str)
+     42 g2 = generate_group_cm(nodes, subjects_per_group, community_size, g2_community_str)
+
+Input In [21], in generate_group_cm(nodes, subjects, community_size, community_str, scale, seed)
+      1 def generate_group_cm(nodes, subjects, community_size, community_str, scale=0.25, seed=2022):
+      2     &#34;&#34;&#34;
+      3     Quick way to simulate group differences for visualization purposes. 
+      4 
+   (...)
+     16         scale (STD) of normal distribution. 
+     17     &#34;&#34;&#34;
+---&gt; 18     np.random.seed(seed)
+     19     mu = np.zeros([nodes, nodes, 1])
+     20     np.fill_diagonal(mu[:, :, 0], 1)</code></pre></div></div></div></div>
+
+<h2 id="running-nbs-statistics">Running NBS statistics</h2>
+<p>From the generated data.
+Using the NBS implementation from bctpy with generate the p values </p>
+<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># g1 and g2 are both (Node, Node, Subject) in size. 
+# The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities). 
+p, adj, null = bct.nbs_bct(g1, g2, 4, seed=2022)</code></pre></div>
+<div class="report"><p><span class="count">[3]</span>
+<span class="start">2022-06-21 10:30:19</span> (<span class="time">11.0ms</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">2.18s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">NameError: name &#39;bct&#39; is not defined</code></pre></div>
+      <div class="report"><pre><code class="nohighlight">NameError                                 Traceback (most recent call last)
+Input In [22], in &lt;cell line: 3&gt;()
+      1 # g1 and g2 are both (Node, Node, Subject) in size. 
+      2 # The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities). 
+----&gt; 3 p, adj, null = bct.nbs_bct(g1, g2, 4, seed=2022)</code></pre></div></div></div></div>
+
+<p>Let us now visualize the data we have created.
+Here we see the correlation matrices and the 2 significant clusters created.</p>
+<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="Python">fig, ax = plt.subplots(1, 3)
+ax[0].imshow(np.mean(g1, axis=-1), cmap=&#39;RdBu_r&#39;, vmin=-0.5, vmax=0.5)
+ax[0].set_title(&#39;Group 1 (mean)&#39;)
+ax[1].imshow(np.mean(g2, axis=-1), cmap=&#39;RdBu_r&#39;, vmin=-0.5, vmax=0.5)
+ax[1].set_title(&#39;Group 2 (mean)&#39;)
+ax[2].imshow(adj, cmap=&#39;binary&#39;)
+ax[2].set_title(&#39;Significant Clusters&#39;)</code></pre></div>
+<div class="report"><p><span class="count">[4]</span>
+<span class="start"></span> (<span class="time"></span>)
+<span class="right"><span class="kernel"></span> (<span class="total"></span>)</span></p></div></div></div></div>
+
+<h3 id="plotting-in-netplotbrain">Plotting in netplotbrain</h3>
+<p>We will assume that are 100 random nodes correspond to the Schaefer 2018 atlas with 100 parcels.
+With this information, we can call netplotbrain.</p>
+<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python">
+# For out edges let&#39;s plot the group different.
+gdif = np.mean(g2,axis=-1) - np.mean(g1,axis=-1)
+
+fig, ax = netplotbrain.plot(template=&#39;MNI152NLin2009cAsym&#39;,
+                            nodes={&#39;atlas&#39;: &#39;Schaefer2018&#39;,
+                                     &#39;desc&#39;: &#39;100Parcels7Networks&#39;,
+                                     &#39;resolution&#39;: 1},
+                            edges=gdif,
+                            highlightedges=adj,
+                            templatestyle=&#39;glass&#39;,
+                            view=[&#39;LSR&#39;],
+                            title=[&#39;&#39;, &#39;NBS integration&#39;, &#39;&#39;],
+                            nodetype=&#39;circles&#39;,
+                            highlightlevel=0.5)</code></pre></div>
+<div class="report"><p><span class="count">[5]</span>
+<span class="start">2022-06-21 10:30:19</span> (<span class="time">13.0ms</span>)
+<span class="right"><span class="kernel">python3</span> (<span class="total">2.19s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">NameError: name &#39;np&#39; is not defined</code></pre></div>
+      <div class="report"><pre><code class="nohighlight">NameError                                 Traceback (most recent call last)
+Input In [23], in &lt;cell line: 2&gt;()
+      1 # For out edges let&#39;s plot the group different.
+----&gt; 2 gdif = np.mean(g2,axis=-1) - np.mean(g1,axis=-1)
+      4 fig, ax = netplotbrain.plot(template=&#39;MNI152NLin2009cAsym&#39;,
+      5                             nodes={&#39;atlas&#39;: &#39;Schaefer2018&#39;,
+      6                                      &#39;desc&#39;: &#39;100Parcels7Networks&#39;,
+   (...)
+     13                             nodetype=&#39;circles&#39;,
+     14                             highlightlevel=0.5)</code></pre></div></div></div></div>
+
+<p>The amount of highlight is governed by the highlightlevel argument. 
+Increasing it highlights the significant edges more. </p>
 
               
             </article>
@@ -533,7 +680,7 @@ File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;m
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../simple/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Simple" rel="prev">
+        <a href="../infant/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Infant" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -542,20 +689,20 @@ File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;m
               <span class="md-footer__direction">
                 Previous
               </span>
-              Simple
+              Infant
             </div>
           </div>
         </a>
       
       
         
-        <a href="../whs/" class="md-footer__link md-footer__link--next" aria-label="Next: Whs" rel="next">
+        <a href="../simple/" class="md-footer__link md-footer__link--next" aria-label="Next: Simple" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Whs
+              Simple
             </div>
           </div>
           <div class="md-footer__button md-icon">
