@@ -13,7 +13,7 @@
     
     
       
-        <title>Simple - netplotbrain</title>
+        <title>--- - netplotbrain</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#simple-single-view" class="md-skip">
+        <a href="#-" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Simple
+              ---
             
           </span>
         </div>
@@ -254,21 +254,8 @@
   
   
   
+    
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#simple-single-view" class="md-nav__link">
-    Simple single view
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -282,27 +269,31 @@
                 
 
 
-  <h1>Simple</h1>
-
-<h2 id="simple-single-view">Simple single view</h2>
-<pre><code class="language-python">import netplotbrain
-import pandas as pd
-
-# Example node and edges dataframes included with package
-nodes = pd.read_csv('./example_nodes.tsv', sep='\t', index_col=0)
-edges = pd.read_csv('./example_edges.tsv', sep='\t', index_col=0)
-
-# Plot single view
-netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
-                  view='LSR',
+<h1 id="-">---</h1>
+<h1 id="jupyter">jupyter:</h1>
+<h1 id="jupytext">jupytext:</h1>
+<h1 id="text_representation">text_representation:</h1>
+<h1 id="extension-py">extension: .py</h1>
+<h1 id="format_name-percent">format_name: percent</h1>
+<h1 id="format_version-13">format_version: '1.3'</h1>
+<h1 id="jupytext_version-1110">jupytext_version: 1.11.0</h1>
+<h1 id="kernelspec">kernelspec:</h1>
+<h1 id="display_name-python-3">display_name: Python 3</h1>
+<h1 id="language-python">language: python</h1>
+<h1 id="name-python3">name: python3</h1>
+<h1 id="-_1">---</h1>
+<p>% ## Simple single view</p>
+<p>import netplotbrain
+import pandas as pd</p>
+<h1 id="example-node-and-edges-dataframes-included-with-package">Example node and edges dataframes included with package</h1>
+<p>nodes = pd.read_csv('./example_nodes.tsv', sep='\t', index_col=0)
+edges = pd.read_csv('./example_edges.tsv', sep='\t', index_col=0)</p>
+<h1 id="plot-single-view">Plot single view</h1>
+<p>netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  tempalte='glass',
                   nodes=nodes,
-                  nodescale=40,
-                  nodesize='centrality_measure1',
-                  edges=edges,
-                  nodecolor='community')
-
-</code></pre>
+                  nodescale=50,
+                  edges=edges)</p>
 
               
             </article>
