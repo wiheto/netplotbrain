@@ -108,8 +108,6 @@ With this information, we can call netplotbrain.
 """
 
 # %%
-```python
-
 # For out edges let's plot the group different.
 gdif = np.mean(g2,axis=-1) - np.mean(g1,axis=-1)
 
@@ -124,7 +122,6 @@ fig, ax = netplotbrain.plot(template='MNI152NLin2009cAsym',
                             title=['', 'NBS integration', ''],
                             nodetype='circles',
                             highlightlevel=0.5)
-```
 
 # %% [markdown]
 The amount of highlight is governed by the highlightlevel argument. 
