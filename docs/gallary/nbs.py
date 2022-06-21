@@ -99,11 +99,13 @@ ax[1].set_title('Group 2 (mean)')
 ax[2].imshow(adj, cmap='binary')
 ax[2].set_title('Significant Clusters')
 
-# %% 
+# %%  [mardkown]
+"""
 ### Plotting in netplotbrain
 
 We will assume that are 100 random nodes correspond to the Schaefer 2018 atlas with 100 parcels.
 With this information, we can call netplotbrain.
+"""
 
 # %%
 ```python
