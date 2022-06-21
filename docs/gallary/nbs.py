@@ -12,7 +12,8 @@
 #     name: python3
 # ---
 
-"""
+# %% Netplotbrain with network based statistics [markdown]
+""" 
 ## Plotting significant results from network based statistics
 Netplotbrain aims to try and integrate with other tools, minimizing the work needed.
 For this we are going to use bctpy's implementation of network based statistics.
