@@ -11,7 +11,7 @@
 #     language: python
 #     name: python3
 # ---
-% ## Simple single view
+# %% Simple single view
 
 import netplotbrain
 import pandas as pd
