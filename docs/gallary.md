@@ -20,8 +20,8 @@
 
 ### Network based statistics (via bctpy) integration
 
-![](./gallary/figures/template_inf.png)
-[Source Code](./gallary/nbs.md)
+![](./gallary/figures/nbs.png)
+[Source Code](./gallary/nbs/)
 
 ## TemplateFLow Atlases
 

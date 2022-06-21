@@ -1,49 +1,62 @@
-# %% [markdown]
+# ---
+# jupyter:
+#   jupytext:
+#     text_representation:
+#       extension: .py
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.11.0
+#   kernelspec:
+#     display_name: Python 3
+#     language: python
+#     name: python3
+# ---
+
 """
 ## Plotting significant results from network based statistics
 Netplotbrain aims to try and integrate with other tools, minimizing the work needed.
-For this we are going to use bctpy's implementation of network based statistics. 
+For this we are going to use bctpy's implementation of network based statistics.
 """
 
-# %% 
+# %%
 import bct
 import numpy as np
 import matplotlib.pyplot as plt
 import netplotbrain
 
-# %% [markown]
+# %% [markdown]
 """
-### Generating the data 
+### Generating the data
 
-To run NBS statistics we need connectivity matrices for multiple subjects. 
-The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects. 
+To run NBS statistics we need connectivity matrices for multiple subjects.
+The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects.
 
 In this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.
 
-We are going to create connectivity matrices with 100 nodes for 50 subjects. 
-The 100 nodes will be split into 6 communities of varying sizes. 
+We are going to create connectivity matrices with 100 nodes for 50 subjects.
+The 100 nodes will be split into 6 communities of varying sizes.
 Edge weights will be sampled from a normal distribution with the standard deviation set to 0.25.
-The mean of the normal distribution for each edge varies. 
-For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups. 
+The mean of the normal distribution for each edge varies.
+For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups.
 """
 
-# %% 
+# %%
 def generate_group_cm(nodes, subjects, community_size, community_str, scale=0.25, seed=2022):
     """
-    Quick way to simulate group differences for visualization purposes. 
+    Quick way to simulate group differences for visualization purposes.
 
     Input
     -----
-    nodes : int 
+    nodes : int
         number of nodes
-    subjects : int 
+    subjects : int
         number of subjects
     community_size : list
         list of number of nodes in each community
     community_str : list
-        list of mean str for within community connections 
+        list of mean str for within community connections
     scale : float
-        scale (STD) of normal distribution. 
+        scale (STD) of normal distribution.
     """
     np.random.seed(seed)
     mu = np.zeros([nodes, nodes, 1])
@@ -76,12 +89,12 @@ g2 = generate_group_cm(nodes, subjects_per_group, community_size, g2_community_s
 ## Running NBS statistics
 
 From the generated data.
-Using the NBS implementation from bctpy with generate the p values 
+Using the NBS implementation from bctpy with generate the p values
 """
 
 # %%
-# g1 and g2 are both (Node, Node, Subject) in size. 
-# The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities). 
+# g1 and g2 are both (Node, Node, Subject) in size.
+# The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities).
 p, adj, null = bct.nbs_bct(g1, g2, 4, seed=2022)
 
 # %% [markdown]
@@ -99,7 +112,7 @@ ax[1].set_title('Group 2 (mean)')
 ax[2].imshow(adj, cmap='binary')
 ax[2].set_title('Significant Clusters')
 
-# %%  [mardkown]
+# %%  [markdown]
 """
 ### Plotting in netplotbrain
 
@@ -124,5 +137,5 @@ fig, ax = netplotbrain.plot(template='MNI152NLin2009cAsym',
                             highlightlevel=0.5)
 
 # %% [markdown]
-The amount of highlight is governed by the highlightlevel argument. 
-Increasing it highlights the significant edges more. 
+The amount of highlight is governed by the highlightlevel argument.
+Increasing it highlights the significant edges more.
