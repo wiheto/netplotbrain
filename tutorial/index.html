@@ -40,11 +40,7 @@
       
     
     
-      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
-    
-      <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
-    
-      <link rel="stylesheet" href="../css/pheasant.css">
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
     <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -190,52 +186,7 @@
   
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        Netplotbrain
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api/" class="md-nav__link">
-        Api
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cite/" class="md-nav__link">
-        Citation
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gallary/" class="md-nav__link">
-        Gallery
+        Home
       </a>
     </li>
   
@@ -405,99 +356,25 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
     
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
       
       
       
-      
-        <label class="md-nav__link" for="__nav_6">
-          Gallary
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Gallary" data-md-level="1">
-        <label class="md-nav__title" for="__nav_6">
-          <span class="md-nav__icon md-icon"></span>
-          Gallary
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
+
   
   
   
     <li class="md-nav__item">
-      <a href="../gallary/infant/" class="md-nav__link">
-        Infant
+      <a href="../gallary.md - GALLARY/gallary.md" class="md-nav__link">
+        Gallary
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gallary/nbs/" class="md-nav__link">
-        Nbs
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gallary/simple/" class="md-nav__link">
-        Simple
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gallary/two_rows/" class="md-nav__link">
-        Two rows
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../gallary/whs/" class="md-nav__link">
-        Whs
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -650,7 +527,6 @@
                 
 
 
-
 <h1 id="tutorial">Tutorial</h1>
 <p><strong>NB: This is under construction/being updated</strong></p>
 <p>In this section there are files on different components of netplotbrain.</p>
@@ -690,69 +566,16 @@
 </tbody>
 </table>
 <p>If we create this dataframe with the two nodes above, we will just plot two circles onto the figure. </p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
+<pre><code class="language-python"># Import packages
 import netplotbrain
 import pandas as pd
 # Define the nodes
-nodes_df = pd.DataFrame({&#39;x&#39;: [40, 10, 30, -15, -25], 
-                         &#39;y&#39;: [50, 40, -10, -20, 20], 
-                         &#39;z&#39;: [20, 30, -10, -15, 30]})
+nodes_df = pd.DataFrame({'x': [40, 10, 30, -15, -25], 
+                         'y': [50, 40, -10, -20, 20], 
+                         'z': [20, 30, -10, -15, 30]})
 # Call netplotbrain to plot
-netplotbrain.plot(nodes=nodes_df, arrowaxis=None)</code></pre></div>
-<div class="report"><p><span class="count">[1]</span>
-<span class="start">2022-06-21 10:30:17</span> (<span class="time">1.61s</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">1.63s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;nibabel&#39;</code></pre></div>
-      <div class="report"><pre><code class="nohighlight">ModuleNotFoundError                       Traceback (most recent call last)
-Input In [7], in &lt;cell line: 2&gt;()
-      1 # Import packages
-----&gt; 2 import netplotbrain
-      3 import pandas as pd
-      4 # Define the nodes
-
-File ~/packages/netplotbrain/netplotbrain/__init__.py:6, in &lt;module&gt;
-      1 &#34;&#34;&#34;
-      2 .. include:: ../README.md
-      3 
-      4 .. include:: ../docs/gallary.md
-      5 &#34;&#34;&#34;
-----&gt; 6 from .plot import plot
-      8 __all__ = [&#39;plot&#39;]
-      9 __pdoc__ = {
-     10     &#34;plotting&#34;: False,
-     11     &#34;utils&#34;: False,
-     12     &#34;templatesettings&#34;: False,
-     13 }
-
-File ~/packages/netplotbrain/netplotbrain/plot.py:4, in &lt;module&gt;
-      2 from typing import Optional
-      3 import matplotlib.pyplot as plt
-----&gt; 4 from .plotting import _plot_template, \
-      5     _plot_edges, _plot_nodes, _plot_spheres,\
-      6     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-      7     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
-      8     _setup_legend, _process_edge_input, _process_node_input,\
-      9     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-     10     _plot_gif, _npedges2dfedges
-     11 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-     12     _load_profile, _nrows_in_fig, _highlight_edges
-     14 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = &#39;L&#39;, frames=None, edges=None, template=None, templatestyle=&#39;filled&#39;,
-     15          arrowaxis=&#39;auto&#39;, arroworigin=None, edgecolor=&#39;k&#39;, nodesize=1, nodecolor=&#39;salmon&#39;, nodetype=&#39;circles&#39;,
-     16          nodecmap=&#39;Dark2&#39;, edgecmap=&#39;Set2&#39;, edgeweights=None, nodes_df=None, hemisphere=&#39;both&#39;, title=&#39;auto&#39;, highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
-
-File ~/packages/netplotbrain/netplotbrain/plotting/__init__.py:5, in &lt;module&gt;
-      3 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
-      4 from .plot_spheres import _plot_spheres
-----&gt; 5 from .plot_templates import _plot_template, _plot_template_style_filled, \
-      6     _plot_template_style_cloudy, _plot_template_style_surface
-      7 from .plot_dimarrows import _add_axis_arrows
-      8 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-
-File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;module&gt;
-      1 import numpy as np
-----&gt; 2 import nibabel as nib
-      3 import os
-      4 import templateflow.api as tf</code></pre></div></div></div></div>
-
+netplotbrain.plot(nodes=nodes_df, arrowaxis=None)
+</code></pre>
 <p>Here we just see five dots of the same size, but we have nodes in the 3D space. </p>
 <p>The second option <code>arrowaxis</code> turns of some default directional arrows which do not look good in this small-scale example without a background template.</p>
 <p>The other columns in the dataframe can refer to node related properties (e.g. size and colour). In such cases the dataframe may begin something like this: </p>
@@ -785,76 +608,23 @@ File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;m
 </tbody>
 </table>
 <p>Then the columns <code>nodecolor=communities</code>and <code>nodesize=degree_centrality</code> be specified and each node will automatically be coloured or scaled by the specified column. For example: </p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
+<pre><code class="language-python"># Import packages
 import netplotbrain
 import pandas as pd
 # Define the nodes (5 example nodes)
-nodes_df = pd.DataFrame(data={&#39;x&#39;: [40, 10, 30, -15, -25], 
-                              &#39;y&#39;: [50, 40, -10, -20, 20], 
-                              &#39;z&#39;: [20, 30, -10, -15, 30], 
-                              &#39;communities&#39;: [1, 1, 1, 2, 2], 
-                              &#39;degree_centrality&#39;: [1, 1, 0.2, 0.8, 0.4]})
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
 # Call netplotbrain to plot
 netplotbrain.plot(
     nodes=nodes_df,
-    nodesize=&#39;degree_centrality&#39;,
-    nodecolor=&#39;communities&#39;,
+    nodesize='degree_centrality',
+    nodecolor='communities',
     arrowaxis=None,
-    nodescale=100)</code></pre></div>
-<div class="report"><p><span class="count">[2]</span>
-<span class="start">2022-06-21 10:30:18</span> (<span class="time">52.4ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">1.68s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;nibabel&#39;</code></pre></div>
-      <div class="report"><pre><code class="nohighlight">ModuleNotFoundError                       Traceback (most recent call last)
-Input In [8], in &lt;cell line: 2&gt;()
-      1 # Import packages
-----&gt; 2 import netplotbrain
-      3 import pandas as pd
-      4 # Define the nodes (5 example nodes)
-
-File ~/packages/netplotbrain/netplotbrain/__init__.py:6, in &lt;module&gt;
-      1 &#34;&#34;&#34;
-      2 .. include:: ../README.md
-      3 
-      4 .. include:: ../docs/gallary.md
-      5 &#34;&#34;&#34;
-----&gt; 6 from .plot import plot
-      8 __all__ = [&#39;plot&#39;]
-      9 __pdoc__ = {
-     10     &#34;plotting&#34;: False,
-     11     &#34;utils&#34;: False,
-     12     &#34;templatesettings&#34;: False,
-     13 }
-
-File ~/packages/netplotbrain/netplotbrain/plot.py:4, in &lt;module&gt;
-      2 from typing import Optional
-      3 import matplotlib.pyplot as plt
-----&gt; 4 from .plotting import _plot_template, \
-      5     _plot_edges, _plot_nodes, _plot_spheres,\
-      6     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-      7     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
-      8     _setup_legend, _process_edge_input, _process_node_input,\
-      9     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-     10     _plot_gif, _npedges2dfedges
-     11 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-     12     _load_profile, _nrows_in_fig, _highlight_edges
-     14 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = &#39;L&#39;, frames=None, edges=None, template=None, templatestyle=&#39;filled&#39;,
-     15          arrowaxis=&#39;auto&#39;, arroworigin=None, edgecolor=&#39;k&#39;, nodesize=1, nodecolor=&#39;salmon&#39;, nodetype=&#39;circles&#39;,
-     16          nodecmap=&#39;Dark2&#39;, edgecmap=&#39;Set2&#39;, edgeweights=None, nodes_df=None, hemisphere=&#39;both&#39;, title=&#39;auto&#39;, highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
-
-File ~/packages/netplotbrain/netplotbrain/plotting/__init__.py:5, in &lt;module&gt;
-      3 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
-      4 from .plot_spheres import _plot_spheres
-----&gt; 5 from .plot_templates import _plot_template, _plot_template_style_filled, \
-      6     _plot_template_style_cloudy, _plot_template_style_surface
-      7 from .plot_dimarrows import _add_axis_arrows
-      8 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-
-File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;module&gt;
-      1 import numpy as np
-----&gt; 2 import nibabel as nib
-      3 import os
-      4 import templateflow.api as tf</code></pre></div></div></div></div>
-
+    nodescale=100)
+</code></pre>
 <p>Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added <code>nodescale</code> which just linearly scales all nodes by that factor. We also see that when specifying <code>nodesize</code> and <code>nodecolor</code> that legends automatically appear.</p>
 <p>At the moment we just have some circles floating in 3D space. Let us add some more information about this network.</p>
 <h4 id="an-atlas-from-templateflow-or-local-file-argument-nodes">An atlas from templateflow or local file (Argument: nodes)</h4>
@@ -862,92 +632,32 @@ File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;m
 The atlases can be used as nodes.
 If you specify the key/value pairs of an atlas on templateflow in a dictionary, the atlas will be automatically downloaded.
 For example, the following will get the 400 Parcels version from the Schaefer atlas.</p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># import packages
+<pre><code class="language-python"># import packages
 import netplotbrain
 # Define the atlas by key value words of TemplateFlow name
-nodes={&#39;template&#39;: &#39;MNI152NLin2009cAsym&#39;,
-         &#39;atlas&#39;: &#39;Schaefer2018&#39;,
+nodes={'template': 'MNI152NLin2009cAsym',
+         'atlas': 'Schaefer2018',
 ## Template (nifti or string)
 netplotbrain.plot(
     nodes=nodes,
-    arrowaxis=None)     </code></pre></div>
-<div class="report"><p><span class="count">[3]</span>
-<span class="start">2022-06-21 10:30:19</span> (<span class="time">3.31ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">1.68s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">SyntaxError: unexpected EOF while parsing (2192184692.py, line 9)</code></pre></div>
-      <div class="report"><pre><code class="nohighlight"></code></pre></div></div></div></div>
-
+    arrowaxis=None)     
+</code></pre>
 <p>See templateflow.org for more atlases.</p>
 <p>If the template argument is specified in <code>netplotbrain.plot</code>, then the template argument does not need to be included in the <code>nodes</code> dictionary.</p>
 <p>Since the nifti image consists of parcels (i.e. regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels over the circles with a single argument <code>nodetype</code>.</p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># import packages
+<pre><code class="language-python"># import packages
 import netplotbrain
 # Define the atlas by key value words of TemplateFlow name
-nodes={&#39;template&#39;: &#39;MNI152NLin2009cAsym&#39;,
-         &#39;atlas&#39;: &#39;Schaefer2018&#39;,
-         &#39;desc&#39;: &#39;400Parcels7Networks&#39;,
-         &#39;resolution&#39;: 1}
+nodes={'template': 'MNI152NLin2009cAsym',
+         'atlas': 'Schaefer2018',
+         'desc': '400Parcels7Networks',
+         'resolution': 1}
 # Plot
 netplotbrain.plot(
     nodes=nodes,
     arrowaxis=None,
-    nodetype=&#39;parcel&#39;)     </code></pre></div>
-<div class="report"><p><span class="count">[4]</span>
-<span class="start">2022-06-21 10:30:19</span> (<span class="time">48.8ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">1.73s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;nibabel&#39;</code></pre></div>
-      <div class="report"><pre><code class="nohighlight">ModuleNotFoundError                       Traceback (most recent call last)
-Input In [10], in &lt;cell line: 2&gt;()
-      1 # import packages
-----&gt; 2 import netplotbrain
-      3 # Define the atlas by key value words of TemplateFlow name
-      4 nodes={&#39;template&#39;: &#39;MNI152NLin2009cAsym&#39;,
-      5          &#39;atlas&#39;: &#39;Schaefer2018&#39;,
-      6          &#39;desc&#39;: &#39;400Parcels7Networks&#39;,
-      7          &#39;resolution&#39;: 1}
-
-File ~/packages/netplotbrain/netplotbrain/__init__.py:6, in &lt;module&gt;
-      1 &#34;&#34;&#34;
-      2 .. include:: ../README.md
-      3 
-      4 .. include:: ../docs/gallary.md
-      5 &#34;&#34;&#34;
-----&gt; 6 from .plot import plot
-      8 __all__ = [&#39;plot&#39;]
-      9 __pdoc__ = {
-     10     &#34;plotting&#34;: False,
-     11     &#34;utils&#34;: False,
-     12     &#34;templatesettings&#34;: False,
-     13 }
-
-File ~/packages/netplotbrain/netplotbrain/plot.py:4, in &lt;module&gt;
-      2 from typing import Optional
-      3 import matplotlib.pyplot as plt
-----&gt; 4 from .plotting import _plot_template, \
-      5     _plot_edges, _plot_nodes, _plot_spheres,\
-      6     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-      7     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
-      8     _setup_legend, _process_edge_input, _process_node_input,\
-      9     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-     10     _plot_gif, _npedges2dfedges
-     11 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-     12     _load_profile, _nrows_in_fig, _highlight_edges
-     14 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = &#39;L&#39;, frames=None, edges=None, template=None, templatestyle=&#39;filled&#39;,
-     15          arrowaxis=&#39;auto&#39;, arroworigin=None, edgecolor=&#39;k&#39;, nodesize=1, nodecolor=&#39;salmon&#39;, nodetype=&#39;circles&#39;,
-     16          nodecmap=&#39;Dark2&#39;, edgecmap=&#39;Set2&#39;, edgeweights=None, nodes_df=None, hemisphere=&#39;both&#39;, title=&#39;auto&#39;, highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
-
-File ~/packages/netplotbrain/netplotbrain/plotting/__init__.py:5, in &lt;module&gt;
-      3 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
-      4 from .plot_spheres import _plot_spheres
-----&gt; 5 from .plot_templates import _plot_template, _plot_template_style_filled, \
-      6     _plot_template_style_cloudy, _plot_template_style_surface
-      7 from .plot_dimarrows import _add_axis_arrows
-      8 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-
-File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;module&gt;
-      1 import numpy as np
-----&gt; 2 import nibabel as nib
-      3 import os
-      4 import templateflow.api as tf</code></pre></div></div></div></div>
-
+    nodetype='parcel')     
+</code></pre>
 <h2 id="12-specifying-edges">1.2 Specifying Edges</h2>
 <p>The edges between the nodes can be passed to netplotbrain as either a numpy array (NxN adjacency matrix) or a pandas dataframe (edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example:</p>
 <table>
@@ -973,228 +683,69 @@ File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;m
 </table>
 <p><code>i</code> and <code>j</code> reference the indices of our nodes defined above. You can use the argument <code>edgecol</code> to specify different column names.</p>
 <p>Let us continue to add to our figure above: </p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
+<pre><code class="language-python"># Import packages
 import netplotbrain
 import pandas as pd
 # Define the nodes (5 example nodes)
-nodes_df = pd.DataFrame(data={&#39;x&#39;: [40, 10, 30, -15, -25], 
-                              &#39;y&#39;: [50, 40, -10, -20, 20], 
-                              &#39;z&#39;: [20, 30, -10, -15, 30], 
-                              &#39;communities&#39;: [1, 1, 1, 2, 2], 
-                              &#39;degree_centrality&#39;: [1, 1, 0.2, 0.8, 0.4]})
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
 # Define the edges 
-edges_df = pd.DataFrame(data={&#39;i&#39;: [0, 0, 1, 1, 3], 
-                              &#39;j&#39;: [1, 2, 2, 3, 4]})
+edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3], 
+                              'j': [1, 2, 2, 3, 4]})
 # Call netplotbrain to plot
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolor=&#39;communities&#39;,
+    nodecolor='communities',
     arrowaxis=None,
-    nodescale=150)</code></pre></div>
-<div class="report"><p><span class="count">[5]</span>
-<span class="start">2022-06-21 10:30:19</span> (<span class="time">52.2ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">1.78s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;nibabel&#39;</code></pre></div>
-      <div class="report"><pre><code class="nohighlight">ModuleNotFoundError                       Traceback (most recent call last)
-Input In [11], in &lt;cell line: 2&gt;()
-      1 # Import packages
-----&gt; 2 import netplotbrain
-      3 import pandas as pd
-      4 # Define the nodes (5 example nodes)
-
-File ~/packages/netplotbrain/netplotbrain/__init__.py:6, in &lt;module&gt;
-      1 &#34;&#34;&#34;
-      2 .. include:: ../README.md
-      3 
-      4 .. include:: ../docs/gallary.md
-      5 &#34;&#34;&#34;
-----&gt; 6 from .plot import plot
-      8 __all__ = [&#39;plot&#39;]
-      9 __pdoc__ = {
-     10     &#34;plotting&#34;: False,
-     11     &#34;utils&#34;: False,
-     12     &#34;templatesettings&#34;: False,
-     13 }
-
-File ~/packages/netplotbrain/netplotbrain/plot.py:4, in &lt;module&gt;
-      2 from typing import Optional
-      3 import matplotlib.pyplot as plt
-----&gt; 4 from .plotting import _plot_template, \
-      5     _plot_edges, _plot_nodes, _plot_spheres,\
-      6     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-      7     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
-      8     _setup_legend, _process_edge_input, _process_node_input,\
-      9     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-     10     _plot_gif, _npedges2dfedges
-     11 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-     12     _load_profile, _nrows_in_fig, _highlight_edges
-     14 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = &#39;L&#39;, frames=None, edges=None, template=None, templatestyle=&#39;filled&#39;,
-     15          arrowaxis=&#39;auto&#39;, arroworigin=None, edgecolor=&#39;k&#39;, nodesize=1, nodecolor=&#39;salmon&#39;, nodetype=&#39;circles&#39;,
-     16          nodecmap=&#39;Dark2&#39;, edgecmap=&#39;Set2&#39;, edgeweights=None, nodes_df=None, hemisphere=&#39;both&#39;, title=&#39;auto&#39;, highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
-
-File ~/packages/netplotbrain/netplotbrain/plotting/__init__.py:5, in &lt;module&gt;
-      3 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
-      4 from .plot_spheres import _plot_spheres
-----&gt; 5 from .plot_templates import _plot_template, _plot_template_style_filled, \
-      6     _plot_template_style_cloudy, _plot_template_style_surface
-      7 from .plot_dimarrows import _add_axis_arrows
-      8 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-
-File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;module&gt;
-      1 import numpy as np
-----&gt; 2 import nibabel as nib
-      3 import os
-      4 import templateflow.api as tf</code></pre></div></div></div></div>
-
+    nodescale=150)
+</code></pre>
 <p>If you have the column <code>weight</code> in your edge dataframe, these will be automatically plotted as well. 
 This can be turn off by setting <code>edgeweights</code> to False. Also, a list of length 3 can be given to edgecol that specifies alternative names for ['i', 'j', 'weights'].</p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
+<pre><code class="language-python"># Import packages
 import netplotbrain
 import pandas as pd
 # Define the nodes (5 example nodes)
-nodes_df = pd.DataFrame(data={&#39;x&#39;: [40, 10, 30, -15, -25], 
-                              &#39;y&#39;: [50, 40, -10, -20, 20], 
-                              &#39;z&#39;: [20, 30, -10, -15, 30], 
-                              &#39;communities&#39;: [1, 1, 1, 2, 2], 
-                              &#39;degree_centrality&#39;: [1, 1, 0.2, 0.8, 0.4]})
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
 # Define the edges 
-edges_df = pd.DataFrame(data={&#39;i&#39;: [0, 0, 1, 1, 3], 
-                              &#39;j&#39;: [1, 2, 2, 3, 4]})
+edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3], 
+                              'j': [1, 2, 2, 3, 4]})
 # Call netplotbrain to plot
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolor=&#39;communities&#39;,
+    nodecolor='communities',
     arrowaxis=None,
-    nodescale=150)</code></pre></div>
-<div class="report"><p><span class="count">[6]</span>
-<span class="start">2022-06-21 10:30:19</span> (<span class="time">50.6ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">1.83s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;nibabel&#39;</code></pre></div>
-      <div class="report"><pre><code class="nohighlight">ModuleNotFoundError                       Traceback (most recent call last)
-Input In [12], in &lt;cell line: 2&gt;()
-      1 # Import packages
-----&gt; 2 import netplotbrain
-      3 import pandas as pd
-      4 # Define the nodes (5 example nodes)
-
-File ~/packages/netplotbrain/netplotbrain/__init__.py:6, in &lt;module&gt;
-      1 &#34;&#34;&#34;
-      2 .. include:: ../README.md
-      3 
-      4 .. include:: ../docs/gallary.md
-      5 &#34;&#34;&#34;
-----&gt; 6 from .plot import plot
-      8 __all__ = [&#39;plot&#39;]
-      9 __pdoc__ = {
-     10     &#34;plotting&#34;: False,
-     11     &#34;utils&#34;: False,
-     12     &#34;templatesettings&#34;: False,
-     13 }
-
-File ~/packages/netplotbrain/netplotbrain/plot.py:4, in &lt;module&gt;
-      2 from typing import Optional
-      3 import matplotlib.pyplot as plt
-----&gt; 4 from .plotting import _plot_template, \
-      5     _plot_edges, _plot_nodes, _plot_spheres,\
-      6     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-      7     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
-      8     _setup_legend, _process_edge_input, _process_node_input,\
-      9     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-     10     _plot_gif, _npedges2dfedges
-     11 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-     12     _load_profile, _nrows_in_fig, _highlight_edges
-     14 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = &#39;L&#39;, frames=None, edges=None, template=None, templatestyle=&#39;filled&#39;,
-     15          arrowaxis=&#39;auto&#39;, arroworigin=None, edgecolor=&#39;k&#39;, nodesize=1, nodecolor=&#39;salmon&#39;, nodetype=&#39;circles&#39;,
-     16          nodecmap=&#39;Dark2&#39;, edgecmap=&#39;Set2&#39;, edgeweights=None, nodes_df=None, hemisphere=&#39;both&#39;, title=&#39;auto&#39;, highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
-
-File ~/packages/netplotbrain/netplotbrain/plotting/__init__.py:5, in &lt;module&gt;
-      3 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
-      4 from .plot_spheres import _plot_spheres
-----&gt; 5 from .plot_templates import _plot_template, _plot_template_style_filled, \
-      6     _plot_template_style_cloudy, _plot_template_style_surface
-      7 from .plot_dimarrows import _add_axis_arrows
-      8 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-
-File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;module&gt;
-      1 import numpy as np
-----&gt; 2 import nibabel as nib
-      3 import os
-      4 import templateflow.api as tf</code></pre></div></div></div></div>
-
+    nodescale=150)
+</code></pre>
 <p>Finally, you can specify a number matrix instead of a pandas dataframe. </p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python"># Import packages
+<pre><code class="language-python"># Import packages
 import netplotbrain
 import pandas as pd
 # Define the nodes (5 example nodes)
-nodes_df = pd.DataFrame(data={&#39;x&#39;: [40, 10, 30, -15, -25], 
-                              &#39;y&#39;: [50, 40, -10, -20, 20], 
-                              &#39;z&#39;: [20, 30, -10, -15, 30], 
-                              &#39;communities&#39;: [1, 1, 1, 2, 2], 
-                              &#39;degree_centrality&#39;: [1, 1, 0.2, 0.8, 0.4]})
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
 # Define the edges 
-edges_df = pd.DataFrame(data={&#39;i&#39;: [0, 0, 1, 1, 3], 
-                              &#39;j&#39;: [1, 2, 2, 3, 4]})
+edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3], 
+                              'j': [1, 2, 2, 3, 4]})
 # Call netplotbrain to plot
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolor=&#39;communities&#39;,
+    nodecolor='communities',
     arrowaxis=None,
-    nodescale=150)</code></pre></div>
-<div class="report"><p><span class="count">[7]</span>
-<span class="start">2022-06-21 10:30:19</span> (<span class="time">49.0ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">1.88s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;nibabel&#39;</code></pre></div>
-      <div class="report"><pre><code class="nohighlight">ModuleNotFoundError                       Traceback (most recent call last)
-Input In [13], in &lt;cell line: 2&gt;()
-      1 # Import packages
-----&gt; 2 import netplotbrain
-      3 import pandas as pd
-      4 # Define the nodes (5 example nodes)
-
-File ~/packages/netplotbrain/netplotbrain/__init__.py:6, in &lt;module&gt;
-      1 &#34;&#34;&#34;
-      2 .. include:: ../README.md
-      3 
-      4 .. include:: ../docs/gallary.md
-      5 &#34;&#34;&#34;
-----&gt; 6 from .plot import plot
-      8 __all__ = [&#39;plot&#39;]
-      9 __pdoc__ = {
-     10     &#34;plotting&#34;: False,
-     11     &#34;utils&#34;: False,
-     12     &#34;templatesettings&#34;: False,
-     13 }
-
-File ~/packages/netplotbrain/netplotbrain/plot.py:4, in &lt;module&gt;
-      2 from typing import Optional
-      3 import matplotlib.pyplot as plt
-----&gt; 4 from .plotting import _plot_template, \
-      5     _plot_edges, _plot_nodes, _plot_spheres,\
-      6     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-      7     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
-      8     _setup_legend, _process_edge_input, _process_node_input,\
-      9     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-     10     _plot_gif, _npedges2dfedges
-     11 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-     12     _load_profile, _nrows_in_fig, _highlight_edges
-     14 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = &#39;L&#39;, frames=None, edges=None, template=None, templatestyle=&#39;filled&#39;,
-     15          arrowaxis=&#39;auto&#39;, arroworigin=None, edgecolor=&#39;k&#39;, nodesize=1, nodecolor=&#39;salmon&#39;, nodetype=&#39;circles&#39;,
-     16          nodecmap=&#39;Dark2&#39;, edgecmap=&#39;Set2&#39;, edgeweights=None, nodes_df=None, hemisphere=&#39;both&#39;, title=&#39;auto&#39;, highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
-
-File ~/packages/netplotbrain/netplotbrain/plotting/__init__.py:5, in &lt;module&gt;
-      3 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
-      4 from .plot_spheres import _plot_spheres
-----&gt; 5 from .plot_templates import _plot_template, _plot_template_style_filled, \
-      6     _plot_template_style_cloudy, _plot_template_style_surface
-      7 from .plot_dimarrows import _add_axis_arrows
-      8 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-
-File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;module&gt;
-      1 import numpy as np
-----&gt; 2 import nibabel as nib
-      3 import os
-      4 import templateflow.api as tf</code></pre></div></div></div></div>
-
+    nodescale=150)
+</code></pre>
 <h2 id="13-specifying-templates">1.3 Specifying Templates</h2>
 <h2 id="template-nifti-or-string">Template (nifti or string)</h2>
 <p>For the template you can supply any nifti file.</p>
@@ -1250,155 +801,35 @@ You can specify it as a string:</p>
 So, setting view = 'LSR' will generate 3 subplots with left, superior, and right views</p>
 <p>If you specify a list (e.g. <code>['LR', 'AP']</code>) then two different rows will be generated.
 The first from left to right. The second from anterior to posterior.</p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python">import netplotbrain
-netplotbrain.plot(template=&#39;MNI152NLin2009cAsym&#39;,
-                  templatestyle=&#39;surface&#39;,
-                  view=[&#39;LSR&#39;, &#39;AIP&#39;])
-plt.show()</code></pre></div>
-<div class="report"><p><span class="count">[8]</span>
-<span class="start">2022-06-21 10:30:19</span> (<span class="time">125ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">2.01s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;nibabel&#39;</code></pre></div>
-      <div class="report"><pre><code class="nohighlight">ModuleNotFoundError                       Traceback (most recent call last)
-Input In [14], in &lt;cell line: 1&gt;()
-----&gt; 1 import netplotbrain
-      2 netplotbrain.plot(template=&#39;MNI152NLin2009cAsym&#39;,
-      3                   templatestyle=&#39;surface&#39;,
-      4                   view=[&#39;LSR&#39;, &#39;AIP&#39;])
-      5 plt.show()
-
-File ~/packages/netplotbrain/netplotbrain/__init__.py:6, in &lt;module&gt;
-      1 &#34;&#34;&#34;
-      2 .. include:: ../README.md
-      3 
-      4 .. include:: ../docs/gallary.md
-      5 &#34;&#34;&#34;
-----&gt; 6 from .plot import plot
-      8 __all__ = [&#39;plot&#39;]
-      9 __pdoc__ = {
-     10     &#34;plotting&#34;: False,
-     11     &#34;utils&#34;: False,
-     12     &#34;templatesettings&#34;: False,
-     13 }
-
-File ~/packages/netplotbrain/netplotbrain/plot.py:4, in &lt;module&gt;
-      2 from typing import Optional
-      3 import matplotlib.pyplot as plt
-----&gt; 4 from .plotting import _plot_template, \
-      5     _plot_edges, _plot_nodes, _plot_spheres,\
-      6     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-      7     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
-      8     _setup_legend, _process_edge_input, _process_node_input,\
-      9     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-     10     _plot_gif, _npedges2dfedges
-     11 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-     12     _load_profile, _nrows_in_fig, _highlight_edges
-     14 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = &#39;L&#39;, frames=None, edges=None, template=None, templatestyle=&#39;filled&#39;,
-     15          arrowaxis=&#39;auto&#39;, arroworigin=None, edgecolor=&#39;k&#39;, nodesize=1, nodecolor=&#39;salmon&#39;, nodetype=&#39;circles&#39;,
-     16          nodecmap=&#39;Dark2&#39;, edgecmap=&#39;Set2&#39;, edgeweights=None, nodes_df=None, hemisphere=&#39;both&#39;, title=&#39;auto&#39;, highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
-
-File ~/packages/netplotbrain/netplotbrain/plotting/__init__.py:5, in &lt;module&gt;
-      3 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
-      4 from .plot_spheres import _plot_spheres
-----&gt; 5 from .plot_templates import _plot_template, _plot_template_style_filled, \
-      6     _plot_template_style_cloudy, _plot_template_style_surface
-      7 from .plot_dimarrows import _add_axis_arrows
-      8 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-
-File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;module&gt;
-      1 import numpy as np
-----&gt; 2 import nibabel as nib
-      3 import os
-      4 import templateflow.api as tf</code></pre></div></div></div></div>
-
+<pre><code class="language-python">import netplotbrain
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['LSR', 'AIP'])
+plt.show()
+</code></pre>
 <p>You can also specify the specific rotation (tuple): (xy-rotation, xz-rotation) in degrees. The R view is (0, 0)</p>
 <h3 id="rotated-sequences-with-frames">Rotated sequences with frames</h3>
 <p>You can also generate a sequence of rotated images.</p>
 <p>If the view is two letters, (e.g. <code>'LR'</code>), then a sequence will be generated from the L-view to R-view.</p>
 <p>The parameter <code>frames</code> will control how many images are generated.
 Images will then be displayed along a single row.</p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python">import netplotbrain
-netplotbrain.plot(template=&#39;MNI152NLin2009cAsym&#39;,
-                  templatestyle=&#39;surface&#39;,
-                  view=[&#39;AP&#39;],
-                  frames=5)</code></pre></div>
-<div class="report"><p><span class="count">[9]</span>
-<span class="start">2022-06-21 10:30:19</span> (<span class="time">49.3ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">2.06s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">ModuleNotFoundError: No module named &#39;nibabel&#39;</code></pre></div>
-      <div class="report"><pre><code class="nohighlight">ModuleNotFoundError                       Traceback (most recent call last)
-Input In [15], in &lt;cell line: 1&gt;()
-----&gt; 1 import netplotbrain
-      2 netplotbrain.plot(template=&#39;MNI152NLin2009cAsym&#39;,
-      3                   templatestyle=&#39;surface&#39;,
-      4                   view=[&#39;AP&#39;],
-      5                   frames=5)
-
-File ~/packages/netplotbrain/netplotbrain/__init__.py:6, in &lt;module&gt;
-      1 &#34;&#34;&#34;
-      2 .. include:: ../README.md
-      3 
-      4 .. include:: ../docs/gallary.md
-      5 &#34;&#34;&#34;
-----&gt; 6 from .plot import plot
-      8 __all__ = [&#39;plot&#39;]
-      9 __pdoc__ = {
-     10     &#34;plotting&#34;: False,
-     11     &#34;utils&#34;: False,
-     12     &#34;templatesettings&#34;: False,
-     13 }
-
-File ~/packages/netplotbrain/netplotbrain/plot.py:4, in &lt;module&gt;
-      2 from typing import Optional
-      3 import matplotlib.pyplot as plt
-----&gt; 4 from .plotting import _plot_template, \
-      5     _plot_edges, _plot_nodes, _plot_spheres,\
-      6     _scale_nodes, _add_axis_arrows, _plot_parcels,\
-      7     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
-      8     _setup_legend, _process_edge_input, _process_node_input,\
-      9     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-     10     _plot_gif, _npedges2dfedges
-     11 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-     12     _load_profile, _nrows_in_fig, _highlight_edges
-     14 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = &#39;L&#39;, frames=None, edges=None, template=None, templatestyle=&#39;filled&#39;,
-     15          arrowaxis=&#39;auto&#39;, arroworigin=None, edgecolor=&#39;k&#39;, nodesize=1, nodecolor=&#39;salmon&#39;, nodetype=&#39;circles&#39;,
-     16          nodecmap=&#39;Dark2&#39;, edgecmap=&#39;Set2&#39;, edgeweights=None, nodes_df=None, hemisphere=&#39;both&#39;, title=&#39;auto&#39;, highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
-
-File ~/packages/netplotbrain/netplotbrain/plotting/__init__.py:5, in &lt;module&gt;
-      3 from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
-      4 from .plot_spheres import _plot_spheres
-----&gt; 5 from .plot_templates import _plot_template, _plot_template_style_filled, \
-      6     _plot_template_style_cloudy, _plot_template_style_surface
-      7 from .plot_dimarrows import _add_axis_arrows
-      8 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-
-File ~/packages/netplotbrain/netplotbrain/plotting/plot_templates.py:2, in &lt;module&gt;
-      1 import numpy as np
-----&gt; 2 import nibabel as nib
-      3 import os
-      4 import templateflow.api as tf</code></pre></div></div></div></div>
-
+<pre><code class="language-python">import netplotbrain
+netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['AP'],
+                  frames=5)
+</code></pre>
 <h3 id="plot-single-hemispheres">Plot single hemispheres</h3>
 <p>The hemisphere argument allows you to plot either the left of right hemisphere.
 Doing this entails all nodes on the left and right hemisphere's automatically get </p>
-<div class="pheasant-fenced-code"><div class="cached"><div class="cell jupyter input"><div class="code"><pre><code class="python">netplotbrain.plot(template=&#39;MNI152NLin2009cAsym&#39;,
-                  templatestyle=&#39;surface&#39;,
-                  view=[&#39;SSS&#39;],
-                  hemisphere=[&#39;L&#39;, &#39;R&#39;, &#39;&#39;],
+<pre><code class="language-python">netplotbrain.plot(template='MNI152NLin2009cAsym',
+                  templatestyle='surface',
+                  view=['SSS'],
+                  hemisphere=['L', 'R', ''],
                   nodes=nodesdf,
-                  nodesize=&#39;centrality_measure1&#39;,
-                  edges=edges)</code></pre></div>
-<div class="report"><p><span class="count">[10]</span>
-<span class="start">2022-06-21 10:30:19</span> (<span class="time">10.7ms</span>)
-<span class="right"><span class="kernel">python3</span> (<span class="total">2.07s</span>)</span></p></div></div><div class="cell jupyter error"><div class="code"><pre><code class="nohighlight">NameError: name &#39;netplotbrain&#39; is not defined</code></pre></div>
-      <div class="report"><pre><code class="nohighlight">NameError                                 Traceback (most recent call last)
-Input In [16], in &lt;cell line: 1&gt;()
-----&gt; 1 netplotbrain.plot(template=&#39;MNI152NLin2009cAsym&#39;,
-      2                   templatestyle=&#39;surface&#39;,
-      3                   view=[&#39;SSS&#39;],
-      4                   hemisphere=[&#39;L&#39;, &#39;R&#39;, &#39;&#39;],
-      5                   nodes=nodesdf,
-      6                   nodesize=&#39;centrality_measure1&#39;,
-      7                   edges=edges)</code></pre></div></div></div></div>
-
+                  nodesize='centrality_measure1',
+                  edges=edges)
+</code></pre>
 <p><img alt="" src="./examples/figures/hemi.png" /></p>
 
               
@@ -1415,7 +846,7 @@ Input In [16], in &lt;cell line: 1&gt;()
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../gallary/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Gallery" rel="prev">
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1424,20 +855,20 @@ Input In [16], in &lt;cell line: 1&gt;()
               <span class="md-footer__direction">
                 Previous
               </span>
-              Gallery
+              Home
             </div>
           </div>
         </a>
       
       
         
-        <a href="../gallary/infant/" class="md-footer__link md-footer__link--next" aria-label="Next: Infant" rel="next">
+        <a href="../api/" class="md-footer__link md-footer__link--next" aria-label="Next: API" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Infant
+              API
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -1471,8 +902,6 @@ Input In [16], in &lt;cell line: 1&gt;()
     
     
       <script src="../assets/javascripts/bundle.a877e258.min.js"></script>
-      
-        <script src="../js/pheasant.js"></script>
       
     
   </body>
