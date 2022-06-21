@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#plotting-significant-results-from-network-based-statistics" class="md-skip">
+        <a href="#generating-the-data" class="md-skip">
           Skip to content
         </a>
       
@@ -262,8 +262,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#plotting-significant-results-from-network-based-statistics" class="md-nav__link">
-    Plotting significant results from network based statistics
+  <a href="#generating-the-data" class="md-nav__link">
+    Generating the data
   </a>
   
 </li>
@@ -272,6 +272,19 @@
   <a href="#running-nbs-statistics" class="md-nav__link">
     Running NBS statistics
   </a>
+  
+    <nav class="md-nav" aria-label="Running NBS statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plotting-in-netplotbrain" class="md-nav__link">
+    Plotting in netplotbrain
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1320,21 +1333,8 @@ Licensed under the Apache License, Version 2.0.
     }
     init_mathjax();
     </script>
-    <!-- End of mathjax configuration --><div class="jupyter-wrapper">
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="plotting-significant-results-from-network-based-statistics">Plotting significant results from network based statistics<a class="anchor-link" href="#plotting-significant-results-from-network-based-statistics">&#182;</a></h2><p>Netplotbrain aims to try and integrate with other tools, minimizing the work needed.
-For this we are going to use bctpy's implementation of network based statistics.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+    <!-- End of mathjax configuration --><div class="jupyter-wrapper"><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -1354,15 +1354,17 @@ For this we are going to use bctpy's implementation of network based statistics.
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">bct</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">netplotbrain</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">## Plotting significant results from network based statistics</span>
+<span class="sd">Netplotbrain aims to try and integrate with other tools, minimizing the work needed.</span>
+<span class="sd">For this we are going to use bctpy&#39;s implementation of network based statistics.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
-<div id="cell-1" class="clipboard-copy-txt">import bct
-import numpy as np
-import matplotlib.pyplot as plt
-import netplotbrain</div>
+<div id="cell-1" class="clipboard-copy-txt">"""
+## Plotting significant results from network based statistics
+Netplotbrain aims to try and integrate with other tools, minimizing the work needed.
+For this we are going to use bctpy's implementation of network based statistics.
+"""</div>
     
         </div>
     </div>
@@ -1370,9 +1372,34 @@ import netplotbrain</div>
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[1]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>&#34;\n## Plotting significant results from network based statistics\nNetplotbrain aims to try and integrate with other tools, minimizing the work needed.\nFor this we are going to use bctpy&#39;s implementation of network based statistics.\n&#34;</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -1392,35 +1419,15 @@ import netplotbrain</div>
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">### Generating the data</span>
-
-<span class="sd">To run NBS statistics we need connectivity matrices for multiple subjects.</span>
-<span class="sd">The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects.</span>
-
-<span class="sd">In this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.</span>
-
-<span class="sd">We are going to create connectivity matrices with 100 nodes for 50 subjects.</span>
-<span class="sd">The 100 nodes will be split into 6 communities of varying sizes.</span>
-<span class="sd">Edge weights will be sampled from a normal distribution with the standard deviation set to 0.25.</span>
-<span class="sd">The mean of the normal distribution for each edge varies.</span>
-<span class="sd">For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">bct</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">netplotbrain</span>
 </pre></div>
-<div id="cell-2" class="clipboard-copy-txt">"""
-### Generating the data
-
-To run NBS statistics we need connectivity matrices for multiple subjects.
-The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects.
-
-In this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.
-
-We are going to create connectivity matrices with 100 nodes for 50 subjects.
-The 100 nodes will be split into 6 communities of varying sizes.
-Edge weights will be sampled from a normal distribution with the standard deviation set to 0.25.
-The mean of the normal distribution for each edge varies.
-For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups.
-"""</div>
+<div id="cell-2" class="clipboard-copy-txt">import bct
+import numpy as np
+import matplotlib.pyplot as plt
+import netplotbrain</div>
     
         </div>
     </div>
@@ -1428,31 +1435,25 @@ For between-community edges the mean is set to 0. For within community edges eac
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&#39;\n### Generating the data\n\nTo run NBS statistics we need connectivity matrices for multiple subjects.\nThe data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects.\n\nIn this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.\n\nWe are going to create connectivity matrices with 100 nodes for 50 subjects.\nThe 100 nodes will be split into 6 communities of varying sizes.\nEdge weights will be sampled from a normal distribution with the standard deviation set to 0.25.\nThe mean of the normal distribution for each edge varies.\nFor between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups.\n&#39;</pre>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="generating-the-data">Generating the data<a class="anchor-link" href="#generating-the-data">&#182;</a></h3><p>To run NBS statistics we need connectivity matrices for multiple subjects.
+The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects.</p>
+<p>In this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.</p>
+<p>We are going to create connectivity matrices with 100 nodes for 50 subjects.
+The 100 nodes will be split into 6 communities of varying sizes.
+Edge weights will be sampled from a normal distribution with the standard deviation set to 0.25.
+The mean of the normal distribution for each edge varies.
+For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups.</p>
 
 </div>
-
 </div>
-
-</div>
-
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -1604,11 +1605,13 @@ Using the NBS implementation from bctpy with generate the p values</p>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># g1 and g2 are both (Node, Node, Subject) in size.</span>
 <span class="c1"># The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities).</span>
-<span class="n">p</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">null</span> <span class="o">=</span> <span class="n">bct</span><span class="o">.</span><span class="n">nbs_bct</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2022</span><span class="p">)</span>
+<span class="c1"># Note, k=100 is set for speed purposes. Should be larger.  </span>
+<span class="n">p</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">null</span> <span class="o">=</span> <span class="n">bct</span><span class="o">.</span><span class="n">nbs_bct</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2022</span><span class="p">)</span>
 </pre></div>
 <div id="cell-4" class="clipboard-copy-txt"># g1 and g2 are both (Node, Node, Subject) in size.
 # The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities).
-p, adj, null = bct.nbs_bct(g1, g2, 4, seed=2022)</div>
+# Note, k=100 is set for speed purposes. Should be larger.  
+p, adj, null = bct.nbs_bct(g1, g2, 4, k=100, seed=2022)</div>
     
         </div>
     </div>
@@ -1631,18 +1634,18 @@ p, adj, null = bct.nbs_bct(g1, g2, 4, seed=2022)</div>
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>max component size is 21
-estimating null distribution with 1000 permutations
-permutation 0 of 1000.  p-value so far is 0.000
-permutation 100 of 1000.  p-value so far is 0.000
-permutation 200 of 1000.  p-value so far is 0.000
-permutation 300 of 1000.  p-value so far is 0.000
-permutation 400 of 1000.  p-value so far is 0.000
-permutation 500 of 1000.  p-value so far is 0.000
-permutation 600 of 1000.  p-value so far is 0.000
-permutation 700 of 1000.  p-value so far is 0.000
-permutation 800 of 1000.  p-value so far is 0.000
-permutation 900 of 1000.  p-value so far is 0.000
-permutation 999 of 1000.  p-value so far is 0.000
+estimating null distribution with 100 permutations
+permutation 0 of 100.  p-value so far is 0.000
+permutation 10 of 100.  p-value so far is 0.000
+permutation 20 of 100.  p-value so far is 0.000
+permutation 30 of 100.  p-value so far is 0.000
+permutation 40 of 100.  p-value so far is 0.000
+permutation 50 of 100.  p-value so far is 0.000
+permutation 60 of 100.  p-value so far is 0.000
+permutation 70 of 100.  p-value so far is 0.000
+permutation 80 of 100.  p-value so far is 0.000
+permutation 90 of 100.  p-value so far is 0.000
+permutation 99 of 100.  p-value so far is 0.000
 </pre>
 </div>
 </div>
@@ -1753,6 +1756,19 @@ jp-needs-light-background
 </div>
 
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="plotting-in-netplotbrain">Plotting in netplotbrain<a class="anchor-link" href="#plotting-in-netplotbrain">&#182;</a></h3><p>We will assume that are 100 random nodes correspond to the Schaefer 2018 atlas with 100 parcels.
+With this information, we can call netplotbrain.</p>
+
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
@@ -1765,73 +1781,6 @@ jp-needs-light-background
         <div class="CodeMirror cm-s-jupyter">
         <div class="zeroclipboard-container">
             <clipboard-copy for="cell-6">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">### Plotting in netplotbrain</span>
-
-<span class="sd">We will assume that are 100 random nodes correspond to the Schaefer 2018 atlas with 100 parcels.</span>
-<span class="sd">With this information, we can call netplotbrain.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-</pre></div>
-<div id="cell-6" class="clipboard-copy-txt">"""
-### Plotting in netplotbrain
-
-We will assume that are 100 random nodes correspond to the Schaefer 2018 atlas with 100 parcels.
-With this information, we can call netplotbrain.
-"""</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&#39;\n### Plotting in netplotbrain\n\nWe will assume that are 100 random nodes correspond to the Schaefer 2018 atlas with 100 parcels.\nWith this information, we can call netplotbrain.\n&#39;</pre>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-7">
             <div>
                 <span class="notice" hidden>Copied!</span>
                 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
@@ -1856,7 +1805,7 @@ With this information, we can call netplotbrain.
                             <span class="n">nodetype</span><span class="o">=</span><span class="s1">&#39;circles&#39;</span><span class="p">,</span>
                             <span class="n">highlightlevel</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
-<div id="cell-7" class="clipboard-copy-txt"># For out edges let's plot the group different.
+<div id="cell-6" class="clipboard-copy-txt"># For out edges let's plot the group different.
 gdif = np.mean(g2,axis=-1) - np.mean(g1,axis=-1)
 
 fig, ax = netplotbrain.plot(template='MNI152NLin2009cAsym',
