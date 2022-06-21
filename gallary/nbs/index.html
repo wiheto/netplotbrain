@@ -13,7 +13,7 @@
     
     
       
-        <title>%% [markdown] - netplotbrain</title>
+        <title>--- - netplotbrain</title>
       
     
     
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              %% [markdown]
+              ---
             
           </span>
         </div>
@@ -289,7 +289,7 @@
                 
 
 
-  <h1>%% [markdown]</h1>
+  <h1>---</h1>
 
 <script>
 (function (global, factory) {
@@ -1393,33 +1393,33 @@ import netplotbrain</div>
             </clipboard-copy>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">### Generating the data </span>
+<span class="sd">### Generating the data</span>
 
-<span class="sd">To run NBS statistics we need connectivity matrices for multiple subjects. </span>
-<span class="sd">The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects. </span>
+<span class="sd">To run NBS statistics we need connectivity matrices for multiple subjects.</span>
+<span class="sd">The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects.</span>
 
 <span class="sd">In this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.</span>
 
-<span class="sd">We are going to create connectivity matrices with 100 nodes for 50 subjects. </span>
-<span class="sd">The 100 nodes will be split into 6 communities of varying sizes. </span>
+<span class="sd">We are going to create connectivity matrices with 100 nodes for 50 subjects.</span>
+<span class="sd">The 100 nodes will be split into 6 communities of varying sizes.</span>
 <span class="sd">Edge weights will be sampled from a normal distribution with the standard deviation set to 0.25.</span>
-<span class="sd">The mean of the normal distribution for each edge varies. </span>
-<span class="sd">For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups. </span>
+<span class="sd">The mean of the normal distribution for each edge varies.</span>
+<span class="sd">For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 <div id="cell-2" class="clipboard-copy-txt">"""
-### Generating the data 
+### Generating the data
 
-To run NBS statistics we need connectivity matrices for multiple subjects. 
-The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects. 
+To run NBS statistics we need connectivity matrices for multiple subjects.
+The data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects.
 
 In this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.
 
-We are going to create connectivity matrices with 100 nodes for 50 subjects. 
-The 100 nodes will be split into 6 communities of varying sizes. 
+We are going to create connectivity matrices with 100 nodes for 50 subjects.
+The 100 nodes will be split into 6 communities of varying sizes.
 Edge weights will be sampled from a normal distribution with the standard deviation set to 0.25.
-The mean of the normal distribution for each edge varies. 
-For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups. 
+The mean of the normal distribution for each edge varies.
+For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups.
 """</div>
     
         </div>
@@ -1444,7 +1444,7 @@ For between-community edges the mean is set to 0. For within community edges eac
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&#39;\n### Generating the data \n\nTo run NBS statistics we need connectivity matrices for multiple subjects. \nThe data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects. \n\nIn this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.\n\nWe are going to create connectivity matrices with 100 nodes for 50 subjects. \nThe 100 nodes will be split into 6 communities of varying sizes. \nEdge weights will be sampled from a normal distribution with the standard deviation set to 0.25.\nThe mean of the normal distribution for each edge varies. \nFor between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups. \n&#39;</pre>
+<pre>&#39;\n### Generating the data\n\nTo run NBS statistics we need connectivity matrices for multiple subjects.\nThe data we will need is a N x N x S array for two separate groups, where N is the number of nodes and S is the number of subjects.\n\nIn this subsection we will create dummy data to simulate the point. Skip to the next subsection if you just want to see how netplotbrain integrates with NBS statistics.\n\nWe are going to create connectivity matrices with 100 nodes for 50 subjects.\nThe 100 nodes will be split into 6 communities of varying sizes.\nEdge weights will be sampled from a normal distribution with the standard deviation set to 0.25.\nThe mean of the normal distribution for each edge varies.\nFor between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups.\n&#39;</pre>
 </div>
 
 </div>
@@ -1477,20 +1477,20 @@ For between-community edges the mean is set to 0. For within community edges eac
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="k">def</span> <span class="nf">generate_group_cm</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">subjects</span><span class="p">,</span> <span class="n">community_size</span><span class="p">,</span> <span class="n">community_str</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2022</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Quick way to simulate group differences for visualization purposes. </span>
+<span class="sd">    Quick way to simulate group differences for visualization purposes.</span>
 
 <span class="sd">    Input</span>
 <span class="sd">    -----</span>
-<span class="sd">    nodes : int </span>
+<span class="sd">    nodes : int</span>
 <span class="sd">        number of nodes</span>
-<span class="sd">    subjects : int </span>
+<span class="sd">    subjects : int</span>
 <span class="sd">        number of subjects</span>
 <span class="sd">    community_size : list</span>
 <span class="sd">        list of number of nodes in each community</span>
 <span class="sd">    community_str : list</span>
-<span class="sd">        list of mean str for within community connections </span>
+<span class="sd">        list of mean str for within community connections</span>
 <span class="sd">    scale : float</span>
-<span class="sd">        scale (STD) of normal distribution. </span>
+<span class="sd">        scale (STD) of normal distribution.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
     <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">nodes</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
@@ -1520,20 +1520,20 @@ For between-community edges the mean is set to 0. For within community edges eac
 </pre></div>
 <div id="cell-3" class="clipboard-copy-txt">def generate_group_cm(nodes, subjects, community_size, community_str, scale=0.25, seed=2022):
     """
-    Quick way to simulate group differences for visualization purposes. 
+    Quick way to simulate group differences for visualization purposes.
 
     Input
     -----
-    nodes : int 
+    nodes : int
         number of nodes
-    subjects : int 
+    subjects : int
         number of subjects
     community_size : list
         list of number of nodes in each community
     community_str : list
-        list of mean str for within community connections 
+        list of mean str for within community connections
     scale : float
-        scale (STD) of normal distribution. 
+        scale (STD) of normal distribution.
     """
     np.random.seed(seed)
     mu = np.zeros([nodes, nodes, 1])
@@ -1602,12 +1602,12 @@ Using the NBS implementation from bctpy with generate the p values</p>
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># g1 and g2 are both (Node, Node, Subject) in size. </span>
-<span class="c1"># The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities). </span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># g1 and g2 are both (Node, Node, Subject) in size.</span>
+<span class="c1"># The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities).</span>
 <span class="n">p</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="n">null</span> <span class="o">=</span> <span class="n">bct</span><span class="o">.</span><span class="n">nbs_bct</span><span class="p">(</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">2022</span><span class="p">)</span>
 </pre></div>
-<div id="cell-4" class="clipboard-copy-txt"># g1 and g2 are both (Node, Node, Subject) in size. 
-# The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities). 
+<div id="cell-4" class="clipboard-copy-txt"># g1 and g2 are both (Node, Node, Subject) in size.
+# The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities).
 p, adj, null = bct.nbs_bct(g1, g2, 4, seed=2022)</div>
     
         </div>
@@ -1915,7 +1915,7 @@ jp-needs-light-background
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The amount of highlight is governed by the highlightlevel argument. 
+<p>The amount of highlight is governed by the highlightlevel argument.
 Increasing it highlights the significant edges more.</p>
 
 </div>
