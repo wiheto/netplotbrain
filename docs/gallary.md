@@ -24,9 +24,7 @@
 
 ### [Network based statistics (via bctpy) integration](./nbs/)
 
-![](./gallary/figures/nbs.png)
-[Source Code](./nbs/)
-
+[![](./gallary/figures/nbs.png)](./nbs/)
 
 ## Templateflow Atlases
 
