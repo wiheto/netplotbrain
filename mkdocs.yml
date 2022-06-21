@@ -5,8 +5,7 @@ nav:
     - Tutorial: tutorial.md
     - API: api.md
     - Gallary: gallary.md
-        - GALLARY/gallary.md
-
+    
 theme:
   name: material
   palette:
