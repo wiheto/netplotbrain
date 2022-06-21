@@ -1,19 +1,7 @@
-# ---
-# jupyter:
-#   jupytext:
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.11.0
-#   kernelspec:
-#     display_name: Python 3
-#     language: python
-#     name: python3
-# ---
-
-# %% Netplotbrain with network based statistics [markdown]
+# %% [markdown]
 """ 
+# Netplotbrain with network based statistics
+
 ## Plotting significant results from network based statistics
 Netplotbrain aims to try and integrate with other tools, minimizing the work needed.
 For this we are going to use bctpy's implementation of network based statistics.
