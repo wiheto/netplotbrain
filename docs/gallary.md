@@ -9,9 +9,9 @@
 
 ## High level interface
 
-### Three images
-
 ![](./gallary/figures/atlas_circles.png)
+[Source Code](./gallary/highlevel_size/)
+
 
 ## Visualization alternatives
 
@@ -22,7 +22,7 @@
 
 ## Integrations
 
-### Network based statistics (via bctpy) integration
+### [Network based statistics (via bctpy) integration](./nbs/)
 
 ![](./gallary/figures/nbs.png)
 [Source Code](./nbs/)

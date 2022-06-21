@@ -4,7 +4,7 @@
 
 To plot different templtes from templateflow, you just need to change the template specification:
 
-`template='MNIInfant',
+`template='MNIInfant',`
 
 The example nodes are scaled as the template is smalled than regular MNI space.
 """
