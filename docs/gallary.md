@@ -7,9 +7,13 @@
 ![](./gallary/figures/singleview.png)
 [Source Code](./simple/)
 
+## High level interface
+
 ### Three images
 
 ![](./gallary/figures/atlas_circles.png)
+
+## Visualization alternatives
 
 ## Dual row figures
 
@@ -23,7 +27,12 @@
 ![](./gallary/figures/nbs.png)
 [Source Code](./nbs/)
 
-## TemplateFLow Atlases
+
+## Templateflow Atlases
+
+
+
+## TemplateFLow Templates
 
 ### MNIInfant 
 
