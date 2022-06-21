@@ -95,7 +95,8 @@ Using the NBS implementation from bctpy with generate the p values
 # %%
 # g1 and g2 are both (Node, Node, Subject) in size.
 # The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities).
-p, adj, null = bct.nbs_bct(g1, g2, 4, seed=2022)
+# Note, k=100 is set for speed purposes. Should be larger.  
+p, adj, null = bct.nbs_bct(g1, g2, 4, k=100, seed=2022)
 
 # %% [markdown]
 """
