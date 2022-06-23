@@ -151,10 +151,13 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
                 }
             template = tf.get(template=template, desc='brain',
                               extension='.nii.gz', **tf_kwargs)
-            # If multiple templates still remain, take the first
-            # This may lead to suboptimal performence for some templates
-            if isinstance(template, list):
-                template = template[0]
+            img = nib.load(template)
+        else:
+            img = nib.load(template)
+    # If multiple templates still remain, take the first
+    # This may lead to suboptimal performence for some templates
+    elif isinstance(template, list):
+        template = template[0]
         img = nib.load(template)
     elif isinstance(template, (nib.Nifti1Image, nib.Nifti2Image)):
         img = template
