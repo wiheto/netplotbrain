@@ -121,3 +121,22 @@ def _check_axinput(ax, expected_ax_len):
     gridspec = ax[0].get_gridspec()
     return ax, gridspec
 
+
+def _process_highlightedge_input(edges, highlightedges, **profile):
+    # if highlight edges is array, convert to pandas.
+    if isinstance(highlightedges, np.ndarray):
+        # Convert np input to pd
+        highlightedges = _npedges2dfedges(highlightedges)
+        ecols = profile['edgecolumnnames']
+        # Make sure that the i and j column are the same name
+        # Also rename weight to edge_to_highlight
+        highlightedges.rename(columns = {'weight': 'edge_to_highlight',
+                                         'i': ecols[0],
+                                         'j': ecols[1]}, inplace = True)
+        # Merge dataframes with edges
+        edges = edges.merge(highlightedges, how='left')
+        # Make nans 0s
+        edges['edge_to_highlight'] = edges['edge_to_highlight'].fillna(0)
+        # Rename highlightedges to new column
+        highlightedges = 'edge_to_highlight'
+    return edges, highlightedges

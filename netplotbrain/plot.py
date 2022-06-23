@@ -7,7 +7,7 @@ from .plotting import _plot_template, \
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-    _plot_gif, _npedges2dfedges
+    _plot_gif, _npedges2dfedges, _process_highlightedge_input
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
     _load_profile, _nrows_in_fig, _highlight_edges
 
@@ -153,23 +153,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     if highlightnodes is not None:
         nodecolor, highlightnodes, profile['nodealpha'] = _highlight_nodes(
             nodes, nodecolor, highlightnodes, **profile)
-    # if highlight edges is array, convert to pandas.
-    if isinstance(highlightedges, np.ndarray):
-        # Convert np input to pd
-        highlightedges = _npedges2dfedges(highlightedges)
-        ecols = profile['edgecolumnnames']
-        # Make sure that the i and j column are the same name
-        # Also rename weight to edge_to_highlight
-        highlightedges.rename(columns = {'weight': 'edge_to_highlight',
-                                         'i': ecols[0],
-                                         'j': ecols[1]}, inplace = True)
-        # Merge dataframes with edges
-        edges = edges.merge(highlightedges, how='left')
-        # Make nans 0s
-        edges['edge_to_highlight'] = edges['edge_to_highlight'].fillna(0)
-        # Rename highlightedges to new column
-        highlightedges = 'edge_to_highlight'
+
     if highlightedges is not None:
+        edgecolor, highlightedges = _process_highlightedge_input(edges, highlightedges, **profile)
         edgecolor, highlightedges, profile['edgealpha'] = _highlight_edges(edges, edgecolor, highlightedges, **profile)
         # Get the nodes that are touched by highlighted edges
         nodes_to_highlight = edges[highlightedges == 1]
