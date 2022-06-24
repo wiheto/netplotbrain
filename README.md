@@ -19,7 +19,9 @@ Painlessly plot networks on a brain in python. The package is still in early dev
 
 `pip install netplotbrain`
 
-Add the `-U` flag to upgrade from an earlier version.  
+Add the `-U` flag to upgrade from an earlier version.
+
+Works best in python 3.9 and up. 
 
 ## How it works
 
