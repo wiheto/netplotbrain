@@ -1,4 +1,5 @@
 import numpy as np
+import networkx as nx
 from typing import Optional
 import matplotlib.pyplot as plt
 from .plotting import _plot_template, \
@@ -9,9 +10,9 @@ from .plotting import _plot_template, \
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
     _plot_gif, _npedges2dfedges, _process_highlightedge_input
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-    _load_profile, _nrows_in_fig, _highlight_edges
+    _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input
 
-def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled',
+def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled', network=None,
          arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles',
          nodecmap='Dark2', edgecmap='Set2', edgeweights=None, nodes_df=None, hemisphere='both', title='auto', highlightnodes=None, highlightedges=None, showlegend=True, **kwargs):
     """
@@ -41,6 +42,10 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         See edgecolumnames if you want to change the default column names.
         if numpy array, square adjacency array.
         If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
+    network : nx.Graph
+        NetworkX input. Note the nodecolumnnames for coordinates (by default x, y, z) must be node attributes for nodes.
+        If providing network input, than you cannot specify nodes or edges input.
+        These should be included within the networkx object as nodes and edges attributes.
     template : str or nibabel nifti
         Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
     templatestyle : str
@@ -105,6 +110,13 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         raise ValueError('DEPRECATED INPUT (from 0.2.0): Use nodecolor instead of nodecolorby    .')
     # Load default settings, then update with kwargs
     profile = _load_profile(**kwargs)
+    if network is not None:
+        if nodes is not None or edges is not None:
+            raise ValueError('Network is specified with edges or nodes.')
+        elif isinstance(network, nx.Graph):
+            nodes, edges, = _from_networkx_input(network, **profile)
+        else:
+            raise ValueError('Unnown netowrk input')
 
     # Check and load the input of nodes and edges
     nodes, nodeimg, nodecolorby, profile['nodecolumnnames'] = _process_node_input(
@@ -155,7 +167,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             nodes, nodecolor, highlightnodes, **profile)
 
     if highlightedges is not None:
-        edgecolor, highlightedges = _process_highlightedge_input(edges, highlightedges, **profile)
+        edges, highlightedges = _process_highlightedge_input(edges, highlightedges, **profile)
         edgecolor, highlightedges, profile['edgealpha'] = _highlight_edges(edges, edgecolor, highlightedges, **profile)
         # Get the nodes that are touched by highlighted edges
         nodes_to_highlight = edges[highlightedges == 1]

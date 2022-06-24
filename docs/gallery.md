@@ -4,27 +4,27 @@
 
 ### A single view
 
-![](./gallary/figures/singleview.png)
+![](./gallery/figures/singleview.png)
 [Source Code](./simple/)
 
 ## High level interface
 
-![](./gallary/figures/atlas_circles.png)
-[Source Code](./gallary/highlevel_size/)
+![](./gallery/figures/atlas_circles.png)
+[Source Code](./gallery/highlevel_size/)
 
 
 ## Visualization alternatives
 
 ## Dual row figures
 
-![](./gallary/figures/rows1.png)
-[Source Code](./gallary/two_rows/)
+![](./gallery/figures/rows1.png)
+[Source Code](./gallery/two_rows/)
 
 ## Integrations
 
 ### [Network based statistics (via bctpy) integration](./nbs/)
 
-[![](./gallary/figures/nbs.png)](./nbs/)
+[![](./gallery/figures/nbs.png)](./nbs/)
 
 ## Templateflow Atlases
 
@@ -34,12 +34,12 @@
 
 ### MNIInfant 
 
-![](./gallary/figures/template_inf.png)
+![](./gallery/figures/template_inf.png)
 [Source Code](./infant/)
 
 ### WHS (rat)
 
-![](./gallary/figures/template_whs.png)
+![](./gallery/figures/template_whs.png)
 [Source Code](./whs/)
 
 

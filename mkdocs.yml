@@ -4,7 +4,7 @@ nav:
     - Home: index.md
     - Tutorial: tutorial.md
     - API: api.md
-    - Gallary: gallary.md
+    - gallery: gallery.md
 
 theme:
   name: material
