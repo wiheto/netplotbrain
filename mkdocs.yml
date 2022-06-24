@@ -19,7 +19,6 @@ plugins:
     - mkdocs-jupyter:
         execute: True
         allow_errors: false
-        ignore_h1_titles: True
     - mkdocstrings:
         default_handler: python
         handlers:
