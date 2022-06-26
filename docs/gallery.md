@@ -22,6 +22,10 @@
 
 ## Integrations
 
+### [Include spring layout subplots](./spring_layout/)
+
+[![](./gallery/figures/springlayout.png)](./spring_layout/)
+
 ### [Network based statistics (via bctpy) integration](./nbs/)
 
 [![](./gallery/figures/nbs.png)](./nbs/)

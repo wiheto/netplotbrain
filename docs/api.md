@@ -101,10 +101,9 @@ titlefontsize | str | Size of title font (default: medium). See matplotlib "font
 titleloc | str, | Location of title (default: center). See matplotlib "loc"
 titleweight | str | Font weight of title (default: regular). See matplotlib "fontweight"
 
-### PROFILE KWARGS
+### Other KWARG
 
 | Argument | Type | Description |
 | --- | --- | --- |
+seed | int | Pseudorandom integer seed for reproducibility for certain functions (e.g. spring_layout)
 profile | str | path or name of file in netplotbrain/profiles/<filename>.json, specifies default kwargs. Default points to netplotbrain/profiles/default.json
-
-

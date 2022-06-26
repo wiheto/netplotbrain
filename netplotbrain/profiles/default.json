@@ -25,6 +25,7 @@
     "nodescale": 5,
     "nodesizelegend": true,
     "nodesizevminvmax": "minmax",
+    "seed": null,
     "savename": null,
     "surface_resolution": 2,
     "surface_detection": null,

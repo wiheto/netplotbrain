@@ -8,7 +8,8 @@ from .plotting import _plot_template, \
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-    _plot_gif, _npedges2dfedges, _process_highlightedge_input
+    _plot_gif, _npedges2dfedges, _process_highlightedge_input, \
+    _plot_springlayout
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
     _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input
 
@@ -21,7 +22,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     Arguments:
     ------------------
     fig: matplotlib figure
-    view : str, list, or tuple. If string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior)
+    view : str, list, or tuple. If string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior), 's' (spring layout)
         or any combination of these (e.g 'LR', 'AP').
         The string can contain multiple combinations (e.g. LSR)
         if list: multiple strings (as above) which will create new rows of subplots.
@@ -181,7 +182,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # TODO remove double forloop and make single forloop by running over nrows and frames
     for ri in range(nrows):
         # Get the azim, elev and arrowaxis for each row
-        azim, elev, arrowaxis_row = _get_view(
+        azim, elev, arrowaxis_row, viewtype = _get_view(
             view[ri], frames, arrowaxis=arrowaxis)
         for fi in range(frames):
             axind = (ri * nrows) + fi
@@ -198,7 +199,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             else:
                 ax = ax_in
             affine = None
-            if template is not None:
+            if template is not None and viewtype[fi]=='b':
                 affine = _plot_template(ax, templatestyle, template,
                                         voxsize=profile['templatevoxsize'],
                                         azim=azim[fi], elev=elev[fi],
@@ -214,7 +215,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # nodes and subplot may change for each frame/subplot
             # e.g. if hemisphere is specified
             nodes_frame = None
-            if nodes is not None:
+            if nodes is not None and viewtype[fi]=='b':
                 nodes_frame = nodes.copy()
                 nodes_frame = _select_single_hemisphere_nodes(
                     nodes_frame, profile['nodecolumnnames'][0], affine, hemi_frame)
@@ -228,17 +229,19 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 elif nodetype == 'parcels':
                     _plot_parcels(ax, nodeimg, cmap=nodecolor,
                                   hemisphere=hemi_frame, **profile)
-            if edges is not None:
+            if edges is not None and viewtype[fi]=='b':
                 edges_frame = edges.copy()
                 _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights,
                             edgecolor=edgecolor, highlightnodes=highlightnodes, **profile)
-            if arrowaxis_row is not None:
+            if arrowaxis_row is not None and viewtype[fi]=='b':
                 _add_axis_arrows(ax, dims=arrowaxis_row,
                                  origin=arroworigin,
                                  azim=azim[fi], elev=elev[fi], **profile)
-
+            if viewtype[fi] == 's' and nodes is not None and edges is not None:
+                _plot_springlayout(ax, nodes=nodes, edges=edges, nodecolor=nodecolor, nodesize=nodesize,
+                                   edgecolor=edgecolor, edgeweights=edgeweights, highlightnodes=highlightnodes, **profile)
             ax.view_init(azim=azim[fi], elev=elev[fi])
-            _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame, **profile)
+            _add_subplot_title(ax, azim[fi], elev[fi], title_frame, hemi_frame, viewtype[fi], **profile)
             # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
             _set_axes_equal(ax)

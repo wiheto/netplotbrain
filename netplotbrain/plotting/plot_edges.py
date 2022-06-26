@@ -88,6 +88,7 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
     Nothing
     """
     edgecol = kwargs.get('edgecolumnnames')
+    nodecol = kwargs.get('nodecolumnnames')
     edgewidthscale = kwargs.get('edgewidthscale')
     # Convert highlightnodes binary list to index list
     hl_idx = np.where(np.array(highlightnodes) == 1)[0]
@@ -109,8 +110,8 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
         if row[edgecol[0]] in nodes.index and row[edgecol[1]] in nodes.index:
             ea = _get_edge_highlight_alpha(
                 row[edgecol[0]], row[edgecol[1]], hl_idx, **kwargs)
-            xp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['x']
-            yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['y']
-            zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))]['z']
+            xp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))][nodecol[0]]
+            yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))][nodecol[1]]
+            zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))][nodecol[2]]
             ax.plot(xp, yp, zp, color=ec, linewidth=ew, alpha=ea)
         eci += 1
