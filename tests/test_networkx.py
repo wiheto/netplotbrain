@@ -1,7 +1,6 @@
 import netplotbrain
 import pytest
 import pandas as pd
-import numpy as np
 import networkx as nx
 
 # Example node and edges dataframes included with package

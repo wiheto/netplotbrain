@@ -8,8 +8,7 @@ from .plotting import _plot_template, \
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-    _plot_gif, _npedges2dfedges, _process_highlightedge_input, \
-    _plot_springlayout
+    _plot_gif, _process_highlightedge_input, _plot_springlayout
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
     _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input
 

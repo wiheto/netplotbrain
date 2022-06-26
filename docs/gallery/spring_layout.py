@@ -55,6 +55,7 @@ for network in atlasinfo['yeo7networks'].unique():
     idx =  atlasinfo[atlasinfo['yeo7networks']==network].index
     idx_pairs = np.array(list(itertools.combinations(idx, 2)))
     edges[idx_pairs[:, 0], idx_pairs[:, 1]] = np.random.normal(0.5, 0.025, [len(idx_pairs)])
+    edges[idx_pairs[:, 1], idx_pairs[:, 0]] = np.random.normal(0.5, 0.025, [len(idx_pairs)])
 
 # %%
 # Show what the connectivity matrix looks like

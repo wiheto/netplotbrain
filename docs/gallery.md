@@ -2,23 +2,20 @@
 
 ## Simple Figures
 
-### A single view
+### [A single view]((./gallery/highlevel_size/))
 
-![](./gallery/figures/singleview.png)
-[Source Code](./simple/)
+[![](./gallery/figures/singleview.png)](./simple/)
 
-## High level interface
+### [High level interface](./gallery/highlevel_size/)
 
-![](./gallery/figures/atlas_circles.png)
-[Source Code](./gallery/highlevel_size/)
-
+[![](./gallery/figures/atlas_circles.png)](./gallery/highlevel_size/)
 
 ## Visualization alternatives
 
-## Dual row figures
+### [Dual row figures](./gallery/two_rows/)
 
-![](./gallery/figures/rows1.png)
-[Source Code](./gallery/two_rows/)
+[![](./gallery/figures/rows1.png)](./gallery/two_rows/)
+
 
 ## Integrations
 
@@ -36,14 +33,12 @@
 
 ## TemplateFLow Templates
 
-### MNIInfant 
+### [MNIInfant](./infant) 
 
-![](./gallery/figures/template_inf.png)
-[Source Code](./infant/)
+[![](./gallery/figures/template_inf.png)](./infant/)
 
-### WHS (rat)
+### [WHS](./infant) 
 
-![](./gallery/figures/template_whs.png)
-[Source Code](./whs/)
+[![](./gallery/figures/template_whs.png)](./whs/)
 
 

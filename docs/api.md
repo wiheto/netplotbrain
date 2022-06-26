@@ -101,7 +101,7 @@ titlefontsize | str | Size of title font (default: medium). See matplotlib "font
 titleloc | str, | Location of title (default: center). See matplotlib "loc"
 titleweight | str | Font weight of title (default: regular). See matplotlib "fontweight"
 
-### Other KWARG
+### Other KWARGS
 
 | Argument | Type | Description |
 | --- | --- | --- |
