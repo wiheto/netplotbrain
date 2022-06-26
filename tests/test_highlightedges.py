@@ -1,7 +1,6 @@
 from netplotbrain import plot as npbplot
 import pytest
 import pandas as pd
-import matplotlib.pyplot as plt
 import numpy as np
 
 # Example node and edges dataframes included with package
@@ -22,6 +21,7 @@ def test_highlightedges_df():
                                 nodetype='circles',
                                 highlightlevel=0.5)
     return fig
+
 
 N = df_adj[['i', 'j']].max().max() + 1
 adj = np.zeros([N, N])

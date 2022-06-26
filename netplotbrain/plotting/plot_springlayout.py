@@ -1,6 +1,5 @@
 import networkx as nx
 import pandas as pd
-import numpy as np
 from ..plotting import _plot_nodes, _plot_edges
 
 def _plot_springlayout(ax, nodes, edges, nodecolor, nodesize, edgecolor, edgeweights, highlightnodes, **kwargs):
