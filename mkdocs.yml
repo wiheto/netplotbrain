@@ -1,15 +1,24 @@
 site_name: netplotbrain
 
+nav:
+    - Home: index.md
+    - Tutorial: tutorial.md
+    - API: api.md
+    - Gallery: gallery.md
+
 theme:
   name: material
   palette:
     scheme: preference
     primary: teal
     accent: purple
+
 plugins:
     - search
-    - pheasant
     - awesome-pages
+    - mkdocs-jupyter:
+        execute: True
+        allow_errors: false
     - mkdocstrings:
         default_handler: python
         handlers:

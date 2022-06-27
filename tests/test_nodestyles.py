@@ -20,7 +20,7 @@ def test_cont_colormap():
                       nodesize=40,
                       edges=edges,
                       nodecmap='RdBu',
-                      nodecolorby='centrality_measure1',
+                      nodecolor='centrality_measure1',
                       nodecolorlegendstyle='continuous')
     return fig
 

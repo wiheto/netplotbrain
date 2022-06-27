@@ -119,9 +119,6 @@ def _plot_template_style_surface(ax, data, template, **kwargs):
     mesh.set_facecolor(templatecolor)
     mesh.set_alpha(alpha)
     ax.add_collection3d(mesh)
-    ax.set_xlim(0, data.shape[0])
-    ax.set_ylim(0, data.shape[1])
-    ax.set_zlim(0, data.shape[2])
 
 
 def _select_single_hemisphere_template(data, hemisphere):
@@ -158,7 +155,10 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
             # This may lead to suboptimal performence for some templates
             if isinstance(template, list):
                 template = template[0]
-        img = nib.load(template)
+            img = nib.load(template)
+        else:
+            img = nib.load(template)
+
     elif isinstance(template, (nib.Nifti1Image, nib.Nifti2Image)):
         img = template
     if voxsize is not None:
@@ -175,4 +175,8 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
             ax, data, template, **kwargs)
     elif style == 'glass':
         _plot_template_style_glass(ax, data, **kwargs)
+    # Set xyz lim (for regardless of templatestyle)
+    ax.set_xlim(0, data.shape[0])
+    ax.set_ylim(0, data.shape[1])
+    ax.set_zlim(0, data.shape[2])
     return img.affine

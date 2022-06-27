@@ -5,14 +5,15 @@ Full list of KWARGS
 NODE KWARGS
 --------------
 nodecmap : str
-    Matplotlib colormap for node coloring with nodecolorby.
-nodecolor : matplotlib coloring
+    Matplotlib colormap for node coloring when nodecolor points to a dataframe.
+nodecolor : str, matplotlib coloring
+    Can be string to column in nodes or nodes_df input that specifies color column.
     Can be string (default 'black') or list of 3D/4D colors for each edge.
 nodetype : str
-    Can be 'spheres', 'circles', or (if nodeimg is specified) 'parcels'.
+    Can be 'spheres', 'circles', or (if nodes is nifti) 'parcels'.
 nodealpha : float
     Specify the transparency of the nodes
-nodecols : list
+nodecolumnnames : list
     Node column names in node dataframe. 'auto' entails the columns are ['x', 'y', 'z'] (specifying coordinates)
 nodesizevminvmax : str, list
     Scaling alternatives if nodesize is given.
@@ -21,14 +22,16 @@ nodesizevminvmax : str, list
     If absolute, then the default values are used.
     Absolute can lead to problems with, for example, negative values.
 nodecolorvminvmax : str, list
-    Scales continuous colormap between certain values. 
-    Alternatives: 'minmax' (default), 'absmax', , or 2-tuple list of [min, max].
+    Scales colormap between certain values. 
+    Alternatives: 'minmax' (default), 'absmax', or 2-tuple list of [min, max].
     If minmax, colorbar starts at the smallest value to largest value.
     If absmax, then colorbar goes from -abs(max(value)) to abs(max(value)), ensuring 0 is in the middle.
 
 EDGE KWARGS
 ------------
 
+edges_df : dataframe 
+    Allows for passing a dataframe with additional plotting options when edges is a connectivity matrix 
 edgecols : list
     Edge columns names in edge dataframe. Default is i and j (specifying nodes).
 edgecolor : matplotlib coloring
@@ -47,6 +50,12 @@ edgehighlightbehaviour : str
     If any, then only edges connecting any of the nodes are highlighted.
 edgewidthscale : int, float
     Scale the width of all edges by a factor (default: 1)
+edgecolorvminvmax : str, list
+    Scales colormap between certain values. 
+    Alternatives: 'minmax' (default), 'absmax', or 2-tuple list of [min, max].
+    If minmax, colorbar starts at the smallest value to largest value.
+    If absmax, then colorbar goes from -abs(max(value)) to abs(max(value)), ensuring 0 is in the middle.
+
 
 TEMPLATE KWARGS
 -----------------

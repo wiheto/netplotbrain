@@ -18,11 +18,11 @@ Here is the full list of keyword arguments (KWARGS) that can be used along with 
 
 | Argument | Type | Description |
 | --- | --- | --- |
-| nodecmap | str | Matplotlib colormap for node coloring with nodecolorby. |
-| nodecolor | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge. |
-nodetype | str | Can be 'spheres', 'circles', or (if nodeimg is specified) 'parcels'. |
+| nodecmap | str |     Matplotlib colormap for node coloring when nodecolor points to a dataframe. |
+| nodecolor | matplotlib coloring | Can be string (default 'black') that points to either a matplotlib color or a column in nodes or nodes_df. Alternatively a list of 3D/4D colors for each node. |
+nodetype | str | Can be 'spheres', 'circles', or (if nodes is a nifti image) 'parcels'. |
 nodealpha | float | Specify the transparency of the nodes
-nodecols | list | Node column names in node dataframe. 'auto' entails the columns are ['x', 'y', 'z'] (specifying coordinates)
+nodecolumnnames | list | Node column names in node dataframe. 'auto' entails the columns are ['x', 'y', 'z'] (specifying coordinates)
 nodesizevminvmax | str, list | Scaling alternatives if nodesize is given. Alternatives: 'absolute' (default) 'minmax', or 2-tuple list of [min, max]. If minmax, node sizes are scaled between (0 and 1) * nodescale. If absolute, then the default values are used. Absolute can lead to problems with, for example, negative values.
 nodecolorvminvmax | str, list | Scales continuous colormap between certain values. Alternatives: 'minmax' (default), 'absmax', , or 2-tuple list of [min, max]. If minmax, colorbar starts at the smallest value to largest value. If absmax, then colorbar goes from -abs(max(value)) to abs(max(value)), ensuring 0 is in the middle.
 
@@ -30,13 +30,16 @@ nodecolorvminvmax | str, list | Scales continuous colormap between certain value
 
 | Argument | Type | Description |
 | --- | --- | --- |
-edgecols | list | Edge columns names in edge dataframe. Default is i and j (specifying nodes).
-edgecolor | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge.
-edgewidth | int, float | Specify width of edges. If auto, will plot the value in edge array (if array) or the weight column (if in pandas dataframe), otherwise 2.
-edgeweights | str | String that specifies column in edge dataframe that contains weights. If numpy array is edge input, can be True (default) to specify edge weights.
+edges_df | pd.DataFrame | Allows for passing additional edge information if edges is np.array. Behaves like edges when input is dataframe.
 edgealpha | float | Transparency of edges (default: 1).
+edgecolumnames | list | Edge columns names in edge dataframe. Default is i and j (specifying nodes).
+edgecolor | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge.
+edgeweights | str | String that specifies column in edge dataframe that contains weights. If numpy array is edge input, can be True (default) to specify edge weights.
 edgehighlightbehaviour | str | Alternatives "both" or "any" or None. Governs edge dimming when highlightnodes is on. If both, then highlights only edges between highlighted nodes. If any, then only edges connecting any of the nodes are highlighted.
-edgewidthscale | int, float | Scale the width of all edges by a factor (default: 1)
+edgewidthscale | int, float | Scale the width of all edges by a factor (default: 1).
+edgethresholddirection | str | can be "absabove", "above" (or ">"), "below" (or "<") to indicate thresholding behaviour. If absabove, then the thresholding behaviour is np.abs(edges) > edgethreshold. 
+edgethreshold | float | Edgeweight value to threshold edges. 
+edgecolorvminvmax | str, list |     Scales colormap between certain values. Alternatives: 'minmax' (default), 'absmax', or 2-tuple list of [min, max]. If minmax, colorbar starts at the smallest value to largest value. If absmax, then colorbar goes from -abs(max(value)) to abs(max(value)), ensuring 0 is in the middle.
 
 ### TEMPLATE KWARGS
 
@@ -57,7 +60,6 @@ template_glass_maxalpha | float | Default is 0.01. To make the smokey effect the
 
 | Argument | Type | Description |
 | --- | --- | --- |
-nodecols | list | Default is ['x', 'y', 'z']. Column names for node coordinates. 
 nodecolorlegend | Bool | If the colorlegend is plotted or not. Default True.
 nodesizelegend | Bool | If the sizelegend is plotted or not. Default True.
 nodecolorlegendstyle | str | Alternatives: auto (default), discrete, continuous. If the color legend should show the entire colormap or discrete colors. If auto, plots discrete if less than 8 unique values are detected.
@@ -99,10 +101,9 @@ titlefontsize | str | Size of title font (default: medium). See matplotlib "font
 titleloc | str, | Location of title (default: center). See matplotlib "loc"
 titleweight | str | Font weight of title (default: regular). See matplotlib "fontweight"
 
-### PROFILE KWARGS
+### Other KWARGS
 
 | Argument | Type | Description |
 | --- | --- | --- |
+seed | int | Pseudorandom integer seed for reproducibility for certain functions (e.g. spring_layout)
 profile | str | path or name of file in netplotbrain/profiles/<filename>.json, specifies default kwargs. Default points to netplotbrain/profiles/default.json
-
-

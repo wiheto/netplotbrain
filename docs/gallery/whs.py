@@ -1,13 +1,24 @@
-## Template from TemplateFlow: WHS
+# %% [markdown]
+""" 
+# Template from TemplateFlow: WHS
 
-```python
+
+To plot different templtes from templateflow, you just need to change the template specification:
+
+`template='WHS',`
+
+The example nodes are scaled as the template is smalled than regular MNI space.
+"""
+
+# %%
+
 # Import packages
 import netplotbrain
 import pandas as pd
 
 # Load example data 
-nodes = pd.read_csv('./example_nodes.tsv', sep='\t', index_col=0)
-edges = pd.read_csv('./example_edges.tsv', sep='\t', index_col=0)
+nodes = pd.read_csv('./examples/example_nodes.tsv', sep='\t', index_col=0)
+edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 
 # Rescale example node data to fit template
 nodes_whs = nodes.copy()
@@ -23,8 +34,6 @@ netplotbrain.plot(template='WHS',
          nodes=nodes_whs,
          nodesize='centrality_measure1',
          edges=edges,
-         nodecolorby='community',
+         nodecolor='community',
          nodescale=80,
          templatevoxsize=0.2)
-         
-```

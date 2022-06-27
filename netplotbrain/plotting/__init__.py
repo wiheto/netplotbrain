@@ -8,9 +8,10 @@ from .plot_dimarrows import _add_axis_arrows
 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
 from .plot_title import _add_subplot_title
 from .process_input import get_frame_input, _process_edge_input, _process_node_input,\
-    _init_figure, _check_axinput
+    _init_figure, _check_axinput, _process_highlightedge_input
 from .plot_legend import _add_nodecolor_legend, _add_nodesize_legend, _setup_legend
 from .plot_gif import _plot_gif
+from .plot_springlayout import _plot_springlayout
 
 __all__ = ['_plot_template', '_plot_template_style_filled',
            '_plot_template_style_cloudy',
@@ -19,4 +20,5 @@ __all__ = ['_plot_template', '_plot_template_style_filled',
            '_add_axis_arrows', '_get_nodes_from_nii', '_plot_parcels',
            '_select_single_hemisphere_nodes', '_npedges2dfedges', '_add_subplot_title', 
            '_setup_legend', '_process_edge_input', '_process_node_input', '_add_nodesize_legend',
-           '_add_nodecolor_legend', 'get_frame_input', '_init_figure', '_check_axinput', '_plot_gif']
+           '_add_nodecolor_legend', 'get_frame_input', '_init_figure', '_check_axinput', '_plot_gif',
+           '_process_highlightedge_input', '_plot_springlayout']

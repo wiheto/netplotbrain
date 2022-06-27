@@ -4,8 +4,6 @@ from scipy.ndimage import rotate
 
 # equal scaling solution from @AndrewCox from https://stackoverflow.com/a/63625222
 # Functions from @Mateen Ulhaq and @karlo
-
-
 def _set_axes_equal(ax: plt.Axes):
     """
     Set 3D plot axes to equal scale.
@@ -41,6 +39,8 @@ def _set_axes_radius(ax, origin, radius):
 def _get_view(views='L', frames=1, arrowaxis='auto'):
     """
     Gets a or list of azim and elev arguments for viewing of q
+    Viewtype is a string of b or s for brain or springlayout view.
+    E.g. viewtype=bbbs means 3 brain and one springlayout in the image row.
     """
     direction = '+'
     if views[-1] == '-' or views[-1] == '+':
@@ -52,8 +52,10 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
     toview = views[1] if len(views) == 2 else None
     view_defaults = {'L': (180, 10), 'R': (0, 10),
                      'A': (90, 10), 'P': (-90, 10),
-                     'S': (-90, 90), 'I': (90, 90)}
+                     'S': (-90, 90), 'I': (90, 90),
+                     's': (-90, 90)}
     # Set auto arrows for axis depedning on starting view
+    autoarrowaxis = None
     if fromview in ['L', 'R']:
         autoarrowaxis = 'AP'
     elif fromview in ['A', 'P']:
@@ -85,7 +87,13 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
                 vy.append(v1y - n * ((v2y - v1y) / (frames - 1)))
     if arrowaxis == 'auto':
         arrowaxis = autoarrowaxis
-    return vx, vy, arrowaxis
+    # Viewtype
+    viewtype = 'b' * len(vx)
+    if 's' in views:
+        # Assumes there will only ever be one springlayout
+        ind = views.index('s')
+        viewtype = viewtype[:ind] + 's' + viewtype[ind+1:]
+    return vx, vy, arrowaxis, viewtype
 
 
 def _rotate_data_to_viewingangle(data, azim=0, elev=0, rotateback=False):

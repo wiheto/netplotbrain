@@ -1,5 +1,6 @@
 
-def _add_subplot_title(ax, azim=None, elev=None, title='auto', hemisphere='both', **kwargs):
+
+def _add_subplot_title(ax, azim=None, elev=None, title='auto', hemisphere='both', viewtype='b', **kwargs):
     titlefont = kwargs.get('font')
     titlecolor = kwargs.get('fontcolor')
     titlefontsize = kwargs.get('titlefontsize')
@@ -16,7 +17,7 @@ def _add_subplot_title(ax, azim=None, elev=None, title='auto', hemisphere='both'
             title = 'Anterior'
         elif viewcoord == (-90, 10):
             title = 'Posterior'
-        elif viewcoord == (-90, 90):
+        elif viewcoord == (-90, 90) and viewtype == 'b':
             title = 'Superior'
         elif viewcoord == (90, 90):
             title = 'Inferior'
