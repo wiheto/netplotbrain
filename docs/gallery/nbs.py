@@ -122,7 +122,7 @@ fig, ax = netplotbrain.plot(template='MNI152NLin2009cAsym',
                             highlightedges=adj,
                             templatestyle='glass',
                             view=['LSR'],
-                            title=['', 'NBS integration', ''],
+                            title='NBS integration',
                             nodetype='circles',
                             highlightlevel=0.5)
 
