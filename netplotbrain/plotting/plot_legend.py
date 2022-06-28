@@ -98,7 +98,7 @@ def _add_nodecolor_legend_discrete(ax, nodes, nodecolorby, nodecolor, **kwargs):
     return ax
 
 
-def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap, **kwargs):
+def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, **kwargs):
     """
     Add node color legend to bottom of figure.
     This is for continuous colours.
@@ -106,6 +106,7 @@ def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap, **kwargs):
     # Get relevant kwargs
     font = kwargs.get('font')
     fontcolor = kwargs.get('fontcolor')
+    nodecmap = kwargs.get('nodecmap')
     legendtickfontsize = kwargs.get('legendtickfontsize')
     legendtitlefontsize = kwargs.get('legendtitlefontsize')
     nodecolorvminvmax = kwargs.get('nodecolorvminvmax')
@@ -148,6 +149,6 @@ def _add_nodecolor_legend(ax, nodes, nodecolorby, nodecolor, nodecmap, **kwargs)
         ax = _add_nodecolor_legend_discrete(
             ax, nodes, nodecolorby, nodecolor, **kwargs)
     else:
-        ax = add_nodecolor_legend_continuous(ax, nodes, nodecolorby, nodecmap, **kwargs)
+        ax = add_nodecolor_legend_continuous(ax, nodes, nodecolorby, **kwargs)
 
     return ax

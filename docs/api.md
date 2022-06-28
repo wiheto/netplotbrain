@@ -18,9 +18,10 @@ Here is the full list of keyword arguments (KWARGS) that can be used along with 
 
 | Argument | Type | Description |
 | --- | --- | --- |
-| nodecmap | str |     Matplotlib colormap for node coloring when nodecolor points to a dataframe. |
-| nodecolor | matplotlib coloring | Can be string (default 'black') that points to either a matplotlib color or a column in nodes or nodes_df. Alternatively a list of 3D/4D colors for each node. |
-nodetype | str | Can be 'spheres', 'circles', or (if nodes is a nifti image) 'parcels'. |
+nodes_df | pd.DataFrame | Allows for passing additional edge information if nodes is nifti file or templateflow atlas dictionary. Behaves like nodes when input is dataframe.
+nodecmap | str |     Matplotlib colormap for node coloring when nodecolor points to a dataframe. 
+nodecolor | matplotlib coloring | Can be string (default 'black') that points to either a matplotlib color or a column in nodes or nodes_df. Alternatively a list of 3D/4D colors for each node. 
+nodetype | str | Can be 'spheres', 'circles', or (if nodes is a nifti image) 'parcels'. 
 nodealpha | float | Specify the transparency of the nodes
 nodecolumnnames | list | Node column names in node dataframe. 'auto' entails the columns are ['x', 'y', 'z'] (specifying coordinates)
 nodesizevminvmax | str, list | Scaling alternatives if nodesize is given. Alternatives: 'absolute' (default) 'minmax', or 2-tuple list of [min, max]. If minmax, node sizes are scaled between (0 and 1) * nodescale. If absolute, then the default values are used. Absolute can lead to problems with, for example, negative values.
@@ -31,6 +32,7 @@ nodecolorvminvmax | str, list | Scales continuous colormap between certain value
 | Argument | Type | Description |
 | --- | --- | --- |
 edges_df | pd.DataFrame | Allows for passing additional edge information if edges is np.array. Behaves like edges when input is dataframe.
+edgecmap | str |     Matplotlib colormap for node coloring when nodecolor points to a dataframe. |
 edgealpha | float | Transparency of edges (default: 1).
 edgecolumnames | list | Edge columns names in edge dataframe. Default is i and j (specifying nodes).
 edgecolor | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge.
@@ -45,9 +47,10 @@ edgecolorvminvmax | str, list |     Scales colormap between certain values. Alte
 
 | Argument | Type | Description |
 | --- | --- | --- |
+templatealpha | float | Opacity of template voxels.
 templatecolor | str | If templatestyle=='surface' or 'filled', the color of template voxels
 templateedgethreshold | float | If templatestyle=='cloudy', can tweak the edges detection threshold. (Default: 0.7)
-templatealpha | float | Opacity of template voxels.
+templatestyle | str | can be 'surface': (a surface is rendered from the template), 'glass': a semi-transparanet brain is generated from the template. 'filled': plot all voxels, 'cloudy': cloudy (cloudy scatter edges outline the figure)
 templatevoxelsize | int | Resize voxels this size. Larger voxels = quicker. (Default: 2)
 surface_detection | float | The value used to detect the surface boundary (see argument level in marching_cubes). Some default choices are made for various templates
 surface_resolution | int | If templatestyle=='surface' controls the size of the triangles used in the surface reconstruction. (Default: 2).
@@ -55,16 +58,22 @@ template_glass_compactness | float | Default 0.3. Compactness argument for skima
 temlate_glass_nsegments | int | n_segments argument for skimage.segementations.slic. Approx number of segments. 3 seems to work well. Increase if not enough detail, reduce if too much detail.
 template_glass_maxalpha | float | Default is 0.01. To make the smokey effect the alpha is relative to template intensity value This value sets the alpha scalar factor. The value will be the largest possible alpha value, where all other values scale between 0 and template_glass_max_alpha.
 
+### HIGHLIGHTING KWARGS
+
+highlightlevel | float | Intensity of the highlighting (opposite of alpha). Controls both nods and edges together. Value between 0 and 1, if 1, non-highlighted nodes are fully transparent. If 0, non-highlighted nodes are same alpha level as highlighted nodes. Default 0.85.
+
+See also nodehighlight* and edgehighlight* kwargs.
 
 ### LEGENDKWARGS
 
 | Argument | Type | Description |
-| --- | --- | --- |
+| --- | --- | --- |    
+legendtickfontsize | str, int | Matplotlib fontsize for title in figure legends
+legendtitlefontsize | str, int | Matplotlib fontsize for ticks in figure legends
 nodecolorlegend | Bool | If the colorlegend is plotted or not. Default True.
 nodesizelegend | Bool | If the sizelegend is plotted or not. Default True.
 nodecolorlegendstyle | str | Alternatives: auto (default), discrete, continuous. If the color legend should show the entire colormap or discrete colors. If auto, plots discrete if less than 8 unique values are detected.
-legendtickfontsize | str, int | Matplotlib fontsize for title in figure legends
-legendtitlefontsize | str, int | Matplotlib fontsize for ticks in figure legends
+showlegend | bool, list | If size or colour have been set, generates a legend for that property at bottom of figure. If True, plots all the legends that can be plotted. If list, can contain 'nodesize' and 'nodecolor' to plot those in the legend.
 
 ### ARROW KWARGS
 
@@ -82,6 +91,11 @@ ax | matplotlib 3D ax | fig = plt.figure(). ax = fig.add_subplot(111, projection
 fig | matplotlib figure
 savename | str | Save path for figure. If string ends with .png or .svg it will one save this figure. if the path ends with anything else, it will save both a .png and .svg figure. Default: None and nothing is saved.
 figdpi | int | 300 Default. R   esolution of figure when saving png files.
+
+### HEMISPHERE KWARGS
+| Argument | Type | Description |
+| --- | --- | --- |
+hemisphere | string, list | If string, can be left or right to specify single hemisphere to include. If list, should match the size of views and contain strings to specify hemisphere shown in subplots. Can be abbreviated to "L", "R" and ("both" or empty string possible if both hemisphere plotted). Between hemisphere edges are deleted.
 
 ### GIF KWARGS
 

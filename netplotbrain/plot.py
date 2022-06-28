@@ -12,9 +12,8 @@ from .plotting import _plot_template, \
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
     _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input
 
-def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', frames=None, edges=None, template=None, templatestyle='filled', network=None,
-         arrowaxis='auto', arroworigin=None, edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles',
-         nodecmap='Dark2', edgecmap='Set2', edgeweights=None, nodes_df=None, hemisphere='both', title=None, subtitles='auto', highlightnodes=None, showlegend=True, **kwargs):
+def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', edgeweights=None, frames=None, edges=None, template=None, network=None,
+         edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', title=None, hemisphere='both', subtitles='auto', highlightnodes=None, highlightedges=None, **kwargs):
     """
     Plot a network on a brain
 
@@ -33,9 +32,6 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         If string, can load a csv file, tsv file (tab seperator), assumes index column is the 0th column.
         If nodes points to a nifti image, a string to filename or nibabel object that contains nodes as int.
         Or additionally can point to an atlas on templateflow.
-    nodes_df : dataframe
-        If nodes points to a nifti file, optional dataframe of input for other arguments (e.g. size).
-        Should be in the same order as the node ints in the nifti image.
     edges : dataframe, numpy array, or string
         If dataframe, must include i, j columns (and weight, for weighted).
         i and j specify indices in nodes.
@@ -47,22 +43,12 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         If providing network input, than you cannot specify nodes or edges input.
         These should be included within the networkx object as nodes and edges attributes.
     template : str or nibabel nifti
-        Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
-    templatestyle : str
-        can be 'surface': (a surface is rendered from the template),
-               'glass': a semi-transparanet brain is generated from the template.
-               'filled': (a single transparant color)
-               'cloudy': cloudy (cloudy scatter edges outline the figure)
+        Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.        
     frames : int
         If specifying 2 views (e.g. LR or AP) and would like to rotates a between them.
         This value will indicate the number of rotations to get from L to R.
         For any other view specification, (e.g. specifying string such as 'LSR')
         then this value is not needed.
-    hemisphere: string or list
-        If string, can be left or right to specify single hemisphere to include.
-        If list, should match the size of views and contain strings to specify hemisphere.
-        Can be abbreviated to L, R and (empty string possible if both hemisphere plotted).
-        Between hemisphere edges are deleted.
     highlightnodes : int, list, dict, str
         List or int point out which nodes you want to be highlighted.
         If dict, should be a single column-value pair.
@@ -75,16 +61,6 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         Example: highlight all nodes of that, in the edge dataframe, have a community
         value of 1, the input will be {'community': 1}.
         If string, should point to a column in the nodes dataframe and all non-zero values will be plotted.
-    highlightlevel : float
-        Intensity of the highlighting (opposite of alpha).
-        Value between 0 and 1, if 1, non-highlighted nodes are fully transparent.
-        If 0, non-highlighted nodes are same alpha level as highlighted nodes.
-        Default 0.85.
-    showlegend : bool or list
-        If size or colour have been set, generates a legend for that property at bottom of figure.
-        If True, plots all the legends that can be plotted.
-        If list, can contain 'nodesize' and 'nodecolor' to plot those in the legend.
-        See legend kwargs for turning specific legends on/off.
     nodecolor : str or RGB value.
         If string, named matplotlib color or name of column in dataframe
     nodesize : str, int, float
@@ -107,7 +83,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     if 'nodeimg' in kwargs:
         raise ValueError('DEPRECATED INPUT (from 0.2.0): Use nodes instead of nodeimg. If additional nodeinfo exists as a dataframe, use nodes_df.')
     if 'nodecolorby' in kwargs:
-        raise ValueError('DEPRECATED INPUT (from 0.2.0): Use nodecolor instead of nodecolorby    .')
+        raise ValueError('DEPRECATED INPUT (from 0.2.0): Use nodecolor instead of nodecolorby.')
     # Load default settings, then update with kwargs
     profile = _load_profile(**kwargs)
     if network is not None:
@@ -120,16 +96,16 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
 
     # Check and load the input of nodes and edges
     nodes, nodeimg, nodecolorby, profile['nodecolumnnames'] = _process_node_input(
-        nodes, nodes_df, nodecolor, profile['nodecolumnnames'], template, profile['templatevoxsize'])
+        nodes, profile['nodes_df'], nodecolor, profile['nodecolumnnames'], template, profile['templatevoxsize'])
     edges, edgeweights = _process_edge_input(edges, edgeweights, **profile)
     # Set up legend row
     # TODO compact code into subfunction
     legends = None
     legendrows = 0
-    if isinstance(showlegend, list):
-        legends = showlegend
+    if isinstance(profile['showlegend'], list):
+        legends = profile['showlegend']
         legendrows = len(legends)
-    elif showlegend is True:
+    elif profile['showlegend'] is True:
         # Only plot size legend is sphere/circle and string or list input
         # TODO setup_legend is a little clunky and could be fixed
         if nodetype != 'parcel' and not isinstance(nodesize, (float, int)):
@@ -171,10 +147,10 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         
     # Set nodecolor to colorby argument
     if nodecolorby is not None:
-        nodecolor = _get_colorby_colors(nodes, nodecolorby, nodecmap, **profile)
+        nodecolor = _get_colorby_colors(nodes, nodecolorby, **profile)
     if isinstance(edgecolor, str) and edges is not None:
         if edgecolor in edges:
-            edgecolor = _get_colorby_colors(edges, edgecolor, edgecmap, 'edge', **profile)
+            edgecolor = _get_colorby_colors(edges, edgecolor, 'edge', **profile)
     if highlightnodes is not None and highlightedges is not None:
         raise ValueError('Cannot highlight based on edges and nodes at the same time.')
     if highlightnodes is not None:
@@ -197,7 +173,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     for ri in range(nrows):
         # Get the azim, elev and arrowaxis for each row
         azim, elev, arrowaxis_row, viewtype = _get_view(
-            view[ri], frames, arrowaxis=arrowaxis)
+            view[ri], frames, arrowaxis=profile['arrowaxis'])
         for fi in range(frames):
             axind = (ri * nrows) + fi
             # Get hemisphere for this frame
@@ -214,10 +190,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 ax = ax_in
             affine = None
             if template is not None and viewtype[fi]=='b':
-                affine = _plot_template(ax, templatestyle, template,
+                affine = _plot_template(ax, profile['templatestyle'], template,
                                         voxsize=profile['templatevoxsize'],
                                         azim=azim[fi], elev=elev[fi],
-                                        hemisphere=hemi_frame,
                                         **profile)
                 
             # Template voxels will have origin at 0,0,0
@@ -250,7 +225,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                             edgecolor=edgecolor, highlightnodes=highlightnodes, **profile)
             if arrowaxis_row is not None and viewtype[fi]=='b':
                 _add_axis_arrows(ax, dims=arrowaxis_row,
-                                 origin=arroworigin,
+                                 origin=profile['arroworigin'],
                                  azim=azim[fi], elev=elev[fi], **profile)
             if viewtype[fi] == 's' and nodes is not None and edges is not None:
                 _plot_springlayout(ax, nodes=nodes, edges=edges, nodecolor=nodecolor, nodesize=nodesize,
@@ -291,7 +266,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 ax = _add_nodesize_legend(ax, nodes, nodesize, **profile)
             if legend == 'nodecolor':
                 ax = _add_nodecolor_legend(
-                    ax, nodes, nodecolorby, nodecolor, nodecmap, **profile)
+                    ax, nodes, nodecolorby, nodecolor, **profile)
             ax.axis('off')
             #ax = _add_size_legend(ax, nodes, nodesize, nodescale)
             ax_out.append(ax)

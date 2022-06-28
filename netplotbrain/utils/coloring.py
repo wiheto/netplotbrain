@@ -106,7 +106,7 @@ def _detect_coloring_type(nodes, nodecolorby, prespecified=None):
     return colorpropertytype
 
 
-def _get_colorby_colors(df, colorby, cmap='plasma', datatype='node', **kwargs):
+def _get_colorby_colors(df, colorby, datatype='node', **kwargs):
     """
     Get array of different colors by some column
 
@@ -116,7 +116,6 @@ def _get_colorby_colors(df, colorby, cmap='plasma', datatype='node', **kwargs):
         dataframe to look in for colorby argument (nodes or edges dataframe)
     colorby : str
         column in dataframe
-    cmap : colormap
     datatype : str
         node or edge
 
@@ -125,6 +124,8 @@ def _get_colorby_colors(df, colorby, cmap='plasma', datatype='node', **kwargs):
     color_array : numpy array
         A N x 4 list of matplotlib colours for each node
     """
+    # Get relevant kwargs
+    cmap = kwargs.get(datatype + 'cmap')
     color_vminvmax = kwargs.get(datatype + 'colorvminvmax')
     colortype = _detect_coloring_type(df, colorby)
     cmap = cm.get_cmap(cmap)
