@@ -8,12 +8,12 @@ from .plotting import _plot_template, \
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
-    _plot_gif, _process_highlightedge_input, _plot_springlayout
+    _plot_gif, _process_highlightedge_input, _plot_springlayout, _add_title
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
     _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', edgeweights=None, frames=None, edges=None, template=None, network=None,
-         edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', title=None, hemisphere='both', subtitles='auto', highlightnodes=None, highlightedges=None, **kwargs):
+         edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', hemisphere='both', highlightnodes=None, highlightedges=None, **kwargs):
     """
     Plot a network on a brain
 
@@ -65,7 +65,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         If string, named matplotlib color or name of column in dataframe
     nodesize : str, int, float
         If string, can plot a column in nodes
-    title : str or list
+    subtitle : list
         Default auto, will describe the view settings.
         Otherwise string or list of for subplot titles
 
@@ -124,19 +124,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Get number of non-legend rowsnon
     nrows, view, frames = _nrows_in_fig(view, frames)
     
-    #if subtitles is not specified, give each subplot its view name
-    if subtitles == 'auto':
-        subtitles = []
-        for i in range(0, nrows * frames):
-            subtitles.append('auto')
-    #if subtitles is None, remove subtitles 
-    elif subtitles == None:
-        subtitles=[]
-        for i in range(0, nrows * frames):
-            subtitles.append('')
-    
-    if len(subtitles) != nrows * frames:
-        raise ValueError('Shape subtitles must be the same as number of subplots')
+    #Set subtitles to None if title is set.
+    if profile['subtitles'] == 'auto' and profile['title'] is not None:
+        profile['subtitles'] = None
     
     # Init figure, if not given as input
     if ax is None:
@@ -179,7 +169,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # Get hemisphere for this frame
             hemi_frame = get_frame_input(hemisphere, axind, ri, fi, str)
             # Get title for this frame
-            title_frame = get_frame_input(title, axind, ri, fi, str)
+            subtitle_frame = get_frame_input(profile['subtitles'], axind, ri, fi, str)
             # Set up subplot
             if ax_in is None:
                 ax = fig.add_subplot(gridspec[ri, fi], projection='3d')
@@ -232,18 +222,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                                    edgecolor=edgecolor, edgeweights=edgeweights, highlightnodes=highlightnodes, **profile)
             ax.view_init(azim=azim[fi], elev=elev[fi])
             
-            if nrows * frames != 1:
-                subtitle=subtitles[axind]
-            elif title == None:
-                subtitle = 'auto'
-            else:
-                subtitle=''
-            
-            _add_subplot_title(ax, azim[fi], elev[fi], subtitle, hemi_frame, viewtype[fi], **profile)
-            
-            # Title on top of the figure
-            if title is not None: 
-                fig.suptitle(title)
+            _add_subplot_title(ax, azim[fi], elev[fi], subtitle_frame, hemi_frame, viewtype[fi], **profile)
             
             # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
@@ -270,6 +249,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax.axis('off')
             #ax = _add_size_legend(ax, nodes, nodesize, nodescale)
             ax_out.append(ax)
+
+    # Title on top of the figure
+    if profile['title'] is not None: 
+        _add_title(fig, **profile)
+            
     fig.tight_layout()
 
     # If gif is requested, create the gif.

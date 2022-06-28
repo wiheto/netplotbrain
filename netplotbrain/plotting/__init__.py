@@ -6,7 +6,7 @@ from .plot_templates import _plot_template, _plot_template_style_filled, \
     _plot_template_style_cloudy, _plot_template_style_surface
 from .plot_dimarrows import _add_axis_arrows
 from .plot_parcels import _get_nodes_from_nii, _plot_parcels
-from .plot_title import _add_subplot_title
+from .plot_title import _add_subplot_title, _add_title
 from .process_input import get_frame_input, _process_edge_input, _process_node_input,\
     _init_figure, _check_axinput, _process_highlightedge_input
 from .plot_legend import _add_nodecolor_legend, _add_nodesize_legend, _setup_legend
@@ -21,4 +21,4 @@ __all__ = ['_plot_template', '_plot_template_style_filled',
            '_select_single_hemisphere_nodes', '_npedges2dfedges', '_add_subplot_title', 
            '_setup_legend', '_process_edge_input', '_process_node_input', '_add_nodesize_legend',
            '_add_nodecolor_legend', 'get_frame_input', '_init_figure', '_check_axinput', '_plot_gif',
-           '_process_highlightedge_input', '_plot_springlayout']
+           '_process_highlightedge_input', '_plot_springlayout', '_add_title']

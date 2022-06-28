@@ -33,6 +33,10 @@
     "savename": null,
     "seed": null,
     "showlegend": true,
+    "subtitles": "auto",
+    "subtitlefontsize": "medium",
+    "subtitleloc": "center",
+    "subtitleweight": "regular",
     "surface_resolution": 2,
     "surface_detection": null,
     "templatealpha": 0.2,
@@ -43,7 +47,7 @@
     "template_glass_compactness": 0.3,
     "template_glass_nsegments": 3,
     "template_glass_maxalpha": 0.01,
+    "title": null,
     "titlefontsize": "medium",
-    "titleloc": "center",
     "titleweight": "regular"
 }

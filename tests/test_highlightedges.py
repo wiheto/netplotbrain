@@ -17,7 +17,7 @@ def test_highlightedges_df():
                                 template='MNI152NLin2009cAsym',
                                 templatestyle='glass',
                                 view=['LSR'],
-                                title=['',    'NBS integration', ''],
+                                title='NBS integration',
                                 nodetype='circles',
                                 highlightlevel=0.5)
     return fig
@@ -39,7 +39,7 @@ def test_highlightedges_np():
                                 template='MNI152NLin2009cAsym',
                                 templatestyle='glass',
                                 view=['LSR'],
-                                title=['',    'NBS integration', ''],
+                                title='NBS integration',
                                 nodetype='circles',
                                 highlightlevel=0.5)
     return fig

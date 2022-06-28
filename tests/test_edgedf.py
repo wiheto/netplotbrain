@@ -31,7 +31,7 @@ def test_edges_df():
                                 templatestyle='glass',
                                 view=['S'],
                                 edgecolor='color',
-                                title=['Edge_df'],
+                                title='Edge_df',
                                 nodetype='circles',
                                 edgecmap='tab10',
                                 edgethreshold=0,
