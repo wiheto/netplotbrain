@@ -281,6 +281,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#highlighting-kwargs" class="md-nav__link">
+    HIGHLIGHTING KWARGS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#legendkwargs" class="md-nav__link">
     LEGENDKWARGS
   </a>
@@ -297,6 +304,13 @@
           <li class="md-nav__item">
   <a href="#figure-kwargs" class="md-nav__link">
     FIGURE KWARGS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hemisphere-kwargs" class="md-nav__link">
+    HEMISPHERE KWARGS
   </a>
   
 </li>
@@ -411,6 +425,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#highlighting-kwargs" class="md-nav__link">
+    HIGHLIGHTING KWARGS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#legendkwargs" class="md-nav__link">
     LEGENDKWARGS
   </a>
@@ -427,6 +448,13 @@
           <li class="md-nav__item">
   <a href="#figure-kwargs" class="md-nav__link">
     FIGURE KWARGS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hemisphere-kwargs" class="md-nav__link">
+    HEMISPHERE KWARGS
   </a>
   
 </li>
@@ -498,6 +526,11 @@
 </thead>
 <tbody>
 <tr>
+<td>nodes_df</td>
+<td>pd.DataFrame</td>
+<td>Allows for passing additional edge information if nodes is nifti file or templateflow atlas dictionary. Behaves like nodes when input is dataframe.</td>
+</tr>
+<tr>
 <td>nodecmap</td>
 <td>str</td>
 <td>Matplotlib colormap for node coloring when nodecolor points to a dataframe.</td>
@@ -548,6 +581,11 @@
 <td>edges_df</td>
 <td>pd.DataFrame</td>
 <td>Allows for passing additional edge information if edges is np.array. Behaves like edges when input is dataframe.</td>
+</tr>
+<tr>
+<td>edgecmap</td>
+<td>str</td>
+<td>Matplotlib colormap for node coloring when nodecolor points to a dataframe.</td>
 </tr>
 <tr>
 <td>edgealpha</td>
@@ -607,6 +645,11 @@
 </thead>
 <tbody>
 <tr>
+<td>templatealpha</td>
+<td>float</td>
+<td>Opacity of template voxels.</td>
+</tr>
+<tr>
 <td>templatecolor</td>
 <td>str</td>
 <td>If templatestyle=='surface' or 'filled', the color of template voxels</td>
@@ -617,9 +660,9 @@
 <td>If templatestyle=='cloudy', can tweak the edges detection threshold. (Default: 0.7)</td>
 </tr>
 <tr>
-<td>templatealpha</td>
-<td>float</td>
-<td>Opacity of template voxels.</td>
+<td>templatestyle</td>
+<td>str</td>
+<td>can be 'surface': (a surface is rendered from the template), 'glass': a semi-transparanet brain is generated from the template. 'filled': plot all voxels, 'cloudy': cloudy (cloudy scatter edges outline the figure)</td>
 </tr>
 <tr>
 <td>templatevoxelsize</td>
@@ -653,6 +696,9 @@
 </tr>
 </tbody>
 </table>
+<h3 id="highlighting-kwargs">HIGHLIGHTING KWARGS</h3>
+<p>highlightlevel | float | Intensity of the highlighting (opposite of alpha). Controls both nods and edges together. Value between 0 and 1, if 1, non-highlighted nodes are fully transparent. If 0, non-highlighted nodes are same alpha level as highlighted nodes. Default 0.85.</p>
+<p>See also nodehighlight<em> and edgehighlight</em> kwargs.</p>
 <h3 id="legendkwargs">LEGENDKWARGS</h3>
 <table>
 <thead>
@@ -663,6 +709,16 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>legendtickfontsize</td>
+<td>str, int</td>
+<td>Matplotlib fontsize for title in figure legends</td>
+</tr>
+<tr>
+<td>legendtitlefontsize</td>
+<td>str, int</td>
+<td>Matplotlib fontsize for ticks in figure legends</td>
+</tr>
 <tr>
 <td>nodecolorlegend</td>
 <td>Bool</td>
@@ -679,14 +735,9 @@
 <td>Alternatives: auto (default), discrete, continuous. If the color legend should show the entire colormap or discrete colors. If auto, plots discrete if less than 8 unique values are detected.</td>
 </tr>
 <tr>
-<td>legendtickfontsize</td>
-<td>str, int</td>
-<td>Matplotlib fontsize for title in figure legends</td>
-</tr>
-<tr>
-<td>legendtitlefontsize</td>
-<td>str, int</td>
-<td>Matplotlib fontsize for ticks in figure legends</td>
+<td>showlegend</td>
+<td>bool, list</td>
+<td>If size or colour have been set, generates a legend for that property at bottom of figure. If True, plots all the legends that can be plotted. If list, can contain 'nodesize' and 'nodecolor' to plot those in the legend.</td>
 </tr>
 </tbody>
 </table>
@@ -746,6 +797,23 @@
 <td>figdpi</td>
 <td>int</td>
 <td>300 Default. R   esolution of figure when saving png files.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hemisphere-kwargs">HEMISPHERE KWARGS</h3>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hemisphere</td>
+<td>string, list</td>
+<td>If string, can be left or right to specify single hemisphere to include. If list, should match the size of views and contain strings to specify hemisphere shown in subplots. Can be abbreviated to "L", "R" and ("both" or empty string possible if both hemisphere plotted). Between hemisphere edges are deleted.</td>
 </tr>
 </tbody>
 </table>
