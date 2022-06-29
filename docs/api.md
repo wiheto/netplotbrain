@@ -47,6 +47,7 @@ edgecolorvminvmax | str, list |     Scales colormap between certain values. Alte
 
 | Argument | Type | Description |
 | --- | --- | --- |
+tempalte | str, dict or nibabel nifti | The background template. If str: path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template. If dict, specify keyword - value pairs for templateflow.api.get(). If specifying templateflow string, and there are multiple cohorts (e.g. MNIInfant) add "_cohort-X" to the string. For example, for MNIInfant, cohort 3, write: "MNIInfant_cohort-3".
 templatealpha | float | Opacity of template voxels.
 templatecolor | str | If templatestyle=='surface' or 'filled', the color of template voxels
 templateedgethreshold | float | If templatestyle=='cloudy', can tweak the edges detection threshold. (Default: 0.7)

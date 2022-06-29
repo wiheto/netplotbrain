@@ -217,7 +217,7 @@ For the template you can supply any nifti file.
 You can also provide the template name for any template on templateflow.org.
 The T1w brain mask will then automatically downloaded (if not already present on your computer) and used as the background.
 
-Netplotbrain can render slightly different templates
+Note, if there are multiple cohorts for the atlas, you should add which cohort it is to the string. This specification follows the format "templatename_cohort-X". So for example, if you want to use the second cohort for MNIInfant, you specify "MNIInfant_cohort-2". Additionally, if there is a specific templateflow file that you wish to use (that is not one of the default template files) you can specify a dictionary of templateflow keyword-value pairs. 
 
 ### Template Styles
 

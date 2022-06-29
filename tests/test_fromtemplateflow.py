@@ -33,3 +33,25 @@ def test_templateflow_atlas_highlight():
                       nodecolorlegend=False,
                       nodesizelegend=False)
     return fig
+
+
+
+
+@pytest.mark.mpl_image_compare
+def test_templateflow_cohort():
+    fig, _ = npbplot(template='MNIInfant_cohort-8',
+                     templatestyle='surface')
+    return fig
+
+
+tf_kwargs = {'template': 'MNI152NLin6Asym',
+             'resolution': 5,
+             'desc': 'brain',
+             'suffix': 'T2w',
+             'extension': 'nii.gz'}
+
+@pytest.mark.mpl_image_compare
+def test_templateflow_fromdict():
+    fig, _ = npbplot(template=tf_kwargs,
+                     templatestyle='surface')
+    return fig

@@ -25,7 +25,7 @@ nodes_inf['y'] = nodes_inf['y'] / 1.25
 nodes_inf['z'] = nodes_inf['z'] / 1.25
 
 # Plot figure
-netplotbrain.plot(template='MNIInfant',
+netplotbrain.plot(template='MNIInfant_cohort-2',
          templatestyle='surface',
          title='Infant template',
          view='LSR',

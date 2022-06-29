@@ -136,31 +136,33 @@ def _select_single_hemisphere_template(data, hemisphere):
 
 def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
                    voxsize=None, azim=0, elev=0, hemisphere='both', **kwargs):
+    if isinstance(template, dict):
+        template = tf.get(**template)
+
     if isinstance(template, str):
         if not os.path.exists(template):
-            tf_kwargs = {}
+            tf_kwargs = {'resolution': 1}
             # Add kwargs to specify specific templates
             if 'MNI152' in template or 'OASIS' in template:
-                tf_kwargs = {
-                    'suffix': 'T1w',
-                    'resolution': 1,
-                }
-            if 'WHS' in template:
-                tf_kwargs = {
-                    'resolution': 1,
-                }
+                tf_kwargs['suffix'] = 'T1w'
+            # If cohort is in the name as template=templateame_cohort-X, split to template=tempaltename, and 'cohort' is in tf_kwargs  
+            if '_cohort-' in template:
+                cohort = template.split('cohort-')[1]
+                tf_kwargs['cohort'] = cohort
+                template = template.split('_')[0]
+
             template = tf.get(template=template, desc='brain',
                               extension='.nii.gz', **tf_kwargs)
-            # If multiple templates still remain, take the first
-            # This may lead to suboptimal performence for some templates
-            if isinstance(template, list):
-                template = template[0]
-            img = nib.load(template)
-        else:
-            img = nib.load(template)
+          
+    # If template is now a list then templateflow found multiple entries.
+    if isinstance(template, list):
+        print('More than 1 template found. Please provide more arguments to specify the template you want.')
+        for t in template:
+            print(t.name)
+        raise ValueError('More than one template found')
 
-    elif isinstance(template, (nib.Nifti1Image, nib.Nifti2Image)):
-        img = template
+    img = nib.load(template)
+
     if voxsize is not None:
         img = resample_to_output(img, [voxsize] * 3)
     data = img.get_fdata()

@@ -42,8 +42,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         NetworkX input. Note the nodecolumnnames for coordinates (by default x, y, z) must be node attributes for nodes.
         If providing network input, than you cannot specify nodes or edges input.
         These should be included within the networkx object as nodes and edges attributes.
-    template : str or nibabel nifti
-        Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.        
+    template : str, dict or nibabel nifti
+        Path to nifti image, or templateflow template name (see templateflow.org) in order to automatically download T1 template.
+        If dict, specify keyword - value pairs for templateflow.api.get().
+        If specifying templateflow string, and there are multiple cohorts (e.g. MNIInfant) add "_cohort-X" to the string.
+        For example, for MNIInfant, cohort 3, write: "MNIInfant_cohort-3"
     frames : int
         If specifying 2 views (e.g. LR or AP) and would like to rotates a between them.
         This value will indicate the number of rotations to get from L to R.
