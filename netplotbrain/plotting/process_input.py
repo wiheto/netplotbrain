@@ -3,20 +3,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 from ..plotting import _npedges2dfedges, _get_nodes_from_nii
 
-def get_frame_input(inputvar, axind, ri, fi, exnotlist=True):
+def get_frame_input(inputvar, axind, ri, fi, nrows, frames):
     """
     Gets subplot variable.
 
     The variable depends on whether the
     input is a string, array or 2d array.
     """
-    if exnotlist:
-        if not isinstance(inputvar, list):
-            var_frame = inputvar
-        elif not isinstance(inputvar[0], list):
-            var_frame = inputvar[axind]
-        else:
-            var_frame = inputvar[ri][fi]
+    # First sett if input is a singular string, int or None.
+    if isinstance(inputvar, int):
+        var_frame = inputvar
+    elif isinstance(inputvar, str):
+        var_frame = inputvar
+    elif inputvar is None:
+        var_frame = inputvar
+    # Then check if first input of list is also a list (e.g. format ['LR', 'SP'])
+    elif len(inputvar) == nrows and isinstance(inputvar[0], str) and len(inputvar[0]) == frames:
+        var_frame = inputvar[ri][fi]
+    # If a 2x2 figure input is ['LRSP']
+    elif len(inputvar) == (nrows * frames):
+        var_frame = inputvar[axind]
+    else:
+        var_frame = inputvar[ri][fi]
     return var_frame
 
 

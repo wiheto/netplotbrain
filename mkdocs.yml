@@ -5,6 +5,7 @@ nav:
     - Tutorial: tutorial.md
     - API: api.md
     - Gallery: gallery.md
+    - Preset viewing angles: preset.py
 
 theme:
   name: material

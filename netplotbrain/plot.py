@@ -10,7 +10,7 @@ from .plotting import _plot_template, \
     _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
     _plot_gif, _process_highlightedge_input, _plot_springlayout, _add_title
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
-    _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input
+    _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input, _get_presetviews
 
 def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', edgeweights=None, frames=None, edges=None, template=None, network=None,
          edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', hemisphere='both', highlightnodes=None, highlightedges=None, **kwargs):
@@ -121,9 +121,12 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             legendrows = len(legends)
 
     # Figure setup
+    # Get preset views 
+    if isinstance(view, str):
+        if view.startswith('preset'):
+            view, hemisphere = _get_presetviews(view)
     # Get number of non-legend rowsnon
     nrows, view, frames = _nrows_in_fig(view, frames)
-    
     #Set subtitles to None if title is set.
     if profile['subtitles'] == 'auto' and profile['title'] is not None:
         profile['subtitles'] = None
@@ -167,9 +170,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         for fi in range(frames):
             axind = (ri * nrows) + fi
             # Get hemisphere for this frame
-            hemi_frame = get_frame_input(hemisphere, axind, ri, fi, str)
+            hemi_frame = get_frame_input(hemisphere, axind, ri, fi, nrows, frames)
             # Get title for this frame
-            subtitle_frame = get_frame_input(profile['subtitles'], axind, ri, fi, str)
+            subtitle_frame = get_frame_input(profile['subtitles'], axind, ri, fi, nrows, frames)
             # Set up subplot
             if ax_in is None:
                 ax = fig.add_subplot(gridspec[ri, fi], projection='3d')
