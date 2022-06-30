@@ -42,7 +42,7 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
         img = nib.load(imgpath)
     # load image, if string
     if isinstance(img, str):
-        img = img.load(str)
+        img = nib.load(img)
 
     # Resize img to desired output resolution
     # Will be same as template
