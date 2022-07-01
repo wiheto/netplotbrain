@@ -1,0 +1,85 @@
+{
+    "general": {
+        "resolution": 1,
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "Fischer344": {
+        "label": "GM",
+        "suffix": "probseg"
+    },
+    "MNI152NLin2009bAsym": {
+        "suffix": "T1w"
+    },
+    "MNI152NLin2009bSym": {
+        "suffix": "T1w"
+    },
+    "MNI152NLin2009cAsym": {
+        "suffix": "T1w",
+        "resolution": 1,
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "MNI152NLin6Asym": {
+        "suffix": "T1w",
+        "resolution": 1,
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "MNI305": {
+        "suffix": "T1w"
+    },
+    "MNIColin27": {
+        "suffix": "T1w"
+    },
+    "NKI": {
+        "suffix": "T1w",
+        "resolution": 1,
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "NMT31Sym": {
+        "suffix": "T1w",
+        "resolution": 1,
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "OASIS30ANTs": {
+        "suffix": "T1w",
+        "resolution": 1,
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "PNC": {
+        "suffix": "T1w",
+        "resolution": 1,
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "RESILIENT": {
+        "suffix": "T1w",
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "UNCInfant": {
+        "suffix": "T1w",
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "VALiDATe29": {
+        "suffix": "T1w",
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "WHS": {
+        "suffix": "probseg",
+        "desc": "brain",
+        "extension": ".nii.gz"
+    },
+    "fsaverage": {
+        "suffix": "T1w",
+        "resolution": 1,
+        "extension": ".nii.gz",
+        "density": "41k"
+    }
+}

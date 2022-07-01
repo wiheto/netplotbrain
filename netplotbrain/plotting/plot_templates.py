@@ -1,6 +1,7 @@
 import numpy as np
 import nibabel as nib
 import os
+import json
 import templateflow.api as tf
 from scipy.ndimage import rotate, sobel
 from scipy.ndimage.interpolation import spline_filter1d
@@ -141,18 +142,24 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
         template = tf.get(**template)
     if isinstance(template, str):
         if not os.path.exists(template):
-            tf_kwargs = {'resolution': 1}
-            # Add kwargs to specify specific templates
-            if 'MNI152' in template or 'OASIS' in template:
-                tf_kwargs['suffix'] = 'T1w'
+            # Open jsonfile that contains all keyword arguments for templates
+            with open('./netplotbrain/templatesettings/template_get_kwargs.json', 'r') as f:
+                tf_kwargs_all = json.load(f)
             # If cohort is in the name as template=templateame_cohort-X, split to template=tempaltename, and 'cohort' is in tf_kwargs  
+            cohort = None
             if '_cohort-' in template:
                 cohort = template.split('cohort-')[1]
-                tf_kwargs['cohort'] = cohort
+                # Rename template
                 template = template.split('_')[0]
-
-            template = tf.get(template=template, desc='brain',
-                              extension='.nii.gz', **tf_kwargs)
+            if template in tf_kwargs_all:
+                tf_kwargs = tf_kwargs_all[template]
+            else:
+                tf_kwargs = tf_kwargs_all['general']
+            # Add cohort to kwargs
+            if cohort is not None:
+                tf_kwargs['cohort'] = cohort
+            # Get template
+            template = tf.get(template=template, **tf_kwargs)
           
     # If template is now a list then templateflow found multiple entries.
     if isinstance(template, list):
