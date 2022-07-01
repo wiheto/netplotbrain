@@ -271,7 +271,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 
 ```python
 # rat template
-# Setting templatevoxsize to 0.2 will make it slightly quicker
+# Setting templatevoxelsize to 0.2 will make it slightly quicker
 # Due to the voxel size being smaller, the nodes are currently smaller
 # So scaling the nodes is useful.
 nodes_whs = nodes.copy()
@@ -287,7 +287,7 @@ netplotbrain.plot(template='WHS',
          edges=edges,
          nodecolor='community',
          nodescale=80,
-         templatevoxsize=0.2)
+         templatevoxelsize=0.2)
 
 plt.show()
 ```
@@ -349,7 +349,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodes=nodes,
                   nodesize='centrality_measure1',
                   edges=edges,
-                  templatevoxsize=2)
+                  templatevoxelsize=2)
 plt.show()
 ```
 ![](./examples/figures/styles2.png)

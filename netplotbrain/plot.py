@@ -99,7 +99,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
 
     # Check and load the input of nodes and edges
     nodes, nodeimg, nodecolorby, profile['nodecolumnnames'] = _process_node_input(
-        nodes, profile['nodes_df'], nodecolor, profile['nodecolumnnames'], template, profile['templatevoxsize'])
+        nodes, profile['nodes_df'], nodecolor, profile['nodecolumnnames'], template, profile['templatevoxelsize'])
     edges, edgeweights = _process_edge_input(edges, edgeweights, **profile)
     # Set up legend row
     # TODO compact code into subfunction
@@ -172,10 +172,10 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             view[ri], frames, arrowaxis=profile['arrowaxis'])
         for fi in range(frames):
             axind = (ri * nrows) + fi
-            # Get hemisphere for this frame
+            # get_frame_input allows input arguments to be string or list of different arguments for different plots
             hemi_frame = get_frame_input(hemisphere, axind, ri, fi, nrows, frames)
-            # Get title for this frame
             subtitle_frame = get_frame_input(profile['subtitles'], axind, ri, fi, nrows, frames)
+            templatestyle_frame = get_frame_input(profile['templatestyle'], axind, ri, fi, nrows, frames)
             # Set up subplot
             if ax_in is None:
                 ax = fig.add_subplot(gridspec[ri, fi], projection='3d')
@@ -186,8 +186,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 ax = ax_in
             affine = None
             if template is not None and viewtype[fi]=='b':
-                affine = _plot_template(ax, profile['templatestyle'], template,
-                                        voxsize=profile['templatevoxsize'],
+                affine = _plot_template(ax, templatestyle_frame, template,
                                         azim=azim[fi], elev=elev[fi],
                                         **profile)
                 

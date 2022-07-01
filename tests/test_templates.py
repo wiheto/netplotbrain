@@ -7,7 +7,7 @@ def test_cloudytemplate():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
                       templatestyle='cloudy',
                       view='SIP',
-                      templatevoxsize=2)
+                      templatevoxelsize=2)
     return fig
 
 # Plot only filled template
@@ -16,7 +16,7 @@ def test_filledtemplate():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
                       templatestyle='filled',
                       view='L',
-                      templatevoxsize=5)
+                      templatevoxelsize=5)
     return fig
 
 

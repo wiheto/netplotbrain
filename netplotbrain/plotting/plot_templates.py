@@ -135,10 +135,10 @@ def _select_single_hemisphere_template(data, hemisphere):
 
 
 def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
-                   voxsize=None, azim=0, elev=0, hemisphere='both', **kwargs):
+                   azim=0, elev=0, hemisphere='both', **kwargs):
+    voxsize = kwargs.get('templatevoxelsize')
     if isinstance(template, dict):
         template = tf.get(**template)
-
     if isinstance(template, str):
         if not os.path.exists(template):
             tf_kwargs = {'resolution': 1}

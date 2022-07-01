@@ -36,4 +36,4 @@ netplotbrain.plot(template='WHS',
          edges=edges,
          nodecolor='community',
          nodescale=80,
-         templatevoxsize=0.2)
+         templatevoxelsize=0.2)

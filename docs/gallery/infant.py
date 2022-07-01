@@ -34,5 +34,5 @@ netplotbrain.plot(template='MNIInfant_cohort-2',
          nodecolor='community',
          nodescale=80,
          edges=edges,
-         templatevoxsize=5)
+         templatevoxelsize=5)
 

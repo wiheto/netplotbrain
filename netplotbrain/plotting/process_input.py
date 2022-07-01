@@ -28,7 +28,7 @@ def get_frame_input(inputvar, axind, ri, fi, nrows, frames):
     return var_frame
 
 
-def _process_node_input(nodes, nodes_df, nodecolor, nodecolumnnames, template, templatevoxsize):
+def _process_node_input(nodes, nodes_df, nodecolor, nodecolumnnames, template, templatevoxelsize):
     """
     Takes node input (nodes, nodesdf and nodecolumnnames) and processes them.
     Loads pandas dataframe if nodes is string.
@@ -48,12 +48,12 @@ def _process_node_input(nodes, nodes_df, nodecolor, nodecolumnnames, template, t
             nodes = pd.read_csv(nodes, index_col=0)
         elif nodes.endswith('.nii') or  nodes.endswith('.nii.gz'):
             nodes, nodeimg = _get_nodes_from_nii(
-                nodes, voxsize=templatevoxsize, template=template, nodes=nodes_df)
+                nodes, voxsize=templatevoxelsize, template=template, nodes=nodes_df)
         else:
             raise ValueError('nodes as str must be a .csv, .tsv, .nii, or .nii.gz')
     else:
         nodes, nodeimg = _get_nodes_from_nii(
-            nodes, voxsize=templatevoxsize, template=template, nodes=nodes_df)
+            nodes, voxsize=templatevoxelsize, template=template, nodes=nodes_df)
     # set nodecolumnnames if no explicit input
     if nodecolumnnames == 'auto':
         nodecolumnnames = ['x', 'y', 'z']

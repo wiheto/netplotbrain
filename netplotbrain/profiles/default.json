@@ -42,7 +42,7 @@
     "templatealpha": 0.2,
     "templateedgethreshold": 0.7,
     "templatecolor": "lightgray",
-    "templatevoxsize": null,
+    "templatevoxelsize": null,
     "templatestyle": "glass",
     "template_glass_compactness": 0.3,
     "template_glass_nsegments": 3,
