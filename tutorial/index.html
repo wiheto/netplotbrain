@@ -766,7 +766,7 @@ netplotbrain.plot(
 <p>For the template you can supply any nifti file.</p>
 <p>You can also provide the template name for any template on templateflow.org.
 The T1w brain mask will then automatically downloaded (if not already present on your computer) and used as the background.</p>
-<p>Netplotbrain can render slightly different templates</p>
+<p>Note, if there are multiple cohorts for the atlas, you should add which cohort it is to the string. This specification follows the format "templatename_cohort-X". So for example, if you want to use the second cohort for MNIInfant, you specify "MNIInfant_cohort-2". Additionally, if there is a specific templateflow file that you wish to use (that is not one of the default template files) you can specify a dictionary of templateflow keyword-value pairs. </p>
 <h3 id="template-styles">Template Styles</h3>
 <p>There are currently three background styles: "surface", "filled" and "cloudy".</p>
 <p>The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to the resolution of the surface.</p>
