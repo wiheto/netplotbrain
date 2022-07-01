@@ -15,5 +15,4 @@ netplotbrain.plot(template='MNI152NLin6Asym',
                   templatestyle=['surface', 'filled', 'cloudy', 'glass'],
                   view='A',
                   arrowaxis=None,
-                  subtitles=['surface', 'filled', 'cloudy', 'glass'],
-                  fig=fig, ax=ax)
+                  subtitles=['surface', 'filled', 'cloudy', 'glass'])
