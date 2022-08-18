@@ -20,7 +20,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     Arguments:
     ------------------
     fig: matplotlib figure
-    view : str, list, or tuple. If string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior), 's' (spring layout)
+    view : str, list, or tuple. If string: alternatives are 'A' (anterior), 'P' (posteiror), 'L' (left), 'R' (right), 'I' (inferior), 'S' (superior), 's' (spring layout), '360' (full rotation)
         or any combination of these (e.g 'LR', 'AP').
         The string can contain multiple combinations (e.g. LSR)
         if list: multiple strings (as above) which will create new rows of subplots.
