@@ -72,7 +72,7 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
             vx.append(vxtmp)
             vy.append(vytmp)
     # Otherwise rotate figure based on frames iput
-    else: 
+    else:
         if views == '360':
             v1x, v1y = view_defaults['L']
             v2x, v2y = (view_defaults['L'][0]+360,10)
