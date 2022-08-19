@@ -54,7 +54,7 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
                      'A': (90, 10), 'P': (-90, 10),
                      'S': (-90, 90), 'I': (90, 90),
                      's': (-90, 90)}
-    # Set auto arrows for axis depedning on starting view
+    # Set auto arrows for axis depending on starting view
     autoarrowaxis = None
     if fromview in ['L', 'R']:
         autoarrowaxis = 'AP'
@@ -64,7 +64,7 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
         autoarrowaxis = ['LR', 'AP']
     # If multiple letters are specified or one view specified
     # Then just get default
-    if len(views) == frames or len(views) != 2:
+    if len(views) == frames or (len(views) != 2 and views != '360') :
         vx = []
         vy = []
         for view in views:
@@ -73,8 +73,14 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
             vy.append(vytmp)
     # Otherwise rotate figure based on frames iput
     else:
-        v1x, v1y = view_defaults[fromview]
-        v2x, v2y = view_defaults[toview]
+        if views == '360':
+            v1x, v1y = view_defaults['L']
+            v2x, v2y = (view_defaults['L'][0]+360,10)
+            # add an extra frame because duplicate frame gets deleted later
+            frames += 1
+        else:
+            v1x, v1y = view_defaults[fromview]
+            v2x, v2y = view_defaults[toview]
         vx = []
         vy = []
         for n in range(frames):
@@ -85,6 +91,10 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
                 # This only works when going from LR- and AP-
                 vx.append(v1x - n * ((v2x - v1x) / (frames - 1)))
                 vy.append(v1y - n * ((v2y - v1y) / (frames - 1)))
+        # remove extra frame in 360
+        if views == '360':
+            vx = vx[:-1]
+            vy = vy[:-1]
     if arrowaxis == 'auto':
         arrowaxis = autoarrowaxis
     # Viewtype
@@ -170,6 +180,6 @@ def _nrows_in_fig(view, frames):
     view_frame_checker = str(view[0])
     view_frame_checker = view_frame_checker.replace('+', '').replace('-', '')
     # If specific views are given, calculate value of frames.
-    if len(view_frame_checker) > 2:
+    if len(view_frame_checker) > 2 and view_frame_checker != '360':
         frames = len(view_frame_checker)
     return nrows, view, frames
