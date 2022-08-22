@@ -6,15 +6,19 @@
 
 [![](./gallery/figures/singleview.png)](./simple/)
 
-### [High level interface](./gallery/highlevel_size/)
-
-[![](./gallery/figures/atlas_circles.png)](./gallery/highlevel_size/)
-
 ## Visualization alternatives
 
-### [Dual row figures](./gallery/two_rows/)
+### [Node styles](./node_styles/)
 
-[![](./gallery/figures/rows1.png)](./gallery/two_rows/)
+[![](./gallery/figures/nodestyles.png)](./node_styles/)
+
+### [Template styles](./node_styles/)
+
+[![](./gallery/figures/templatestyles.png)](./template_styles/)
+
+### [Dual row figures](.//two_rows/)
+
+[![](./gallery/figures/rows1.png)](./two_rows/)
 
 
 ## Integrations
