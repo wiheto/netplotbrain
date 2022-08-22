@@ -1,33 +1,33 @@
 
 
-def _add_subplot_title(ax, azim=None, elev=None, subtitle='auto', hemisphere='both', viewtype='b', **kwargs):
+def _add_subplot_title(ax, azim=None, elev=None, subtitle_frame='auto', hemisphere='both', viewtype='b', **kwargs):
     subtitlefont = kwargs.get('font')
     subtitlecolor = kwargs.get('fontcolor')
     subtitlefontsize = kwargs.get('subtitlefontsize')
     subtitleloc = kwargs.get('subtitleloc')
     subtitleweight = kwargs.get('subtitleweight')
-    if subtitle == 'auto':
+    if subtitle_frame == 'auto':
         viewcoord = (azim, elev)
-        subtitle = ''
+        subtitle_frame = ''
         if viewcoord == (180, 10):
-            subtitle = 'Left'
+            subtitle_frame = 'Left'
         elif viewcoord == (0, 10):
-            subtitle = 'Right'
+            subtitle_frame = 'Right'
         elif viewcoord == (90, 10):
-            subtitle = 'Anterior'
+            subtitle_frame = 'Anterior'
         elif viewcoord == (-90, 10):
-            subtitle = 'Posterior'
+            subtitle_frame = 'Posterior'
         elif viewcoord == (-90, 90) and viewtype == 'b':
-            subtitle = 'Superior'
+            subtitle_frame = 'Superior'
         elif viewcoord == (90, 90):
-            subtitle = 'Inferior'
+            subtitle_frame = 'Inferior'
         # Add hemisphere
         if hemisphere == 'L' or hemisphere == 'left':
-            subtitle += ' (left hemisphere)'
+            subtitle_frame += ' (left hemisphere)'
         elif hemisphere == 'R' or hemisphere == 'right':
-            subtitle += ' (right hemisphere)'
+            subtitle_frame += ' (right hemisphere)'
 
-    ax.set_title(subtitle, fontname=subtitlefont,
+    ax.set_title(subtitle_frame, fontname=subtitlefont,
                      fontweight=subtitleweight, color=subtitlecolor,
                      fontsize=subtitlefontsize,
                      loc=subtitleloc)

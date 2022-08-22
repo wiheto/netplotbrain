@@ -187,6 +187,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             affine = None
             if template is not None and viewtype[fi]=='b':
                 affine = _plot_template(ax, templatestyle_frame, template,
+                                        hemisphere=hemi_frame,
                                         azim=azim[fi], elev=elev[fi],
                                         **profile)
                 
