@@ -44,7 +44,7 @@ def _plot_template_style_cloudy(ax, data, azim, elev, **kwargs):
 
 
 
-def _plot_template_style_glass(ax, data, **kwargs):
+def _plot_template_style_glass(ax, data, template, **kwargs):
     """
     This style plots the borders after a quick segmentation resulting in a glass or smokey brain
 
@@ -63,27 +63,54 @@ def _plot_template_style_glass(ax, data, **kwargs):
         Color of image.
 
     """
-    #Get kwargs
-    template_glass_compactness = kwargs.get('template_glass_compactness')
-    template_glass_nsegments = kwargs.get('template_glass_nsegments')
-    template_glass_maxalpha = kwargs.get('template_glass_maxalpha')
-    templatecolor= kwargs.get('templatecolor')
+    # Load default
+    with open('./netplotbrain/templatesettings/templatesettings_glass.json', 'r') as f:
+        glass_kwargs_all = json.load(f)
+    if template in glass_kwargs_all:
+        glass_kwargs = glass_kwargs_all[template]
+    else:
+        glass_kwargs = glass_kwargs_all['default']
+
+    glass_kwargs['templatecolor'] = kwargs.get('templatecolor')
+    # See if any values have been manually set
+    if 'template_glass_compactness' in kwargs:
+        glass_kwargs['template_glass_compactness'] = kwargs.get('template_glass_compactness')
+    if 'template_glass_nsegments' in kwargs:
+        glass_kwargs['template_glass_nsegments'] = kwargs.get('template_glass_nsegments')
+    if 'template_glass_maxalpha' in kwargs:
+        glass_kwargs['template_glass_maxalpha'] = kwargs.get('template_glass_maxalpha')
+    if 'template_glass_minsizefactor' in kwargs:
+        glass_kwargs['template_glass_minsizefactor'] = kwargs.get('template_glass_minsizefactor')
+    if 'template_glass_maxsizefactor' in kwargs:
+        glass_kwargs['template_glass_maxsizefactor'] = kwargs.get('template_glass_maxsizefactor')
+    if 'template_glass_pointsize' in kwargs:
+        glass_kwargs['template_glass_pointsize'] = kwargs.get('template_glass_pointsize')
+
+    print(glass_kwargs)
 
     # perform segmentation.
-    segments = segmentation.slic(data, template_glass_nsegments,
-                                 compactness=template_glass_compactness,
+    segments = segmentation.slic(data, glass_kwargs['template_glass_nsegments'],
+                                 compactness=glass_kwargs['template_glass_compactness'],
                                  enforce_connectivity=False,
                                  start_label=1,
-                                 channel_axis=None)
+                                 channel_axis=None,
+                                 min_size_factor=glass_kwargs['template_glass_minsizefactor'],
+                                 max_size_factor=glass_kwargs['template_glass_maxsizefactor'])
     borders = segmentation.find_boundaries(segments, mode='thick')
-
     # Scale the alpha of the border values based on template intensity
     data[~borders] = 0
     points = np.where(data!=0)
     border_vals = data[points[0], points[1], points[2]]
-    alpha_per_point = (border_vals - border_vals.min()) / (border_vals.max() - border_vals.min())
+    # No normalization if template max is equal to min. This occurs when template is mask
+    if border_vals.min() == border_vals.max():
+        alpha_per_point = border_vals
+    else:
+        alpha_per_point = (border_vals - border_vals.min()) / (border_vals.max() - border_vals.min())
 
-    ax.scatter(points[0], points[1], points[2], s=0.2, alpha=alpha_per_point * template_glass_maxalpha, color=templatecolor)
+    ax.scatter(points[0], points[1], points[2], 
+               s=glass_kwargs['template_glass_pointsize'], 
+               alpha=alpha_per_point * glass_kwargs['template_glass_maxalpha'], 
+               color=glass_kwargs['templatecolor'])
 
 
 
@@ -138,6 +165,7 @@ def _select_single_hemisphere_template(data, hemisphere):
 def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
                    azim=0, elev=0, hemisphere='both', **kwargs):
     voxsize = kwargs.get('templatevoxelsize')
+    templatestylename = 'default'
     if isinstance(template, dict):
         template = tf.get(**template)
     if isinstance(template, str):
@@ -159,6 +187,7 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
             if cohort is not None:
                 tf_kwargs['cohort'] = cohort
             # Get template
+            templatestylename = template
             template = tf.get(template=template, **tf_kwargs)
           
     # If template is now a list then templateflow found multiple entries.
@@ -183,7 +212,7 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
         _plot_template_style_surface(
             ax, data, template, **kwargs)
     elif style == 'glass':
-        _plot_template_style_glass(ax, data, **kwargs)
+        _plot_template_style_glass(ax, data, templatestylename,**kwargs)
     # Set xyz lim (for regardless of templatestyle)
     ax.set_xlim(0, data.shape[0])
     ax.set_ylim(0, data.shape[1])

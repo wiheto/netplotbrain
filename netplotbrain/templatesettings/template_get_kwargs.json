@@ -15,7 +15,7 @@
         "suffix": "T1w"
     },
     "MNI152NLin2009cAsym": {
-        "suffix": "T1w",
+        "suffix": "probseg",
         "resolution": 1,
         "desc": "brain",
         "extension": ".nii.gz"
@@ -27,10 +27,12 @@
         "extension": ".nii.gz"
     },
     "MNI305": {
-        "suffix": "T1w"
+        "suffix": "mask",
+        "desc": "brain"
     },
     "MNIColin27": {
-        "suffix": "T1w"
+        "suffix": "mask",
+        "desc": "brain"
     },
     "NKI": {
         "suffix": "T1w",
@@ -57,8 +59,8 @@
         "extension": ".nii.gz"
     },
     "RESILIENT": {
-        "suffix": "T1w",
-        "desc": "brain",
+        "suffix": "probseg",
+        "desc": "GM",
         "extension": ".nii.gz"
     },
     "UNCInfant": {
@@ -67,7 +69,7 @@
         "extension": ".nii.gz"
     },
     "VALiDATe29": {
-        "suffix": "T1w",
+        "suffix": "mask",
         "desc": "brain",
         "extension": ".nii.gz"
     },
@@ -77,9 +79,9 @@
         "extension": ".nii.gz"
     },
     "fsaverage": {
-        "suffix": "T1w",
+        "suffix": "mask",
         "resolution": 1,
         "extension": ".nii.gz",
-        "density": "41k"
+        "desc": "brain"
     }
 }
