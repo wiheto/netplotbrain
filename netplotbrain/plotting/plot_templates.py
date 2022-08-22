@@ -86,8 +86,6 @@ def _plot_template_style_glass(ax, data, template, **kwargs):
     if 'template_glass_pointsize' in kwargs:
         glass_kwargs['template_glass_pointsize'] = kwargs.get('template_glass_pointsize')
 
-    print(glass_kwargs)
-
     # perform segmentation.
     segments = segmentation.slic(data, glass_kwargs['template_glass_nsegments'],
                                  compactness=glass_kwargs['template_glass_compactness'],
