@@ -1,2 +1,3 @@
 include examples/*
 include netplotbrain/profiles/*.json
+include netplotbrain/templatesettings/*.json
