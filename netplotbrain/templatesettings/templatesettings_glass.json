@@ -1,0 +1,66 @@
+{
+    "default": {
+        "template_glass_compactness": 0.3,
+        "template_glass_nsegments": 3,
+        "template_glass_maxalpha": 0.01,
+        "template_glass_pointsize": 0.1 ,       
+        "template_glass_minsizefactor": 0.5,
+        "template_glass_maxsizefactor": 3
+    },
+    "Fischer344": {
+        "template_glass_compactness": 0.3,
+        "template_glass_nsegments": 3,
+        "template_glass_minsizefactor": 0,
+        "template_glass_maxsizefactor": 0.5,    
+        "template_glass_maxalpha": 0.002,
+        "template_glass_pointsize": 0.02
+    },
+    "MouseIn": {
+        "template_glass_compactness": 0.3,
+        "template_glass_nsegments": 3,
+        "template_glass_minsizefactor": 0.5,
+        "template_glass_maxsizefactor": 3,    
+        "template_glass_maxalpha": 0.04,
+        "template_glass_pointsize": 2
+    },
+    "MNI152Lin": {
+        "template_glass_compactness": 0.5,
+        "template_glass_nsegments": 3,
+        "template_glass_minsizefactor": 0,
+        "template_glass_maxsizefactor": 3,    
+        "template_glass_maxalpha": 0.01,
+        "template_glass_pointsize": 0.1
+    },
+    "NMT31Sym": {
+        "template_glass_compactness": 0.3,
+        "template_glass_nsegments": 3,
+        "template_glass_minsizefactor": 0.05,
+        "template_glass_maxsizefactor": 3,    
+        "template_glass_maxalpha": 0.0075,
+        "template_glass_pointsize": 0.02
+    },
+    "OASIS30ANTs": {
+        "template_glass_compactness": 0.09,
+        "template_glass_nsegments": 3,
+        "template_glass_minsizefactor": 0.05,
+        "template_glass_maxsizefactor": 3,    
+        "template_glass_maxalpha": 0.009,
+        "template_glass_pointsize": 0.1
+    },
+    "VALiDATe29": {
+        "template_glass_compactness": 0.3,
+        "template_glass_nsegments": 5,
+        "template_glass_minsizefactor": 0.05,
+        "template_glass_maxsizefactor": 3,    
+        "template_glass_maxalpha": 0.009,
+        "template_glass_pointsize": 0.1
+    },
+    "fsaverage": {
+        "template_glass_compactness": 0.4,
+        "template_glass_nsegments": 4,
+        "template_glass_minsizefactor": 0.05,
+        "template_glass_maxsizefactor": 3,    
+        "template_glass_maxalpha": 0.008,
+        "template_glass_pointsize": 0.04
+    }
+}
