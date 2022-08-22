@@ -66,4 +66,4 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 
 ### Preset views. 
 
-There are a number of preset views which specify combinations of different viewws. See [here](./preset/) for preset examples. 
+There are a number of preset views which specify combinations of different viewws. See [here](../../preset/) for preset examples. 
