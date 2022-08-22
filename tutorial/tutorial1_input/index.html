@@ -1,0 +1,621 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.6">
+    
+    
+      
+        <title>Tutorial 1: Input data. - netplotbrain</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4a0965b7.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#009485">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="preference" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tutorial-1-input-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="netplotbrain" class="md-header__button md-logo" aria-label="netplotbrain" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            netplotbrain
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tutorial 1: Input data.
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="netplotbrain" class="md-nav__button md-logo" aria-label="netplotbrain" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    netplotbrain
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Tutorial
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gallery/" class="md-nav__link">
+        Gallery
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../preset/" class="md-nav__link">
+        Preset viewing angles.
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-nodes" class="md-nav__link">
+    Specifying Nodes
+  </a>
+  
+    <nav class="md-nav" aria-label="Specifying Nodes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-pandas-dataframe-argument-nodes" class="md-nav__link">
+    A pandas dataframe (Argument: nodes)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-atlas-from-templateflow-or-local-file-argument-nodes" class="md-nav__link">
+    An atlas from templateflow or local file (Argument: nodes)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-edges" class="md-nav__link">
+    Specifying Edges
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-templates" class="md-nav__link">
+    Specifying Templates
+  </a>
+  
+    <nav class="md-nav" aria-label="Specifying Templates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-nifti-or-string" class="md-nav__link">
+    Template (nifti or string)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-styles" class="md-nav__link">
+    Template Styles
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="tutorial-1-input-data">Tutorial 1: Input data.</h1>
+<p>There are three input components: </p>
+<ol>
+<li>the nodes, </li>
+<li>the edges, </li>
+<li>the template</li>
+</ol>
+<p>Each component and their properties are  plotted independently of each other.</p>
+<h2 id="specifying-nodes">Specifying Nodes</h2>
+<p>There are two ways you can specify the coordinates of the nodes. </p>
+<h3 id="a-pandas-dataframe-argument-nodes">A pandas dataframe (Argument: nodes)</h3>
+<p>To plot the nodes, the pandas dataframe must contain three columns that refer to the 3D coordinates of each node. By default, these columns are called <code>x</code>, <code>y</code>, <code>z</code> by they can be manually specified by called the <code>colnames</code> keyword argument. </p>
+<p>Thus, the dataframe will begin something like this:</p>
+<table>
+<thead>
+<tr>
+<th align="center">x</th>
+<th align="center">y</th>
+<th align="center">z</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">40</td>
+<td align="center">50</td>
+<td align="center">20</td>
+</tr>
+<tr>
+<td align="center">-10</td>
+<td align="center">40</td>
+<td align="center">30</td>
+</tr>
+</tbody>
+</table>
+<p>If we create this dataframe with the two nodes above, we will just plot two circles onto the figure. </p>
+<pre><code class="language-python"># Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes
+nodes_df = pd.DataFrame({'x': [40, 10, 30, -15, -25], 
+                         'y': [50, 40, -10, -20, 20], 
+                         'z': [20, 30, -10, -15, 30]})
+# Call netplotbrain to plot
+netplotbrain.plot(nodes=nodes_df, arrowaxis=None)
+</code></pre>
+<p>Here we just see five dots of the same size, but we have nodes in the 3D space. </p>
+<p>The second option <code>arrowaxis</code> turns of some default directional arrows which do not look good in this small-scale example without a background template.</p>
+<p>The other columns in the dataframe can refer to node related properties (e.g. size and colour). In such cases the dataframe may begin something like this: </p>
+<p>These just become other columns in the dataframe (called node_df).</p>
+<table>
+<thead>
+<tr>
+<th align="center">x</th>
+<th align="center">y</th>
+<th align="center">z</th>
+<th align="center">communities</th>
+<th align="center">degree_centrality</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">40</td>
+<td align="center">50</td>
+<td align="center">20</td>
+<td align="center">1</td>
+<td align="center">0.8</td>
+</tr>
+<tr>
+<td align="center">-10</td>
+<td align="center">40</td>
+<td align="center">30</td>
+<td align="center">1</td>
+<td align="center">0.4</td>
+</tr>
+</tbody>
+</table>
+<p>Then the columns <code>nodecolor=communities</code>and <code>nodesize=degree_centrality</code> be specified and each node will automatically be coloured or scaled by the specified column. For example: </p>
+<pre><code class="language-python"># Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes (5 example nodes)
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
+# Call netplotbrain to plot
+netplotbrain.plot(
+    nodes=nodes_df,
+    nodesize='degree_centrality',
+    nodecolor='communities',
+    arrowaxis=None,
+    nodescale=100)
+</code></pre>
+<p>Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added <code>nodescale</code> which just linearly scales all nodes by that factor. We also see that when specifying <code>nodesize</code> and <code>nodecolor</code> that legends automatically appear.</p>
+<p>At the moment we just have some circles floating in 3D space. Let us add some more information about this network.</p>
+<h3 id="an-atlas-from-templateflow-or-local-file-argument-nodes">An atlas from templateflow or local file (Argument: nodes)</h3>
+<p>One of the key benefits with netplotbrain is that it interacts with TemplateFlow, which is a collection of brain templates and atlases.
+The atlases can be used as nodes.
+If you specify the key/value pairs of an atlas on templateflow in a dictionary, the atlas will be automatically downloaded.
+For example, the following will get the 400 Parcels version from the Schaefer atlas.</p>
+<pre><code class="language-python"># import packages
+import netplotbrain
+# Define the atlas by key value words of TemplateFlow name
+nodes={'template': 'MNI152NLin2009cAsym',
+         'atlas': 'Schaefer2018',
+## Template (nifti or string)
+netplotbrain.plot(
+    nodes=nodes,
+    arrowaxis=None)     
+</code></pre>
+<p>See templateflow.org for more atlases.</p>
+<p>If the template argument is specified in <code>netplotbrain.plot</code>, then the template argument does not need to be included in the <code>nodes</code> dictionary.</p>
+<p>Since the nifti image consists of parcels (i.e. regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels over the circles with a single argument <code>nodetype</code>.</p>
+<pre><code class="language-python"># import packages
+import netplotbrain
+# Define the atlas by key value words of TemplateFlow name
+nodes={'template': 'MNI152NLin2009cAsym',
+         'atlas': 'Schaefer2018',
+         'desc': '400Parcels7Networks',
+         'resolution': 1}
+# Plot
+netplotbrain.plot(
+    nodes=nodes,
+    arrowaxis=None,
+    nodetype='parcel')     
+</code></pre>
+<h2 id="specifying-edges">Specifying Edges</h2>
+<p>The edges between the nodes can be passed to netplotbrain as either a numpy array (NxN adjacency matrix) or a pandas dataframe (edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example:</p>
+<table>
+<thead>
+<tr>
+<th align="center">j</th>
+<th align="center">j</th>
+<th align="center">weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0.8</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">0.5</td>
+</tr>
+</tbody>
+</table>
+<p><code>i</code> and <code>j</code> reference the indices of our nodes defined above. You can use the argument <code>edgecol</code> to specify different column names.</p>
+<p>Let us continue to add to our figure above: </p>
+<pre><code class="language-python"># Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes (5 example nodes)
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
+# Define the edges 
+edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3], 
+                              'j': [1, 2, 2, 3, 4]})
+# Call netplotbrain to plot
+netplotbrain.plot(
+    nodes=nodes_df,
+    edges=edges_df,
+    nodecolor='communities',
+    arrowaxis=None,
+    nodescale=150)
+</code></pre>
+<p>If you have the column <code>weight</code> in your edge dataframe, these will be automatically plotted as well. 
+This can be turn off by setting <code>edgeweights</code> to False. Also, a list of length 3 can be given to edgecol that specifies alternative names for ['i', 'j', 'weights'].</p>
+<pre><code class="language-python"># Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes (5 example nodes)
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
+# Define the edges 
+edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3], 
+                              'j': [1, 2, 2, 3, 4]})
+# Call netplotbrain to plot
+netplotbrain.plot(
+    nodes=nodes_df,
+    edges=edges_df,
+    nodecolor='communities',
+    arrowaxis=None,
+    nodescale=150)
+</code></pre>
+<p>Finally, you can specify a number matrix instead of a pandas dataframe. </p>
+<pre><code class="language-python"># Import packages
+import netplotbrain
+import pandas as pd
+# Define the nodes (5 example nodes)
+nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
+                              'y': [50, 40, -10, -20, 20], 
+                              'z': [20, 30, -10, -15, 30], 
+                              'communities': [1, 1, 1, 2, 2], 
+                              'degree_centrality': [1, 1, 0.2, 0.8, 0.4]})
+# Define the edges 
+edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3], 
+                              'j': [1, 2, 2, 3, 4]})
+# Call netplotbrain to plot
+netplotbrain.plot(
+    nodes=nodes_df,
+    edges=edges_df,
+    nodecolor='communities',
+    arrowaxis=None,
+    nodescale=150)
+</code></pre>
+<h2 id="specifying-templates">Specifying Templates</h2>
+<h3 id="template-nifti-or-string">Template (nifti or string)</h3>
+<p>For the template you can supply any nifti file.</p>
+<p>You can also provide the template name for any template on templateflow.org.
+The T1w brain mask will then automatically downloaded (if not already present on your computer) and used as the background.</p>
+<p>Note, if there are multiple cohorts for the atlas, you should add which cohort it is to the string. This specification follows the format "templatename_cohort-X". So for example, if you want to use the second cohort for MNIInfant, you specify "MNIInfant_cohort-2". Additionally, if there is a specific templateflow file that you wish to use (that is not one of the default template files) you can specify a dictionary of templateflow keyword-value pairs. </p>
+<h3 id="template-styles">Template Styles</h3>
+<p>There are currently three background styles: "glass", "surface", "filled" and "cloudy".</p>
+<p>The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to the resolution of the surface.</p>
+<p>The filled style plots the template's brain mask as voxels. This can be slightly RAM consuming.</p>
+<p>The cloudy style tries to identify the outline of the mask and plots points along the edges. The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.</p>
+<p>For templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker.</p>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.85cb4492.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.a877e258.min.js"></script>
+      
+    
+  </body>
+</html>
