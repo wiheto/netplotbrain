@@ -8,6 +8,7 @@ from scipy.ndimage.interpolation import spline_filter1d
 from nibabel.processing import resample_to_output
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure, segmentation
+from .. import __path__ as netplotpath
 from ..templatesettings import _get_surface_level_for_template
 
 
@@ -64,7 +65,8 @@ def _plot_template_style_glass(ax, data, template, **kwargs):
 
     """
     # Load default
-    with open('./netplotbrain/templatesettings/templatesettings_glass.json', 'r') as f:
+    # Get the netplotbrian path
+    with open(netplotpath[0] + '/templatesettings/templatesettings_glass.json', 'r') as f:
         glass_kwargs_all = json.load(f)
     if template in glass_kwargs_all:
         glass_kwargs = glass_kwargs_all[template]
@@ -169,7 +171,8 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
     if isinstance(template, str):
         if not os.path.exists(template):
             # Open jsonfile that contains all keyword arguments for templates
-            with open('./netplotbrain/templatesettings/template_get_kwargs.json', 'r') as f:
+             # Get the netplotbrian path
+            with open(netplotpath[0] + '/templatesettings/template_get_kwargs.json', 'r') as f:
                 tf_kwargs_all = json.load(f)
             # If cohort is in the name as template=templateame_cohort-X, split to template=tempaltename, and 'cohort' is in tf_kwargs  
             cohort = None
