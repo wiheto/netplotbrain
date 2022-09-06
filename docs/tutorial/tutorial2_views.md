@@ -1,8 +1,6 @@
 
 # Tutorial 2: Visualization 
 
-Here we will learn about two 
-
 ### Views
 
 The view is the angle which the brain is viewed from in the plot.
@@ -20,9 +18,9 @@ You can specify it as a string:
 
 
 Sequences of views are possible.
-So, setting view = 'LSR' will generate 3 subplots with left, superior, and right views
+So, setting view = 'LSR' will generate 3 subplots with left, superior, and right views.
 
-If you specify a list (e.g. `['LR', 'AP']`) then two different rows will be generated.
+If you specify a list (e.g., `['LR', 'AP']`) then two different rows will be generated.
 The first from left to right. The second from anterior to posterior.
 
 ```python
@@ -33,13 +31,13 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 plt.show()
 ```
 
-You can also specify the specific rotation (tuple): (xy-rotation, xz-rotation) in degrees. The R view is (0, 0)
+You can also specify the specific rotation (tuple): (xy-rotation, xz-rotation) in degrees. The R view is (0, 0).
 
 ### Rotated sequences with frames
 
 You can also generate a sequence of rotated images.
 
-If the view is two letters, (e.g. `'LR'`), then a sequence will be generated from the L-view to R-view.
+If the view is two letters (e.g., `'LR'`), then a sequence will be generated from the L-view to the R-view.
 
 The parameter `frames` will control how many images are generated.
 Images will then be displayed along a single row.
@@ -54,7 +52,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 
 ### 360 degrees 
 
-It is also possible to specify the `view="360"`to get a fully rotated brain. The frames argument dictates how many snapshots will be generated. 
+It is also possible to specify the `view="360"`to get a fully rotated brain. The frames argument dictates how many snapshots will be generated.
 
 ```python
 import netplotbrain
@@ -64,6 +62,6 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   frames=8)
 ```
 
-### Preset views. 
+### Preset views 
 
 There are a number of preset views which specify combinations of different viewws. See [here](../../preset/) for preset examples. 
