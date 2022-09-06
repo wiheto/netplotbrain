@@ -1,4 +1,4 @@
-# Tutorial 1: Input data.
+# Tutorial 1: Input data
 
 There are three input components: 
 
