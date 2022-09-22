@@ -37,7 +37,7 @@ def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
     elif isinstance(highlightnodes, str):
         if highlightnodes not in nodes:
             raise ValueError('If highlightnodes is a str it must be a column in nodes')
-        highlightnodes = nodes[highlightnodes].values()
+        highlight_idx = nodes[highlightnodes].values
     else:
         highlight_idx = np.zeros(len(nodes))
         highlight_idx[highlightnodes] = 1
