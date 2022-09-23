@@ -190,7 +190,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                                         hemisphere=hemi_frame,
                                         azim=azim[fi], elev=elev[fi],
                                         **profile)
-                
+            
             # Template voxels will have origin at 0,0,0
             # It is easier to scale the nodes from the image affine
             # Then to rescale the ax.voxels function

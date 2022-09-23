@@ -59,9 +59,9 @@ def _get_nodes_from_nii(img, nodes=None, voxsize=None, template=None):
     z_coord = []
     for r in rois:
         allcoords = np.where(imgdata == r)
-        x_coord.append(np.median(allcoords[0]))
-        y_coord.append(np.median(allcoords[1]))
-        z_coord.append(np.median(allcoords[2]))
+        x_coord.append(np.mean(allcoords[0]))
+        y_coord.append(np.mean(allcoords[1]))
+        z_coord.append(np.mean(allcoords[2]))
 
     # If nodes is None, define the dataframe
     if nodes is None:

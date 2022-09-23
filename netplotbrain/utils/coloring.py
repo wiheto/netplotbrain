@@ -37,7 +37,7 @@ def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
     elif isinstance(highlightnodes, str):
         if highlightnodes not in nodes:
             raise ValueError('If highlightnodes is a str it must be a column in nodes')
-        highlightnodes = nodes[highlightnodes].values()
+        highlight_idx = nodes[highlightnodes].values
     else:
         highlight_idx = np.zeros(len(nodes))
         highlight_idx[highlightnodes] = 1
@@ -127,6 +127,7 @@ def _get_colorby_colors(df, colorby, datatype='node', **kwargs):
     # Get relevant kwargs
     cmap = kwargs.get(datatype + 'cmap')
     color_vminvmax = kwargs.get(datatype + 'colorvminvmax')
+    #TODO: Add flag if colours are in column
     colortype = _detect_coloring_type(df, colorby)
     cmap = cm.get_cmap(cmap)
     if colortype == 'discrete':
