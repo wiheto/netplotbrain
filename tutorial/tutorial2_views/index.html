@@ -301,7 +301,7 @@
       
         <li class="md-nav__item">
   <a href="#preset-views" class="md-nav__link">
-    Preset views.
+    Preset views
   </a>
   
 </li>
@@ -321,7 +321,6 @@
 
 
 <h1 id="tutorial-2-visualization">Tutorial 2: Visualization</h1>
-<p>Here we will learn about two </p>
 <h3 id="views">Views</h3>
 <p>The view is the angle which the brain is viewed from in the plot.
 You can specify it as a string:</p>
@@ -364,8 +363,8 @@ You can specify it as a string:</p>
 </tbody>
 </table>
 <p>Sequences of views are possible.
-So, setting view = 'LSR' will generate 3 subplots with left, superior, and right views</p>
-<p>If you specify a list (e.g. <code>['LR', 'AP']</code>) then two different rows will be generated.
+So, setting view = 'LSR' will generate 3 subplots with left, superior, and right views.</p>
+<p>If you specify a list (e.g., <code>['LR', 'AP']</code>) then two different rows will be generated.
 The first from left to right. The second from anterior to posterior.</p>
 <pre><code class="language-python">import netplotbrain
 netplotbrain.plot(template='MNI152NLin2009cAsym',
@@ -373,10 +372,10 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   view=['LSR', 'AIP'])
 plt.show()
 </code></pre>
-<p>You can also specify the specific rotation (tuple): (xy-rotation, xz-rotation) in degrees. The R view is (0, 0)</p>
+<p>You can also specify the specific rotation (tuple): (xy-rotation, xz-rotation) in degrees. The R view is (0, 0).</p>
 <h3 id="rotated-sequences-with-frames">Rotated sequences with frames</h3>
 <p>You can also generate a sequence of rotated images.</p>
-<p>If the view is two letters, (e.g. <code>'LR'</code>), then a sequence will be generated from the L-view to R-view.</p>
+<p>If the view is two letters (e.g., <code>'LR'</code>), then a sequence will be generated from the L-view to the R-view.</p>
 <p>The parameter <code>frames</code> will control how many images are generated.
 Images will then be displayed along a single row.</p>
 <pre><code class="language-python">import netplotbrain
@@ -386,14 +385,14 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   frames=5)
 </code></pre>
 <h3 id="360-degrees">360 degrees</h3>
-<p>It is also possible to specify the <code>view="360"</code>to get a fully rotated brain. The frames argument dictates how many snapshots will be generated. </p>
+<p>It is also possible to specify the <code>view="360"</code>to get a fully rotated brain. The frames argument dictates how many snapshots will be generated.</p>
 <pre><code class="language-python">import netplotbrain
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   templatestyle='glass',
                   view='360',
                   frames=8)
 </code></pre>
-<h3 id="preset-views">Preset views.</h3>
+<h3 id="preset-views">Preset views</h3>
 <p>There are a number of preset views which specify combinations of different viewws. See <a href="../../preset/">here</a> for preset examples. </p>
 
               

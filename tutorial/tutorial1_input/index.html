@@ -13,7 +13,7 @@
     
     
       
-        <title>Tutorial 1: Input data. - netplotbrain</title>
+        <title>Tutorial 1: Input data - netplotbrain</title>
       
     
     
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Tutorial 1: Input data.
+              Tutorial 1: Input data
             
           </span>
         </div>
@@ -353,7 +353,7 @@
                 
 
 
-<h1 id="tutorial-1-input-data">Tutorial 1: Input data.</h1>
+<h1 id="tutorial-1-input-data">Tutorial 1: Input data</h1>
 <p>There are three input components: </p>
 <ol>
 <li>the nodes, </li>
@@ -364,7 +364,7 @@
 <h2 id="specifying-nodes">Specifying Nodes</h2>
 <p>There are two ways you can specify the coordinates of the nodes. </p>
 <h3 id="a-pandas-dataframe-argument-nodes">A pandas dataframe (Argument: nodes)</h3>
-<p>To plot the nodes, the pandas dataframe must contain three columns that refer to the 3D coordinates of each node. By default, these columns are called <code>x</code>, <code>y</code>, <code>z</code> by they can be manually specified by called the <code>colnames</code> keyword argument. </p>
+<p>To plot the nodes, the pandas dataframe must contain three columns that refer to the 3D coordinates of each node. By default, these columns are called <code>x</code>, <code>y</code>, <code>z</code>, but they can be manually specified by calling the <code>colnames</code> keyword argument. </p>
 <p>Thus, the dataframe will begin something like this:</p>
 <table>
 <thead>
@@ -399,8 +399,8 @@ nodes_df = pd.DataFrame({'x': [40, 10, 30, -15, -25],
 netplotbrain.plot(nodes=nodes_df, arrowaxis=None)
 </code></pre>
 <p>Here we just see five dots of the same size, but we have nodes in the 3D space. </p>
-<p>The second option <code>arrowaxis</code> turns of some default directional arrows which do not look good in this small-scale example without a background template.</p>
-<p>The other columns in the dataframe can refer to node related properties (e.g. size and colour). In such cases the dataframe may begin something like this: </p>
+<p>The second option <code>arrowaxis</code> turns off some default, directional arrows which do not look good in this small-scale example without a background template.</p>
+<p>The other columns in the dataframe can refer to node-related properties (e.g., size and colour). In such cases the dataframe may begin something like this: </p>
 <p>These just become other columns in the dataframe (called node_df).</p>
 <table>
 <thead>
@@ -429,7 +429,7 @@ netplotbrain.plot(nodes=nodes_df, arrowaxis=None)
 </tr>
 </tbody>
 </table>
-<p>Then the columns <code>nodecolor=communities</code>and <code>nodesize=degree_centrality</code> be specified and each node will automatically be coloured or scaled by the specified column. For example: </p>
+<p>Then the columns <code>nodecolor=communities</code>and <code>nodesize=degree_centrality</code> can be specified and each node will automatically be coloured or scaled by the specified column. For example: </p>
 <pre><code class="language-python"># Import packages
 import netplotbrain
 import pandas as pd
@@ -447,10 +447,10 @@ netplotbrain.plot(
     arrowaxis=None,
     nodescale=100)
 </code></pre>
-<p>Will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added <code>nodescale</code> which just linearly scales all nodes by that factor. We also see that when specifying <code>nodesize</code> and <code>nodecolor</code> that legends automatically appear.</p>
+<p>This will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added <code>nodescale</code> which just linearly scales all nodes by that factor. We also see that, when specifying <code>nodesize</code> and <code>nodecolor</code>, that legends automatically appear.</p>
 <p>At the moment we just have some circles floating in 3D space. Let us add some more information about this network.</p>
 <h3 id="an-atlas-from-templateflow-or-local-file-argument-nodes">An atlas from templateflow or local file (Argument: nodes)</h3>
-<p>One of the key benefits with netplotbrain is that it interacts with TemplateFlow, which is a collection of brain templates and atlases.
+<p>One of the key benefits of using netplotbrain is that it interacts with TemplateFlow, which is a collection of brain templates and atlases.
 The atlases can be used as nodes.
 If you specify the key/value pairs of an atlas on templateflow in a dictionary, the atlas will be automatically downloaded.
 For example, the following will get the 400 Parcels version from the Schaefer atlas.</p>
@@ -466,7 +466,7 @@ netplotbrain.plot(
 </code></pre>
 <p>See templateflow.org for more atlases.</p>
 <p>If the template argument is specified in <code>netplotbrain.plot</code>, then the template argument does not need to be included in the <code>nodes</code> dictionary.</p>
-<p>Since the nifti image consists of parcels (i.e. regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels over the circles with a single argument <code>nodetype</code>.</p>
+<p>Since the nifti image consists of parcels (i.e., regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels, over the circles, with a single argument <code>nodetype</code>.</p>
 <pre><code class="language-python"># import packages
 import netplotbrain
 # Define the atlas by key value words of TemplateFlow name
@@ -526,7 +526,7 @@ netplotbrain.plot(
     nodescale=150)
 </code></pre>
 <p>If you have the column <code>weight</code> in your edge dataframe, these will be automatically plotted as well. 
-This can be turn off by setting <code>edgeweights</code> to False. Also, a list of length 3 can be given to edgecol that specifies alternative names for ['i', 'j', 'weights'].</p>
+This can be turned off by setting <code>edgeweights</code> to False. Also, a list of length 3 can be given to edgecol that specifies alternative names for ['i', 'j', 'weights'].</p>
 <pre><code class="language-python"># Import packages
 import netplotbrain
 import pandas as pd
@@ -572,11 +572,11 @@ netplotbrain.plot(
 <h3 id="template-nifti-or-string">Template (nifti or string)</h3>
 <p>For the template you can supply any nifti file.</p>
 <p>You can also provide the template name for any template on templateflow.org.
-The T1w brain mask will then automatically downloaded (if not already present on your computer) and used as the background.</p>
-<p>Note, if there are multiple cohorts for the atlas, you should add which cohort it is to the string. This specification follows the format "templatename_cohort-X". So for example, if you want to use the second cohort for MNIInfant, you specify "MNIInfant_cohort-2". Additionally, if there is a specific templateflow file that you wish to use (that is not one of the default template files) you can specify a dictionary of templateflow keyword-value pairs. </p>
+The T1w brain mask will then be automatically downloaded (if not already present on your computer) and used as the background.</p>
+<p>Note, if there are multiple cohorts for the atlas, you should add which cohort it is to the string. This specification follows the format "templatename_cohort-X". So, for example, if you want to use the second cohort for MNIInfant, you specify "MNIInfant_cohort-2". Additionally, if there is a specific templateflow file that you wish to use (that is not one of the default template files) you can specify a dictionary of templateflow keyword-value pairs. </p>
 <h3 id="template-styles">Template Styles</h3>
-<p>There are currently three background styles: "glass", "surface", "filled" and "cloudy".</p>
-<p>The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to the resolution of the surface.</p>
+<p>There are currently four background styles: "glass", "surface", "filled" and "cloudy".</p>
+<p>The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to modify the resolution of the surface.</p>
 <p>The filled style plots the template's brain mask as voxels. This can be slightly RAM consuming.</p>
 <p>The cloudy style tries to identify the outline of the mask and plots points along the edges. The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.</p>
 <p>For templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker.</p>
