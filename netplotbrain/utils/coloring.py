@@ -127,6 +127,7 @@ def _get_colorby_colors(df, colorby, datatype='node', **kwargs):
     # Get relevant kwargs
     cmap = kwargs.get(datatype + 'cmap')
     color_vminvmax = kwargs.get(datatype + 'colorvminvmax')
+    #TODO: Add flag if colours are in column
     colortype = _detect_coloring_type(df, colorby)
     cmap = cm.get_cmap(cmap)
     if colortype == 'discrete':
