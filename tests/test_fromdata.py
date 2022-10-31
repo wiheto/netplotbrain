@@ -75,7 +75,7 @@ def test_360():
                       edges=edges,
                       gif=True,
                       savename='giftest')
-    return fi
+    return fig
     
 
 # show saving works 
