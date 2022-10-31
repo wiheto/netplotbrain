@@ -27,7 +27,7 @@ def test_error_network_not_nx():
                 network=1)
 
 # If highlightedges and highlightnods are specified at the same time
-def test_error_network_not_nx():
+def test_error_doublehighlight():
     with pytest.raises(ValueError):
         npbplot(template=None,
                 edges=edges,
