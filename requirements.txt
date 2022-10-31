@@ -6,4 +6,4 @@ scipy>=1.4.1
 scikit-image>=0.19.1
 pandas>=1.2.4
 pillow>=8.4.0
-networkx>=2.8.4
+networkx>=2.6.3
