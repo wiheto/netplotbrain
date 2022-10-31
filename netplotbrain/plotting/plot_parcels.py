@@ -84,7 +84,7 @@ def _plot_parcels(ax, img, cmap='Set2', hemisphere='both', **kwargs):
     See plot for input arguments.
     """
     # get kwargs
-    alpha = kwargs.get('nodealpha')
+    alpha = kwargs.get('node_alpha')
     surface_resolution = kwargs.get('surface_resolution')
     # Due to only being able to get data once, this leads to problems when LR hemi are specieid
     data = img.get_fdata(caching='unchanged').copy()

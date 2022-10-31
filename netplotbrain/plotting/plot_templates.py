@@ -14,9 +14,9 @@ from ..templatesettings import _get_surface_level_for_template
 
 def _plot_template_style_cloudy(ax, data, azim, elev, **kwargs):
     # Get kewyowrd argments relevant for function
-    alpha = kwargs.get('templatealpha')
-    edgethreshold = kwargs.get('templateedgethreshold')
-    templatecolor = kwargs.get('templatecolor')
+    alpha = kwargs.get('template_alpha')
+    edge_threshold = kwargs.get('templateedge_threshold')
+    template_color = kwargs.get('template_color')
     # If the viewpoint is not at 0,0, rotate the image so the edge thresholding occurs at approriate angle
     if azim != 0:
         data = rotate(data, -azim, axes=[0, 1], reshape=False)
@@ -36,11 +36,11 @@ def _plot_template_style_cloudy(ax, data, azim, elev, **kwargs):
     if azim != 0:
         sdata = rotate(sdata, azim, axes=[0, 1], reshape=False)
     # Binarize sobel filter in relation to threshold
-    bdata = np.abs(sdata) > np.max(np.abs(sdata)) * edgethreshold
+    bdata = np.abs(sdata) > np.max(np.abs(sdata)) * edge_threshold
     # Plot resulting edges as a scatter
     x, y, z = np.where(bdata == 1)
     # ax.voxels(bdata, alpha=0.2, edgecolor=None, facecolor='lightgray')
-    ax.scatter(x, y, z, s=5, facecolor=templatecolor,
+    ax.scatter(x, y, z, s=5, facecolor=template_color,
                edgecolors=None, marker='s', alpha=alpha, rasterized=True)
 
 
@@ -60,7 +60,7 @@ def _plot_template_style_glass(ax, data, template, **kwargs):
         Default is 0.01. To make the smokey effect the alpha is relative to template intensity value.
         This value sets the alpha scalar factor.
         The value will be the largest possible alpha value, where all other values scale between 0 and template_glass_max_alpha.
-    templatecolor : string
+    template_color : string
         Color of image.
 
     """
@@ -73,7 +73,7 @@ def _plot_template_style_glass(ax, data, template, **kwargs):
     else:
         glass_kwargs = glass_kwargs_all['default']
 
-    glass_kwargs['templatecolor'] = kwargs.get('templatecolor')
+    glass_kwargs['template_color'] = kwargs.get('template_color')
     # See if any values have been manually set
     if 'template_glass_compactness' in kwargs:
         glass_kwargs['template_glass_compactness'] = kwargs.get('template_glass_compactness')
@@ -110,15 +110,15 @@ def _plot_template_style_glass(ax, data, template, **kwargs):
     ax.scatter(points[0], points[1], points[2], 
                s=glass_kwargs['template_glass_pointsize'], 
                alpha=alpha_per_point * glass_kwargs['template_glass_maxalpha'], 
-               color=glass_kwargs['templatecolor'])
+               color=glass_kwargs['template_color'])
 
 
 
 def _plot_template_style_filled(ax, data, **kwargs):
-    alpha = kwargs.get('templatealpha')
-    templatecolor = kwargs.get('templatecolor')
+    alpha = kwargs.get('template_alpha')
+    template_color = kwargs.get('template_color')
     ax.voxels(data, alpha=alpha, zorder=-100,
-              facecolor=templatecolor, edgecolor=None, shade=False, rasterized=True)
+              facecolor=template_color, edgecolor=None, shade=False, rasterized=True)
 
 
 def _plot_template_style_surface(ax, data, template, **kwargs):
@@ -134,8 +134,8 @@ def _plot_template_style_surface(ax, data, template, **kwargs):
         Some default choices are made for various templates
     """
     # get kwargs
-    alpha = kwargs.get('templatealpha')
-    templatecolor = kwargs.get('templatecolor')
+    alpha = kwargs.get('template_alpha')
+    template_color = kwargs.get('template_color')
     surface_detection = kwargs.get('surface_detection')
     surface_resolution = kwargs.get('surface_resolution')
     if surface_detection is None:
@@ -144,7 +144,7 @@ def _plot_template_style_surface(ax, data, template, **kwargs):
     verts, faces, _, _ = measure.marching_cubes(
         data, level=surface_detection, step_size=surface_resolution)
     mesh = Poly3DCollection(verts[faces], rasterized=True)
-    mesh.set_facecolor(templatecolor)
+    mesh.set_facecolor(template_color)
     mesh.set_alpha(alpha)
     ax.add_collection3d(mesh)
 
@@ -164,8 +164,8 @@ def _select_single_hemisphere_template(data, hemisphere):
 
 def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
                    azim=0, elev=0, hemisphere='both', **kwargs):
-    voxsize = kwargs.get('templatevoxelsize')
-    templatestylename = 'default'
+    voxsize = kwargs.get('template_voxelsize')
+    template_stylename = 'default'
     if isinstance(template, dict):
         template = tf.get(**template)
     if isinstance(template, str):
@@ -188,7 +188,7 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
             if cohort is not None:
                 tf_kwargs['cohort'] = cohort
             # Get template
-            templatestylename = template
+            template_stylename = template
             template = tf.get(template=template, **tf_kwargs)
           
     # If template is now a list then templateflow found multiple entries.
@@ -213,8 +213,8 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
         _plot_template_style_surface(
             ax, data, template, **kwargs)
     elif style == 'glass':
-        _plot_template_style_glass(ax, data, templatestylename,**kwargs)
-    # Set xyz lim (for regardless of templatestyle)
+        _plot_template_style_glass(ax, data, template_stylename,**kwargs)
+    # Set xyz lim (for regardless of template_style)
     ax.set_xlim(0, data.shape[0])
     ax.set_ylim(0, data.shape[1])
     ax.set_zlim(0, data.shape[2])

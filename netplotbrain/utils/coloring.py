@@ -30,7 +30,7 @@ def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
         Binary array of N index indicating which nodes are highlighted (for edge purposes)
     """
     highlightlevel = kwargs.get('highlightlevel')
-    nodealpha = kwargs.get('nodealpha')
+    node_alpha = kwargs.get('node_alpha')
     if isinstance(highlightnodes, dict):
         highlight_idx = nodes[highlightnodes.keys()] == highlightnodes.values()
         highlight_idx = np.squeeze(highlight_idx.values)
@@ -45,12 +45,12 @@ def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
         nodecolor = _colorarray_from_string(nodecolor, len(nodes))
     if nodecolor.shape[1] == 3:
         nodecolor = np.hstack(
-            [nodecolor, np.vstack([nodealpha]*len(nodecolor))])
+            [nodecolor, np.vstack([node_alpha]*len(nodecolor))])
     # dim the non-highlighted nodes
-    nodecolor[highlight_idx == 0, 3] = nodealpha * (1 - highlightlevel)
-    # Nodealpha is now set in nodecolor, so set as None to avoid any later problems
-    nodealpha = None
-    return nodecolor, highlight_idx, nodealpha
+    nodecolor[highlight_idx == 0, 3] = node_alpha * (1 - highlightlevel)
+    # node_alpha is now set in nodecolor, so set as None to avoid any later problems
+    node_alpha = None
+    return nodecolor, highlight_idx, node_alpha
 
 
 
@@ -58,7 +58,7 @@ def _highlight_edges(edges, edgecolor, highlightedges, **kwargs):
     """
     """
     highlightlevel = kwargs.get('highlightlevel')
-    edgealpha = kwargs.get('edgealpha')
+    edge_alpha = kwargs.get('edge_alpha')
     if isinstance(highlightedges, dict):
         highlight_idx = edges[highlightedges.keys()] == highlightedges.values()
         highlight_idx = np.squeeze(highlight_idx.values)
@@ -74,12 +74,12 @@ def _highlight_edges(edges, edgecolor, highlightedges, **kwargs):
         edgecolor = _colorarray_from_string(edgecolor, len(edges))
     if edgecolor.shape[1] == 3:
         edgecolor = np.hstack(
-            [edgecolor, np.vstack([edgealpha]*len(edgecolor))])
+            [edgecolor, np.vstack([edge_alpha]*len(edgecolor))])
     # dim the non-highlighted edges
-    edgecolor[highlight_idx == 0, 3] = edgealpha * (1 - highlightlevel)
-    # Nodealpha is now set in nodecolor, so set as None to avoid any later problems
-    edgealpha = None
-    return edgecolor, highlight_idx, edgealpha
+    edgecolor[highlight_idx == 0, 3] = edge_alpha * (1 - highlightlevel)
+    # node_alpha is now set in nodecolor, so set as None to avoid any later problems
+    edge_alpha = None
+    return edgecolor, highlight_idx, edge_alpha
 
 
 def assign_color(row, colordict):
@@ -149,6 +149,6 @@ def _get_colorby_colors(df, colorby, datatype='node', **kwargs):
         cat = (cat - -np.nanmax(np.abs(cat))) / (np.nanmax(np.abs(cat)) - -np.nanmax(np.abs(cat)))
         color_array = cmap(cat)
     else:
-        # This will occur if nodecolorvminvmax is not
+        # This will occur if node_colorvminvmax is not
         raise ValueError('Cannot determine color type')
     return color_array

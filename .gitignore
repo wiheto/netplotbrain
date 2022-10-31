@@ -5,3 +5,6 @@ scratch/*
 examples/tests
 *.pytest_cache
 *.ipynb_checkpoints
+*.eggs/*
+build/*
+*.whl

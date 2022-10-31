@@ -11,6 +11,11 @@ Painlessly plot networks on a brain in python. The package is still in early dev
 
 ![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/examples/figures/showcase.png)
 
+## Note
+
+From V0.2.1 keyword arguments now include underscores after the figure component to enhance readability. This means 'nodealpha' becomes 'node_alpha', 'templatevoxelsize' becomes 'template_voxelsize'.
+
+
 ## Features
 
 1. Easy to specify properties: integration with pandas entails node and edge size/colour can easily be specified.

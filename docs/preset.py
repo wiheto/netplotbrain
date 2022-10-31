@@ -18,7 +18,7 @@ edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 """
 # %%
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='glass',
+                  template_style='glass',
                   view='preset-3',
                   nodes=nodes,
                   edges=edges)
@@ -29,7 +29,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 """
 # %%
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='glass',
+                  template_style='glass',
                   view='preset-4',
                   nodes=nodes,
                   edges=edges)
@@ -40,7 +40,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 """
 # %%
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='glass',
+                  template_style='glass',
                   view='preset-4spring',
                   nodes=nodes,
                   edges=edges)
@@ -51,7 +51,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 """
 # %%
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='glass',
+                  template_style='glass',
                   view='preset-9',
                   nodes=nodes,
                   edges=edges)
@@ -62,7 +62,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 """
 # %%
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='glass',
+                  template_style='glass',
                   view='preset-6',
                   nodes=nodes,
                   edges=edges)
@@ -73,7 +73,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 """
 # %%
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='glass',
+                  template_style='glass',
                   view='preset-6spring',
                   nodes=nodes,
                   edges=edges)

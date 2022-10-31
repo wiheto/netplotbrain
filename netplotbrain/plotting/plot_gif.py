@@ -2,7 +2,7 @@ import io
 from PIL import Image
 
 
-def _plot_gif(fig, ax, gifduration, savename=None, gif_loop=0):
+def _plot_gif(fig, ax, gif_duration, savename=None, gif_loop=0):
 
     """
     Create a GIF from plot
@@ -17,7 +17,7 @@ def _plot_gif(fig, ax, gifduration, savename=None, gif_loop=0):
 
     fig : matplotlib figure
 
-    gifduration: each frame in ms, int (600 is suggested)
+    gif_duration: each frame in ms, int (600 is suggested)
 
     gif_loop: number of loops, int
     If 0, it becomes an infinite loop
@@ -46,4 +46,4 @@ def _plot_gif(fig, ax, gifduration, savename=None, gif_loop=0):
         images.append(img)
 
     images[0].save(savename,
-                   save_all=True, append_images=images[1:], optimize=False, duration=gifduration, loop=gif_loop)
+                   save_all=True, append_images=images[1:], optimize=False, duration=gif_duration, loop=gif_loop)

@@ -28,12 +28,12 @@ def get_frame_input(inputvar, axind, ri, fi, nrows, frames):
     return var_frame
 
 
-def _process_node_input(nodes, nodes_df, nodecolor, nodecolumnnames, template, templatevoxelsize):
+def _process_node_input(nodes, nodes_df, nodecolor, node_columnnames, template, template_voxelsize):
     """
-    Takes node input (nodes, nodesdf and nodecolumnnames) and processes them.
+    Takes node input (nodes, nodesdf and node_columnnames) and processes them.
     Loads pandas dataframe if nodes is string.
     Gets the nodes from the nifti file if nodes is an img is set.
-    Sets defult columns for nodecolumnnames.
+    Sets defult columns for node_columnnames.
     If nodes is an img, then nodes_df passes additional info if wanted.
     """
     # Preset nodeimg to None
@@ -48,22 +48,22 @@ def _process_node_input(nodes, nodes_df, nodecolor, nodecolumnnames, template, t
             nodes = pd.read_csv(nodes, index_col=0)
         elif nodes.endswith('.nii') or  nodes.endswith('.nii.gz'):
             nodes, nodeimg = _get_nodes_from_nii(
-                nodes, voxsize=templatevoxelsize, template=template, nodes=nodes_df)
+                nodes, voxsize=template_voxelsize, template=template, nodes=nodes_df)
         else:
             raise ValueError('nodes as str must be a .csv, .tsv, .nii, or .nii.gz')
     else:
         nodes, nodeimg = _get_nodes_from_nii(
-            nodes, voxsize=templatevoxelsize, template=template, nodes=nodes_df)
-    # set nodecolumnnames if no explicit input
-    if nodecolumnnames == 'auto':
-        nodecolumnnames = ['x', 'y', 'z']
+            nodes, voxsize=template_voxelsize, template=template, nodes=nodes_df)
+    # set node_columnnames if no explicit input
+    if node_columnnames == 'auto':
+        node_columnnames = ['x', 'y', 'z']
     # Check if nodecolor is a string in nodes, if yes, set to nodecolorby to nodecolor
     # Note: this may not be the most effective way to do this.
     nodecolorby = None
     if isinstance(nodecolor, str) and nodes is not None:
         if nodecolor in nodes:
             nodecolorby = str(nodecolor)
-    return nodes, nodeimg, nodecolorby, nodecolumnnames
+    return nodes, nodeimg, nodecolorby, node_columnnames
 
 
 def _process_edge_input(edges, edgeweights, **kwargs):
@@ -73,8 +73,8 @@ def _process_edge_input(edges, edgeweights, **kwargs):
     Creates pandas dataframe if edges is numpy array.
     Sets default edgeweight to "weight" if not given.
     """
-    edgethreshold = kwargs.get('edgethreshold')
-    edgethresholddirection = kwargs.get('edgethresholddirection')
+    edge_threshold = kwargs.get('edge_threshold')
+    edge_thresholddirection = kwargs.get('edge_thresholddirection')
     edges_df = kwargs.get('edges_df')
     if isinstance(edges, str):
         edges = pd.read_csv(edges, sep='\t', index_col=0)
@@ -93,14 +93,14 @@ def _process_edge_input(edges, edgeweights, **kwargs):
             edgeweights = None
         if edgeweights is not None and edgeweights not in edges:
             raise ValueError('Edgeweights is specified and not in edges')
-        # If edgeweight and edgethreshold have been set
-        if edgeweights is not None and edgethreshold is not None:
-            if edgethresholddirection == 'absabove':
-                edges = edges[np.abs(edges[edgeweights]) > edgethreshold]
-            if edgethresholddirection == 'above' or edgethresholddirection == '>':
-                edges = edges[edges[edgeweights] > edgethreshold]
-            if edgethresholddirection == 'below' or edgethresholddirection == '<':
-                edges = edges[edges[edgeweights] < edgethreshold]
+        # If edgeweight and edge_threshold have been set
+        if edgeweights is not None and edge_threshold is not None:
+            if edge_thresholddirection == 'absabove':
+                edges = edges[np.abs(edges[edgeweights]) > edge_threshold]
+            if edge_thresholddirection == 'above' or edge_thresholddirection == '>':
+                edges = edges[edges[edgeweights] > edge_threshold]
+            if edge_thresholddirection == 'below' or edge_thresholddirection == '<':
+                edges = edges[edges[edgeweights] < edge_threshold]
 
     return edges, edgeweights
 
@@ -135,7 +135,7 @@ def _process_highlightedge_input(edges, highlightedges, **profile):
     if isinstance(highlightedges, np.ndarray):
         # Convert np input to pd
         highlightedges = _npedges2dfedges(highlightedges)
-        ecols = profile['edgecolumnnames']
+        ecols = profile['edge_columnnames']
         # Make sure that the i and j column are the same name
         # Also rename weight to edge_to_highlight
         highlightedges.rename(columns = {'weight': 'edge_to_highlight',

@@ -21,17 +21,17 @@ def test_templateflow_atlas_highlight():
                                'desc': '100Parcels7Networks',
                                'resolution': 1},
                       template='MNI152NLin2009cAsym',
-                      templatestyle=None,
+                      template_style=None,
                       view=['L'],
                       nodetype='parcels',
-                      nodecmap='Dark2',
+                      node_cmap='Dark2',
                       nodecolor='yeo7networks',
-                      nodealpha=0.8,
+                      node_alpha=0.8,
                       title='Highlight a community',
                       highlightnodes={'yeo7networks': 'Cont'},
                       highlightlevel=0.95,
-                      nodecolorlegend=False,
-                      nodesizelegend=False)
+                      node_colorlegend=False,
+                      node_sizelegend=False)
     return fig
 
 
@@ -40,7 +40,7 @@ def test_templateflow_atlas_highlight():
 @pytest.mark.mpl_image_compare
 def test_templateflow_cohort():
     fig, _ = npbplot(template='MNIInfant_cohort-8',
-                     templatestyle='surface')
+                     template_style='surface')
     return fig
 
 
@@ -53,5 +53,5 @@ tf_kwargs = {'template': 'MNI152NLin6Asym',
 @pytest.mark.mpl_image_compare
 def test_templateflow_fromdict():
     fig, _ = npbplot(template=tf_kwargs,
-                     templatestyle='surface')
+                     template_style='surface')
     return fig

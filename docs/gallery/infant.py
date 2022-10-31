@@ -26,13 +26,13 @@ nodes_inf['z'] = nodes_inf['z'] / 1.25
 
 # Plot figure
 netplotbrain.plot(template='MNIInfant_cohort-2',
-         templatestyle='surface',
+         template_style='surface',
          title='Infant template',
          view='LSR',
          nodes=nodes_inf,
          nodesize='centrality_measure1',
          nodecolor='community',
-         nodescale=80,
+         node_scale=80,
          edges=edges,
-         templatevoxelsize=5)
+         template_voxelsize=5)
 

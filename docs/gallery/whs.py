@@ -28,12 +28,12 @@ nodes_whs['z'] = nodes_whs['z'] / 8
 
 # Plot figure
 netplotbrain.plot(template='WHS',
-         templatestyle='surface',
+         template_style='surface',
          title='Multiple templates possible',
          view='LSR',
          nodes=nodes_whs,
          nodesize='centrality_measure1',
          edges=edges,
          nodecolor='community',
-         nodescale=80,
-         templatevoxelsize=0.2)
+         node_scale=80,
+         template_voxelsize=0.2)

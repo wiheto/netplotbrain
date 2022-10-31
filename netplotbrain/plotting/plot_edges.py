@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def _npedges2dfedges(edges, edgethreshold=0, edgethresholddirection='absabove'):
+def _npedges2dfedges(edges, edge_threshold=0, edge_thresholddirection='absabove'):
     """
     A function which transforms numpy array edges into dataframe.
 
@@ -12,18 +12,18 @@ def _npedges2dfedges(edges, edgethreshold=0, edgethresholddirection='absabove'):
     ---------------------
     edges : numpy array
         n x n array of edges
-    edgethreshold : float
+    edge_threshold : float
         only find edges over a certain threshold
     edgetype : str
         Can be below, above or absabove. Default is absabove.
-        This argument says if keeping edges<edgethreshold, below(edge<threshold), or abs(edges) above
+        This argument says if keeping edges<edge_threshold, below(edge<threshold), or abs(edges) above
     """
-    if edgethresholddirection == 'above':
-        ind = np.where(edges > edgethreshold)
-    if edgethresholddirection == 'below':
-        ind = np.where(edges < edgethreshold)
-    if edgethresholddirection == 'absabove':
-        ind = np.where(np.abs(edges) > edgethreshold)
+    if edge_thresholddirection == 'above':
+        ind = np.where(edges > edge_threshold)
+    if edge_thresholddirection == 'below':
+        ind = np.where(edges < edge_threshold)
+    if edge_thresholddirection == 'absabove':
+        ind = np.where(np.abs(edges) > edge_threshold)
     weights = edges[ind]
     # Create dataframe
     df = pd.DataFrame(data={'i': ind[0], 'j': ind[1], 'weight': weights})
@@ -31,20 +31,20 @@ def _npedges2dfedges(edges, edgethreshold=0, edgethresholddirection='absabove'):
 
 
 def _get_edge_highlight_alpha(node_i, node_j, highlightnodes, **kwargs):
-    edgealpha = kwargs.get('edgealpha')
+    edge_alpha = kwargs.get('edge_alpha')
     highlightlevel = kwargs.get('highlightlevel')
-    edgehighlightbehaviour = kwargs.get('edgehighlightbehaviour')
-    if edgealpha is None:
+    edge_highlightbehaviour = kwargs.get('edge_highlightbehaviour')
+    if edge_alpha is None:
         pass
-    elif highlightnodes is None or edgehighlightbehaviour is None:
+    elif highlightnodes is None or edge_highlightbehaviour is None:
         pass
-    elif node_i in highlightnodes and node_j in highlightnodes and edgehighlightbehaviour == 'both':
+    elif node_i in highlightnodes and node_j in highlightnodes and edge_highlightbehaviour == 'both':
         pass
-    elif (node_i in highlightnodes or node_j in highlightnodes) and edgehighlightbehaviour == 'any':
+    elif (node_i in highlightnodes or node_j in highlightnodes) and edge_highlightbehaviour == 'any':
         pass
     else:
-        edgealpha = edgealpha * (1 - highlightlevel)
-    return edgealpha
+        edge_alpha = edge_alpha * (1 - highlightlevel)
+    return edge_alpha
 
 
 def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=None, **kwargs):
@@ -60,7 +60,7 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
         numpy array (adj matrix) or edgelist (df.columns = ['i', 'j', ...])
     edgewidth : string
         Column pointing to edges.
-    edgewidthscale : float, int
+    edge_widthscale : float, int
         For display purposes, scale edges by value.
     edgecolor : matplotlib color
         Colour of edges
@@ -72,7 +72,7 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
         See netplotbrain.plot
     highlightlevel : float
         See netplotbrain.plot
-    edgehighlightbehaviour : str
+    edge_highlightbehaviour : str
         alternatives "both" or "any" or None.
         Governs edge dimming when highlightnodes is on
         If both, then highlights only edges between highlighted nodes.
@@ -80,21 +80,21 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
 
     kwargs
     ---------------------
-    edgealpha : float
+    edge_alpha : float
         Transparency of edges.
 
     Returns
     ----------------------
     Nothing
     """
-    edgecol = kwargs.get('edgecolumnnames')
-    nodecol = kwargs.get('nodecolumnnames')
-    edgewidthscale = kwargs.get('edgewidthscale')
+    edgecol = kwargs.get('edge_columnnames')
+    nodecol = kwargs.get('node_columnnames')
+    edge_widthscale = kwargs.get('edge_widthscale')
     # Convert highlightnodes binary list to index list
     hl_idx = np.where(np.array(highlightnodes) == 1)[0]
     # if set as a string
     ec = edgecolor
-    # Because while edgecolor (when array) and edges can be same size, if edgethreshold is set, indicies can be off due to merge
+    # Because while edgecolor (when array) and edges can be same size, if edge_threshold is set, indicies can be off due to merge
     # So eci is a separate counter instead of using the auto index in iterrows (which takes df index).
     eci = 0
     for _, row in edges.iterrows():
@@ -103,9 +103,9 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edgecolor='k', highlightnodes=
             if edgecolor.shape[0] == len(edges):
                 ec = edgecolor[eci, :]
         if edgewidth is None:
-            ew = edgewidthscale
+            ew = edge_widthscale
         else:
-            ew = row[edgewidth] * edgewidthscale
+            ew = row[edgewidth] * edge_widthscale
 
         if row[edgecol[0]] in nodes.index and row[edgecol[1]] in nodes.index:
             ea = _get_edge_highlight_alpha(

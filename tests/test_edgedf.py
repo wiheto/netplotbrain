@@ -28,13 +28,13 @@ def test_edges_df():
                                 edges=graph,
                                 edges_df=edges_df,
                                 template='MNI152NLin2009cAsym',
-                                templatestyle='glass',
+                                template_style='glass',
                                 view=['S'],
                                 edgecolor='color',
                                 title='Edge_df',
                                 nodetype='circles',
-                                edgecmap='tab10',
-                                edgethreshold=0,
-                                edgewidthscale=5,
-                                edgethresholddirection='above')
+                                edge_cmap='tab10',
+                                edge_threshold=0,
+                                edge_widthscale=5,
+                                edge_thresholddirection='above')
     return fig

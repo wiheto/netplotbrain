@@ -122,12 +122,12 @@ def _rotate_data_to_viewingangle(data, azim=0, elev=0, rotateback=False):
 
 def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
     """
-    Scales nodesize in relation to nodescale, vmin and vmax.
+    Scales nodesize in relation to node_scale, vmin and vmax.
 
-    The parameter nodesizevminvmax dictates the vmin, vmax behaviour.
+    The parameter node_sizevminvmax dictates the vmin, vmax behaviour.
     """
-    vminvmax = kwargs.get('nodesizevminvmax')
-    nodescale = kwargs.get('nodescale')
+    vminvmax = kwargs.get('node_sizevminvmax')
+    node_scale = kwargs.get('node_scale')
     nodesizevector = nodes[nodesize].copy()
     labelformat = None
     if isinstance(vminvmax, list):
@@ -149,7 +149,7 @@ def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
             nodesizevector = (nodesizevector - nodesizevector.min()) / \
                 (nodesizevector.max() - nodesizevector.min()) * (1.05 - 0.05) + 0.05
 
-    nodesizevector = nodesizevector * nodescale
+    nodesizevector = nodesizevector * node_scale
     if return_labels:
         nodesizelabels = nodes[nodesize].copy()
         nodesizelabels[np.isnan(nodesizevector)] = np.nan

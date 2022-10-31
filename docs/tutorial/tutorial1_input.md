@@ -68,10 +68,10 @@ netplotbrain.plot(
     nodesize='degree_centrality',
     nodecolor='communities',
     arrowaxis=None,
-    nodescale=100)
+    node_scale=100)
 ```
  
-This will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `nodescale` which just linearly scales all nodes by that factor. We also see that, when specifying `nodesize` and `nodecolor`, that legends automatically appear.
+This will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `node_scale` which just linearly scales all nodes by that factor. We also see that, when specifying `nodesize` and `nodecolor`, that legends automatically appear.
 
 At the moment we just have some circles floating in 3D space. Let us add some more information about this network.
 
@@ -147,7 +147,7 @@ netplotbrain.plot(
     edges=edges_df,
     nodecolor='communities',
     arrowaxis=None,
-    nodescale=150)
+    node_scale=150)
 ```
 
 If you have the column `weight` in your edge dataframe, these will be automatically plotted as well. 
@@ -172,7 +172,7 @@ netplotbrain.plot(
     edges=edges_df,
     nodecolor='communities',
     arrowaxis=None,
-    nodescale=150)
+    node_scale=150)
 ```
 
 Finally, you can specify a number matrix instead of a pandas dataframe. 
@@ -196,7 +196,7 @@ netplotbrain.plot(
     edges=edges_df,
     nodecolor='communities',
     arrowaxis=None,
-    nodescale=150)
+    node_scale=150)
 ```
 
 ## Specifying Templates

@@ -27,7 +27,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         if tuple: (azim, elev) where azim rotates along xy, and elev rotates along xz.
         If LR or AP view combinations only, you can specify i.e. 'AP-' to rotate in the opposite direction
     nodes : dataframe, string, dict, or nii
-        The dataframe must include x, y, z columns that correspond to coordinates of nodes (see nodecolumnnames to change this).
+        The dataframe must include x, y, z columns that correspond to coordinates of nodes (see node_columnnames to change this).
         Can include additional infomation for node size and color.
         If string, can load a csv file, tsv file (tab seperator), assumes index column is the 0th column.
         If nodes points to a nifti image, a string to filename or nibabel object that contains nodes as int.
@@ -39,7 +39,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         if numpy array, square adjacency array.
         If string, can load a tsv file (tab seperator), assumes index column is the 0th column.
     network : nx.Graph
-        NetworkX input. Note the nodecolumnnames for coordinates (by default x, y, z) must be node attributes for nodes.
+        NetworkX input. Note the node_columnnames for coordinates (by default x, y, z) must be node attributes for nodes.
         If providing network input, than you cannot specify nodes or edges input.
         These should be included within the networkx object as nodes and edges attributes.
     template : str, dict or nibabel nifti
@@ -98,8 +98,8 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             raise ValueError('Unnown netowrk input')
 
     # Check and load the input of nodes and edges
-    nodes, nodeimg, nodecolorby, profile['nodecolumnnames'] = _process_node_input(
-        nodes, profile['nodes_df'], nodecolor, profile['nodecolumnnames'], template, profile['templatevoxelsize'])
+    nodes, nodeimg, nodecolorby, profile['node_columnnames'] = _process_node_input(
+        nodes, profile['nodes_df'], nodecolor, profile['node_columnnames'], template, profile['template_voxelsize'])
     edges, edgeweights = _process_edge_input(edges, edgeweights, **profile)
     # Set up legend row
     # TODO compact code into subfunction
@@ -112,14 +112,14 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         # Only plot size legend is sphere/circle and string or list input
         # TODO setup_legend is a little clunky and could be fixed
         if nodetype != 'parcel' and not isinstance(nodesize, (float, int)):
-            nodesizelegend = profile['nodesizelegend']
+            node_sizelegend = profile['node_sizelegend']
             legends = _setup_legend(
-                nodesize, nodesizelegend, 'nodesize', legends)
+                nodesize, node_sizelegend, 'nodesize', legends)
         # Only plot color legend if colorby
         if nodecolorby is not None:
-            nodecolorlegend = profile['nodecolorlegend']
+            node_colorlegend = profile['node_colorlegend']
             legends = _setup_legend(
-                nodecolorby, nodecolorlegend, 'nodecolor', legends)
+                nodecolorby, node_colorlegend, 'nodecolor', legends)
         if legends is not None:
             legendrows = len(legends)
 
@@ -150,22 +150,23 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     if highlightnodes is not None and highlightedges is not None:
         raise ValueError('Cannot highlight based on edges and nodes at the same time.')
     if highlightnodes is not None:
-        nodecolor, highlightnodes, profile['nodealpha'] = _highlight_nodes(
+        nodecolor, highlightnodes, profile['node_alpha'] = _highlight_nodes(
             nodes, nodecolor, highlightnodes, **profile)
 
     if highlightedges is not None:
         edges, highlightedges = _process_highlightedge_input(edges, highlightedges, **profile)
-        edgecolor, highlightedges, profile['edgealpha'] = _highlight_edges(edges, edgecolor, highlightedges, **profile)
+        edgecolor, highlightedges, profile['edge_alpha'] = _highlight_edges(edges, edgecolor, highlightedges, **profile)
         # Get the nodes that are touched by highlighted edges
         nodes_to_highlight = edges[highlightedges == 1]
-        nodes_to_highlight = np.unique(nodes_to_highlight[profile['edgecolumnnames']].values)
-        nodecolor, highlightnodes, profile['nodealpha'] = _highlight_nodes(
+        nodes_to_highlight = np.unique(nodes_to_highlight[profile['edge_columnnames']].values)
+        nodecolor, highlightnodes, profile['node_alpha'] = _highlight_nodes(
             nodes, nodecolor, nodes_to_highlight, **profile)
 
     # Rename ax as ax_in and prespecfiy ax_out before forloop
     ax_in = ax
     ax_out = []
     # TODO remove double forloop and make single forloop by running over nrows and frames
+    # TODO add test for single image across frames and copy axis for speed.
     for ri in range(nrows):
         # Get the azim, elev and arrowaxis for each row
         azim, elev, arrowaxis_row, viewtype = _get_view(
@@ -175,7 +176,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # get_frame_input allows input arguments to be string or list of different arguments for different plots
             hemi_frame = get_frame_input(hemisphere, axind, ri, fi, nrows, frames)
             subtitle_frame = get_frame_input(profile['subtitles'], axind, ri, fi, nrows, frames)
-            templatestyle_frame = get_frame_input(profile['templatestyle'], axind, ri, fi, nrows, frames)
+            template_style_frame = get_frame_input(profile['template_style'], axind, ri, fi, nrows, frames)
             # Set up subplot
             if ax_in is None:
                 ax = fig.add_subplot(gridspec[ri, fi], projection='3d')
@@ -186,7 +187,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 ax = ax_in
             affine = None
             if template is not None and viewtype[fi]=='b':
-                affine = _plot_template(ax, templatestyle_frame, template,
+                affine = _plot_template(ax, template_style_frame, template,
                                         hemisphere=hemi_frame,
                                         azim=azim[fi], elev=elev[fi],
                                         **profile)
@@ -197,14 +198,14 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # So if affine is not None, nodes get scaled in relation to origin and voxelsize,
             # If node coords are derived from nodeimg, this has already been taken care of.
             if nodes is not None and nodeimg is None and axind == 0:
-                nodes = _scale_nodes(nodes, profile['nodecolumnnames'], affine)
+                nodes = _scale_nodes(nodes, profile['node_columnnames'], affine)
             # nodes and subplot may change for each frame/subplot
             # e.g. if hemisphere is specified
             nodes_frame = None
             if nodes is not None and viewtype[fi]=='b':
                 nodes_frame = nodes.copy()
                 nodes_frame = _select_single_hemisphere_nodes(
-                    nodes_frame, profile['nodecolumnnames'][0], affine, hemi_frame)
+                    nodes_frame, profile['node_columnnames'][0], affine, hemi_frame)
 
                 if nodetype == 'spheres':
                     _plot_spheres(ax, nodes_frame, nodecolor=nodecolor,
@@ -253,7 +254,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 ax = _add_nodecolor_legend(
                     ax, nodes, nodecolorby, nodecolor, **profile)
             ax.axis('off')
-            #ax = _add_size_legend(ax, nodes, nodesize, nodescale)
+            #ax = _add_size_legend(ax, nodes, nodesize, node_scale)
             ax_out.append(ax)
 
     # Title on top of the figure
@@ -264,7 +265,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
 
     # If gif is requested, create the gif.
     if profile['gif'] is True:
-        _plot_gif(fig, ax_out, profile['gifduration'], profile['savename'], profile['gifloop'])
+        _plot_gif(fig, ax_out, profile['gif_duration'], profile['savename'], profile['gif_loop'])
     # Save figure if set
     elif profile['savename'] is not None:
         if profile['savename'].endswith('.png'):

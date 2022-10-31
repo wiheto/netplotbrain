@@ -19,21 +19,21 @@ def test_cont_colormap():
                       nodes=nodes,
                       nodesize=40,
                       edges=edges,
-                      nodecmap='RdBu',
+                      node_cmap='RdBu',
                       nodecolor='centrality_measure1',
-                      nodecolorlegendstyle='continuous')
+                      node_colorlegendstyle='continuous')
     return fig
 
 @pytest.mark.mpl_image_compare
 def test_nodevminvmax():
     fig, _ = npbplot(template=None,
                       view='S',
-                      nodescale=100,
+                      node_scale=100,
                       nodes=nodes,
                       nodesize='centrality_measure1',
                       edges=edges,
-                      nodecmap='RdBu',
-                      nodesizevminvmax=[0.6, 1.1])
+                      node_cmap='RdBu',
+                      node_sizevminvmax=[0.6, 1.1])
     return fig
 
 # Nodes as spheres
@@ -42,10 +42,10 @@ def test_spheres():
     fig, _ = npbplot(nodes=nodes,
                   edges=edge_array,
                   template='MNI152NLin2009cAsym',
-                  templatestyle=None,
+                  template_style=None,
                   view=['A'],
                   nodetype='spheres',
-                  nodealpha=0.5,
+                  node_alpha=0.5,
                   nodecolor='Salmon',
                   title='Sphere test')
     return fig

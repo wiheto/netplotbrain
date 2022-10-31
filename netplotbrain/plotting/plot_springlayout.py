@@ -7,10 +7,10 @@ def _plot_springlayout(ax, nodes, edges, nodecolor, nodesize, edgecolor, edgewei
     This funciton calculates and plots a spring layout for nodes/edges instead of on a brain.
     """
     # Get relevant kwargs
-    edgecols = kwargs.get('edgecolumnnames')
+    edgecols = kwargs.get('edge_columnnames')
     seed = kwargs.get('seed')
     # nodecolumnname is not needed/problematic, so get rid of it from kwargs
-    kwargs.pop('nodecolumnnames')
+    kwargs.pop('node_columnnames')
     # First convert to networkx
     network = nx.from_pandas_edgelist(edges, edgecols[0], edgecols[1], edgeweights)
     # Calculate spring board for each
@@ -25,7 +25,7 @@ def _plot_springlayout(ax, nodes, edges, nodecolor, nodesize, edgecolor, edgewei
     # Get edge plot properties (repeats plot_edges)
     sl_nodecols= ['spring_x', 'spring_y', 'spring_z']
     _plot_edges(ax, nodes, edges, edgewidth=edgeweights, edgecolor=edgecolor,
-                highlightnodes=highlightnodes, nodecolumnnames=sl_nodecols, **kwargs)
-    _plot_nodes(ax, nodes, nodecolumnnames=sl_nodecols,
+                highlightnodes=highlightnodes, node_columnnames=sl_nodecols, **kwargs)
+    _plot_nodes(ax, nodes, node_columnnames=sl_nodecols,
                nodecolor=nodecolor, nodesize=nodesize, **kwargs)
 

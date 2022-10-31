@@ -11,10 +11,10 @@ edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 @pytest.mark.mpl_image_compare
 def test_simple():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
-                      templatestyle='surface',
+                      template_style='surface',
                       view='S',
                       nodes=nodes,
-                      nodescale=40,
+                      node_scale=40,
                       nodesize='centrality_measure1',
                       edges=edges,
                       nodecolor='community')
@@ -27,10 +27,10 @@ def test_singlehemisphere():
     fig, _ = npbplot(nodes=nodes,
                   edges=edges,
                   template='MNI152NLin2009cAsym',
-                  templatestyle=None,
+                  template_style=None,
                   view=['SSS'],
                   hemisphere=['L', 'R', ''],
-                  nodealpha=0.5,
+                  node_alpha=0.5,
                   nodecolor='Salmon')
     return fig
 
@@ -44,7 +44,7 @@ def test_customax():
     fig, _ = npbplot(template=None,
                       view=['SLP'],
                       nodes=nodes,
-                      nodescale=40,
+                      node_scale=40,
                       nodesize='centrality_measure1',
                       edges=edges,
                       fig=fig,
@@ -57,7 +57,7 @@ def test_gif_plot():
                       view=['AP'],
                       frames=3,
                       nodes=nodes,
-                      nodescale=40,
+                      node_scale=40,
                       nodesize='centrality_measure1',
                       edges=edges,
                       gif=True,

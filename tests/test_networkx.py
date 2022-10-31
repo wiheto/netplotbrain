@@ -18,7 +18,7 @@ for _, edge in edges.iterrows():
 
 # Should backtranslate network x input into original inptu
 def test_networkx_input_conversion():
-    nodes_from_nx, edges_from_nx = netplotbrain.utils._from_networkx_input(g, nodecolumnnames=['x', 'y', 'z'], edgecolumnnames=['i', 'j'])
+    nodes_from_nx, edges_from_nx = netplotbrain.utils._from_networkx_input(g, node_columnnames=['x', 'y', 'z'], edge_columnnames=['i', 'j'])
     assert all(nodes_from_nx == nodes)
     assert all(edges_from_nx == edges)
 

@@ -5,18 +5,18 @@ import pytest
 @pytest.mark.mpl_image_compare
 def test_cloudytemplate():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
-                      templatestyle='cloudy',
+                      template_style='cloudy',
                       view='SIP',
-                      templatevoxelsize=2)
+                      template_voxelsize=2)
     return fig
 
 # Plot only filled template
 @pytest.mark.mpl_image_compare
 def test_filledtemplate():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
-                      templatestyle='filled',
+                      template_style='filled',
                       view='L',
-                      templatevoxelsize=5)
+                      template_voxelsize=5)
     return fig
 
 
@@ -24,6 +24,6 @@ def test_filledtemplate():
 @pytest.mark.mpl_image_compare
 def test_glasstemplate():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
-                     templatestyle='glass',
+                     template_style='glass',
                      view=['AP', 'SL'])
     return fig

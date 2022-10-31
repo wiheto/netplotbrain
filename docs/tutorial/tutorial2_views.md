@@ -26,7 +26,7 @@ The first from left to right. The second from anterior to posterior.
 ```python
 import netplotbrain
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
+                  template_style='surface',
                   view=['LSR', 'AIP'])
 plt.show()
 ```
@@ -45,7 +45,7 @@ Images will then be displayed along a single row.
 ```python
 import netplotbrain
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
+                  template_style='surface',
                   view=['AP'],
                   frames=5)
 ```
@@ -57,7 +57,7 @@ It is also possible to specify the `view="360"`to get a fully rotated brain. The
 ```python
 import netplotbrain
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='glass',
+                  template_style='glass',
                   view='360',
                   frames=8)
 ```

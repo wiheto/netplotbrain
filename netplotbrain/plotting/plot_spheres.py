@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def _plot_spheres(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, alpha=None, **kwargs):
+def _plot_spheres(ax, nodes, node_columnnames, nodecolor='salmon', nodesize=20, alpha=None, **kwargs):
     """
     Function that plots spheres in figure.
 
@@ -10,7 +10,7 @@ def _plot_spheres(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, a
     ax : matplotlib ax
     nodes : dataframe
         node dataframe with x, y, z coordinates.
-    nodecolumnnames : list of string
+    node_columnnames : list of string
         name of node column coordinates in datadrame to correspond with x,y,z.
     nodesize : string or float, int
         if string, must refer to a column in nodes.
@@ -26,20 +26,20 @@ def _plot_spheres(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, a
 
     """
     # Get relevant kwargs
-    nodescale = kwargs.get('nodescale')
-    nodealpha = kwargs.get('nodealpha')
+    node_scale = kwargs.get('node_scale')
+    node_alpha = kwargs.get('node_alpha')
     # Loop through each node and plot a surface plot
     for index, row in nodes.iterrows():
         # Get the xyz coords for the node
-        c = [row[nodecolumnnames[0]],
-             row[nodecolumnnames[1]],
-             row[nodecolumnnames[2]]]
+        c = [row[node_columnnames[0]],
+             row[node_columnnames[1]],
+             row[node_columnnames[2]]]
 
         # Check if nodesize is in the dataframe
         if nodesize in nodes.keys():
-            r = row[nodesize] * nodescale
+            r = row[nodesize] * node_scale
         else:
-            r = nodesize * nodescale
+            r = nodesize * node_scale
 
         u, v = np.mgrid[0:2*np.pi:50j, 0:np.pi:50j]
 
@@ -56,4 +56,4 @@ def _plot_spheres(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, a
 
         ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
                         color=ncolor,
-                        alpha=nodealpha)
+                        alpha=node_alpha)

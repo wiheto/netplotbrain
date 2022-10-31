@@ -14,7 +14,7 @@
 
 ### [Template styles](./node_styles/)
 
-[![](./gallery/figures/templatestyles.png)](./template_styles/)
+[![](./gallery/figures/template_styles.png)](./template_styles/)
 
 ### [Dual row figures](.//two_rows/)
 

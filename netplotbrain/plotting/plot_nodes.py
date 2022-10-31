@@ -1,7 +1,7 @@
 import numpy as np
 from ..utils import _node_scale_vminvmax
 
-def _plot_nodes(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, **kwargs):
+def _plot_nodes(ax, nodes, node_columnnames, nodecolor='salmon', nodesize=20, **kwargs):
     """
     Function that plots nodes in figure
 
@@ -9,14 +9,14 @@ def _plot_nodes(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, **k
     ---------------
     ax : matplotlib ax
     nodes : dataframe
-        node dataframe with x, y, z coordinates, must include nodecolumnnames.
-    nodecolumnnames : list of string
+        node dataframe with x, y, z coordinates, must include node_columnnames.
+    node_columnnames : list of string
         name of node column coordinates in datadrame.
     nodesize : string or float, int
         if string, must refer to a column in nodes.
     nodecolor : string or matplotlib color
         if non-color string, must refer to a column in nodes
-    nodescale : float
+    node_scale : float
         Scaling factor applied to nodesize.
 
 
@@ -26,8 +26,8 @@ def _plot_nodes(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, **k
 
     """
     # Get relevant kwargs
-    nodescale = kwargs.get('nodescale')
-    nodealpha = kwargs.get('nodealpha')
+    node_scale = kwargs.get('node_scale')
+    node_alpha = kwargs.get('node_alpha')
     # If half hemisphere is plotted, then cut the right
     nc = nodecolor
     if isinstance(nodecolor, np.ndarray):
@@ -37,12 +37,12 @@ def _plot_nodes(ax, nodes, nodecolumnnames, nodecolor='salmon', nodesize=20, **k
     if isinstance(nodesize, str) and nodesize in nodes.columns:
         ns = _node_scale_vminvmax(nodes, nodesize, **kwargs)
     else:
-        ns = nodesize * nodescale
-    ax.scatter(nodes[nodecolumnnames[0]], nodes[nodecolumnnames[1]],
-               nodes[nodecolumnnames[2]], s=ns, color=nc, alpha=nodealpha)
+        ns = nodesize * node_scale
+    ax.scatter(nodes[node_columnnames[0]], nodes[node_columnnames[1]],
+               nodes[node_columnnames[2]], s=ns, color=nc, alpha=node_alpha)
 
 
-def _scale_nodes(nodes, nodecolumnnames, affine=None):
+def _scale_nodes(nodes, node_columnnames, affine=None):
     """
     Scales nodes from MNI coordinates to ax with origin of 0.
 
@@ -50,7 +50,7 @@ def _scale_nodes(nodes, nodecolumnnames, affine=None):
     ---------------
     nodes : dataframe
         node dataframe with x, y, z coordinates.
-    nodecolumnnames : list of strings
+    node_columnnames : list of strings
         column names of x, y, z coordinates
     affine : array
         3x4 array from img.affine (nibabel image).
@@ -63,12 +63,12 @@ def _scale_nodes(nodes, nodecolumnnames, affine=None):
     """
     nodes_scaled = nodes.copy()
     if affine is not None:
-        nodes_scaled[nodecolumnnames[0]] = (
-            nodes_scaled[nodecolumnnames[0]] - affine[0, -1]) / affine[0, 0]
-        nodes_scaled[nodecolumnnames[1]] = (
-            nodes_scaled[nodecolumnnames[1]] - affine[1, -1]) / affine[1, 1]
-        nodes_scaled[nodecolumnnames[2]] = (
-            nodes_scaled[nodecolumnnames[2]] - affine[2, -1]) / affine[2, 2]
+        nodes_scaled[node_columnnames[0]] = (
+            nodes_scaled[node_columnnames[0]] - affine[0, -1]) / affine[0, 0]
+        nodes_scaled[node_columnnames[1]] = (
+            nodes_scaled[node_columnnames[1]] - affine[1, -1]) / affine[1, 1]
+        nodes_scaled[node_columnnames[2]] = (
+            nodes_scaled[node_columnnames[2]] - affine[2, -1]) / affine[2, 2]
     return nodes_scaled
 
 

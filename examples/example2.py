@@ -46,10 +46,10 @@ nodes, edges = create_random_data(n, m, xlim, ylim, zlim)
 
 # Plot single view
 netplotbrain.plot(template=None,
-         templatestyle=None,
+         template_style=None,
          view='LSR',
          nodes=nodes,
-         nodescale=60,
+         node_scale=60,
          nodesize='centrality_measure1',
          edges=edges)
 
@@ -61,17 +61,17 @@ ylim = [-10, 6]
 zlim = [-3, 6]
 nodes, edges = create_random_data(n, m, xlim, ylim, zlim)
 
-# Setting templatevoxsize to 0.2 will make it slightly quicker
+# Setting template_voxelsize to 0.2 will make it slightly quicker
 # Due to the voxel size being smaller, the nodes are currently smaller
 # So scaling the nodes is useful.
 netplotbrain.plot(template='WHS',
-         templatestyle='surface',
+         template_style='surface',
          view='LSR',
          nodes=nodes,
          nodesize='centrality_measure1',
          edges=edges,
-         nodescale=10,
-         templatevoxsize=0.2)
+         node_scale=10,
+         template_voxelsize=0.2)
 
 plt.savefig('./examples/figures/template_whs.png', dpi=150)
 

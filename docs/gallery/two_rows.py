@@ -20,7 +20,7 @@ edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 
 # Plot figure
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='glass',
+                  template_style='glass',
                   nodes=nodes,
                   nodesize='centrality_measure1',
                   edges=edges,
