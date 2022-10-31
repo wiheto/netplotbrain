@@ -50,7 +50,7 @@ netplotbrain.plot(template=None,
          view='LSR',
          nodes=nodes,
          node_scale=60,
-         nodesize='centrality_measure1',
+         node_size='centrality_measure1',
          edges=edges)
 
 plt.savefig('./examples/figures/template_oasis30ants.png', dpi=150)
@@ -68,7 +68,7 @@ netplotbrain.plot(template='WHS',
          template_style='surface',
          view='LSR',
          nodes=nodes,
-         nodesize='centrality_measure1',
+         node_size='centrality_measure1',
          edges=edges,
          node_scale=10,
          template_voxelsize=0.2)

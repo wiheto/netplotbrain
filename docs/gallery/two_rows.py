@@ -22,8 +22,8 @@ edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   template_style='glass',
                   nodes=nodes,
-                  nodesize='centrality_measure1',
+                  node_size='centrality_measure1',
                   edges=edges,
-                  nodecolor='community',
+                  node_color='community',
                   view=['LSR', 'AIP'])
 

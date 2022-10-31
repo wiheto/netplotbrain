@@ -38,7 +38,7 @@ def test_printlayout():
                     nodes_df=atlasinfo,
                     edges=edges,
                     view='LSs', template_style='glass',
-                    node_scale=20, nodecolor='yeo7networks',
+                    node_scale=20, node_color='yeo7networks',
                     edge_threshold=0,
                     edge_thresholddirection='>',
                     seed=2022)

@@ -7,13 +7,13 @@ from .plotting import _plot_template, \
     _scale_nodes, _add_axis_arrows, _plot_parcels,\
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
-    _add_nodesize_legend, _add_nodecolor_legend, _init_figure, _check_axinput, \
+    _add_node_size_legend, _add_node_color_legend, _init_figure, _check_axinput, \
     _plot_gif, _process_highlightedge_input, _plot_springlayout, _add_title
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
     _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input, _get_presetviews
 
-def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', edgeweights=None, frames=None, edges=None, template=None, network=None,
-         edgecolor='k', nodesize=1, nodecolor='salmon', nodetype='circles', hemisphere='both', highlightnodes=None, highlightedges=None, **kwargs):
+def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L', edge_weights=None, frames=None, edges=None, template=None, network=None,
+         edge_color='k', node_size=1, node_color='salmon', node_type='circles', hemisphere='both', highlight_nodes=None, highlight_edges=None, **kwargs):
     """
     Plot a network on a brain
 
@@ -52,21 +52,21 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         This value will indicate the number of rotations to get from L to R.
         For any other view specification, (e.g. specifying string such as 'LSR')
         then this value is not needed.
-    highlightnodes : int, list, dict, str
+    highlight_nodes : int, list, dict, str
         List or int point out which nodes you want to be highlighted.
         If dict, should be a single column-value pair.
         Example: highlight all nodes of that, in the node dataframe, have a community
         value of 1, the input will be {'community': 1}.
         If string, should point to a column in the nodes dataframe and all non-zero values will be plotted.
-    highlightedges : array, dict, str
+    highlight_edges : array, dict, str
         List or int point out which nodes you want to be highlighted.
         If dict, should be a single column-value pair.
         Example: highlight all nodes of that, in the edge dataframe, have a community
         value of 1, the input will be {'community': 1}.
         If string, should point to a column in the nodes dataframe and all non-zero values will be plotted.
-    nodecolor : str or RGB value.
+    node_color : str or RGB value.
         If string, named matplotlib color or name of column in dataframe
-    nodesize : str, int, float
+    node_size : str, int, float
         If string, can plot a column in nodes
     subtitle : list
         Default auto, will describe the view settings.
@@ -85,8 +85,8 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Raise Errors for deprecated inputs from version 0.1.x
     if 'nodeimg' in kwargs:
         raise ValueError('DEPRECATED INPUT (from 0.2.0): Use nodes instead of nodeimg. If additional nodeinfo exists as a dataframe, use nodes_df.')
-    if 'nodecolorby' in kwargs:
-        raise ValueError('DEPRECATED INPUT (from 0.2.0): Use nodecolor instead of nodecolorby.')
+    if 'node_colorby' in kwargs:
+        raise ValueError('DEPRECATED INPUT (from 0.2.0): Use node_color instead of node_colorby.')
     # Load default settings, then update with kwargs
     profile = _load_profile(**kwargs)
     if network is not None:
@@ -98,9 +98,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             raise ValueError('Unnown netowrk input')
 
     # Check and load the input of nodes and edges
-    nodes, nodeimg, nodecolorby, profile['node_columnnames'] = _process_node_input(
-        nodes, profile['nodes_df'], nodecolor, profile['node_columnnames'], template, profile['template_voxelsize'])
-    edges, edgeweights = _process_edge_input(edges, edgeweights, **profile)
+    nodes, nodeimg, node_colorby, profile['node_columnnames'] = _process_node_input(
+        nodes, profile['nodes_df'], node_color, profile['node_columnnames'], template, profile['template_voxelsize'])
+    edges, edge_weights = _process_edge_input(edges, edge_weights, **profile)
     # Set up legend row
     # TODO compact code into subfunction
     legends = None
@@ -111,15 +111,15 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     elif profile['showlegend'] is True:
         # Only plot size legend is sphere/circle and string or list input
         # TODO setup_legend is a little clunky and could be fixed
-        if nodetype != 'parcel' and not isinstance(nodesize, (float, int)):
+        if node_type != 'parcel' and not isinstance(node_size, (float, int)):
             node_sizelegend = profile['node_sizelegend']
             legends = _setup_legend(
-                nodesize, node_sizelegend, 'nodesize', legends)
+                node_size, node_sizelegend, 'node_size', legends)
         # Only plot color legend if colorby
-        if nodecolorby is not None:
+        if node_colorby is not None:
             node_colorlegend = profile['node_colorlegend']
             legends = _setup_legend(
-                nodecolorby, node_colorlegend, 'nodecolor', legends)
+                node_colorby, node_colorlegend, 'node_color', legends)
         if legends is not None:
             legendrows = len(legends)
 
@@ -141,26 +141,26 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         expected_ax_len = (nrows * frames)
         ax, gridspec = _check_axinput(ax, expected_ax_len)
         
-    # Set nodecolor to colorby argument
-    if nodecolorby is not None:
-        nodecolor = _get_colorby_colors(nodes, nodecolorby, **profile)
-    if isinstance(edgecolor, str) and edges is not None:
-        if edgecolor in edges:
-            edgecolor = _get_colorby_colors(edges, edgecolor, 'edge', **profile)
-    if highlightnodes is not None and highlightedges is not None:
+    # Set node_color to colorby argument
+    if node_colorby is not None:
+        node_color = _get_colorby_colors(nodes, node_colorby, **profile)
+    if isinstance(edge_color, str) and edges is not None:
+        if edge_color in edges:
+            edge_color = _get_colorby_colors(edges, edge_color, 'edge', **profile)
+    if highlight_nodes is not None and highlight_edges is not None:
         raise ValueError('Cannot highlight based on edges and nodes at the same time.')
-    if highlightnodes is not None:
-        nodecolor, highlightnodes, profile['node_alpha'] = _highlight_nodes(
-            nodes, nodecolor, highlightnodes, **profile)
+    if highlight_nodes is not None:
+        node_color, highlight_nodes, profile['node_alpha'] = _highlight_nodes(
+            nodes, node_color, highlight_nodes, **profile)
 
-    if highlightedges is not None:
-        edges, highlightedges = _process_highlightedge_input(edges, highlightedges, **profile)
-        edgecolor, highlightedges, profile['edge_alpha'] = _highlight_edges(edges, edgecolor, highlightedges, **profile)
+    if highlight_edges is not None:
+        edges, highlight_edges = _process_highlightedge_input(edges, highlight_edges, **profile)
+        edge_color, highlight_edges, profile['edge_alpha'] = _highlight_edges(edges, edge_color, highlight_edges, **profile)
         # Get the nodes that are touched by highlighted edges
-        nodes_to_highlight = edges[highlightedges == 1]
+        nodes_to_highlight = edges[highlight_edges == 1]
         nodes_to_highlight = np.unique(nodes_to_highlight[profile['edge_columnnames']].values)
-        nodecolor, highlightnodes, profile['node_alpha'] = _highlight_nodes(
-            nodes, nodecolor, nodes_to_highlight, **profile)
+        node_color, highlight_nodes, profile['node_alpha'] = _highlight_nodes(
+            nodes, node_color, nodes_to_highlight, **profile)
 
     # Rename ax as ax_in and prespecfiy ax_out before forloop
     ax_in = ax
@@ -207,26 +207,26 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 nodes_frame = _select_single_hemisphere_nodes(
                     nodes_frame, profile['node_columnnames'][0], affine, hemi_frame)
 
-                if nodetype == 'spheres':
-                    _plot_spheres(ax, nodes_frame, nodecolor=nodecolor,
-                                  nodesize=nodesize, **profile)
-                elif nodetype == 'circles':
-                    _plot_nodes(ax, nodes_frame, nodecolor=nodecolor,
-                                nodesize=nodesize, **profile)
-                elif nodetype == 'parcels':
-                    _plot_parcels(ax, nodeimg, cmap=nodecolor,
+                if node_type == 'spheres':
+                    _plot_spheres(ax, nodes_frame, node_color=node_color,
+                                  node_size=node_size, **profile)
+                elif node_type == 'circles':
+                    _plot_nodes(ax, nodes_frame, node_color=node_color,
+                                node_size=node_size, **profile)
+                elif node_type == 'parcels':
+                    _plot_parcels(ax, nodeimg, cmap=node_color,
                                   hemisphere=hemi_frame, **profile)
             if edges is not None and viewtype[fi]=='b':
                 edges_frame = edges.copy()
-                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edgeweights,
-                            edgecolor=edgecolor, highlightnodes=highlightnodes, **profile)
+                _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edge_weights,
+                            edge_color=edge_color, highlight_nodes=highlight_nodes, **profile)
             if arrowaxis_row is not None and viewtype[fi]=='b':
                 _add_axis_arrows(ax, dims=arrowaxis_row,
                                  origin=profile['arroworigin'],
                                  azim=azim[fi], elev=elev[fi], **profile)
             if viewtype[fi] == 's' and nodes is not None and edges is not None:
-                _plot_springlayout(ax, nodes=nodes, edges=edges, nodecolor=nodecolor, nodesize=nodesize,
-                                   edgecolor=edgecolor, edgeweights=edgeweights, highlightnodes=highlightnodes, **profile)
+                _plot_springlayout(ax, nodes=nodes, edges=edges, node_color=node_color, node_size=node_size,
+                                   edge_color=edge_color, edge_weights=edge_weights, highlight_nodes=highlight_nodes, **profile)
             ax.view_init(azim=azim[fi], elev=elev[fi])
             
             _add_subplot_title(ax, azim[fi], elev[fi], subtitle_frame, hemi_frame, viewtype[fi], **profile)
@@ -248,13 +248,13 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             else:
                 legend_subplotp_colind = int(np.round(spind / 2) - 1)
             ax = fig.add_subplot(gridspec[nrows + li, legend_subplotp_colind])
-            if legend == 'nodesize':
-                ax = _add_nodesize_legend(ax, nodes, nodesize, **profile)
-            if legend == 'nodecolor':
-                ax = _add_nodecolor_legend(
-                    ax, nodes, nodecolorby, nodecolor, **profile)
+            if legend == 'node_size':
+                ax = _add_node_size_legend(ax, nodes, node_size, **profile)
+            if legend == 'node_color':
+                ax = _add_node_color_legend(
+                    ax, nodes, node_colorby, node_color, **profile)
             ax.axis('off')
-            #ax = _add_size_legend(ax, nodes, nodesize, node_scale)
+            #ax = _add_size_legend(ax, nodes, node_size, node_scale)
             ax_out.append(ax)
 
     # Title on top of the figure

@@ -120,47 +120,47 @@ def _rotate_data_to_viewingangle(data, azim=0, elev=0, rotateback=False):
     return data
 
 
-def _node_scale_vminvmax(nodes, nodesize, return_labels=False, **kwargs):
+def _node_scale_vminvmax(nodes, node_size, return_labels=False, **kwargs):
     """
-    Scales nodesize in relation to node_scale, vmin and vmax.
+    Scales node_size in relation to node_scale, vmin and vmax.
 
     The parameter node_sizevminvmax dictates the vmin, vmax behaviour.
     """
     vminvmax = kwargs.get('node_sizevminvmax')
     node_scale = kwargs.get('node_scale')
-    nodesizevector = nodes[nodesize].copy()
+    node_sizevector = nodes[node_size].copy()
     labelformat = None
     if isinstance(vminvmax, list):
         # If outside custom range, set size to zero
-        nodesizevector[nodesizevector < vminvmax[0]] = np.nan
-        nodesizevector[nodesizevector > vminvmax[1]] = np.nan
+        node_sizevector[node_sizevector < vminvmax[0]] = np.nan
+        node_sizevector[node_sizevector > vminvmax[1]] = np.nan
         # After removing scale so that vmin and vmax are lowest and highest numbers
-        nodesizevector = (
-            nodesizevector - vminvmax[0]) / (vminvmax[1] - vminvmax[0]) * (1.05 - 0.05) + 0.05
+        node_sizevector = (
+            node_sizevector - vminvmax[0]) / (vminvmax[1] - vminvmax[0]) * (1.05 - 0.05) + 0.05
     elif isinstance(vminvmax, str):
         if vminvmax == 'maxabs':
-            nodesizevector = np.abs(nodesizevector)
+            node_sizevector = np.abs(node_sizevector)
             # now make sure behaviour is like minmax scaling but labelformat is maxabs
             vminvmax = 'minmax'
             labelformat = 'maxabs'
         if vminvmax == 'minmax':
             # Add small value to ensure smallest value is not 0.1 and 1.1 to ensure min value is still seen
             # TODO this value could be scaled.
-            nodesizevector = (nodesizevector - nodesizevector.min()) / \
-                (nodesizevector.max() - nodesizevector.min()) * (1.05 - 0.05) + 0.05
+            node_sizevector = (node_sizevector - node_sizevector.min()) / \
+                (node_sizevector.max() - node_sizevector.min()) * (1.05 - 0.05) + 0.05
 
-    nodesizevector = nodesizevector * node_scale
+    node_sizevector = node_sizevector * node_scale
     if return_labels:
-        nodesizelabels = nodes[nodesize].copy()
-        nodesizelabels[np.isnan(nodesizevector)] = np.nan
+        node_sizelabels = nodes[node_size].copy()
+        node_sizelabels[np.isnan(node_sizevector)] = np.nan
         if labelformat == 'maxabs':
-            nodesizelabels = np.abs(nodesizelabels)
-    # If nodesizevector is nan, make them 0
-    nodesizevector[np.isnan(nodesizevector)] = 0
+            node_sizelabels = np.abs(node_sizelabels)
+    # If node_sizevector is nan, make them 0
+    node_sizevector[np.isnan(node_sizevector)] = 0
     # If return labels, make output a tuple
     if return_labels:
-        nodesizevector = (nodesizevector, nodesizelabels)
-    return nodesizevector
+        node_sizevector = (node_sizevector, node_sizelabels)
+    return node_sizevector
 
 
 def _nrows_in_fig(view, frames):

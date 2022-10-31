@@ -19,67 +19,67 @@ def _colorarray_from_string(cmap, ncolors):
     return colors[:ncolors]
 
 
-def _highlight_nodes(nodes, nodecolor, highlightnodes, **kwargs):
+def _highlight_nodes(nodes, node_color, highlight_nodes, **kwargs):
     """
 
     Returns
     -------
-    nodecolor : array
+    node_color : array
         a N x 4 color array for colouring of nodes where alpha is set here.
     highlight_idx : array
         Binary array of N index indicating which nodes are highlighted (for edge purposes)
     """
     highlightlevel = kwargs.get('highlightlevel')
     node_alpha = kwargs.get('node_alpha')
-    if isinstance(highlightnodes, dict):
-        highlight_idx = nodes[highlightnodes.keys()] == highlightnodes.values()
+    if isinstance(highlight_nodes, dict):
+        highlight_idx = nodes[highlight_nodes.keys()] == highlight_nodes.values()
         highlight_idx = np.squeeze(highlight_idx.values)
-    elif isinstance(highlightnodes, str):
-        if highlightnodes not in nodes:
-            raise ValueError('If highlightnodes is a str it must be a column in nodes')
-        highlight_idx = nodes[highlightnodes].values
+    elif isinstance(highlight_nodes, str):
+        if highlight_nodes not in nodes:
+            raise ValueError('If highlight_nodes is a str it must be a column in nodes')
+        highlight_idx = nodes[highlight_nodes].values
     else:
         highlight_idx = np.zeros(len(nodes))
-        highlight_idx[highlightnodes] = 1
-    if isinstance(nodecolor, str):
-        nodecolor = _colorarray_from_string(nodecolor, len(nodes))
-    if nodecolor.shape[1] == 3:
-        nodecolor = np.hstack(
-            [nodecolor, np.vstack([node_alpha]*len(nodecolor))])
+        highlight_idx[highlight_nodes] = 1
+    if isinstance(node_color, str):
+        node_color = _colorarray_from_string(node_color, len(nodes))
+    if node_color.shape[1] == 3:
+        node_color = np.hstack(
+            [node_color, np.vstack([node_alpha]*len(node_color))])
     # dim the non-highlighted nodes
-    nodecolor[highlight_idx == 0, 3] = node_alpha * (1 - highlightlevel)
-    # node_alpha is now set in nodecolor, so set as None to avoid any later problems
+    node_color[highlight_idx == 0, 3] = node_alpha * (1 - highlightlevel)
+    # node_alpha is now set in node_color, so set as None to avoid any later problems
     node_alpha = None
-    return nodecolor, highlight_idx, node_alpha
+    return node_color, highlight_idx, node_alpha
 
 
 
-def _highlight_edges(edges, edgecolor, highlightedges, **kwargs):
+def _highlight_edges(edges, edge_color, highlight_edges, **kwargs):
     """
     """
     highlightlevel = kwargs.get('highlightlevel')
     edge_alpha = kwargs.get('edge_alpha')
-    if isinstance(highlightedges, dict):
-        highlight_idx = edges[highlightedges.keys()] == highlightedges.values()
+    if isinstance(highlight_edges, dict):
+        highlight_idx = edges[highlight_edges.keys()] == highlight_edges.values()
         highlight_idx = np.squeeze(highlight_idx.values)
-    elif isinstance(highlightedges, str):
-        if highlightedges not in edges:
-            raise ValueError('If highlightnodes is a str it must be a column in nodes')
+    elif isinstance(highlight_edges, str):
+        if highlight_edges not in edges:
+            raise ValueError('If highlight_nodes is a str it must be a column in nodes')
         highlight_idx = np.zeros(len(edges))
-        highlight_idx[edges[highlightedges] != 0] = 1
+        highlight_idx[edges[highlight_edges] != 0] = 1
     else:
         highlight_idx = np.zeros(len(edges))
-        highlight_idx[highlightedges] = 1
-    if isinstance(edgecolor, str):
-        edgecolor = _colorarray_from_string(edgecolor, len(edges))
-    if edgecolor.shape[1] == 3:
-        edgecolor = np.hstack(
-            [edgecolor, np.vstack([edge_alpha]*len(edgecolor))])
+        highlight_idx[highlight_edges] = 1
+    if isinstance(edge_color, str):
+        edge_color = _colorarray_from_string(edge_color, len(edges))
+    if edge_color.shape[1] == 3:
+        edge_color = np.hstack(
+            [edge_color, np.vstack([edge_alpha]*len(edge_color))])
     # dim the non-highlighted edges
-    edgecolor[highlight_idx == 0, 3] = edge_alpha * (1 - highlightlevel)
-    # node_alpha is now set in nodecolor, so set as None to avoid any later problems
+    edge_color[highlight_idx == 0, 3] = edge_alpha * (1 - highlightlevel)
+    # node_alpha is now set in node_color, so set as None to avoid any later problems
     edge_alpha = None
-    return edgecolor, highlight_idx, edge_alpha
+    return edge_color, highlight_idx, edge_alpha
 
 
 def assign_color(row, colordict):
@@ -89,16 +89,16 @@ def assign_color(row, colordict):
         return colordict[row]
 
 
-def _detect_coloring_type(nodes, nodecolorby, prespecified=None):
+def _detect_coloring_type(nodes, node_colorby, prespecified=None):
     """
     Follows a heuristic to detect if a colorby column is continuous or discrete.
     If there are more than 8 unique values, then the value is seen as continuous.
     Prespecified allows you to override the behaviour.
     """
     if prespecified is None or prespecified == 'auto':
-        if nodes[nodecolorby].nunique(dropna=True) > 8:
+        if nodes[node_colorby].nunique(dropna=True) > 8:
             colorpropertytype = 'continuious'
-        elif nodes[nodecolorby].nunique(dropna=True) <= 8:
+        elif nodes[node_colorby].nunique(dropna=True) <= 8:
             colorpropertytype = 'discrete'
     else:
         colorpropertytype = prespecified

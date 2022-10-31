@@ -17,10 +17,10 @@ def test_cont_colormap():
     fig, _ = npbplot(template=None,
                       view='S',
                       nodes=nodes,
-                      nodesize=40,
+                      node_size=40,
                       edges=edges,
                       node_cmap='RdBu',
-                      nodecolor='centrality_measure1',
+                      node_color='centrality_measure1',
                       node_colorlegendstyle='continuous')
     return fig
 
@@ -30,7 +30,7 @@ def test_nodevminvmax():
                       view='S',
                       node_scale=100,
                       nodes=nodes,
-                      nodesize='centrality_measure1',
+                      node_size='centrality_measure1',
                       edges=edges,
                       node_cmap='RdBu',
                       node_sizevminvmax=[0.6, 1.1])
@@ -44,8 +44,8 @@ def test_spheres():
                   template='MNI152NLin2009cAsym',
                   template_style=None,
                   view=['A'],
-                  nodetype='spheres',
+                  node_type='spheres',
                   node_alpha=0.5,
-                  nodecolor='Salmon',
+                  node_color='Salmon',
                   title='Sphere test')
     return fig

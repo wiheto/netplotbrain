@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def _plot_spheres(ax, nodes, node_columnnames, nodecolor='salmon', nodesize=20, alpha=None, **kwargs):
+def _plot_spheres(ax, nodes, node_columnnames, node_color='salmon', node_size=20, alpha=None, **kwargs):
     """
     Function that plots spheres in figure.
 
@@ -12,9 +12,9 @@ def _plot_spheres(ax, nodes, node_columnnames, nodecolor='salmon', nodesize=20, 
         node dataframe with x, y, z coordinates.
     node_columnnames : list of string
         name of node column coordinates in datadrame to correspond with x,y,z.
-    nodesize : string or float, int
+    node_size : string or float, int
         if string, must refer to a column in nodes.
-    nodecolor : string or matplotlib color
+    node_color : string or matplotlib color
         if non-color string, must refer to a column in nodes
 
     Returns
@@ -35,11 +35,11 @@ def _plot_spheres(ax, nodes, node_columnnames, nodecolor='salmon', nodesize=20, 
              row[node_columnnames[1]],
              row[node_columnnames[2]]]
 
-        # Check if nodesize is in the dataframe
-        if nodesize in nodes.keys():
-            r = row[nodesize] * node_scale
+        # Check if node_size is in the dataframe
+        if node_size in nodes.keys():
+            r = row[node_size] * node_scale
         else:
-            r = nodesize * node_scale
+            r = node_size * node_scale
 
         u, v = np.mgrid[0:2*np.pi:50j, 0:np.pi:50j]
 
@@ -49,10 +49,10 @@ def _plot_spheres(ax, nodes, node_columnnames, nodecolor='salmon', nodesize=20, 
         z = r*np.cos(v)
 
         # Select the node color if string or array
-        if isinstance(nodecolor, np.ndarray):
-            ncolor = nodecolor[index]
+        if isinstance(node_color, np.ndarray):
+            ncolor = node_color[index]
         else:
-            ncolor = nodecolor
+            ncolor = node_color
 
         ax.plot_surface(c[0]+x, c[1]+y, c[2]+z,
                         color=ncolor,

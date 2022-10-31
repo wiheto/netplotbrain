@@ -3,7 +3,7 @@
 # Different node styles
 
 There are currently three different node style options to choose from: circles, spheres, parcels.
-You just need to change the specification in the nodetype argument.
+You just need to change the specification in the node_type argument.
 """
 
 # %%
@@ -22,7 +22,7 @@ netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                   template_style='glass',
                   template_glass_maxalpha=0.03,
                   view='S',
-                  nodetype='circles',
+                  node_type='circles',
                   node_scale=40,
                   node_alpha=1,
                   arrowaxis=None,
@@ -38,7 +38,7 @@ netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                   template_style='glass',
                   template_glass_maxalpha=0.03,
                   view='S',
-                  nodetype='spheres',
+                  node_type='spheres',
                   node_alpha=1,
                   arrowaxis=None,
                   subtitles='Spheres',
@@ -52,9 +52,9 @@ netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                   template='MNI152NLin6Asym',
                   template_style=None,
                   view='S',
-                  nodetype='parcels',
+                  node_type='parcels',
                   node_alpha=1,
-                  nodecolor='tab20c',
+                  node_color='tab20c',
                   arrowaxis=None,
                   subtitles='Parcels',
                   fig=fig, ax=ax)

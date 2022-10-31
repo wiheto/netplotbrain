@@ -119,11 +119,11 @@ fig, ax = netplotbrain.plot(template='MNI152NLin2009cAsym',
                                      'desc': '100Parcels7Networks',
                                      'resolution': 1},
                             edges=gdif,
-                            highlightedges=adj,
+                            highlight_edges=adj,
                             template_style='glass',
                             view=['LSR'],
                             title='NBS integration',
-                            nodetype='circles',
+                            node_type='circles',
                             highlightlevel=0.5)
 
 # %% [markdown]

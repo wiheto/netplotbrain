@@ -28,7 +28,7 @@ def get_frame_input(inputvar, axind, ri, fi, nrows, frames):
     return var_frame
 
 
-def _process_node_input(nodes, nodes_df, nodecolor, node_columnnames, template, template_voxelsize):
+def _process_node_input(nodes, nodes_df, node_color, node_columnnames, template, template_voxelsize):
     """
     Takes node input (nodes, nodesdf and node_columnnames) and processes them.
     Loads pandas dataframe if nodes is string.
@@ -57,16 +57,16 @@ def _process_node_input(nodes, nodes_df, nodecolor, node_columnnames, template, 
     # set node_columnnames if no explicit input
     if node_columnnames == 'auto':
         node_columnnames = ['x', 'y', 'z']
-    # Check if nodecolor is a string in nodes, if yes, set to nodecolorby to nodecolor
+    # Check if node_color is a string in nodes, if yes, set to node_colorby to node_color
     # Note: this may not be the most effective way to do this.
-    nodecolorby = None
-    if isinstance(nodecolor, str) and nodes is not None:
-        if nodecolor in nodes:
-            nodecolorby = str(nodecolor)
-    return nodes, nodeimg, nodecolorby, node_columnnames
+    node_colorby = None
+    if isinstance(node_color, str) and nodes is not None:
+        if node_color in nodes:
+            node_colorby = str(node_color)
+    return nodes, nodeimg, node_colorby, node_columnnames
 
 
-def _process_edge_input(edges, edgeweights, **kwargs):
+def _process_edge_input(edges, edge_weights, **kwargs):
     """
     Takes the input edges and edgeweight.
     Loads pandas dataframe if edges is string.
@@ -81,28 +81,28 @@ def _process_edge_input(edges, edgeweights, **kwargs):
     # Check input, if numpy array, make dataframe
     if isinstance(edges, np.ndarray):
         edges = _npedges2dfedges(edges)
-        edgeweights = 'weight'
+        edge_weights = 'weight'
     # Merge edges_df if it exists.
     if edges_df is not None:
         edges = edges.merge(edges_df, how='left')
-    # Set default behaviour of edgeweights
+    # Set default behaviour of edge_weights
     if isinstance(edges, pd.DataFrame):
-        if edgeweights is None or edgeweights is True:
-            edgeweights = 'weight'
+        if edge_weights is None or edge_weights is True:
+            edge_weights = 'weight'
         if 'weight' not in edges:
-            edgeweights = None
-        if edgeweights is not None and edgeweights not in edges:
-            raise ValueError('Edgeweights is specified and not in edges')
+            edge_weights = None
+        if edge_weights is not None and edge_weights not in edges:
+            raise ValueError('edge_weights is specified and not in edges')
         # If edgeweight and edge_threshold have been set
-        if edgeweights is not None and edge_threshold is not None:
+        if edge_weights is not None and edge_threshold is not None:
             if edge_thresholddirection == 'absabove':
-                edges = edges[np.abs(edges[edgeweights]) > edge_threshold]
+                edges = edges[np.abs(edges[edge_weights]) > edge_threshold]
             if edge_thresholddirection == 'above' or edge_thresholddirection == '>':
-                edges = edges[edges[edgeweights] > edge_threshold]
+                edges = edges[edges[edge_weights] > edge_threshold]
             if edge_thresholddirection == 'below' or edge_thresholddirection == '<':
-                edges = edges[edges[edgeweights] < edge_threshold]
+                edges = edges[edges[edge_weights] < edge_threshold]
 
-    return edges, edgeweights
+    return edges, edge_weights
 
 
 def _init_figure(frames, nrows, legendrow):
@@ -130,21 +130,21 @@ def _check_axinput(ax, expected_ax_len):
     return ax, gridspec
 
 
-def _process_highlightedge_input(edges, highlightedges, **profile):
+def _process_highlightedge_input(edges, highlight_edges, **profile):
     # if highlight edges is array, convert to pandas.
-    if isinstance(highlightedges, np.ndarray):
+    if isinstance(highlight_edges, np.ndarray):
         # Convert np input to pd
-        highlightedges = _npedges2dfedges(highlightedges)
+        highlight_edges = _npedges2dfedges(highlight_edges)
         ecols = profile['edge_columnnames']
         # Make sure that the i and j column are the same name
         # Also rename weight to edge_to_highlight
-        highlightedges.rename(columns = {'weight': 'edge_to_highlight',
+        highlight_edges.rename(columns = {'weight': 'edge_to_highlight',
                                          'i': ecols[0],
                                          'j': ecols[1]}, inplace = True)
         # Merge dataframes with edges
-        edges = edges.merge(highlightedges, how='left')
+        edges = edges.merge(highlight_edges, how='left')
         # Make nans 0s
         edges['edge_to_highlight'] = edges['edge_to_highlight'].fillna(0)
-        # Rename highlightedges to new column
-        highlightedges = 'edge_to_highlight'
-    return edges, highlightedges
+        # Rename highlight_edges to new column
+        highlight_edges = 'edge_to_highlight'
+    return edges, highlight_edges

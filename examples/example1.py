@@ -24,9 +24,9 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   view='LSR',
                   nodes=nodes,
                   node_scale=40,
-                  nodesize='centrality_measure1',
+                  node_size='centrality_measure1',
                   edges=edges,
-                  nodecolor='community')
+                  node_color='community')
 
 plt.savefig('./examples/figures/singleview.png', dpi=150)
 plt.close('all')
@@ -43,8 +43,8 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   view='A',
                   nodes=nodes,
                   title='Centrality Measure 1',
-                  nodesize='centrality_measure1',
-                  nodecolor='red',
+                  node_size='centrality_measure1',
+                  node_color='red',
                   edges=edges,
                   showlegend=False)
 
@@ -56,8 +56,8 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   view='A',
                   nodes=nodes,
                   title='Centrality Measure 2',
-                  nodesize='centrality_measure2',
-                  nodecolor='blue',
+                  node_size='centrality_measure2',
+                  node_color='blue',
                   edges=edges,
                   showlegend=False)
 
@@ -70,9 +70,9 @@ plt.close('all')
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   template_style='surface',
                   nodes=nodes,
-                  nodesize='centrality_measure1',
+                  node_size='centrality_measure1',
                   edges=edges,
-                  nodecolor='community',
+                  node_color='community',
                   view=['LSR', 'AIP'],
                   frames=2)
 
@@ -89,7 +89,7 @@ netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                   title='Plotting templateflow atlas as spheres',
                   template_style='surface',
                   view=['LSR'],
-                  nodetype='circles')
+                  node_type='circles')
 
 plt.savefig('./examples/figures/atlas_circles.png', dpi=150)
 plt.close('all')
@@ -104,9 +104,9 @@ netplotbrain.plot(nodes={'atlas': 'Schaefer2018',
                   title='Plotting templateflow atlas as parcels',
                   template_style=None,
                   view=['LSR'],
-                  nodetype='parcels',
+                  node_type='parcels',
                   node_alpha=0.5,
-                  nodecolor='Set3')
+                  node_color='Set3')
 
 plt.savefig('./examples/figures/atlas_parcels.png', dpi=150)
 plt.close('all')
@@ -119,7 +119,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   view=['SSS'],
                   hemisphere=['L', 'R', ''],
                   nodes=nodes,
-                  nodesize='centrality_measure1',
+                  node_size='centrality_measure1',
                   edges=edges)
 
 plt.savefig('./examples/figures/hemi.png', dpi=150)
@@ -140,9 +140,9 @@ netplotbrain.plot(template='WHS',
          title='Multiple templates possible',
          view='LSR',
          nodes=nodes_whs,
-         nodesize='centrality_measure1',
+         node_size='centrality_measure1',
          edges=edges,
-         nodecolor='community',
+         node_color='community',
          node_scale=80,
          template_voxelsize=0.2)
 
@@ -159,8 +159,8 @@ netplotbrain.plot(template='MNIInfant',
          title='Infant template',
          view='LSR',
          nodes=nodes_inf,
-         nodesize='centrality_measure1',
-         nodecolor='community',
+         node_size='centrality_measure1',
+         node_color='community',
          node_scale=80,
          edges=edges,
          template_voxelsize=5)
@@ -175,7 +175,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   template_style='filled',
                   view='SPR',
                   nodes=nodes,
-                  nodesize='centrality_measure1',
+                  node_size='centrality_measure1',
                   edges=edges,
                   template_voxelsize=5)
 
@@ -189,7 +189,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   template_style='cloudy',
                   view='SPR',
                   nodes=nodes,
-                  nodesize='centrality_measure1',
+                  node_size='centrality_measure1',
                   edges=edges,
                   template_voxelsize=2)
 

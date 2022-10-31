@@ -39,9 +39,9 @@ def _plot_template_style_cloudy(ax, data, azim, elev, **kwargs):
     bdata = np.abs(sdata) > np.max(np.abs(sdata)) * edge_threshold
     # Plot resulting edges as a scatter
     x, y, z = np.where(bdata == 1)
-    # ax.voxels(bdata, alpha=0.2, edgecolor=None, facecolor='lightgray')
+    # ax.voxels(bdata, alpha=0.2, edge_color=None, facecolor='lightgray')
     ax.scatter(x, y, z, s=5, facecolor=template_color,
-               edgecolors=None, marker='s', alpha=alpha, rasterized=True)
+               edge_colors=None, marker='s', alpha=alpha, rasterized=True)
 
 
 
@@ -118,7 +118,7 @@ def _plot_template_style_filled(ax, data, **kwargs):
     alpha = kwargs.get('template_alpha')
     template_color = kwargs.get('template_color')
     ax.voxels(data, alpha=alpha, zorder=-100,
-              facecolor=template_color, edgecolor=None, shade=False, rasterized=True)
+              facecolor=template_color, edge_color=None, shade=False, rasterized=True)
 
 
 def _plot_template_style_surface(ax, data, template, **kwargs):

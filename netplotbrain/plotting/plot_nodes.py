@@ -1,7 +1,7 @@
 import numpy as np
 from ..utils import _node_scale_vminvmax
 
-def _plot_nodes(ax, nodes, node_columnnames, nodecolor='salmon', nodesize=20, **kwargs):
+def _plot_nodes(ax, nodes, node_columnnames, node_color='salmon', node_size=20, **kwargs):
     """
     Function that plots nodes in figure
 
@@ -12,12 +12,12 @@ def _plot_nodes(ax, nodes, node_columnnames, nodecolor='salmon', nodesize=20, **
         node dataframe with x, y, z coordinates, must include node_columnnames.
     node_columnnames : list of string
         name of node column coordinates in datadrame.
-    nodesize : string or float, int
+    node_size : string or float, int
         if string, must refer to a column in nodes.
-    nodecolor : string or matplotlib color
+    node_color : string or matplotlib color
         if non-color string, must refer to a column in nodes
     node_scale : float
-        Scaling factor applied to nodesize.
+        Scaling factor applied to node_size.
 
 
     Returns
@@ -29,15 +29,15 @@ def _plot_nodes(ax, nodes, node_columnnames, nodecolor='salmon', nodesize=20, **
     node_scale = kwargs.get('node_scale')
     node_alpha = kwargs.get('node_alpha')
     # If half hemisphere is plotted, then cut the right
-    nc = nodecolor
-    if isinstance(nodecolor, np.ndarray):
-        if len(nodes) < nodecolor.shape[0]:
-            nc = nodecolor[nodes.index, :]
-    # Check if nodesize input is column in node data
-    if isinstance(nodesize, str) and nodesize in nodes.columns:
-        ns = _node_scale_vminvmax(nodes, nodesize, **kwargs)
+    nc = node_color
+    if isinstance(node_color, np.ndarray):
+        if len(nodes) < node_color.shape[0]:
+            nc = node_color[nodes.index, :]
+    # Check if node_size input is column in node data
+    if isinstance(node_size, str) and node_size in nodes.columns:
+        ns = _node_scale_vminvmax(nodes, node_size, **kwargs)
     else:
-        ns = nodesize * node_scale
+        ns = node_size * node_scale
     ax.scatter(nodes[node_columnnames[0]], nodes[node_columnnames[1]],
                nodes[node_columnnames[2]], s=ns, color=nc, alpha=node_alpha)
 

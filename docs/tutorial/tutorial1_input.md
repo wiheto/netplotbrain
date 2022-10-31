@@ -50,7 +50,7 @@ These just become other columns in the dataframe (called node_df).
 |  40     | 50    | 20    | 1    | 0.8
 | -10     | 40    | 30    | 1    | 0.4
 
-Then the columns `nodecolor=communities`and `nodesize=degree_centrality` can be specified and each node will automatically be coloured or scaled by the specified column. For example: 
+Then the columns `node_color=communities`and `node_size=degree_centrality` can be specified and each node will automatically be coloured or scaled by the specified column. For example: 
 
 ```python
 # Import packages
@@ -65,13 +65,13 @@ nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25],
 # Call netplotbrain to plot
 netplotbrain.plot(
     nodes=nodes_df,
-    nodesize='degree_centrality',
-    nodecolor='communities',
+    node_size='degree_centrality',
+    node_color='communities',
     arrowaxis=None,
     node_scale=100)
 ```
  
-This will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `node_scale` which just linearly scales all nodes by that factor. We also see that, when specifying `nodesize` and `nodecolor`, that legends automatically appear.
+This will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `node_scale` which just linearly scales all nodes by that factor. We also see that, when specifying `node_size` and `node_color`, that legends automatically appear.
 
 At the moment we just have some circles floating in 3D space. Let us add some more information about this network.
 
@@ -98,7 +98,7 @@ See templateflow.org for more atlases.
 
 If the template argument is specified in `netplotbrain.plot`, then the template argument does not need to be included in the `nodes` dictionary.
 
-Since the nifti image consists of parcels (i.e., regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels, over the circles, with a single argument `nodetype`.
+Since the nifti image consists of parcels (i.e., regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels, over the circles, with a single argument `node_type`.
 
 ```python
 # import packages
@@ -112,7 +112,7 @@ nodes={'template': 'MNI152NLin2009cAsym',
 netplotbrain.plot(
     nodes=nodes,
     arrowaxis=None,
-    nodetype='parcel')     
+    node_type='parcel')     
 ```
 
 ## Specifying Edges
@@ -145,13 +145,13 @@ edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3],
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolor='communities',
+    node_color='communities',
     arrowaxis=None,
     node_scale=150)
 ```
 
 If you have the column `weight` in your edge dataframe, these will be automatically plotted as well. 
-This can be turned off by setting `edgeweights` to False. Also, a list of length 3 can be given to edgecol that specifies alternative names for ['i', 'j', 'weights'].
+This can be turned off by setting `edge_weights` to False. Also, a list of length 3 can be given to edgecol that specifies alternative names for ['i', 'j', 'weights'].
 
 ```python
 # Import packages
@@ -170,7 +170,7 @@ edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3],
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolor='communities',
+    node_color='communities',
     arrowaxis=None,
     node_scale=150)
 ```
@@ -194,7 +194,7 @@ edges_df = pd.DataFrame(data={'i': [0, 0, 1, 1, 3],
 netplotbrain.plot(
     nodes=nodes_df,
     edges=edges_df,
-    nodecolor='communities',
+    node_color='communities',
     arrowaxis=None,
     node_scale=150)
 ```

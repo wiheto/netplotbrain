@@ -15,9 +15,9 @@ def test_simple():
                       view='S',
                       nodes=nodes,
                       node_scale=40,
-                      nodesize='centrality_measure1',
+                      node_size='centrality_measure1',
                       edges=edges,
-                      nodecolor='community')
+                      node_color='community')
     return fig
 
 
@@ -31,7 +31,7 @@ def test_singlehemisphere():
                   view=['SSS'],
                   hemisphere=['L', 'R', ''],
                   node_alpha=0.5,
-                  nodecolor='Salmon')
+                  node_color='Salmon')
     return fig
 
 # Figure that receives own ax
@@ -45,7 +45,7 @@ def test_customax():
                       view=['SLP'],
                       nodes=nodes,
                       node_scale=40,
-                      nodesize='centrality_measure1',
+                      node_size='centrality_measure1',
                       edges=edges,
                       fig=fig,
                       ax=ax)
@@ -58,7 +58,20 @@ def test_gif_plot():
                       frames=3,
                       nodes=nodes,
                       node_scale=40,
-                      nodesize='centrality_measure1',
+                      node_size='centrality_measure1',
+                      edges=edges,
+                      gif=True,
+                      savename='giftest')
+    return fig
+
+@pytest.mark.mpl_image_compare
+def test_360():
+    fig, _ = npbplot(template=None,
+                      view='360',
+                      frames=5,
+                      nodes=nodes,
+                      node_scale=40,
+                      node_size='centrality_measure1',
                       edges=edges,
                       gif=True,
                       savename='giftest')

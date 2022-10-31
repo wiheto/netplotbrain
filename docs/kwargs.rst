@@ -5,18 +5,18 @@ Full list of KWARGS
 NODE KWARGS
 --------------
 node_cmap : str
-    Matplotlib colormap for node coloring when nodecolor points to a dataframe.
-nodecolor : str, matplotlib coloring
+    Matplotlib colormap for node coloring when node_color points to a dataframe.
+node_color : str, matplotlib coloring
     Can be string to column in nodes or nodes_df input that specifies color column.
     Can be string (default 'black') or list of 3D/4D colors for each edge.
-nodetype : str
+node_type : str
     Can be 'spheres', 'circles', or (if nodes is nifti) 'parcels'.
 node_alpha : float
     Specify the transparency of the nodes
 node_columnnames : list
     Node column names in node dataframe. 'auto' entails the columns are ['x', 'y', 'z'] (specifying coordinates)
 node_sizevminvmax : str, list
-    Scaling alternatives if nodesize is given.
+    Scaling alternatives if node_size is given.
     Alternatives: 'absolute' (default) 'minmax', or 2-tuple list of [min, max].
     If minmax, node sizes are scaled between (0 and 1) * node_scale.
     If absolute, then the default values are used.
@@ -34,18 +34,18 @@ edges_df : dataframe
     Allows for passing a dataframe with additional plotting options when edges is a connectivity matrix 
 edgecols : list
     Edge columns names in edge dataframe. Default is i and j (specifying nodes).
-edgecolor : matplotlib coloring
+edge_color : matplotlib coloring
     Can be string (default 'black') or list of 3D/4D colors for each edge.
 edgewidth : int, float
     Specify width of edges. If auto, will plot the value in edge array (if array) or the weight column (if in pandas dataframe), otherwise 2.
-edgeweights : string
+edge_weights : string
     String that specifies column in edge dataframe that contains weights.
     If numpy array is edge input, can be True (default) to specify edge weights.
 edge_alpha : float
     Transparency of edges (default: 1).
 edge_highlightbehaviour : str
     Alternatives "both" or "any" or None.
-    Governs edge dimming when highlightnodes is on
+    Governs edge dimming when highlight_nodes is on
     If both, then highlights only edges between highlighted nodes.
     If any, then only edges connecting any of the nodes are highlighted.
 edge_widthscale : int, float

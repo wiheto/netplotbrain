@@ -15,7 +15,7 @@ def _setup_legend(legendproperty, legend, legendname, currentlegend=None):
     return currentlegend
 
 
-def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
+def _add_node_size_legend(ax, nodes, node_size, **kwargs):
     """
     Adds node size legend to bottom of figure
     """
@@ -28,9 +28,9 @@ def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
     legend_tickfontsize = kwargs.get('legend_tickfontsize')
     legendtitle_fontsize = kwargs.get('legendtitle_fontsize')
     if node_sizelegend is True:
-        if isinstance(nodesize, str) and nodesize in nodes.columns:
+        if isinstance(node_size, str) and node_size in nodes.columns:
             _, nl = _node_scale_vminvmax(
-                nodes, nodesize, return_labels=True, **kwargs)
+                nodes, node_size, return_labels=True, **kwargs)
             # If node_sizevminvmax is set, use that as the smallest and largest size/labels
             # otherwise derive from data
             if isinstance(node_sizevminvmax, list):
@@ -51,7 +51,7 @@ def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
             node_sizelegendlabels = node_sizelegendlabels.round(3)
         else:
             raise ValueError(
-                'Unable to plot size legend (nodesize specification issue)')
+                'Unable to plot size legend (node_size specification issue)')
     else:
         # This ensures input of nodelegendlabels is the unscaled unit.
         node_sizelegendlabels = np.array(node_sizelegend)
@@ -62,14 +62,14 @@ def _add_nodesize_legend(ax, nodes, nodesize, **kwargs):
     for x, label in enumerate(node_sizelegendlabels):
         ax.text(x, 0.925, label, color=fontcolor, ha='center',
                 font=font, fontsize=legend_tickfontsize)
-    ax.text(np.mean(np.arange(len(node_sizelegendlabels))), 1.05, nodesize,
+    ax.text(np.mean(np.arange(len(node_sizelegendlabels))), 1.05, node_size,
             color=fontcolor, ha='center', font=font, fontsize=legendtitle_fontsize)
     ax.set_ylim([0.925, 1.1])
     ax.set_xlim([-2, len(node_sizelegendlabels) + 1])
     return ax
 
 
-def _add_nodecolor_legend_discrete(ax, nodes, nodecolorby, nodecolor, **kwargs):
+def _add_node_color_legend_discrete(ax, nodes, node_colorby, node_color, **kwargs):
     """
     Add node color legend to bottom of figure.
     This is for discrete colours.
@@ -81,24 +81,24 @@ def _add_nodecolor_legend_discrete(ax, nodes, nodecolorby, nodecolor, **kwargs):
     legend_tickfontsize = kwargs.get('legend_tickfontsize')
     legendtitle_fontsize = kwargs.get('legendtitle_fontsize')
     # Create list of discrete colors
-    uniquenodecolorby = sorted(list(set(nodes[nodecolorby].dropna().values)))
-    uniquenodecolors_idx = [nodes[nodes[nodecolorby] ==
-                                  x].first_valid_index() for x in uniquenodecolorby]
-    uniquenodecolors = nodecolor[uniquenodecolors_idx, :]
-    ax.scatter(np.arange(len(uniquenodecolorby)), np.ones(
-        len(uniquenodecolorby)), color=uniquenodecolors, s=node_scale)
-    for x, label in enumerate(uniquenodecolorby):
+    uniquenode_colorby = sorted(list(set(nodes[node_colorby].dropna().values)))
+    uniquenode_colors_idx = [nodes[nodes[node_colorby] ==
+                                  x].first_valid_index() for x in uniquenode_colorby]
+    uniquenode_colors = node_color[uniquenode_colors_idx, :]
+    ax.scatter(np.arange(len(uniquenode_colorby)), np.ones(
+        len(uniquenode_colorby)), color=uniquenode_colors, s=node_scale)
+    for x, label in enumerate(uniquenode_colorby):
         ax.text(x, 0.925, label, color=fontcolor, ha='center',
                 font=font, fontsize=legend_tickfontsize)
     ax.set_ylim([0.85, 1.1])
-    ax.set_xlim([-2, len(uniquenodecolorby) + 1])
+    ax.set_xlim([-2, len(uniquenode_colorby) + 1])
     # Plot title
-    ax.text(np.mean(np.arange(len(uniquenodecolorby))), 1.05, nodecolorby,
+    ax.text(np.mean(np.arange(len(uniquenode_colorby))), 1.05, node_colorby,
             color=fontcolor, ha='center', font=font, fontsize=legendtitle_fontsize)
     return ax
 
 
-def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, **kwargs):
+def add_node_color_legend_continuous(ax, nodes, node_colorby, **kwargs):
     """
     Add node color legend to bottom of figure.
     This is for continuous colours.
@@ -112,11 +112,11 @@ def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, **kwargs):
     node_colorvminvmax = kwargs.get('node_colorvminvmax')
     # Create continuous scale
     if node_colorvminvmax == 'minmax':
-        nc_min = nodes[nodecolorby].min()
-        nc_max = nodes[nodecolorby].max()
+        nc_min = nodes[node_colorby].min()
+        nc_max = nodes[node_colorby].max()
     elif  node_colorvminvmax == 'maxabs':
-        nc_min = -nodes[nodecolorby].abs().max()
-        nc_max = nodes[nodecolorby].abs().max()
+        nc_min = -nodes[node_colorby].abs().max()
+        nc_max = nodes[node_colorby].abs().max()
     else:
         nc_min = node_colorvminvmax[0]
         nc_max = node_colorvminvmax[1]
@@ -132,23 +132,23 @@ def add_nodecolor_legend_continuous(ax, nodes, nodecolorby, **kwargs):
         ax.text(xtick, 0.75, np.round(xticklabels[i], 3), color=fontcolor, ha='center',
                 font=font, fontsize=legend_tickfontsize, transform=ax.transData)
     # Plot title
-    ax.text(0, 1.4, nodecolorby,
+    ax.text(0, 1.4, node_colorby,
             color=fontcolor, ha='center', font=font, fontsize=legendtitle_fontsize)
     return ax
 
 
-def _add_nodecolor_legend(ax, nodes, nodecolorby, nodecolor, node_cmap, **kwargs):
+def _add_node_color_legend(ax, nodes, node_colorby, node_color, node_cmap, **kwargs):
     """
-    Adds a nodecolor legend to figure.
+    Adds a node_color legend to figure.
     This function descites whether a discrete or continuous colorbar is to be added.
     """
     node_colorlegendstyle = kwargs.get('node_colorlegendstyle')
-    node_colorlegendstyle = _detect_coloring_type(nodes, nodecolorby, node_colorlegendstyle)
+    node_colorlegendstyle = _detect_coloring_type(nodes, node_colorby, node_colorlegendstyle)
     # Plot whichever legend is wanted
     if node_colorlegendstyle == 'discrete':
-        ax = _add_nodecolor_legend_discrete(
-            ax, nodes, nodecolorby, nodecolor, **kwargs)
+        ax = _add_node_color_legend_discrete(
+            ax, nodes, node_colorby, node_color, **kwargs)
     else:
-        ax = add_nodecolor_legend_continuous(ax, nodes, nodecolorby, **kwargs)
+        ax = add_node_color_legend_continuous(ax, nodes, node_colorby, **kwargs)
 
     return ax
