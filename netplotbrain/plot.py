@@ -82,16 +82,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     .. include:: ../docs/kwargs.rst
 
     """
-    # Raise Errors for deprecated inputs from version 0.1.x
-    if 'nodeimg' in kwargs:
-        raise ValueError('DEPRECATED INPUT (from 0.2.0): Use nodes instead of nodeimg. If additional nodeinfo exists as a dataframe, use nodes_df.')
-    if 'node_colorby' in kwargs:
-        raise ValueError('DEPRECATED INPUT (from 0.2.0): Use node_color instead of node_colorby.')
     # Load default settings, then update with kwargs
     profile = _load_profile(**kwargs)
     if network is not None:
         if nodes is not None or edges is not None:
-            raise ValueError('Network is specified with edges or nodes.')
+            raise ValueError('Network keyword arugment is specified along with edges or nodes.')
         elif isinstance(network, nx.Graph):
             nodes, edges, = _from_networkx_input(network, **profile)
         else:

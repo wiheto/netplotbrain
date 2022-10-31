@@ -75,4 +75,24 @@ def test_360():
                       edges=edges,
                       gif=True,
                       savename='giftest')
-    return fig
+    return fi
+    
+
+# show saving works 
+def test_save_png():
+    npbplot(template=None,
+                edges=edges,
+                nodes=nodes,
+                savename='tmp.png')
+
+def test_save_png():
+    npbplot(template=None,
+                edges=edges,
+                nodes=nodes,
+                savename='tmp.svg')
+
+def test_save_png():
+    npbplot(template=None,
+                edges=edges,
+                nodes=nodes,
+                savename='tmp')
