@@ -96,3 +96,4 @@ def test_save_png():
                 edges=edges,
                 nodes=nodes,
                 savename='tmp')
+

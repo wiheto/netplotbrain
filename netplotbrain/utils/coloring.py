@@ -35,8 +35,6 @@ def _highlight_nodes(nodes, node_color, highlight_nodes, **kwargs):
         highlight_idx = nodes[highlight_nodes.keys()] == highlight_nodes.values()
         highlight_idx = np.squeeze(highlight_idx.values)
     elif isinstance(highlight_nodes, str):
-        if highlight_nodes not in nodes:
-            raise ValueError('If highlight_nodes is a str it must be a column in nodes')
         highlight_idx = nodes[highlight_nodes].values
     else:
         highlight_idx = np.zeros(len(nodes))
@@ -63,8 +61,6 @@ def _highlight_edges(edges, edge_color, highlight_edges, **kwargs):
         highlight_idx = edges[highlight_edges.keys()] == highlight_edges.values()
         highlight_idx = np.squeeze(highlight_idx.values)
     elif isinstance(highlight_edges, str):
-        if highlight_edges not in edges:
-            raise ValueError('If highlight_nodes is a str it must be a column in nodes')
         highlight_idx = np.zeros(len(edges))
         highlight_idx[edges[highlight_edges] != 0] = 1
     else:
