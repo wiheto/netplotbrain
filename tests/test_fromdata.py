@@ -11,7 +11,7 @@ edges = pd.read_csv('./examples/example_edges.tsv', sep='\t', index_col=0)
 @pytest.mark.mpl_image_compare
 def test_simple():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
-                      template_style='surface',
+                      template_style='glass',
                       view='S',
                       nodes=nodes,
                       node_scale=40,
