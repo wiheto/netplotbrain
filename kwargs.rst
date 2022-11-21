@@ -4,24 +4,24 @@ Full list of KWARGS
 
 NODE KWARGS
 --------------
-nodecmap : str
-    Matplotlib colormap for node coloring when nodecolor points to a dataframe.
-nodecolor : str, matplotlib coloring
+node_cmap : str
+    Matplotlib colormap for node coloring when node_color points to a dataframe.
+node_color : str, matplotlib coloring
     Can be string to column in nodes or nodes_df input that specifies color column.
     Can be string (default 'black') or list of 3D/4D colors for each edge.
-nodetype : str
+node_type : str
     Can be 'spheres', 'circles', or (if nodes is nifti) 'parcels'.
-nodealpha : float
+node_alpha : float
     Specify the transparency of the nodes
-nodecolumnnames : list
+node_columnnames : list
     Node column names in node dataframe. 'auto' entails the columns are ['x', 'y', 'z'] (specifying coordinates)
-nodesizevminvmax : str, list
-    Scaling alternatives if nodesize is given.
+node_sizevminvmax : str, list
+    Scaling alternatives if node_size is given.
     Alternatives: 'absolute' (default) 'minmax', or 2-tuple list of [min, max].
-    If minmax, node sizes are scaled between (0 and 1) * nodescale.
+    If minmax, node sizes are scaled between (0 and 1) * node_scale.
     If absolute, then the default values are used.
     Absolute can lead to problems with, for example, negative values.
-nodecolorvminvmax : str, list
+node_colorvminvmax : str, list
     Scales colormap between certain values. 
     Alternatives: 'minmax' (default), 'absmax', or 2-tuple list of [min, max].
     If minmax, colorbar starts at the smallest value to largest value.
@@ -34,23 +34,23 @@ edges_df : dataframe
     Allows for passing a dataframe with additional plotting options when edges is a connectivity matrix 
 edgecols : list
     Edge columns names in edge dataframe. Default is i and j (specifying nodes).
-edgecolor : matplotlib coloring
+edge_color : matplotlib coloring
     Can be string (default 'black') or list of 3D/4D colors for each edge.
 edgewidth : int, float
     Specify width of edges. If auto, will plot the value in edge array (if array) or the weight column (if in pandas dataframe), otherwise 2.
-edgeweights : string
+edge_weights : string
     String that specifies column in edge dataframe that contains weights.
     If numpy array is edge input, can be True (default) to specify edge weights.
-edgealpha : float
+edge_alpha : float
     Transparency of edges (default: 1).
-edgehighlightbehaviour : str
+edge_highlightbehaviour : str
     Alternatives "both" or "any" or None.
-    Governs edge dimming when highlightnodes is on
+    Governs edge dimming when highlight_nodes is on
     If both, then highlights only edges between highlighted nodes.
     If any, then only edges connecting any of the nodes are highlighted.
-edgewidthscale : int, float
+edge_widthscale : int, float
     Scale the width of all edges by a factor (default: 1)
-edgecolorvminvmax : str, list
+edge_colorvminvmax : str, list
     Scales colormap between certain values. 
     Alternatives: 'minmax' (default), 'absmax', or 2-tuple list of [min, max].
     If minmax, colorbar starts at the smallest value to largest value.
@@ -59,32 +59,32 @@ edgecolorvminvmax : str, list
 
 TEMPLATE KWARGS
 -----------------
-templatecolor : str
-    If templatestyle=='surface' or 'filled', the color of template voxels
-templateedgethreshold : float
-    If templatestyle=='cloudy', can tweak the edges detection threshold. (Default: 0.7)
-templatealpha : float
+template_color : str
+    If template_style=='surface' or 'filled', the color of template voxels
+templateedge_threshold : float
+    If template_style=='cloudy', can tweak the edges detection threshold. (Default: 0.7)
+template_alpha : float
     Opacity of template voxels.
-templatevoxelsize : int
+template_voxelsize : int
     Resize voxels this size. Larger voxels = quicker. (Default: 2)
 surface_detection : float
     The value used to detect the surface boundary (see argument level in marching_cubes).
     Some default choices are made for various templates
 surface_resolution : int
-    If templatestyle=='surface' controls the size of the triangles used in the surface reconstruction. (Default: 2).
+    If template_style=='surface' controls the size of the triangles used in the surface reconstruction. (Default: 2).
 
 LEGENDKWARGS
 ---------------------
-nodecolorlegend : True
+node_colorlegend : True
     If the colorlegend is plotted or not.
-nodesizelegend : True
-nodecolorlegendstyle : str
+node_sizelegend : True
+node_colorlegendstyle : str
     Alternatives: auto (default), discrete, continuous
     If the color legend should show the entire colormap or discrete colors.
     If auto, plots discrete if less than 8 unique values are detected.
-legendtickfontsize : str, int
+legend_tickfontsize : str, int
     Matplotlib fontsize for title in figure legends
-legendtitlefontsize : str, int
+legendtitle_fontsize : str, int
     Matplotlib fontsize for ticks in figure legends
 
 ARROW KWARGS
@@ -115,9 +115,9 @@ GIF KWARGS
 -------------------------
 gif : bool
     If true, saves views as a gif. 
-gifduration : int
+gif_duration : int
     Gif duration in milliseconds
-gifloop : int
+gif_loop : int
     How many times to loop figure. 0 (default) entails infinite loop. 
 
 TEXT KWARGS
@@ -126,11 +126,11 @@ font : str
     font for all text in figure.
 fontcolor : str, list, tuple
     font color for all text in figure
-titlefontsize : str
+title_fontsize : str
     Size of title font (default: medium). See matplotlib "fontsize"
 titleloc : str,
     Location of title (default: center). See matplotlib "loc"
-titleweight : str
+title_weight : str
     Font weight of title (default: regular). See matplotlib "fontweight"
 
 STYLE KWARGS

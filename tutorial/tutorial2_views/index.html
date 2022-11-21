@@ -368,7 +368,7 @@ So, setting view = 'LSR' will generate 3 subplots with left, superior, and right
 The first from left to right. The second from anterior to posterior.</p>
 <pre><code class="language-python">import netplotbrain
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
+                  template_style='surface',
                   view=['LSR', 'AIP'])
 plt.show()
 </code></pre>
@@ -380,7 +380,7 @@ plt.show()
 Images will then be displayed along a single row.</p>
 <pre><code class="language-python">import netplotbrain
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='surface',
+                  template_style='surface',
                   view=['AP'],
                   frames=5)
 </code></pre>
@@ -388,7 +388,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
 <p>It is also possible to specify the <code>view="360"</code>to get a fully rotated brain. The frames argument dictates how many snapshots will be generated.</p>
 <pre><code class="language-python">import netplotbrain
 netplotbrain.plot(template='MNI152NLin2009cAsym',
-                  templatestyle='glass',
+                  template_style='glass',
                   view='360',
                   frames=8)
 </code></pre>

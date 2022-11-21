@@ -1321,7 +1321,7 @@ Licensed under the Apache License, Version 2.0.
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="different-template-styles">Different template styles<a class="anchor-link" href="#different-template-styles">&#182;</a></h1><p>There are currently four different template style options to choose from: suface, filled, cloudy, glass. 
-You just need to change the specification in the templatestyle argument.</p>
+You just need to change the specification in the template_style argument.</p>
 
 </div>
 </div>
@@ -1352,7 +1352,7 @@ You just need to change the specification in the templatestyle argument.</p>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">netplotbrain</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">template</span><span class="o">=</span><span class="s1">&#39;MNI152NLin6Asym&#39;</span><span class="p">,</span>
-                  <span class="n">templatestyle</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;surface&#39;</span><span class="p">,</span> <span class="s1">&#39;filled&#39;</span><span class="p">,</span> <span class="s1">&#39;cloudy&#39;</span><span class="p">,</span> <span class="s1">&#39;glass&#39;</span><span class="p">],</span>
+                  <span class="n">template_style</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;surface&#39;</span><span class="p">,</span> <span class="s1">&#39;filled&#39;</span><span class="p">,</span> <span class="s1">&#39;cloudy&#39;</span><span class="p">,</span> <span class="s1">&#39;glass&#39;</span><span class="p">],</span>
                   <span class="n">view</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span>
                   <span class="n">arrowaxis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">subtitles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;surface&#39;</span><span class="p">,</span> <span class="s1">&#39;filled&#39;</span><span class="p">,</span> <span class="s1">&#39;cloudy&#39;</span><span class="p">,</span> <span class="s1">&#39;glass&#39;</span><span class="p">])</span>
@@ -1362,7 +1362,7 @@ import netplotbrain
 import matplotlib.pyplot as plt
 
 netplotbrain.plot(template='MNI152NLin6Asym',
-                  templatestyle=['surface', 'filled', 'cloudy', 'glass'],
+                  template_style=['surface', 'filled', 'cloudy', 'glass'],
                   view='A',
                   arrowaxis=None,
                   subtitles=['surface', 'filled', 'cloudy', 'glass'])</div>
