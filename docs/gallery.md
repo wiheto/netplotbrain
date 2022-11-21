@@ -2,7 +2,7 @@
 
 ## Simple Figures
 
-### [A single view]((./gallery/highlevel_size/))
+### [A single view]((./gallery/simple/))
 
 [![](./gallery/figures/singleview.png)](./simple/)
 
@@ -12,7 +12,7 @@
 
 [![](./gallery/figures/nodestyles.png)](./node_styles/)
 
-### [Template styles](./node_styles/)
+### [Template styles](./template_styles/)
 
 [![](./gallery/figures/template_styles.png)](./template_styles/)
 
