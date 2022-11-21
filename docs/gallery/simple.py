@@ -25,15 +25,16 @@ import netplotbrain
 import pandas as pd
 import os
 
-# make sure we are running from 
-os.chdir(netplotbrain.__path__[0])
+#Path to node and edge example data on netplotbrain
+nodepath = 'https://raw.githubusercontent.com/wiheto/netplotbrain/main/examples/example_nodes.tsv'
+edgepath = 'https://raw.githubusercontent.com/wiheto/netplotbrain/main/examples/example_edges.tsv'
 
 #Example node and edges dataframes included with package
-nodes = pd.read_csv('../examples/example_nodes.tsv', sep='\t', index_col=0)
+nodes = pd.read_csv(nodepath, sep='\t', index_col=0)
 # peak at first lines of nodes dataframe
 nodes.head()
 
-edges = pd.read_csv('../examples/example_edges.tsv', sep='\t', index_col=0)
+edges = pd.read_csv(edgepath, sep='\t', index_col=0)
 # peak at first lines of edges dataframe
 edges.head()
 
