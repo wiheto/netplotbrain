@@ -1,6 +1,6 @@
 {
-  "title": "Netplotbrain: plot neworks on a brain",
-  "description": "<p>An easy-to-use python package to plot nodes and edges onto a brain, with different styles, different templates, and can highlight results.</p>",
+  "title": "NetPlotBrain: plot networks on a brain",
+  "description": "An easy-to-use python package to plot nodes and edges onto a brain",
   "contributors": [
     {
     }
@@ -12,7 +12,7 @@
         "orcid": "0000-0002-1853-2588"
       },
       {
-        "affiliation": "Department of Clinical Neuroscience, Karolinska Institutet",
+        "affiliation": "Department of Applied Information Technology, University of Gothenburg",
         "name": "Thompson, William H.",
         "orcid": "0000-0002-0533-6035"
       }
@@ -25,7 +25,7 @@
     "fMRI",
     "nodes"
   ],
-  "license": "GPL-3.0 License",
+  "license": "Apache-2.0 license",
   "upload_type": "software"
 }
   
