@@ -121,7 +121,7 @@ def _get_colorby_colors(df, colorby, datatype='node', **kwargs):
         A N x 4 list of matplotlib colours for each node
     """
     # Get relevant kwargs
-    cmap = kwargs.get(datatype + 'cmap')
+    cmap = kwargs.get(datatype + '_' + 'cmap')
     color_vminvmax = kwargs.get(datatype + 'colorvminvmax')
     #TODO: Add flag if colours are in column
     colortype = _detect_coloring_type(df, colorby)
