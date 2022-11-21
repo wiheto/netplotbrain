@@ -239,7 +239,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # setup legend subplot. Goes in centre or centre2 subplots
             spind = gridspec.ncols
             if np.remainder(spind, 2) == 0:
-                legend_subplotp_colind = [int((spind / 2) - 1), int(spind / 2)]
+                # if number of columns is even, center it over the middle two columns
+                # by using slice() on the GridSpec.
+                legend_subplotp_colind = slice(int((spind / 2) - 1), int(spind / 2) + 1)
             else:
                 legend_subplotp_colind = int(np.round(spind / 2) - 1)
             ax = fig.add_subplot(gridspec[nrows + li, legend_subplotp_colind])
