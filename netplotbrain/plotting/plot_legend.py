@@ -137,7 +137,7 @@ def add_node_color_legend_continuous(ax, nodes, node_colorby, **kwargs):
     return ax
 
 
-def _add_node_color_legend(ax, nodes, node_colorby, node_color, node_cmap, **kwargs):
+def _add_node_color_legend(ax, nodes, node_colorby, node_color, **kwargs):
     """
     Adds a node_color legend to figure.
     This function descites whether a discrete or continuous colorbar is to be added.
