@@ -4,6 +4,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d2c620d4be8047989e7b91ac3bbbba97)](https://www.codacy.com/gh/wiheto/netplotbrain/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wiheto/netplotbrain&amp;utm_campaign=Badge_Grade)
 [![DOI](https://zenodo.org/badge/317297000.svg)](https://zenodo.org/badge/latestdoi/317297000)
 [![Coverage Status](https://coveralls.io/repos/github/wiheto/netplotbrain/badge.svg?branch=main)](https://coveralls.io/github/wiheto/netplotbrain?branch=main)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/wiheto/netplotbrain/main)
 
 Painlessly plot networks on a brain in python. The package is still in early development and better documentation/tutorials/examples are in the works.
 
