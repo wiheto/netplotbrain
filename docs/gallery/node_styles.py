@@ -1,12 +1,11 @@
-# %% [markdown]
-""" 
-# Different node styles
+#  
+# # Different node styles
+#
+# [Open interactive notebook in Binder](https://mybinder.org/v2/gh/wiheto/netplotbrain/main?filepath=docs/gallery/node_styles.ipynb)
+#
+# There are currently three different node style options to choose from: circles, spheres, parcels.
+# You just need to change the specification in the node_type argument.
 
-There are currently three different node style options to choose from: circles, spheres, parcels.
-You just need to change the specification in the node_type argument.
-"""
-
-# %%
 # Import packages
 import netplotbrain
 import matplotlib.pyplot as plt

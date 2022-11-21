@@ -17,13 +17,12 @@
 #  
 # # Simple plot
 #
+# [Open interactive notebook in Binder](https://mybinder.org/v2/gh/wiheto/netplotbrain/main?filepath=docs/gallery/simple.ipynb)
 # Below, we load some test data and only specify the template space we would like it plotted in.
-# [Open example in Binder](https://mybinder.org/v2/gh/wiheto/netplotbrain/main?filepath=docs/gallery/simple.ipynb)
 
 # Load imports
 import netplotbrain
 import pandas as pd
-import os
 
 #Path to node and edge example data on netplotbrain
 nodepath = 'https://raw.githubusercontent.com/wiheto/netplotbrain/main/examples/example_nodes.tsv'

@@ -1,12 +1,12 @@
-# %% [markdown]
-""" 
-# Different template styles
+#  
+# # Different template styles
+#
+# [Open interactive notebook in Binder](https://mybinder.org/v2/gh/wiheto/netplotbrain/main?filepath=docs/gallery/template_styles.ipynb)
+#
+# There are currently four different template style options to choose from: suface, filled, cloudy, glass. 
+# You just need to change the specification in the template_style argument.
 
-There are currently four different template style options to choose from: suface, filled, cloudy, glass. 
-You just need to change the specification in the template_style argument.
-"""
-
-# %%
+# +
 # Import packages
 import netplotbrain
 import matplotlib.pyplot as plt

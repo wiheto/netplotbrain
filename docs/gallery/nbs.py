@@ -1,19 +1,18 @@
-# %% [markdown]
-""" 
-# Netplotbrain with network based statistics
+#  
+# # Netplotbrain with network based statistics
+#
+# [Open interactive notebook in Binder](https://mybinder.org/v2/gh/wiheto/netplotbrain/main?filepath=docs/gallery/nbs.ipynb)
+#
+# ## Plotting significant results from network based statistics
+# Netplotbrain aims to try and integrate with other tools, minimizing the work needed.
+# For this we are going to use bctpy's implementation of network based statistics.
 
-## Plotting significant results from network based statistics
-Netplotbrain aims to try and integrate with other tools, minimizing the work needed.
-For this we are going to use bctpy's implementation of network based statistics.
-"""
-
-# %%
 import bct
 import numpy as np
 import matplotlib.pyplot as plt
 import netplotbrain
 
-# %% [markdown]
+# + [markdown]
 """
 ### Generating the data
 
@@ -29,7 +28,7 @@ The mean of the normal distribution for each edge varies.
 For between-community edges the mean is set to 0. For within community edges each community is set to a different value. This value will differ between the two groups.
 """
 
-# %%
+# +
 def generate_group_cm(nodes, subjects, community_size, community_str, scale=0.25, seed=2022):
     """
     Quick way to simulate group differences for visualization purposes.
@@ -73,27 +72,27 @@ g2_community_str = [0.17, 0.7, 0.13, 0.1, 0.15, 0.6]
 g1 = generate_group_cm(nodes, subjects_per_group, community_size, g1_community_str)
 g2 = generate_group_cm(nodes, subjects_per_group, community_size, g2_community_str)
 
-# %% [markdown]
+# + [markdown]
 """
 ## Running NBS statistics
 
 From the generated data.
 Using the NBS implementation from bctpy with generate the p values
 """
+# -
 
-# %%
 # g1 and g2 are both (Node, Node, Subject) in size.
 # The third input argument is the cluster threshold (set far too high here, but to ensure we just get the 2 extreme communities).
 # Note, k=100 is set for speed purposes. Should be larger.  
 p, adj, null = bct.nbs_bct(g1, g2, 4, k=100, seed=2022)
 
-# %% [markdown]
+# + [markdown]
 """
 Let us now visualize the data we have created.
 Here we see the correlation matrices and the 2 significant clusters created.
 """
+# -
 
-# %%
 fig, ax = plt.subplots(1, 3)
 ax[0].imshow(np.mean(g1, axis=-1), cmap='RdBu_r', vmin=-0.5, vmax=0.5)
 ax[0].set_title('Group 1 (mean)')
@@ -102,7 +101,7 @@ ax[1].set_title('Group 2 (mean)')
 ax[2].imshow(adj, cmap='binary')
 ax[2].set_title('Significant Clusters')
 
-# %%  [markdown]
+# + [markdown]
 """
 ### Plotting in netplotbrain
 
@@ -110,7 +109,7 @@ We will assume that are 100 random nodes correspond to the Schaefer 2018 atlas w
 With this information, we can call netplotbrain.
 """
 
-# %%
+# +
 # For out edges let's plot the group different.
 gdif = np.mean(g2,axis=-1) - np.mean(g1,axis=-1)
 
@@ -126,6 +125,8 @@ fig, ax = netplotbrain.plot(template='MNI152NLin2009cAsym',
                             node_type='circles',
                             highlightlevel=0.5)
 
-# %% [markdown]
+# + [markdown]
+"""
 The amount of highlight is governed by the highlightlevel argument.
 Increasing it highlights the significant edges more.
+"""

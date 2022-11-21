@@ -1,4 +1,4 @@
-# %% [markdown]
+# + [markdown]
 """
 # Netplotbrain with spring layout subplot
 
@@ -9,9 +9,11 @@ Netplotbrain integrates with networkx to easily plot spring layout plots with al
 The key argument is specifying view='s' (note lowercase).
 
 In the below example we see view='LSs' to plot left, superior and spring-layout subplots.
-"""
 
-# %%
+[Open interactive notebothh in Binder](https://mybinder.org/v2/gh/wiheto/netplotbrain/main?filepath=docs/gallery/spring_layout.ipynb)
+"""
+# -
+
 # Import all necessary files
 import pandas as pd
 import numpy as np
@@ -22,14 +24,14 @@ import itertools
 # Set random seed for reproducibility
 np.random.seed(2022)
 
-# %% [markdown]
+# + [markdown]
 """
 We are going to download 100 nodes from the Schaefer atlas from templateflow.
 
 We are then going to set the between community edges to be around 0 and the within community edges to be around 0.5.
 """
+# -
 
-# %%
 atlas = {'template': 'MNI152NLin2009cAsym',
          'atlas': 'Schaefer2018',
         'desc': '100Parcels7Networks'}
@@ -46,7 +48,7 @@ atlasinfo['yeo7networks'].replace('SalVentAttn', 'VA', inplace=True)
 atlasinfo['yeo7networks'].replace('Default', 'DMN', inplace=True)
 atlasinfo['yeo7networks'].replace('SomMot', 'SM', inplace=True)
 
-# %%
+# +
 # create empty cognitive matrix
 edges = np.random.normal(0, 0.025, [100, 100])
 
@@ -56,13 +58,12 @@ for network in atlasinfo['yeo7networks'].unique():
     idx_pairs = np.array(list(itertools.combinations(idx, 2)))
     edges[idx_pairs[:, 0], idx_pairs[:, 1]] = np.random.normal(0.5, 0.025, [len(idx_pairs)])
     edges[idx_pairs[:, 1], idx_pairs[:, 0]] = np.random.normal(0.5, 0.025, [len(idx_pairs)])
+# -
 
-# %%
 # Show what the connectivity matrix looks like
 fig, ax = plt.subplots(1)
 ax.imshow(edges)
 
-# %%
 # Plot it all
 netplotbrain.plot(template='MNI152NLin2009cAsym',
                   nodes=atlas,
