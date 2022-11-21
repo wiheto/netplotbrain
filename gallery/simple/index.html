@@ -1350,12 +1350,10 @@ Licensed under the Apache License, Version 2.0.
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># Load imports</span>
 <span class="kn">import</span> <span class="nn">netplotbrain</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">os</span>
 </pre></div>
 <div id="cell-1" class="clipboard-copy-txt"># Load imports
 import netplotbrain
-import pandas as pd
-import os</div>
+import pandas as pd</div>
     
         </div>
     </div>
@@ -1385,11 +1383,13 @@ import os</div>
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># make sure we are running from </span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">netplotbrain</span><span class="o">.</span><span class="n">__path__</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1">#Path to node and edge example data on netplotbrain</span>
+<span class="n">nodepath</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/wiheto/netplotbrain/main/examples/example_nodes.tsv&#39;</span>
+<span class="n">edgepath</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/wiheto/netplotbrain/main/examples/example_edges.tsv&#39;</span>
 </pre></div>
-<div id="cell-2" class="clipboard-copy-txt"># make sure we are running from 
-os.chdir(netplotbrain.__path__[0])</div>
+<div id="cell-2" class="clipboard-copy-txt">#Path to node and edge example data on netplotbrain
+nodepath = 'https://raw.githubusercontent.com/wiheto/netplotbrain/main/examples/example_nodes.tsv'
+edgepath = 'https://raw.githubusercontent.com/wiheto/netplotbrain/main/examples/example_edges.tsv'</div>
     
         </div>
     </div>
@@ -1420,12 +1420,12 @@ os.chdir(netplotbrain.__path__[0])</div>
             </clipboard-copy>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1">#Example node and edges dataframes included with package</span>
-<span class="n">nodes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../examples/example_nodes.tsv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">nodepath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="c1"># peak at first lines of nodes dataframe</span>
 <span class="n">nodes</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 <div id="cell-3" class="clipboard-copy-txt">#Example node and edges dataframes included with package
-nodes = pd.read_csv('../examples/example_nodes.tsv', sep='\t', index_col=0)
+nodes = pd.read_csv(nodepath, sep='\t', index_col=0)
 # peak at first lines of nodes dataframe
 nodes.head()</div>
     
@@ -1555,11 +1555,11 @@ nodes.head()</div>
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">edges</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../examples/example_edges.tsv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">edges</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">edgepath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="c1"># peak at first lines of edges dataframe</span>
 <span class="n">edges</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
-<div id="cell-4" class="clipboard-copy-txt">edges = pd.read_csv('../examples/example_edges.tsv', sep='\t', index_col=0)
+<div id="cell-4" class="clipboard-copy-txt">edges = pd.read_csv(edgepath, sep='\t', index_col=0)
 # peak at first lines of edges dataframe
 edges.head()</div>
     
