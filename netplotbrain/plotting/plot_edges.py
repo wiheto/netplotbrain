@@ -34,6 +34,8 @@ def _get_edge_highlight_alpha(node_i, node_j, highlight_nodes, **kwargs):
     edge_alpha = kwargs.get('edge_alpha')
     highlightlevel = kwargs.get('highlightlevel')
     edge_highlightbehaviour = kwargs.get('edge_highlightbehaviour')
+    if len(highlight_nodes) == 0:
+        highlight_nodes = None
     if edge_alpha is None:
         pass
     elif highlight_nodes is None or edge_highlightbehaviour is None:
