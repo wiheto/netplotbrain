@@ -2,7 +2,7 @@
 
 ## Simple Figures
 
-### [A single view]((./gallery/simple/))
+### [A single view]((./simple/))
 
 [![](./gallery/figures/singleview.png)](./simple/)
 

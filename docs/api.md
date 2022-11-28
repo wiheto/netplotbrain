@@ -1,4 +1,4 @@
-## API
+# API
 
 ## Full list of KWARGS
 
@@ -91,7 +91,7 @@ arroworigin | list | x,y,z coordinates of arrowaxis. Note 0,0,0 is bottom left.
 ax | matplotlib 3D ax | fig = plt.figure(). ax = fig.add_subplot(111, projection='3d'). netplotbrain.plot(ax, ...)
 fig | matplotlib figure
 savename | str | Save path for figure. If string ends with .png or .svg it will one save this figure. if the path ends with anything else, it will save both a .png and .svg figure. Default: None and nothing is saved.
-figdpi | int | 300 Default. R   esolution of figure when saving png files.
+figdpi | int | 300 Default. Resolution of figure when saving png files.
 
 ### HEMISPHERE KWARGS
 | Argument | Type | Description |
