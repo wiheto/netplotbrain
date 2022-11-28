@@ -50,9 +50,9 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
     # Order = LRAPDV
     fromview = views[0]
     toview = views[1] if len(views) == 2 else None
-    view_defaults = {'L': (180, 10), 'R': (0, 10),
-                     'A': (90, 10), 'P': (-90, 10),
-                     'S': (-90, 90), 'I': (90, 90),
+    view_defaults = {'L': (180, 0), 'R': (0, 0),
+                     'A': (90, 0), 'P': (-90, 0),
+                     'S': (-90, 90), 'I': (90, -90),
                      's': (-90, 90)}
     # Set auto arrows for axis depending on starting view
     autoarrowaxis = None

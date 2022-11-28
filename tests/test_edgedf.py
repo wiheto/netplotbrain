@@ -33,7 +33,8 @@ def test_edges_df():
                                 edge_color='color',
                                 title='Edge_df',
                                 node_type='circles',
-                                edge_cmap='tab10',
+                                node_size=5,
+                                edge_cmap='Dark2',
                                 edge_threshold=0,
                                 edge_widthscale=5,
                                 edge_thresholddirection='above')

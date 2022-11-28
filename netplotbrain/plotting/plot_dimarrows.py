@@ -36,8 +36,9 @@ def _add_axis_arrows(ax, dims=None, origin=None, azim=0, elev=0, **kwargs):
             origin[1] = ylim[1] - 15
         if azim <= 90 and azim > -90:
             origin[0] = xlim[1] + 15
+        if elev == -90:
+            origin[1] -= 200 
     # Check the azim to see the orientation of letters
-    # S/I needs to be added.
     # Also this could probably be improved upon
     # Based on hard coding
     valign_a = 'center'
@@ -45,7 +46,7 @@ def _add_axis_arrows(ax, dims=None, origin=None, azim=0, elev=0, **kwargs):
     valign_l = 'center'
     valign_r = 'center'
     valign_s = 'bottom'
-    valign_i = 'top'
+    valign_i = 'bottom'
     if azim <= 90 and azim > -90:
         halign_l = 'left'
         halign_r = 'right'

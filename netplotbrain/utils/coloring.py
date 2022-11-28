@@ -31,6 +31,9 @@ def _highlight_nodes(nodes, node_color, highlight_nodes, **kwargs):
     """
     highlightlevel = kwargs.get('highlightlevel')
     node_alpha = kwargs.get('node_alpha')
+    # Default is None, set to 1 if highlight_nodes is called
+    if node_alpha is None: 
+        node_alpha = 1
     if isinstance(highlight_nodes, dict):
         highlight_idx = nodes[highlight_nodes.keys()] == highlight_nodes.values()
         highlight_idx = np.squeeze(highlight_idx.values)
@@ -57,6 +60,9 @@ def _highlight_edges(edges, edge_color, highlight_edges, **kwargs):
     """
     highlightlevel = kwargs.get('highlightlevel')
     edge_alpha = kwargs.get('edge_alpha')
+    # Default is None, set to 1 if highlighting is called
+    if edge_alpha is None: 
+        edge_alpha = 1
     if isinstance(highlight_edges, dict):
         highlight_idx = edges[highlight_edges.keys()] == highlight_edges.values()
         highlight_idx = np.squeeze(highlight_idx.values)
