@@ -148,7 +148,7 @@ def _add_node_color_legend(ax, nodes, node_colorby, node_color, **kwargs):
     if node_colorlegendstyle == 'discrete':
         ax = _add_node_color_legend_discrete(
             ax, nodes, node_colorby, node_color, **kwargs)
-    else:
+    elif node_colorlegendstyle == 'continuous':
         ax = add_node_color_legend_continuous(ax, nodes, node_colorby, **kwargs)
 
     return ax

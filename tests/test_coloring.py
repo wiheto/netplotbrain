@@ -2,6 +2,7 @@ from netplotbrain import plot as npbplot
 import pytest
 import pandas as pd
 import matplotlib.pyplot as plt
+import templateflow.api as tf
 
 # Example node and edges dataframes included with package
 nodes = pd.read_csv('./examples/example_nodes.tsv', sep='\t', index_col=0)
@@ -21,3 +22,17 @@ def test_highlightnodes_str():
     return fig
 
 
+
+@pytest.mark.mpl_image_compare
+def test_column_as_color():
+    atlasinfo = tf.get(template='MNI152NLin2009cAsym',
+                   atlas='Schaefer2018',
+                   desc='100Parcels7Networks',
+                   extension='.tsv')
+    atlas_df = pd.read_csv(str(atlasinfo), sep='\t')
+    nodes = {'template': 'MNI152NLin2009cAsym',
+                      'atlas': 'Schaefer2018',
+                      'desc': '100Parcels7Networks',
+                      'resolution': 1}
+    fig, _ = npbplot(nodes=nodes, node_type='parcels', nodes_df=atlas_df, node_color='color')
+    return fig

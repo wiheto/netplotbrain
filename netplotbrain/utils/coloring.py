@@ -98,9 +98,15 @@ def _detect_coloring_type(nodes, node_colorby, prespecified=None):
     Prespecified allows you to override the behaviour.
     """
     if prespecified is None or prespecified == 'auto':
-        if nodes[node_colorby].nunique(dropna=True) > 8:
+        # Get unique colors
+        ucols = nodes[node_colorby].unique()
+        ncols = nodes[node_colorby].nunique(dropna=True)
+        cols_are_colorlike = list(map(lambda x: cm.colors.is_color_like(x), ucols))
+        if sum(cols_are_colorlike) == ncols:
+            colorpropertytype = 'column' 
+        elif ncols > 8:
             colorpropertytype = 'continuious'
-        elif nodes[node_colorby].nunique(dropna=True) <= 8:
+        elif ncols <= 8:
             colorpropertytype = 'discrete'
     else:
         colorpropertytype = prespecified
@@ -128,11 +134,13 @@ def _get_colorby_colors(df, colorby, datatype='node', **kwargs):
     """
     # Get relevant kwargs
     cmap = kwargs.get(datatype + '_' + 'cmap')
-    color_vminvmax = kwargs.get(datatype + 'colorvminvmax')
+    color_vminvmax = kwargs.get(datatype + '_colorvminvmax')
     #TODO: Add flag if colours are in column
     colortype = _detect_coloring_type(df, colorby)
     cmap = cm.get_cmap(cmap)
-    if colortype == 'discrete':
+    if colortype == 'column':
+        color_array = cm.colors.to_rgba_array(df[colorby])
+    elif colortype == 'discrete':
         cat = np.unique(df[colorby].dropna())
         colors = cmap(np.linspace(0, 1, len(cat)))
         colordict = dict(zip(cat, colors))

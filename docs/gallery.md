@@ -12,9 +12,9 @@
 
 [![](./gallery/figures/nodestyles.png)](./node_styles/)
 
-### [Template styles](./template_styles/)
+### [Node colours](./specifying_node_colors/)
 
-[![](./gallery/figures/template_styles.png)](./template_styles/)
+[![](./gallery/figures/specifying_node_colors.png)](./specifying_node_colors/)
 
 ### [Dual row figures](.//two_rows/)
 
