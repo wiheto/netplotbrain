@@ -204,10 +204,10 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
         img = resample_to_output(img, [voxsize] * 3)
     data = img.get_fdata()
     data = _select_single_hemisphere_template(data, hemisphere)
-    if style == 'filled' and voxsize is None:
-        print('WARNING: When the template style is filled, plotting can take time. Consider increasing the voxel size using the argument template_voxelsize.')
-        _plot_template_style_filled(ax, data, **kwargs)
-    elif style == 'filled' and voxsize is not None:
+    if style == 'filled' 
+        if voxsize is None:
+            print('WARNING: When the template_style is set to filled and template_voxsize argument is not manually set, plotting can take time.\n
+                   Consider increasing the voxel size using the argument template_voxelsize.')
         _plot_template_style_filled(ax, data, **kwargs)
     elif style == 'cloudy':
         _plot_template_style_cloudy(
