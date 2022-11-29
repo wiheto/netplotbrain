@@ -575,11 +575,48 @@ netplotbrain.plot(
 The T1w brain mask will then be automatically downloaded (if not already present on your computer) and used as the background.</p>
 <p>Note, if there are multiple cohorts for the atlas, you should add which cohort it is to the string. This specification follows the format "templatename_cohort-X". So, for example, if you want to use the second cohort for MNIInfant, you specify "MNIInfant_cohort-2". Additionally, if there is a specific templateflow file that you wish to use (that is not one of the default template files) you can specify a dictionary of templateflow keyword-value pairs. </p>
 <h3 id="template-styles">Template Styles</h3>
-<p>There are currently four background styles: "glass", "surface", "filled" and "cloudy".</p>
+<p>There are currently four background styles: "glass", "surface", "cloudy" and "filled".</p>
 <p>The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to modify the resolution of the surface.</p>
+<p>The cloudy style tries to identify the outline of the mask and plots points along the edges.The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.</p>
 <p>The filled style plots the template's brain mask as voxels. This can be slightly RAM consuming.</p>
-<p>The cloudy style tries to identify the outline of the mask and plots points along the edges. The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.</p>
 <p>For templates, you can change the voxelsize of the template. Larger voxels means the plot will be generated quicker.</p>
+<p>This can come in handy especially when the filled style is used. </p>
+<p>When <code>template_voxelsize</code> is unchanged, the rendering can take time.   </p>
+<pre><code class="language-python"># Import packages
+import netplotbrain
+
+# Call netplotbrain to plot
+netplotbrain.plot(
+    template='MNI152NLin6Asym',
+    template_style='filled',
+    arrowaxis=None)
+
+rendering=156.44848775863647 seconds 
+</code></pre>
+<p><img alt="" src="https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/tutorial/figures/filled_voxsize.png" /></p>
+<p>In order to notably reduce the rendering speed, you can increase <code>template_voxelsize</code>. </p>
+<pre><code class="language-python"># increasing voxelsize
+netplotbrain.plot(
+    template='MNI152NLin6Asym',
+    template_style='filled',
+    template_voxelsize=3,
+    arrowaxis=None)
+
+rendering=23.75227427482605 seconds 
+</code></pre>
+<p><img alt="" src="https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/tutorial/figures/filled_voxsize3.png" /></p>
+<p>However, note that an excessive increase of voxelsize can degrade spatial resolution.  </p>
+<pre><code class="language-python"># further increasing voxelsize
+netplotbrain.plot(
+    template='MNI152NLin6Asym',
+    template_style='filled',
+    template_voxelsize=7,
+    arrowaxis=None)
+
+rendering=2.769284248352051 seconds 
+</code></pre>
+<p><img alt="" src="https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/tutorial/figures/filled_voxsize7.png" /></p>
+<p>Thus, when using the filled style, we invite you to consider the trade-off between rendering speed and spatial resolution.</p>
 
               
             </article>
