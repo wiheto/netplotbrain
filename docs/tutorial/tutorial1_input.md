@@ -238,7 +238,7 @@ netplotbrain.plot(
     
 rendering=156.44848775863647 seconds 
 ```
-![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/gallery/figures/filled_voxsize.png)
+![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/tutorial/figures/filled_voxsize.png)
 
 In order to notably reduce the rendering speed, you can increase `template_voxelsize`. 
 
@@ -252,7 +252,7 @@ netplotbrain.plot(
     
 rendering=23.75227427482605 seconds 
 ```
-![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/gallery/figures/filled_voxsize3.png)
+![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/tutorial/figures/filled_voxsize3.png)
 
 However, note that an excessive increase of voxelsize can degrade spatial resolution.  
 
@@ -266,6 +266,6 @@ netplotbrain.plot(
     
 rendering=2.769284248352051 seconds 
 ```
-![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/gallery/figures/filled_voxsize7.png)
+![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/tutorial/figures/filled_voxsize7.png)
 
 Thus, when using the filled style, we invite you to consider the trade-off between rendering speed and spatial resolution.
