@@ -204,7 +204,7 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
         img = resample_to_output(img, [voxsize] * 3)
     data = img.get_fdata()
     data = _select_single_hemisphere_template(data, hemisphere)
-    if style == 'filled' 
+    if style == 'filled':
         if voxsize is None:
             print('WARNING: When the template_style is set to filled and template_voxsize argument is not manually set, plotting can take time.\n
                    Consider increasing the voxel size using the argument template_voxelsize.')
