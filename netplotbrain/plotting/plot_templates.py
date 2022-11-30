@@ -107,9 +107,9 @@ def _plot_template_style_glass(ax, data, template, **kwargs):
     else:
         alpha_per_point = (border_vals - border_vals.min()) / (border_vals.max() - border_vals.min())
 
-    ax.scatter(points[0], points[1], points[2], 
-               s=glass_kwargs['template_glass_pointsize'], 
-               alpha=alpha_per_point * glass_kwargs['template_glass_maxalpha'], 
+    ax.scatter(points[0], points[1], points[2],
+               s=glass_kwargs['template_glass_pointsize'],
+               alpha=alpha_per_point * glass_kwargs['template_glass_maxalpha'],
                color=glass_kwargs['template_color'])
 
 
@@ -174,7 +174,7 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
              # Get the netplotbrian path
             with open(netplotpath[0] + '/templatesettings/template_get_kwargs.json', 'r') as f:
                 tf_kwargs_all = json.load(f)
-            # If cohort is in the name as template=templateame_cohort-X, split to template=tempaltename, and 'cohort' is in tf_kwargs  
+            # If cohort is in the name as template=templateame_cohort-X, split to template=tempaltename, and 'cohort' is in tf_kwargs
             cohort = None
             if '_cohort-' in template:
                 cohort = template.split('cohort-')[1]
@@ -190,7 +190,7 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
             # Get template
             template_stylename = template
             template = tf.get(template=template, **tf_kwargs)
-          
+
     # If template is now a list then templateflow found multiple entries.
     if isinstance(template, list):
         print('More than 1 template found. Please provide more arguments to specify the template you want.')
