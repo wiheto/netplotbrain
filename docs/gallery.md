@@ -16,7 +16,11 @@
 
 [![](./gallery/figures/specifying_node_color.png)](./specifying_node_color/)
 
-### [Dual row figures](.//two_rows/)
+### [Specifying colormaps](./node_cmap/)
+
+[![](./gallery/figures/node_cmap.png)](./node_cmap/)
+
+### [Dual row figures](./two_rows/)
 
 [![](./gallery/figures/rows1.png)](./two_rows/)
 

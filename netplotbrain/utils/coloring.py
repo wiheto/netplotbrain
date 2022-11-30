@@ -32,7 +32,7 @@ def _highlight_nodes(nodes, node_color, highlight_nodes, **kwargs):
     highlightlevel = kwargs.get('highlightlevel')
     node_alpha = kwargs.get('node_alpha')
     # Default is None, set to 1 if highlight_nodes is called
-    if node_alpha is None: 
+    if node_alpha is None:
         node_alpha = 1
     if isinstance(highlight_nodes, dict):
         highlight_idx = nodes[highlight_nodes.keys()] == highlight_nodes.values()
@@ -61,7 +61,7 @@ def _highlight_edges(edges, edge_color, highlight_edges, **kwargs):
     highlightlevel = kwargs.get('highlightlevel')
     edge_alpha = kwargs.get('edge_alpha')
     # Default is None, set to 1 if highlighting is called
-    if edge_alpha is None: 
+    if edge_alpha is None:
         edge_alpha = 1
     if isinstance(highlight_edges, dict):
         highlight_idx = edges[highlight_edges.keys()] == highlight_edges.values()
@@ -103,7 +103,7 @@ def _detect_coloring_type(nodes, node_colorby, prespecified=None):
         ncols = nodes[node_colorby].nunique(dropna=True)
         cols_are_colorlike = list(map(lambda x: cm.colors.is_color_like(x), ucols))
         if sum(cols_are_colorlike) == ncols:
-            colorpropertytype = 'column' 
+            colorpropertytype = 'column'
         elif ncols > 8:
             colorpropertytype = 'continuious'
         elif ncols <= 8:
@@ -113,6 +113,20 @@ def _detect_coloring_type(nodes, node_colorby, prespecified=None):
 
     return colorpropertytype
 
+def _get_cmap(cmap):
+    """Returns either matplotlib cmap or creates a cmap from str
+
+    Args : str or list
+        maplotlib cmap (string) or list of matplotlib colors
+
+    Returns : cmap
+        maptlotlib cmap
+    """
+    if isinstance(cmap, str):
+        cmap = cm.get_cmap(cmap)
+    elif isinstance(cmap, list):
+        cmap = pltcol.ListedColormap(cmap)
+    return cmap
 
 def _get_colorby_colors(df, colorby, datatype='node', **kwargs):
     """
@@ -137,7 +151,8 @@ def _get_colorby_colors(df, colorby, datatype='node', **kwargs):
     color_vminvmax = kwargs.get(datatype + '_colorvminvmax')
     #TODO: Add flag if colours are in column
     colortype = _detect_coloring_type(df, colorby)
-    cmap = cm.get_cmap(cmap)
+
+    cmap = _get_cmap(cmap)
     if colortype == 'column':
         color_array = cm.colors.to_rgba_array(df[colorby])
     elif colortype == 'discrete':

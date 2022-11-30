@@ -119,7 +119,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             legendrows = len(legends)
 
     # Figure setup
-    # Get preset views 
+    # Get preset views
     if isinstance(view, str):
         if view.startswith('preset'):
             view, hemisphere = _get_presetviews(view)
@@ -128,14 +128,14 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     #Set subtitles to None if title is set.
     if profile['subtitles'] == 'auto' and profile['title'] is not None:
         profile['subtitles'] = None
-    
+
     # Init figure, if not given as input
     if ax is None:
         fig, gridspec = _init_figure(frames, nrows, legendrows)
     else:
         expected_ax_len = (nrows * frames)
         ax, gridspec = _check_axinput(ax, expected_ax_len)
-        
+
     # Set node_color to colorby argument
     if node_colorby is not None:
         node_color = _get_colorby_colors(nodes, node_colorby, **profile)
@@ -186,7 +186,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                                         hemisphere=hemi_frame,
                                         azim=azim[fi], elev=elev[fi],
                                         **profile)
-            
+
             # Template voxels will have origin at 0,0,0
             # It is easier to scale the nodes from the image affine
             # Then to rescale the ax.voxels function
@@ -223,16 +223,16 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 _plot_springlayout(ax, nodes=nodes, edges=edges, node_color=node_color, node_size=node_size,
                                    edge_color=edge_color, edge_weights=edge_weights, highlight_nodes=highlight_nodes, **profile)
             ax.view_init(azim=azim[fi], elev=elev[fi])
-            
+
             _add_subplot_title(ax, azim[fi], elev[fi], subtitle_frame, hemi_frame, viewtype[fi], **profile)
-            
+
             # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
             _set_axes_equal(ax)
             ax.axis('off')
             # Append ax to ax_out to store it.
             ax_out.append(ax)
-            
+
     # Add legends to plot
     if legends is not None and profile['gif'] is False:
         for li, legend in enumerate(legends):
@@ -255,9 +255,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax_out.append(ax)
 
     # Title on top of the figure
-    if profile['title'] is not None: 
+    if profile['title'] is not None:
         _add_title(fig, **profile)
-            
+
     fig.tight_layout()
 
     # If gif is requested, create the gif.

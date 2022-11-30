@@ -1,7 +1,7 @@
 #  
 # # Specifying node colours
 #
-# [Open interactive notebook in Binder](https://mybinder.org/v2/gh/wiheto/netplotbrain/main?filepath=docs/gallery/node_colors.ipynb)
+# [Open interactive notebook in Binder](https://mybinder.org/v2/gh/wiheto/netplotbrain/main?filepath=docs/gallery/specifying_node_color.ipynb)
 #
 # There are three different ways to specify different colours of nodes.
 # Both are done by setting node_color keyword argument.
@@ -9,7 +9,9 @@
 # If this column consists of continuous data, a colour spectrum will be plotted. 
 # If this column consists of differernt colours, these colours will be plotted. 
 #
-# In this notebook we will see an example of each of the three different ways
+# In this notebook we will see an example of each of the three different ways.
+#
+# See [example about cmap for specifying colormaps](https://www.netplotbrain.org/gallery/node_cmap/) 
 
 # Import packages
 import templateflow.api as tf
@@ -33,6 +35,9 @@ atlas_df['network'] = networks
 
 # Add a continuous variable between 0-10 
 atlas_df['centrality'] = np.tile(np.arange(0,10), 10)
+
+# Lets have a look at the data frame now with three different columns for colours
+atlas_df.head()
 
 # define the nodes as templateflow dict
 nodes = {'template': 'MNI152NLin2009cAsym',

@@ -34,5 +34,27 @@ def test_column_as_color():
                       'atlas': 'Schaefer2018',
                       'desc': '100Parcels7Networks',
                       'resolution': 1}
-    fig, _ = npbplot(nodes=nodes, node_type='parcels', nodes_df=atlas_df, node_color='color')
+    fig, _ = npbplot(nodes=nodes, node_type='circles', node_size=30, nodes_df=atlas_df, node_color='color')
+    return fig
+
+
+@pytest.mark.mpl_image_compare
+def test_list_as_cm():
+    fig, _ = npbplot(nodes=nodes, node_type='circles', node_color='community', node_size=50, node_cmap=['salmon', 'cornflowerblue', 'orchid'])
+    return fig
+
+@pytest.mark.mpl_image_compare
+def test_column_as_color():
+    atlasinfo = tf.get(template='MNI152NLin2009cAsym',
+                   atlas='Schaefer2018',
+                   desc='100Parcels7Networks',
+                   extension='.tsv')
+    atlas_df = pd.read_csv(str(atlasinfo), sep='\t')
+    atlas_df['networks'] = list(map(lambda x: x.split('_')[2], atlas_df.name.values))
+    node_cmap = ['blue', 'red', 'green', 'black', 'purple', 'yellow', 'orange']
+    nodes = {'template': 'MNI152NLin2009cAsym',
+                      'atlas': 'Schaefer2018',
+                      'desc': '100Parcels7Networks',
+                      'resolution': 1}
+    fig, _ = npbplot(nodes=nodes, node_type='parcels', nodes_df=atlas_df, node_color='networks', node_cmap=node_cmap)
     return fig
