@@ -1,6 +1,6 @@
 # %% [markdown]
 """ 
-# Preset viewing angles. 
+# Preset viewing angles 
 
 This notebook shows the preset combinations that exist in netplotbrain that can be specified by setting the keyword argument `view` to the following  
 """
