@@ -33,7 +33,7 @@
     "savename": null,
     "seed": null,
     "showlegend": true,
-    "subtitles": "auto",
+    "subtitles": null,
     "subtitle_fontsize": "medium",
     "subtitle_loc": "center",
     "subtitle_weight": "regular",
@@ -44,7 +44,7 @@
     "template_color": "lightgray",
     "template_voxelsize": null,
     "template_style": "glass",
-    "title": null,
+    "title": "auto",
     "title_fontsize": "medium",
     "title_weight": "regular"
 }
