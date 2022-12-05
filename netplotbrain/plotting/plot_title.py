@@ -9,17 +9,17 @@ def _add_subplot_title(ax, azim=None, elev=None, subtitle_frame='auto', hemisphe
     if subtitle_frame == 'auto':
         viewcoord = (azim, elev)
         subtitle_frame = ''
-        if viewcoord == (180, 10):
+        if viewcoord == (180, 0):
             subtitle_frame = 'Left'
-        elif viewcoord == (0, 10):
+        elif viewcoord == (0, 0):
             subtitle_frame = 'Right'
-        elif viewcoord == (90, 10):
+        elif viewcoord == (90, 0):
             subtitle_frame = 'Anterior'
-        elif viewcoord == (-90, 10):
+        elif viewcoord == (-90, 0):
             subtitle_frame = 'Posterior'
         elif viewcoord == (-90, 90) and viewtype == 'b':
             subtitle_frame = 'Superior'
-        elif viewcoord == (90, 90):
+        elif viewcoord == (90, -90):
             subtitle_frame = 'Inferior'
         # Add hemisphere
         if hemisphere == 'L' or hemisphere == 'left':
@@ -31,8 +31,6 @@ def _add_subplot_title(ax, azim=None, elev=None, subtitle_frame='auto', hemisphe
                      fontweight=subtitle_weight, color=subtitlecolor,
                      fontsize=subtitle_fontsize,
                      loc=subtitle_loc)
-
-
 
 def _add_title(fig, **kwargs):
     title = kwargs.get('title')

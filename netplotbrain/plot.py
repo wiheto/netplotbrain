@@ -125,10 +125,19 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             view, hemisphere = _get_presetviews(view)
     # Get number of non-legend rowsnon
     nrows, view, frames = _nrows_in_fig(view, frames)
-    #Set subtitles to None if title is set.
-    if profile['subtitles'] == 'auto' and profile['title'] is not None:
+    
+    # if neither title nor subtitles are set, only view name(s) is/are shown
+    if profile['subtitles'] == 'auto' and profile['title'] == 'auto':
+        profile['subtitles'] = 'auto'
+        profile['title'] = None
+    # if title is set to None, nothing is shown (view name(s) is/are removed)
+    elif profile['title'] is None and profile['subtitles'] == 'auto':
         profile['subtitles'] = None
-
+    
+    if type(profile['subtitles']) is list:
+        if len(profile['subtitles']) != frames*nrows:
+            raise ValueError('Length subtitles must be equal to number of sub-plots')
+             
     # Init figure, if not given as input
     if ax is None:
         fig, gridspec = _init_figure(frames, nrows, legendrows)
@@ -223,8 +232,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 _plot_springlayout(ax, nodes=nodes, edges=edges, node_color=node_color, node_size=node_size,
                                    edge_color=edge_color, edge_weights=edge_weights, highlight_nodes=highlight_nodes, **profile)
             ax.view_init(azim=azim[fi], elev=elev[fi])
-
+                          
             _add_subplot_title(ax, azim[fi], elev[fi], subtitle_frame, hemi_frame, viewtype[fi], **profile)
+            _add_title(fig, **profile)
 
             # Fix the aspect ratio
             ax.set_box_aspect([1, 1, 1])
@@ -253,11 +263,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax.axis('off')
             #ax = _add_size_legend(ax, nodes, node_size, node_scale)
             ax_out.append(ax)
-
+        
     # Title on top of the figure
     if profile['title'] is not None:
         _add_title(fig, **profile)
-
+         
     fig.tight_layout()
 
     # If gif is requested, create the gif.
