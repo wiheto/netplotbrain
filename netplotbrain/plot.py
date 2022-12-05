@@ -126,13 +126,15 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Get number of non-legend rowsnon
     nrows, view, frames = _nrows_in_fig(view, frames)
     
+    # if neither title nor subtitles are set, only view name(s) is/are shown
     if profile['subtitles'] == 'auto' and profile['title'] == 'auto':
         profile['subtitles'] = 'auto'
         profile['title'] = None
+    # if title is set to None, nothing is shown (view name(s) is/are removed)
     elif profile['title'] is None and profile['subtitles'] == 'auto':
         profile['subtitles'] = None
     
-    if type(profile['subtitles']) is list: 
+    if type(profile['subtitles']) is list:
         if len(profile['subtitles']) != frames*nrows:
             raise ValueError('Length subtitles must be equal to number of sub-plots')
              
@@ -230,10 +232,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 _plot_springlayout(ax, nodes=nodes, edges=edges, node_color=node_color, node_size=node_size,
                                    edge_color=edge_color, edge_weights=edge_weights, highlight_nodes=highlight_nodes, **profile)
             ax.view_init(azim=azim[fi], elev=elev[fi])
-            
-            print(profile['subtitles'])
-            print(profile['title'])
-              
+                          
             _add_subplot_title(ax, azim[fi], elev[fi], subtitle_frame, hemi_frame, viewtype[fi], **profile)
             _add_title(fig, **profile)
 
@@ -266,7 +265,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax_out.append(ax)
         
     # Title on top of the figure
-    if profile['title'] is not None:       
+    if profile['title'] is not None:
         _add_title(fig, **profile)
          
     fig.tight_layout()
