@@ -33,7 +33,7 @@
     "savename": null,
     "seed": null,
     "showlegend": true,
-    "subtitles": null,
+    "subtitles": "auto",
     "subtitle_fontsize": "medium",
     "subtitle_loc": "center",
     "subtitle_weight": "regular",

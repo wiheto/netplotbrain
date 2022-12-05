@@ -6,7 +6,7 @@ def _add_subplot_title(ax, azim=None, elev=None, subtitle_frame='auto', hemisphe
     subtitle_fontsize = kwargs.get('subtitle_fontsize')
     subtitle_loc = kwargs.get('subtitle_loc')
     subtitle_weight = kwargs.get('subtitle_weight')
-    if subtitle_frame is None or subtitle_frame=='auto':
+    if subtitle_frame=='auto':
         viewcoord = (azim, elev)
         subtitle_frame = ''
         if viewcoord == (180, 0):
