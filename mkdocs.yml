@@ -2,6 +2,7 @@ site_name: netplotbrain
 
 nav:
     - Home: index.md
+    - Features summary: features.md
     - Tutorial: tutorial.md
     - API: api.md
     - Gallery: gallery.md
