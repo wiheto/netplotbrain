@@ -16,5 +16,5 @@ def test_session_group():
     #print(info)
     #assert 'pre minus post' in info['groups']
 
-test_task_group()
-test_session_group()
+#test_task_group()
+#test_session_group()
