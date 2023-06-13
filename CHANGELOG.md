@@ -11,11 +11,13 @@
 - cm_order for connectivity matrix (wiheto)
 - Dual colours for positive and negative edges (wiheto)
 - Allow dual colors for positive and negative edges (wiheto) 
+- Some gallery examples (plot_dmn, connectivity matrix) (wiheto)
 
 ### Update
 - Updated README with network neuroscience reference (wiheto)
 - Removed matplotlib deprecated `matplotlib.cm.get_cmap` for `matplotlib.colormaps` (wiheto) 
 - Rasterization for glass brains (and all template/cms) for faster svg rendering (wiheto)
+- Example data is now packaged in ./netplotbrain/example_data to be included in package (wiheto)
 
 ### Fixed
 - Renaming "legend_tick_fontsize" and "legend_title_fontsize" to be more consistent (wiheto)

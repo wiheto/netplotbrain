@@ -7,19 +7,16 @@
 # Here we are going to take a atlas from templateflow and only visualize the default mode network
 #
 
-# +
 # Import packages
 import templateflow.api as tf
 import netplotbrain
 import pandas as pd
 
-# +
 # Get template information
 template = 'MNI152NLin2009cAsym'
 atlas = 'Schaefer2018'
 atlas_desc = '400Parcels7Networks'
 
-# +
 # Get and load the tsv file
 atlas_path = tf.get(atlas=atlas,
                     template=template, 
@@ -28,7 +25,6 @@ atlas_path = tf.get(atlas=atlas,
 atlas_df = pd.read_csv(atlas_path, sep='\t')
 atlas_df.head()
 
-# +
 # Now we need to make a colour argument for the DMN nodes only
 # Get which rows are in the default mode network
 atlas_df['defaultmode'] = atlas_df['name'].str.contains('Default')
@@ -36,7 +32,6 @@ atlas_df['defaultmode'] = atlas_df['name'].str.contains('Default')
 # Not really necessary cause we make these nods transparant below
 atlas_df.loc[~atlas_df['defaultmode'], 'color'] = 'white'
 
-# + 
 # now plot
 netplotbrain.plot(template=template,
                   nodes={
