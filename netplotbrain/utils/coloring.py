@@ -1,4 +1,5 @@
-import matplotlib.cm as cm
+from matplotlib import colormaps
+import matplotlib.cm as cm 
 import matplotlib.colors as pltcol
 import numpy as np
 import pandas as pd
@@ -13,7 +14,7 @@ def _colorarray_from_string(cmap, ncolors):
         colors = pltcol.to_rgba_array(cmap)
         colors = np.vstack([colors] * ncolors)
     else:
-        colors = cm.get_cmap(cmap).colors
+        colors = colormaps[cmap].colors
         colors = colors * int(np.ceil(ncolors / len(colors)))
         colors = np.array(colors)
     return colors[:ncolors]
@@ -29,7 +30,7 @@ def _highlight_nodes(nodes, node_color, highlight_nodes, **kwargs):
     highlight_idx : array
         Binary array of N index indicating which nodes are highlighted (for edge purposes)
     """
-    highlightlevel = kwargs.get('highlightlevel')
+    highlight_level = kwargs.get('highlight_level')
     node_alpha = kwargs.get('node_alpha')
     # Default is None, set to 1 if highlight_nodes is called
     if node_alpha is None:
@@ -44,11 +45,12 @@ def _highlight_nodes(nodes, node_color, highlight_nodes, **kwargs):
         highlight_idx[highlight_nodes] = 1
     if isinstance(node_color, str):
         node_color = _colorarray_from_string(node_color, len(nodes))
+        node_color[:, 3] *= node_alpha
     if node_color.shape[1] == 3:
         node_color = np.hstack(
             [node_color, np.vstack([node_alpha]*len(node_color))])
     # dim the non-highlighted nodes
-    node_color[highlight_idx == 0, 3] = node_alpha * (1 - highlightlevel)
+    node_color[highlight_idx == 0, 3] = node_alpha * (1 - highlight_level)
     # node_alpha is now set in node_color, so set as None to avoid any later problems
     node_alpha = None
     return node_color, highlight_idx, node_alpha
@@ -58,7 +60,7 @@ def _highlight_nodes(nodes, node_color, highlight_nodes, **kwargs):
 def _highlight_edges(edges, edge_color, highlight_edges, **kwargs):
     """
     """
-    highlightlevel = kwargs.get('highlightlevel')
+    highlight_level = kwargs.get('highlight_level')
     edge_alpha = kwargs.get('edge_alpha')
     # Default is None, set to 1 if highlighting is called
     if edge_alpha is None:
@@ -74,11 +76,19 @@ def _highlight_edges(edges, edge_color, highlight_edges, **kwargs):
         highlight_idx[highlight_edges] = 1
     if isinstance(edge_color, str):
         edge_color = _colorarray_from_string(edge_color, len(edges))
+        edge_color[:, 3] *= edge_alpha
+    elif isinstance(edge_color, dict):
+        edge_color_positive = _colorarray_from_string(edge_color['positive'], 1)
+        edge_color_negative = _colorarray_from_string(edge_color['negative'], 1)
+        edge_color = np.zeros([len(edges), 4])
+        edge_color[edges['weight'] > 0] = edge_color_positive
+        edge_color[edges['weight'] < 0] = edge_color_negative
+        edge_color[:, 3] *= edge_alpha
     if edge_color.shape[1] == 3:
         edge_color = np.hstack(
             [edge_color, np.vstack([edge_alpha]*len(edge_color))])
     # dim the non-highlighted edges
-    edge_color[highlight_idx == 0, 3] = edge_alpha * (1 - highlightlevel)
+    edge_color[highlight_idx == 0, 3] = edge_alpha * (1 - highlight_level)
     # node_alpha is now set in node_color, so set as None to avoid any later problems
     edge_alpha = None
     return edge_color, highlight_idx, edge_alpha
@@ -123,7 +133,7 @@ def _get_cmap(cmap):
         maptlotlib cmap
     """
     if isinstance(cmap, str):
-        cmap = cm.get_cmap(cmap)
+        cmap = colormaps[cmap]
     elif isinstance(cmap, list):
         cmap = pltcol.ListedColormap(cmap)
     return cmap

@@ -1,6 +1,6 @@
 """Legend plots"""
 import numpy as np
-import matplotlib.cm as cm
+from matplotlib import colormaps
 from ..utils import _node_scale_vminvmax, _detect_coloring_type
 
 
@@ -25,8 +25,8 @@ def _add_node_size_legend(ax, nodes, node_size, **kwargs):
     node_sizevminvmax = kwargs.get('node_sizevminvmax')
     font = kwargs.get('font')
     fontcolor = kwargs.get('fontcolor')
-    legend_tickfontsize = kwargs.get('legend_tickfontsize')
-    legendtitle_fontsize = kwargs.get('legendtitle_fontsize')
+    legend_tickfontsize = kwargs.get('legend_tick_fontsize')
+    legendtitle_fontsize = kwargs.get('legend_title_fontsize')
     if node_sizelegend is True:
         if isinstance(node_size, str) and node_size in nodes.columns:
             _, nl = _node_scale_vminvmax(
@@ -78,8 +78,8 @@ def _add_node_color_legend_discrete(ax, nodes, node_colorby, node_color, **kwarg
     node_scale = kwargs.get('node_scale')
     font = kwargs.get('font')
     fontcolor = kwargs.get('fontcolor')
-    legend_tickfontsize = kwargs.get('legend_tickfontsize')
-    legendtitle_fontsize = kwargs.get('legendtitle_fontsize')
+    legend_tickfontsize = kwargs.get('legend_tick_fontsize')
+    legendtitle_fontsize = kwargs.get('legend_title_fontsize')
     # Create list of discrete colors
     uniquenode_colorby = sorted(list(set(nodes[node_colorby].dropna().values)))
     uniquenode_colors_idx = [nodes[nodes[node_colorby] ==
@@ -107,8 +107,8 @@ def add_node_color_legend_continuous(ax, nodes, node_colorby, **kwargs):
     font = kwargs.get('font')
     fontcolor = kwargs.get('fontcolor')
     node_cmap = kwargs.get('node_cmap')
-    legend_tickfontsize = kwargs.get('legend_tickfontsize')
-    legendtitle_fontsize = kwargs.get('legendtitle_fontsize')
+    legend_tickfontsize = kwargs.get('legend_tick_fontsize')
+    legendtitle_fontsize = kwargs.get('legend_title_fontsize')
     node_colorvminvmax = kwargs.get('node_colorvminvmax')
     # Create continuous scale
     if node_colorvminvmax == 'minmax':
@@ -123,7 +123,7 @@ def add_node_color_legend_continuous(ax, nodes, node_colorby, **kwargs):
     inc = (nc_max - nc_min) / 100
     imspan = np.arange(nc_min, nc_max + (inc / 2), inc)
     imsquare = np.outer(np.ones(1), imspan)
-    ax.imshow(imsquare, cmap=cm.get_cmap(node_cmap),
+    ax.imshow(imsquare, cmap=colormaps[node_cmap],
               origin='lower', extent=(-3, 3, 1, 1.3))
     inc = (nc_max - nc_min) / 4
     xticklabels = np.arange(nc_min, nc_max + (inc / 2), inc)

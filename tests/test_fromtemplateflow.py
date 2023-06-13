@@ -29,7 +29,7 @@ def test_templateflow_atlas_highlight():
                       node_alpha=0.8,
                       title='Highlight a community',
                       highlight_nodes={'yeo7networks': 'Cont'},
-                      highlightlevel=0.95,
+                      highlight_level=0.95,
                       node_colorlegend=False,
                       node_sizelegend=False)
     return fig

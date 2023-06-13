@@ -6,9 +6,9 @@
 # See [example about colors for different way the color columns in the dataframe can be specified](https://www.netplotbrain.org/gallery/specifying_node_color/) 
 #
 # There are two different ways to specify colormaps. This holds for both nodes (node_cmap) edges (edge_cmap)
-# 
+#
 # The first way entails that you specify a matplotlib colormap (e.g. Set1, Inferno, (see options [here](https://matplotlib.org/stable/tutorials/colors/colormaps.html)) 
-# 
+#
 # The second way is to provide a list of matplotlib colors to create your own colormap (see named color options [here](https://matplotlib.org/stable/gallery/color/named_colors.html))
 #
 # This notebook will shows an example of each of these. We will use 100 ROIs from the Schaefer atlas and color the 7 Yeo networks

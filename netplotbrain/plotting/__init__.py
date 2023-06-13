@@ -12,6 +12,7 @@ from .process_input import get_frame_input, _process_edge_input, _process_node_i
 from .plot_legend import _add_node_color_legend, _add_node_size_legend, _setup_legend
 from .plot_gif import _plot_gif
 from .plot_springlayout import _plot_springlayout
+from .plot_cm import _plot_connectivitymatrix
 
 __all__ = ['_plot_template', '_plot_template_style_filled',
            '_plot_template_style_cloudy',
@@ -21,4 +22,4 @@ __all__ = ['_plot_template', '_plot_template_style_filled',
            '_select_single_hemisphere_nodes', '_npedges2dfedges', '_add_subplot_title', 
            '_setup_legend', '_process_edge_input', '_process_node_input', '_add_node_size_legend',
            '_add_node_color_legend', 'get_frame_input', '_init_figure', '_check_axinput', '_plot_gif',
-           '_process_highlightedge_input', '_plot_springlayout', '_add_title']
+           '_process_highlightedge_input', '_plot_springlayout', '_add_title', '_plot_connectivitymatrix']

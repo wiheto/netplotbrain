@@ -43,3 +43,17 @@ def test_printlayout():
                     edge_thresholddirection='>',
                     seed=2022)
     return fig
+
+@pytest.mark.mpl_image_compare
+def test_printlayout_legend():
+    fig, _ = netplotbrain.plot(template='MNI152NLin2009cAsym',
+                    nodes=atlas,
+                    nodes_df=atlasinfo,
+                    edges=edges,
+                    view='LSs', template_style='glass',
+                    node_scale=20, node_color='yeo7networks',
+                    edge_threshold=0,
+                    edge_thresholddirection='>',
+                    seed=2022,
+                    legend_span=[0, 2])
+    return fig

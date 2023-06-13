@@ -32,7 +32,7 @@ def _npedges2dfedges(edges, edge_threshold=0, edge_thresholddirection='absabove'
 
 def _get_edge_highlight_alpha(node_i, node_j, highlight_nodes, **kwargs):
     edge_alpha = kwargs.get('edge_alpha')
-    highlightlevel = kwargs.get('highlightlevel')
+    highlight_level = kwargs.get('highlight_level')
     edge_highlightbehaviour = kwargs.get('edge_highlightbehaviour')
     if len(highlight_nodes) == 0:
         highlight_nodes = None
@@ -45,7 +45,7 @@ def _get_edge_highlight_alpha(node_i, node_j, highlight_nodes, **kwargs):
     elif (node_i in highlight_nodes or node_j in highlight_nodes) and edge_highlightbehaviour == 'any':
         pass
     else:
-        edge_alpha = edge_alpha * (1 - highlightlevel)
+        edge_alpha = edge_alpha * (1 - highlight_level)
     return edge_alpha
 
 
@@ -72,7 +72,7 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edge_color='k', highlight_node
         The third referencees the weights.
     highlight_nodes : list
         See netplotbrain.plot
-    highlightlevel : float
+    highlight_level : float
         See netplotbrain.plot
     edge_highlightbehaviour : str
         alternatives "both" or "any" or None.
@@ -100,14 +100,20 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edge_color='k', highlight_node
     # So eci is a separate counter instead of using the auto index in iterrows (which takes df index).
     eci = 0
     for _, row in edges.iterrows():
-        # if row[edgecol[0]] != 0 and row[edgecol[1]] != 0:
-        if isinstance(edge_color, np.ndarray):
-            if edge_color.shape[0] == len(edges):
-                ec = edge_color[eci, :]
         if edgewidth is None:
             ew = edge_widthscale
         else:
             ew = row[edgewidth] * edge_widthscale
+
+        # if row[edgecol[0]] != 0 and row[edgecol[1]] != 0:
+        if isinstance(edge_color, dict):
+            if ew > 0:
+                ec = edge_color['positive']
+            elif ew < 0:
+                ec = edge_color['negative']
+        elif isinstance(edge_color, np.ndarray):
+            if edge_color.shape[0] == len(edges):
+                ec = edge_color[eci, :]
 
         if row[edgecol[0]] in nodes.index and row[edgecol[1]] in nodes.index:
             ea = _get_edge_highlight_alpha(

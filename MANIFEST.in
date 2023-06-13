@@ -1,3 +1,4 @@
-include examples/*
+include netplotbrain/example_data/*.tsv
+recursive-include netplotbrain/example_data/bids_test/ *
 include netplotbrain/profiles/*.json
 include netplotbrain/templatesettings/*.json

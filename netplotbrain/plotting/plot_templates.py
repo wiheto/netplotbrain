@@ -110,7 +110,8 @@ def _plot_template_style_glass(ax, data, template, **kwargs):
     ax.scatter(points[0], points[1], points[2],
                s=glass_kwargs['template_glass_pointsize'],
                alpha=alpha_per_point * glass_kwargs['template_glass_maxalpha'],
-               color=glass_kwargs['template_color'])
+               color=glass_kwargs['template_color'],
+               rasterized=True)
 
 
 
@@ -143,7 +144,8 @@ def _plot_template_style_surface(ax, data, template, **kwargs):
     # detect surface using skimage's marching cubes
     verts, faces, _, _ = measure.marching_cubes(
         data, level=surface_detection, step_size=surface_resolution)
-    mesh = Poly3DCollection(verts[faces], rasterized=True)
+    mesh = Poly3DCollection(verts[faces])
+    mesh.set(rasterized=True)
     mesh.set_facecolor(template_color)
     mesh.set_alpha(alpha)
     ax.add_collection3d(mesh)

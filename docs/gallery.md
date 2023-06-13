@@ -24,6 +24,10 @@
 
 [![](./gallery/figures/rows1.png)](./two_rows/)
 
+### [Highlight a network](./two_rows/)
+
+[![](./gallery/figures/plot_dmn.png)](./plot_dmn/)
+
 
 ## Integrations
 

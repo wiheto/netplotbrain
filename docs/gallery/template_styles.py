@@ -14,5 +14,4 @@ import matplotlib.pyplot as plt
 netplotbrain.plot(template='MNI152NLin6Asym',
                   template_style=['surface', 'filled', 'cloudy', 'glass'],
                   view='A',
-                  arrowaxis=None,
-                  subtitles=['surface', 'filled', 'cloudy', 'glass'])
+                  arrowaxis=None)
