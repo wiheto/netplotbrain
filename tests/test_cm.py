@@ -32,7 +32,7 @@ atlasinfo['yeo7networks'].replace('SalVentAttn', 'VA', inplace=True)
 atlas['resolution'] = 1
 # Plot it all
 @pytest.mark.mpl_image_compare
-def test_printlayout():
+def test_cm():
     fig, _ = netplotbrain.plot(template='MNI152NLin2009cAsym',
                     nodes=atlas,
                     nodes_df=atlasinfo,
