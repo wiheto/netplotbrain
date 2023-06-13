@@ -1,4 +1,5 @@
-import matplotlib.cm as cm
+from matplotlib import colormaps
+import matplotlib.cm as cm 
 import matplotlib.colors as pltcol
 import numpy as np
 import pandas as pd
@@ -13,7 +14,7 @@ def _colorarray_from_string(cmap, ncolors):
         colors = pltcol.to_rgba_array(cmap)
         colors = np.vstack([colors] * ncolors)
     else:
-        colors = cm.get_cmap(cmap).colors
+        colors = colormaps[cmap].colors
         colors = colors * int(np.ceil(ncolors / len(colors)))
         colors = np.array(colors)
     return colors[:ncolors]
@@ -132,7 +133,7 @@ def _get_cmap(cmap):
         maptlotlib cmap
     """
     if isinstance(cmap, str):
-        cmap = cm.get_cmap(cmap)
+        cmap = colormaps[cmap]
     elif isinstance(cmap, list):
         cmap = pltcol.ListedColormap(cmap)
     return cmap

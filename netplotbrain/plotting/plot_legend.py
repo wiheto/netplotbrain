@@ -1,6 +1,6 @@
 """Legend plots"""
 import numpy as np
-import matplotlib.cm as cm
+from matplotlib import colormaps
 from ..utils import _node_scale_vminvmax, _detect_coloring_type
 
 
@@ -123,7 +123,7 @@ def add_node_color_legend_continuous(ax, nodes, node_colorby, **kwargs):
     inc = (nc_max - nc_min) / 100
     imspan = np.arange(nc_min, nc_max + (inc / 2), inc)
     imsquare = np.outer(np.ones(1), imspan)
-    ax.imshow(imsquare, cmap=cm.get_cmap(node_cmap),
+    ax.imshow(imsquare, cmap=colormaps[node_cmap],
               origin='lower', extent=(-3, 3, 1, 1.3))
     inc = (nc_max - nc_min) / 4
     xticklabels = np.arange(nc_min, nc_max + (inc / 2), inc)

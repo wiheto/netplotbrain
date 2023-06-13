@@ -114,7 +114,7 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edge_color='k', highlight_node
         elif isinstance(edge_color, np.ndarray):
             if edge_color.shape[0] == len(edges):
                 ec = edge_color[eci, :]
-        
+
         if row[edgecol[0]] in nodes.index and row[edgecol[1]] in nodes.index:
             ea = _get_edge_highlight_alpha(
                 row[edgecol[0]], row[edgecol[1]], hl_idx, **kwargs)

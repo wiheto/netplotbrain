@@ -8,14 +8,17 @@
 - Preliminary BIDS operations that generate edge df from BIDS layout `edges_from_bids()` (wiheto)
 - Connectivity matrix as view option (wiheto)
 - Rotation of connectivity matrix (wiheto)
-- cm_order
+- cm_order for connectivity matrix (wiheto)
 - Dual colours for positive and negative edges (wiheto)
+- Allow dual colors for positive and negative edges (wiheto) 
 
 ### Update
 - Updated README with network neuroscience reference (wiheto)
+- Removed matplotlib deprecated `matplotlib.cm.get_cmap` for `matplotlib.colormaps` (wiheto) 
+- Rasterization for glass brains (and all template/cms) for faster svg rendering (wiheto)
 
 ### Fixed
 - Renaming "legend_tick_fontsize" and "legend_title_fontsize" to be more consistent (wiheto)
 - Renaming "highlightlevel" to "highlight_level" to be more consistent (wiheto)
 - Correcting some kwarg names in documentation (wiheto)
-- A bug with spring layout and node_color when only subset of nodes plotted 
+- A bug with spring layout and node_color when only subset of nodes plotted (wiheto)

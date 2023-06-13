@@ -126,7 +126,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             view, hemisphere = _get_presetviews(view)
     # Get number of non-legend rowsnon
     nrows, view, frames = _nrows_in_fig(view, frames)
-    
+
     # if neither title nor subtitles are set, only view name(s) is/are shown
     if profile['subtitles'] == 'auto' and profile['title'] == 'auto':
         profile['subtitles'] = 'auto'
@@ -134,11 +134,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # if title is set to None, nothing is shown (view name(s) is/are removed)
     elif profile['title'] is None and profile['subtitles'] == 'auto':
         profile['subtitles'] = None
-    
+
     if type(profile['subtitles']) is list:
         if len(profile['subtitles']) != frames*nrows:
             raise ValueError('Length subtitles must be equal to number of sub-plots')
-             
+
     # Init figure, if not given as input
     if ax is None:
         fig, gridspec = _init_figure(frames, nrows, legendrows)
@@ -243,11 +243,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # Set view angle for 3d projections
             if viewtype[fi] != 'c':
                 ax.view_init(azim=azim[fi], elev=elev[fi])
-                          
+
             _add_subplot_title(ax, azim[fi], elev[fi], subtitle_frame, hemi_frame, viewtype[fi], **profile)
             _add_title(fig, **profile)
 
-            if viewtype[fi] != 'c':            
+            if viewtype[fi] != 'c':
                 # Fix the aspect ratio
                 ax.set_box_aspect([1, 1, 1])
                 _set_axes_equal(ax)
@@ -264,7 +264,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             if legend_span is not None:
                 if legend_span is int:
                     legend_subplotp_colind = legend_span
-                else: 
+                else:
                     legend_subplotp_colind= slice(legend_span[0], legend_span[1])
             elif np.remainder(spind, 2) == 0:
                 # if number of columns is even, center it over the middle two columns
@@ -281,11 +281,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax.axis('off')
             #ax = _add_size_legend(ax, nodes, node_size, node_scale)
             ax_out.append(ax)
-        
+
     # Title on top of the figure
     if profile['title'] is not None:
         _add_title(fig, **profile)
-         
+
     fig.tight_layout()
 
     # If gif is requested, create the gif.
