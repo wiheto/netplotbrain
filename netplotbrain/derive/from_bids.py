@@ -85,10 +85,6 @@ def edges_from_bids(path: str, derivative: str, operation: str=None, select: str
             if operation is None:
                 sub_list.append(f.entities['subject'])
         if groups == 'session' or groups == 'task' or groups == 'run':
-            print(groups)
-            print(f)
-            print(f.get_entities())
-            print(con_mat.keys())
             entities = f.get_entities()
             con_mat[entities[groups]].append(df)
         else:
