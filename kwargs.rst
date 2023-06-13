@@ -32,7 +32,7 @@ EDGE KWARGS
 
 edges_df : dataframe 
     Allows for passing a dataframe with additional plotting options when edges is a connectivity matrix 
-edgecols : list
+edge_columnnames : list
     Edge columns names in edge dataframe. Default is i and j (specifying nodes).
 edge_color : matplotlib coloring
     Can be string (default 'black') or list of 3D/4D colors for each edge.
@@ -82,9 +82,11 @@ node_colorlegendstyle : str
     Alternatives: auto (default), discrete, continuous
     If the color legend should show the entire colormap or discrete colors.
     If auto, plots discrete if less than 8 unique values are detected.
-legend_tickfontsize : str, int
+legend_span : list
+    Range of subplot columns for the legend to span.
+legend_title_fontsize : str, int
     Matplotlib fontsize for title in figure legends
-legendtitle_fontsize : str, int
+legend_tick_fontsize : str, int
     Matplotlib fontsize for ticks in figure legends
 
 ARROW KWARGS

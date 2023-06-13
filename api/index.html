@@ -299,6 +299,19 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connectviity-matrix-kwargs" class="md-nav__link">
+    Connectviity matrix kwargs
+  </a>
+  
+    <nav class="md-nav" aria-label="Connectviity matrix kwargs">
+      <ul class="md-nav__list">
+        
           <li class="md-nav__item">
   <a href="#legendkwargs" class="md-nav__link">
     LEGENDKWARGS
@@ -452,6 +465,19 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connectviity-matrix-kwargs" class="md-nav__link">
+    Connectviity matrix kwargs
+  </a>
+  
+    <nav class="md-nav" aria-label="Connectviity matrix kwargs">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#legendkwargs" class="md-nav__link">
@@ -620,7 +646,7 @@
 <tr>
 <td>edge_color</td>
 <td>matplotlib coloring</td>
-<td>Can be string (default 'black') or list of 3D/4D colors for each edge.</td>
+<td>Can be string (default 'black') or list of 3D/4D colors for each edge. Can also be a dictionary with keys positive and negative to denote two different colors for positive and negative edges.</td>
 </tr>
 <tr>
 <td>edge_weights</td>
@@ -722,8 +748,30 @@
 </tbody>
 </table>
 <h3 id="highlighting-kwargs">HIGHLIGHTING KWARGS</h3>
-<p>highlightlevel | float | Intensity of the highlighting (opposite of alpha). Controls both nods and edges together. Value between 0 and 1, if 1, non-highlighted nodes are fully transparent. If 0, non-highlighted nodes are same alpha level as highlighted nodes. Default 0.85.</p>
-<p>See also nodehighlight<em> and edgehighlight</em> kwargs.</p>
+<p>highlight_level | float | Intensity of the highlighting (opposite of alpha). Controls both nods and edges together. Value between 0 and 1, if 1, non-highlighted nodes are fully transparent. If 0, non-highlighted nodes are same alpha level as highlighted nodes. Default 0.85.</p>
+<p>See also node_highlight<em> and edge_highlight</em> kwargs.</p>
+<h2 id="connectviity-matrix-kwargs">Connectviity matrix kwargs</h2>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cm_order</td>
+<td>Str</td>
+<td>Specify which variable to group and order nodes in connectivity matrix by. Default is "auto". Auto entails that if node_color is a column in the data and if cm_order is unspecified use node_color column. Otherwise if None will plot in list order.</td>
+</tr>
+<tr>
+<td>cm_rotate</td>
+<td>Bool</td>
+<td>If True, rotates the connectivity matrix 45 degrees. Default True.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="legendkwargs">LEGENDKWARGS</h3>
 <table>
 <thead>
