@@ -19,7 +19,7 @@ def test_highlight_edges_df():
                                 view=['LSR'],
                                 title='NBS integration',
                                 node_type='circles',
-                                highlightlevel=0.5)
+                                highlight_level=0.5)
     return fig
 
 
@@ -41,5 +41,5 @@ def test_highlight_edges_np():
                                 view=['LSR'],
                                 title='NBS integration',
                                 node_type='circles',
-                                highlightlevel=0.5)
+                                highlight_level=0.5)
     return fig

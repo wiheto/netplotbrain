@@ -123,10 +123,10 @@ fig, ax = netplotbrain.plot(template='MNI152NLin2009cAsym',
                             view=['LSR'],
                             title='NBS integration',
                             node_type='circles',
-                            highlightlevel=0.5)
+                            highlight_level=0.5)
 
 # + [markdown]
 """
-The amount of highlight is governed by the highlightlevel argument.
+The amount of highlight is governed by the highlight_level argument.
 Increasing it highlights the significant edges more.
 """

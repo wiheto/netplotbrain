@@ -39,7 +39,7 @@ def _set_axes_radius(ax, origin, radius):
 def _get_view(views='L', frames=1, arrowaxis='auto'):
     """
     Gets a or list of azim and elev arguments for viewing of q
-    Viewtype is a string of b or s for brain or springlayout view.
+    Viewtype is a string of b, s or c for brain, springlayout or connectivity matrix view.
     E.g. viewtype=bbbs means 3 brain and one springlayout in the image row.
     """
     direction = '+'
@@ -53,7 +53,7 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
     view_defaults = {'L': (180, 0), 'R': (0, 0),
                      'A': (90, 0), 'P': (-90, 0),
                      'S': (-90, 90), 'I': (90, -90),
-                     's': (-90, 90)}
+                     's': (-90, 90), 'c': (-90, 90)}
     # Set auto arrows for axis depending on starting view
     autoarrowaxis = None
     if fromview in ['L', 'R']:
@@ -103,6 +103,10 @@ def _get_view(views='L', frames=1, arrowaxis='auto'):
         # Assumes there will only ever be one springlayout
         ind = views.index('s')
         viewtype = viewtype[:ind] + 's' + viewtype[ind+1:]
+    if 'c' in views:
+        # Assumes there will only ever be one connectivity matrix
+        ind = views.index('c')
+        viewtype = viewtype[:ind] + 'c' + viewtype[ind+1:]
     return vx, vy, arrowaxis, viewtype
 
 

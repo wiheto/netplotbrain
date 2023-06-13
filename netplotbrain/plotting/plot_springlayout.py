@@ -1,6 +1,7 @@
 import networkx as nx
 import pandas as pd
 from ..plotting import _plot_nodes, _plot_edges
+import numpy as np
 
 def _plot_springlayout(ax, nodes, edges, node_color, node_size, edge_color, edge_weights, highlight_nodes, **kwargs):
     """
@@ -26,6 +27,9 @@ def _plot_springlayout(ax, nodes, edges, node_color, node_size, edge_color, edge
     sl_nodecols= ['spring_x', 'spring_y', 'spring_z']
     _plot_edges(ax, nodes, edges, edgewidth=edge_weights, edge_color=edge_color,
                 highlight_nodes=highlight_nodes, node_columnnames=sl_nodecols, **kwargs)
+    if isinstance(node_color, np.ndarray):
+        nodes.dropna(subset = sl_nodecols, inplace=True)
+        node_color = node_color[nodes.index, :]
     _plot_nodes(ax, nodes, node_columnnames=sl_nodecols,
                node_color=node_color, node_size=node_size, **kwargs)
 

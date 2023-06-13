@@ -8,7 +8,8 @@ from .plotting import _plot_template, \
     _select_single_hemisphere_nodes, _add_subplot_title, get_frame_input,\
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_node_size_legend, _add_node_color_legend, _init_figure, _check_axinput, \
-    _plot_gif, _process_highlightedge_input, _plot_springlayout, _add_title
+    _plot_gif, _process_highlightedge_input, _plot_springlayout, _add_title, \
+    _plot_connectivitymatrix
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
     _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input, _get_presetviews
 
@@ -169,6 +170,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Rename ax as ax_in and prespecfiy ax_out before forloop
     ax_in = ax
     ax_out = []
+    scaled_nodes = False
     # TODO remove double forloop and make single forloop by running over nrows and frames
     # TODO add test for single image across frames and copy axis for speed.
     for ri in range(nrows):
@@ -183,7 +185,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             template_style_frame = get_frame_input(profile['template_style'], axind, ri, fi, nrows, frames)
             # Set up subplot
             if ax_in is None:
-                ax = fig.add_subplot(gridspec[ri, fi], projection='3d')
+                # Dont use 3d projection for connectivity matrices
+                if viewtype[fi] == 'c':
+                    ax = fig.add_subplot(gridspec[ri, fi])
+                else:
+                    ax = fig.add_subplot(gridspec[ri, fi], projection='3d')
             elif isinstance(ax_in, list):
                 # here ax can only be a 1d list, not 2d list.
                 ax = ax_in[axind]
@@ -201,8 +207,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             # Then to rescale the ax.voxels function
             # So if affine is not None, nodes get scaled in relation to origin and voxelsize,
             # If node coords are derived from nodeimg, this has already been taken care of.
-            if nodes is not None and nodeimg is None and axind == 0:
+            if nodes is not None and nodeimg is None and viewtype[fi]=='b' and scaled_nodes == False:
                 nodes = _scale_nodes(nodes, profile['node_columnnames'], affine)
+                scaled_nodes = True
             # nodes and subplot may change for each frame/subplot
             # e.g. if hemisphere is specified
             nodes_frame = None
@@ -231,14 +238,19 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             if viewtype[fi] == 's' and nodes is not None and edges is not None:
                 _plot_springlayout(ax, nodes=nodes, edges=edges, node_color=node_color, node_size=node_size,
                                    edge_color=edge_color, edge_weights=edge_weights, highlight_nodes=highlight_nodes, **profile)
-            ax.view_init(azim=azim[fi], elev=elev[fi])
+            if viewtype[fi] == 'c' and edges is not None:
+                _plot_connectivitymatrix(ax, edges=edges, nodes=nodes, node_colorby=node_colorby, **profile)
+            # Set view angle for 3d projections
+            if viewtype[fi] != 'c':
+                ax.view_init(azim=azim[fi], elev=elev[fi])
                           
             _add_subplot_title(ax, azim[fi], elev[fi], subtitle_frame, hemi_frame, viewtype[fi], **profile)
             _add_title(fig, **profile)
 
-            # Fix the aspect ratio
-            ax.set_box_aspect([1, 1, 1])
-            _set_axes_equal(ax)
+            if viewtype[fi] != 'c':            
+                # Fix the aspect ratio
+                ax.set_box_aspect([1, 1, 1])
+                _set_axes_equal(ax)
             ax.axis('off')
             # Append ax to ax_out to store it.
             ax_out.append(ax)

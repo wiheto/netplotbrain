@@ -35,7 +35,7 @@ edges_df | pd.DataFrame | Allows for passing additional edge information if edge
 edge_cmap | str |     Matplotlib colormap for node coloring when node_color points to a dataframe. |
 edge_alpha | float | Transparency of edges (default: 1).
 edgecolumnames | list | Edge columns names in edge dataframe. Default is i and j (specifying nodes).
-edge_color | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge.
+edge_color | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge. Can also be a dictionary with keys positive and negative to denote two different colors for positive and negative edges.
 edge_weights | str | String that specifies column in edge dataframe that contains weights. If numpy array is edge input, can be True (default) to specify edge weights.
 edge_highlightbehaviour | str | Alternatives "both" or "any" or None. Governs edge dimming when highlight_nodes is on. If both, then highlights only edges between highlighted nodes. If any, then only edges connecting any of the nodes are highlighted.
 edge_widthscale | int, float | Scale the width of all edges by a factor (default: 1).
@@ -61,9 +61,16 @@ template_glass_maxalpha | float | Default is 0.01. To make the smokey effect the
 
 ### HIGHLIGHTING KWARGS
 
-highlightlevel | float | Intensity of the highlighting (opposite of alpha). Controls both nods and edges together. Value between 0 and 1, if 1, non-highlighted nodes are fully transparent. If 0, non-highlighted nodes are same alpha level as highlighted nodes. Default 0.85.
+highlight_level | float | Intensity of the highlighting (opposite of alpha). Controls both nods and edges together. Value between 0 and 1, if 1, non-highlighted nodes are fully transparent. If 0, non-highlighted nodes are same alpha level as highlighted nodes. Default 0.85.
 
-See also nodehighlight* and edgehighlight* kwargs.
+See also node_highlight* and edge_highlight* kwargs.
+
+## Connectviity matrix kwargs
+
+| Argument | Type | Description |
+| --- | --- | --- |
+cm_order | Str | Specify which variable to group and order nodes in connectivity matrix by. Default is "auto". Auto entails that if node_color is a column in the data and if cm_order is unspecified use node_color column. Otherwise if None will plot in list order. 
+cm_rotate | Bool | If True, rotates the connectivity matrix 45 degrees. Default True.
 
 ### LEGENDKWARGS
 
