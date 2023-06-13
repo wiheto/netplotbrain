@@ -67,7 +67,7 @@ def edges_from_bids(path: str, derivative: str, operation: str=None, select: str
         con_mat['all'] = []
     # In theory this could be expanded to any entity
     elif groups == 'session' or groups == 'task' or groups == 'run':
-        for n in layout.get_entities()[groups].unique():
+        for n in layout.derivatives[derivative].get_entities()[groups].unique():
             con_mat[n] = []
     else:
         non_grouped = []
@@ -85,7 +85,12 @@ def edges_from_bids(path: str, derivative: str, operation: str=None, select: str
             if operation is None:
                 sub_list.append(f.entities['subject'])
         if groups == 'session' or groups == 'task' or groups == 'run':
-            con_mat[f.get_entities()[groups]].append(df)
+            print(groups)
+            print(f)
+            print(f.get_entities())
+            print(con_mat.keys())
+            entities = f.get_entities()
+            con_mat[entities[groups]].append(df)
         else:
             if f.entities['subject'] in groups.index:
                 con_mat[groups.loc[f.entities['subject']]].append(df.values)
