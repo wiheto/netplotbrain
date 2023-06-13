@@ -15,6 +15,7 @@ networks = list(map(lambda x: x.split('_')[2], atlasinfo.name.values))
 atlasinfo['yeo7networks'] = networks
 
 # create empty cognitive matrix
+np.random.seed(2023)
 edges = np.random.normal(0, 0.025, [100, 100])
 
 # Set within network connectivity to be stronger
