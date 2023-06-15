@@ -1,6 +1,16 @@
 # Changelog
 
-## [0.3.0] - in development
+## [0.3.1] - in development
+
+## Added 
+- Added cm_boundary for connectivity matrixes (wiheto) 
+- Some new gallery examples for connectivity matrices (wiheto)
+
+## Fixed
+- cm_rotate now works when False (wiheto)
+- added dpi to svg export for improved rasterized image resolution (wiheto)
+
+## [0.3.0]
 
 ### Added 
 

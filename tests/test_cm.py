@@ -38,9 +38,23 @@ def test_cm():
                     nodes=atlas,
                     nodes_df=atlasinfo,
                     edges=edges,
-                    view='LSc', template_style='glass',
+                    view='c', template_style='glass',
                     node_scale=20, node_color='yeo7networks',
                     edge_threshold=0,
                     edge_thresholddirection='>',
                     seed=2022)
+    return fig
+
+@pytest.mark.mpl_image_compare
+def test_cm_rotateoff():
+    fig, _ = netplotbrain.plot(template='MNI152NLin2009cAsym',
+                    nodes=atlas,
+                    nodes_df=atlasinfo,
+                    edges=edges,
+                    view='c', template_style='glass',
+                    node_scale=20, node_color='yeo7networks',
+                    edge_threshold=0,
+                    edge_thresholddirection='>',
+                    seed=2022,
+                    cm_rotate=False)
     return fig

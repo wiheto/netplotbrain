@@ -6,6 +6,8 @@
 
 [![](./gallery/figures/singleview.png)](./simple/)
 
+### [Connectivity Matrix](./connectivity_matrix/)
+
 ## Visualization alternatives
 
 ### [Node styles](./node_styles/)

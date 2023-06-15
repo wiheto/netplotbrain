@@ -239,7 +239,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 _plot_springlayout(ax, nodes=nodes, edges=edges, node_color=node_color, node_size=node_size,
                                    edge_color=edge_color, edge_weights=edge_weights, highlight_nodes=highlight_nodes, **profile)
             if viewtype[fi] == 'c' and edges is not None:
-                _plot_connectivitymatrix(ax, edges=edges, nodes=nodes, node_colorby=node_colorby, **profile)
+                _plot_connectivitymatrix(ax, edges=edges, nodes=nodes, node_color=node_color, node_colorby=node_colorby, **profile)
             # Set view angle for 3d projections
             if viewtype[fi] != 'c':
                 ax.view_init(azim=azim[fi], elev=elev[fi])
@@ -296,9 +296,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         if profile['savename'].endswith('.png'):
             fig.savefig(profile['savename'], dpi=profile['fig_dpi'])
         elif profile['savename'].endswith('.svg'):
-            fig.savefig(profile['savename'])
+            fig.savefig(profile['savename'], dpi=profile['fig_dpi'])
         else:
             fig.savefig(profile['savename'] + '.png', dpi=profile['fig_dpi'])
-            fig.savefig(profile['savename'] + '.svg')
+            fig.savefig(profile['savename'] + '.svg', dpi=profile['fig_dpi'])
 
     return (fig, ax_out)
