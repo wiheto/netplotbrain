@@ -6,7 +6,10 @@
 
 [![](./gallery/figures/singleview.png)](./simple/)
 
-### [Connectivity Matrix](./connectivity_matrix/)
+### [Connectivity Matrix](./plot_connectivitymatrix/)
+
+[![](./gallery/figures/plot_connectivitymatrix.png)](./plot_connectivitymatrix/)
+
 
 ## Visualization alternatives
 
@@ -45,7 +48,7 @@
 
 
 
-## TemplateFLow Templates
+## TemplateFlow Templates
 
 ### [MNIInfant](./infant) 
 

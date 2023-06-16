@@ -19,7 +19,7 @@ plugins:
     - search
     - awesome-pages
     - mkdocs-jupyter:
-        execute: True
+        execute: true
         allow_errors: false
     - mkdocstrings:
         default_handler: python

@@ -1,3 +1,17 @@
+# ---
+# jupyter:
+#   jupytext:
+#     cell_metadata_filter: -all
+#     formats: ipynb,py:light
+#     text_representation:
+#       extension: .py
+#       format_name: light
+#       format_version: '1.5'
+#       jupytext_version: 1.13.8
+# ---
+
+# + [markdown]
+"""
 # Tutorial 1: Input data
 
 There are three input components: 
@@ -7,7 +21,10 @@ There are three input components:
 3. the template
 
 Each component and their properties are  plotted independently of each other.
+"""
 
+# + [markdown]
+"""
 ## Specifying Nodes
 
 There are two ways you can specify the coordinates of the nodes. 
@@ -24,8 +41,9 @@ Thus, the dataframe will begin something like this:
 | -10     | 40    | 30    |
 
 If we create this dataframe with the two nodes above, we will just plot two circles onto the figure. 
+"""
+# -
 
-```python
 # Import packages
 import netplotbrain
 import pandas as pd
@@ -35,8 +53,9 @@ nodes_df = pd.DataFrame({'x': [40, 10, 30, -15, -25],
                          'z': [20, 30, -10, -15, 30]})
 # Call netplotbrain to plot
 netplotbrain.plot(nodes=nodes_df, arrowaxis=None)
-```
 
+# + [markdown]
+"""
 Here we just see five dots of the same size, but we have nodes in the 3D space. 
 
 The second option `arrowaxis` turns off some default, directional arrows which do not look good in this small-scale example without a background template.
@@ -51,11 +70,9 @@ These just become other columns in the dataframe (called node_df).
 | -10     | 40    | 30    | 1    | 0.4
 
 Then the columns `node_color=communities`and `node_size=degree_centrality` can be specified and each node will automatically be coloured or scaled by the specified column. For example: 
+"""
+# -
 
-```python
-# Import packages
-import netplotbrain
-import pandas as pd
 # Define the nodes (5 example nodes)
 nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
                               'y': [50, 40, -10, -20, 20], 
@@ -69,8 +86,9 @@ netplotbrain.plot(
     node_color='communities',
     arrowaxis=None,
     node_scale=100)
-```
- 
+
+# + [markdown]
+"""
 This will just plot the nodes, with each node having the size of the degree_centrality column and a colour of the communities column. Here we have also added `node_scale` which just linearly scales all nodes by that factor. We also see that, when specifying `node_size` and `node_color`, that legends automatically appear.
 
 At the moment we just have some circles floating in 3D space. Let us add some more information about this network.
@@ -81,28 +99,29 @@ One of the key benefits of using netplotbrain is that it interacts with Template
 The atlases can be used as nodes.
 If you specify the key/value pairs of an atlas on templateflow in a dictionary, the atlas will be automatically downloaded.
 For example, the following will get the 400 Parcels version from the Schaefer atlas.
+"""
+# -
 
-```python
-# import packages
-import netplotbrain
 # Define the atlas by key value words of TemplateFlow name
 nodes={'template': 'MNI152NLin2009cAsym',
          'atlas': 'Schaefer2018',
+         'desc': '400Parcels7Networks',
+         'resolution': 1}
 ## Template (nifti or string)
 netplotbrain.plot(
     nodes=nodes,
     arrowaxis=None)     
-```
 
+# + [markdown]
+"""
 See templateflow.org for more atlases.
 
 If the template argument is specified in `netplotbrain.plot`, then the template argument does not need to be included in the `nodes` dictionary.
 
 Since the nifti image consists of parcels (i.e., regions) of the brain instead of circles placed throughout the brain, it is possible to specify that you would rather visualize the parcels, over the circles, with a single argument `node_type`.
+"""
+# -
 
-```python
-# import packages
-import netplotbrain
 # Define the atlas by key value words of TemplateFlow name
 nodes={'template': 'MNI152NLin2009cAsym',
          'atlas': 'Schaefer2018',
@@ -113,8 +132,9 @@ netplotbrain.plot(
     nodes=nodes,
     arrowaxis=None,
     node_type='parcel')     
-```
 
+# + [markdown]
+"""
 ## Specifying Edges
 
 The edges between the nodes can be passed to netplotbrain as either a numpy array (NxN adjacency matrix) or a pandas dataframe (edgelist) with the default columns 'i', 'j', and 'weight' (optional). An example:
@@ -127,11 +147,9 @@ The edges between the nodes can be passed to netplotbrain as either a numpy arra
 `i` and `j` reference the indices of our nodes defined above. You can use the argument `edgecol` to specify different column names.
 
 Let us continue to add to our figure above: 
+"""
+# -
 
-```python
-# Import packages
-import netplotbrain
-import pandas as pd
 # Define the nodes (5 example nodes)
 nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
                               'y': [50, 40, -10, -20, 20], 
@@ -148,15 +166,15 @@ netplotbrain.plot(
     node_color='communities',
     arrowaxis=None,
     node_scale=150)
-```
 
+# + [markdown]
+"""
 If you have the column `weight` in your edge dataframe, these will be automatically plotted as well. 
 This can be turned off by setting `edge_weights` to False. Also, a list of length 3 can be given to edgecol that specifies alternative names for ['i', 'j', 'weights'].
+"""
+# -
 
-```python
 # Import packages
-import netplotbrain
-import pandas as pd
 # Define the nodes (5 example nodes)
 nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
                               'y': [50, 40, -10, -20, 20], 
@@ -173,14 +191,9 @@ netplotbrain.plot(
     node_color='communities',
     arrowaxis=None,
     node_scale=150)
-```
 
-Finally, you can specify a number matrix instead of a pandas dataframe. 
+# Finally, you can specify a number matrix instead of a pandas dataframe. 
 
-```python
-# Import packages
-import netplotbrain
-import pandas as pd
 # Define the nodes (5 example nodes)
 nodes_df = pd.DataFrame(data={'x': [40, 10, 30, -15, -25], 
                               'y': [50, 40, -10, -20, 20], 
@@ -197,10 +210,10 @@ netplotbrain.plot(
     node_color='communities',
     arrowaxis=None,
     node_scale=150)
-```
 
+# + [markdown]
+"""
 ## Specifying Templates
-
 ### Template (nifti or string)
 
 For the template you can supply any nifti file.
@@ -225,38 +238,31 @@ For templates, you can change the voxelsize of the template. Larger voxels means
 This can come in handy especially when the filled style is used. 
 
 When `template_voxelsize` is unchanged, the rendering can take time.   
-
-```python
-# Import packages
-import netplotbrain
+"""
+#
 
 # Call netplotbrain to plot
 netplotbrain.plot(
     template='MNI152NLin6Asym',
     template_style='filled',
-    arrowaxis=None)
-    
-rendering=156.44848775863647 seconds 
-```
-![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/tutorial/figures/filled_voxsize.png)
+    arrowaxis=None)   
+# renders in ca 156 seconds 
 
-In order to notably reduce the rendering speed, you can increase `template_voxelsize`. 
+# + [markdown]
+# In order to notably reduce the rendering speed, you can increase `template_voxelsize`. 
 
-```python
-# increasing voxelsize
+# +
+#increasing voxelsize
 netplotbrain.plot(
     template='MNI152NLin6Asym',
     template_style='filled',
     template_voxelsize=3,
     arrowaxis=None)
-    
-rendering=23.75227427482605 seconds 
-```
-![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/tutorial/figures/filled_voxsize3.png)
+#renders in ca 24 seconds 
 
-However, note that an excessive increase of voxelsize can degrade spatial resolution.  
+# However, note that an excessive increase of voxelsize can degrade spatial resolution.  
 
-```python
+# +
 # further increasing voxelsize
 netplotbrain.plot(
     template='MNI152NLin6Asym',
@@ -264,8 +270,8 @@ netplotbrain.plot(
     template_voxelsize=7,
     arrowaxis=None)
     
-rendering=2.769284248352051 seconds 
-```
-![](https://raw.githubusercontent.com/wiheto/netplotbrain/main/docs/tutorial/figures/filled_voxsize7.png)
+# renders in ca. 3 seconds 
+# -
 
-Thus, when using the filled style, we invite you to consider the trade-off between rendering speed and spatial resolution.
+# + [markdown] 
+# Thus, when using the filled style, we invite you to consider the trade-off between rendering speed and spatial resolution.

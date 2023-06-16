@@ -92,6 +92,7 @@ node_colorlegend | Bool | If the colorlegend is plotted or not. Default True.
 node_sizelegend | Bool | If the sizelegend is plotted or not. Default True.
 node_colorlegendstyle | str | Alternatives: auto (default), discrete, continuous. If the color legend should show the entire colormap or discrete colors. If auto, plots discrete if less than 8 unique values are detected.
 showlegend | bool, list | If size or colour have been set, generates a legend for that property at bottom of figure. If True, plots all the legends that can be plotted. If list, can contain 'node_size' and 'node_color' to plot those in the legend.
+legend_span | list | Range of subplot columns for the legend to span.
 
 ### ARROW keyword arguments
 
