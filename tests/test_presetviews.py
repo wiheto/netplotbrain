@@ -12,6 +12,7 @@ def test_preset3():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
                       template_style='surface',
                       view='preset-3',
+                      template_voxelsize=8,
                       nodes=nodes,
                       edges=edges)
     return fig
@@ -20,6 +21,7 @@ def test_preset3():
 def test_preset4():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
                       template_style='surface',
+                      template_voxelsize=8,
                       view='preset-4',
                       nodes=nodes,
                       edges=edges)
@@ -29,6 +31,7 @@ def test_preset4():
 def test_preset4s():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
                       template_style='surface',
+                      template_voxelsize=8,
                       view='preset-4s',
                       nodes=nodes,
                       edges=edges)
@@ -38,6 +41,7 @@ def test_preset4s():
 def test_preset9():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
                       template_style='surface',
+                      template_voxelsize=8,
                       view='preset-9',
                       nodes=nodes,
                       edges=edges)
@@ -47,6 +51,7 @@ def test_preset9():
 def test_preset6():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
                       template_style='surface',
+                      template_voxelsize=8,
                       view='preset-6',
                       nodes=nodes,
                       edges=edges)
@@ -57,6 +62,7 @@ def test_preset6s():
     fig, _ = npbplot(template='MNI152NLin2009cAsym',
                       template_style='surface',
                       view='preset-6spring',
+                      template_voxelsize=8,
                       nodes=nodes,
                       edges=edges)
     return fig

@@ -73,14 +73,12 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         Default auto, will describe the view settings.
         Otherwise string or list of for subplot titles
 
-    For more key word arguments, see `netplotbrain.kwargs`
+    For more key word arguments, visit: https://www.netplotbrain.org/api/
 
     Returns
     --------
     fig, ax - matplotlib figure and ax handles.
         Legend handles should not be included but there should be an empty row in the figure size for each legend needed.
-
-    .. include:: ../docs/kwargs.rst
 
     """
     # Load default settings, then update with kwargs
