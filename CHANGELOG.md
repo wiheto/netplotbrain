@@ -5,10 +5,12 @@
 ## Added 
 - Added cm_boundary for connectivity matrixes (wiheto) 
 - Some new gallery examples for connectivity matrices (wiheto)
+- connectivity matrix tutorial (wiheto)
 
 ## Fixed
 - cm_rotate now works when False (wiheto)
 - added dpi to svg export for improved rasterized image resolution (wiheto)
+- minor improvements and fixes to cm_plot (wiheto)
 
 ## [0.3.0]
 
