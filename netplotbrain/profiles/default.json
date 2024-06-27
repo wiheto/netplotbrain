@@ -37,6 +37,8 @@
     "node_colorlegend": true,
     "node_colorlegendstyle": "auto",
     "node_colorvminvmax": "minmax",
+    "node_text": null,
+    "node_text_style": "center",
     "node_scale": 5,
     "node_sizelegend": true,
     "node_sizevminvmax": "minmax",
