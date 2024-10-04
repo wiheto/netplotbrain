@@ -34,7 +34,7 @@ jobs:
           name: Copy results to workspace
           command: |
             mkdir -p /workspace/pytest_images
-            cp -r pytest_images/* /workspace/pytest_images/
+            cp -r pytest_images/*/*.png /workspace/pytest_images/
       - run:
           name: Copy baseline images to workspace
           command: |
