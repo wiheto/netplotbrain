@@ -74,4 +74,4 @@ workflows:
           filters:
             branches:
               only: master
-          when: always  # Ensure this runs regardless of build-and-test outcome
+          allow_failure: true  # Ensure it runs even if the build-and-test fails
