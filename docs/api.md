@@ -31,6 +31,7 @@ node_label | str | If set, will plot the this column as labels on or near each n
 node_text_style | str | Can be 'center'. If 'center', labels are plotted on the node. No other options at the moment.
 node_sizevminvmax | str, list | Scaling alternatives if node_size is given. Alternatives: 'absolute' (default) 'minmax', or 2-tuple list of [min, max]. If minmax, node sizes are scaled between (0 and 1) * node_scale. If absolute, then the default values are used. Absolute can lead to problems with, for example, negative values.
 node_colorvminvmax | str, list | Scales continuous colormap between certain values. Alternatives: 'minmax' (default), 'absmax', , or 2-tuple list of [min, max]. If minmax, colorbar starts at the smallest value to largest value. If absmax, then colorbar goes from -abs(max(value)) to abs(max(value)), ensuring 0 is in the middle.
+node_text | str | Column name in nodes_df that contains text to be displayed on nodes.
 
 ### EDGE keyword arguments
 

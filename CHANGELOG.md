@@ -6,6 +6,8 @@
 
 - Text annotations (wiheto) with two styles: 
     - `center` for centered annotations on node
+- Added network ribbons onto cm_boundary and cm_boundaryalpha (seblome) PR72
+- 
 
 ## [0.3.1] 
 
