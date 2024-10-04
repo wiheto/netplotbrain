@@ -71,7 +71,4 @@ workflows:
       - store-artifacts:
           requires:
             - build-and-test
-          filters:
-            branches:
-              only: master
-          allow_failure: true  # Ensure it runs even if the build-and-test fails
+          continue-on-error: true  # This ensures store-artifacts runs even if build-and-test fails
