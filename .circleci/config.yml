@@ -55,9 +55,10 @@ jobs:
       - run:
           name: Check /tmp Directory
           command: |
+            echo "Check for if not found /tmp"
             ls -R /tmp  
       - store_artifacts:
-          path: /tmp/*/  
+          path: tmp/*/  
           destination: test_results/
 workflows:
   sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
