@@ -52,6 +52,10 @@ jobs:
       - store_artifacts:
           path: tests/baseline  
           destination: baseline_images
+      - run:
+          name: Check /tmp Directory
+          command: |
+            ls -R /tmp  
       - store_artifacts:
           path: /tmp/*/  
           destination: test_results/
