@@ -71,3 +71,7 @@ workflows:
       - store-artifacts:
           requires:
             - build-and-test
+          filters:
+            branches:
+              only: master
+          when: always  # Ensure this runs regardless of build-and-test outcome
