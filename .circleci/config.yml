@@ -29,26 +29,17 @@ jobs:
       - run:
           name: Run pytest tests in parallel
           command: |
-            pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) --mpl --confcutdir=.
+            pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) --mpl --mpl-results-path=pytest_images
       - run:
           name: Coveralls
           command: coveralls
       - store_artifacts:
           path: tests/baseline
           destination: baseline_images
-      - run:
-          name: Check /tmp Directory
-          command: |
-            echo "Check for files in /tmp"
-            ls -R /tmp
       - store_artifacts:
-          path: tmp/*
-          destination: test_results/
-      - run:
-          name: Debug Logs
-          command: |
-            echo "Starting job..."
-            ls -al
+          path: pytest_images/*
+          destination: pytest_images/
+
 
 
 workflows:
