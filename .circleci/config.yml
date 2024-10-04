@@ -9,88 +9,40 @@ jobs:
     docker:
       - image: cimg/python:3.9
     parallelism: 4  # Run 4 containers in parallel
-    resource_class: large  # Adjust based on your needs
+    resource_class: large  # Optional: Change the resource size for larger workloads
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
       - run:
-          name: Install additional packages
+          name: additional pip install
           command: |
-            pip install pytest pytest-mpl coveralls mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
+            pip install pytest pytest-mpl coveralls
       - run:
-          name: Install netplotbrain
+          name: doc install
+          command: |
+            pip install mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
+      - run:
+          name: install netplotbrain
           command: |
             pip install ./
       - run:
           name: Run pytest tests in parallel
           command: |
-            set +e  # Disable immediate exit on errors
-            pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) \
-              --mpl --mpl-results-path=pytest_images
-            TEST_EXIT_CODE=$?
-            echo "Pytest exit code: $TEST_EXIT_CODE"
-            echo $TEST_EXIT_CODE > test_exit_code.txt
-            set -e  # Re-enable immediate exit on errors
-          # Ensure the step continues even if tests fail
-          continue-on-error: true
+            pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) --mpl --mpl-results-path=pytest_images
       - run:
-          name: Copy results to workspace
-          command: |
-            mkdir -p /workspace/pytest_images
-            cp -r pytest_images/*/*.png /workspace/pytest_images/ || true
-          when: always  # Always run this step
-      - run:
-          name: Copy baseline images to workspace
-          command: |
-            mkdir -p /workspace/baseline_images
-            cp -r tests/baseline/* /workspace/baseline_images/ || true
-          when: always  # Always run this step
-      - run:
-          name: Copy test exit code to workspace
-          command: |
-            mkdir -p /workspace
-            cp test_exit_code.txt /workspace/ || true
-          when: always  # Always run this step
-      - persist_to_workspace:
-          root: /workspace
-          paths:
-            - pytest_images
-            - baseline_images
-            - test_exit_code.txt  # Include the exit code file
-      - run:
-          name: Fail job if tests failed
-          command: |
-            TEST_EXIT_CODE=$(cat test_exit_code.txt)
-            if [ "$TEST_EXIT_CODE" -ne 0 ]; then
-              echo "Tests failed with exit code $TEST_EXIT_CODE"
-              exit $TEST_EXIT_CODE
-            else
-              echo "Tests passed"
-            fi
-
-  store-artifacts:
-    docker:
-      - image: cimg/python:3.9
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /workspace
-      - run:
-          name: Store Artifacts
-          command: |
-            echo "Storing artifacts from workspace"
+          name: Coveralls
+          command: coveralls
       - store_artifacts:
-          path: /workspace/baseline_images
+          path: tests/baseline
           destination: baseline_images
       - store_artifacts:
-          path: /workspace/pytest_images
-          destination: pytest_images
+          path: pytest_images/*/*.png
+          destination: pytest_images/
+
+
 
 workflows:
   sample:
     jobs:
       - build-and-test
-      - store-artifacts:
-          requires:
-            - build-and-test
