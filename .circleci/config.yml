@@ -31,18 +31,43 @@ jobs:
           command: |
             pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) --mpl --mpl-results-path=pytest_images
       - run:
-          name: Coveralls
-          command: coveralls
+          name: Copy results to workspace
+          command: |
+            mkdir -p /workspace/pytest_images
+            cp -r pytest_images/* /workspace/pytest_images/
+      - run:
+          name: Copy baseline images to workspace
+          command: |
+            mkdir -p /workspace/baseline_images
+            cp -r tests/baseline/* /workspace/baseline_images/
+      - persist_to_workspace:
+          root: /workspace
+          paths:
+            - pytest_images
+            - baseline_images
+
+  store-artifacts:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /workspace
+      - run:
+          name: Store Artifacts
+          command: |
+            echo "Storing artifacts from workspace"
       - store_artifacts:
-          path: tests/baseline
+          path: /workspace/baseline_images
           destination: baseline_images
       - store_artifacts:
-          path: pytest_images/*
-          destination: pytest_images/
-
-
+          path: /workspace/pytest_images
+          destination: pytest_images
 
 workflows:
   sample:
     jobs:
       - build-and-test
+      - store-artifacts:
+          requires:
+            - build-and-test
