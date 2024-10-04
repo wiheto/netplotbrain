@@ -52,6 +52,9 @@ jobs:
       - store_artifacts:
           path: tests/baseline  
           destination: baseline_images
+      - store_artifacts:
+          path: /tmp/*/  
+          destination: test_results/
 workflows:
   sample:  # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run. 
