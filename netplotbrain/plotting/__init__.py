@@ -1,6 +1,6 @@
 """Main plotting functions in package."""
 from .plot_edges import _plot_edges, _npedges2dfedges
-from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes
+from .plot_nodes import _scale_nodes, _plot_nodes, _select_single_hemisphere_nodes, _add_node_text
 from .plot_spheres import _plot_spheres
 from .plot_templates import _plot_template, _plot_template_style_filled, \
     _plot_template_style_cloudy, _plot_template_style_surface
@@ -22,4 +22,5 @@ __all__ = ['_plot_template', '_plot_template_style_filled',
            '_select_single_hemisphere_nodes', '_npedges2dfedges', '_add_subplot_title', 
            '_setup_legend', '_process_edge_input', '_process_node_input', '_add_node_size_legend',
            '_add_node_color_legend', 'get_frame_input', '_init_figure', '_check_axinput', '_plot_gif',
-           '_process_highlightedge_input', '_plot_springlayout', '_add_title', '_plot_connectivitymatrix']
+           '_process_highlightedge_input', '_plot_springlayout', '_add_title', '_plot_connectivitymatrix',
+           '_add_node_text']

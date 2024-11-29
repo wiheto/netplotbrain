@@ -9,7 +9,7 @@ from .plotting import _plot_template, \
     _setup_legend, _process_edge_input, _process_node_input,\
     _add_node_size_legend, _add_node_color_legend, _init_figure, _check_axinput, \
     _plot_gif, _process_highlightedge_input, _plot_springlayout, _add_title, \
-    _plot_connectivitymatrix
+    _plot_connectivitymatrix, _add_node_text
 from .utils import _highlight_nodes, _get_colorby_colors, _set_axes_equal, _get_view, \
     _load_profile, _nrows_in_fig, _highlight_edges, _from_networkx_input, _get_presetviews
 
@@ -242,6 +242,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             if viewtype[fi] != 'c':
                 ax.view_init(azim=azim[fi], elev=elev[fi])
 
+            # If node_text is set, add it to plot
+            if profile['node_text'] is not None and nodes is not None and viewtype[fi]=='b':
+                _add_node_text(ax, nodes_frame, profile['node_text'], profile['node_columnnames'], profile['node_text_style'])
+
+            # Add titles 
             _add_subplot_title(ax, azim[fi], elev[fi], subtitle_frame, hemi_frame, viewtype[fi], **profile)
             _add_title(fig, **profile)
 

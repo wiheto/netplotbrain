@@ -1,6 +1,15 @@
 # Changelog
 
-## [0.3.1] - in development
+## [0.4.0]
+
+### Added
+
+- Text annotations (wiheto) with two styles: 
+    - `center` for centered annotations on node
+- Added network ribbons onto cm_boundary and cm_boundaryalpha (seblome) PR72
+- 
+
+## [0.3.1] 
 
 ## Added 
 - Added cm_boundary for connectivity matrixes (wiheto) 

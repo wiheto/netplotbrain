@@ -14,14 +14,57 @@
 """
 # Tutorial 1: Input data
 
-There are three input components: 
+To plot figures in Netplotbrain we use the function `netplotbrain.plot()`.
+While there are other functions in netplotbrain (e.g. dealing with BIDS data) the `netplotbrain.plot()` function is the main function you will use.
 
-1. the nodes, 
-2. the edges, 
-3. the template
+There are three input components to the function: 
+
+1. the template
+2. the nodes, 
+3. the edges, 
 
 Each component and their properties are  plotted independently of each other.
+
+We will go through each of the components in turn. At the end of the tutorial, we also discuss how to speed up template rendering. 
 """
+
+# Import packages for tutorial 
+import netplotbrain
+import pandas as pd
+import time
+
+# + [markdown]
+"""
+## Specifying Templates
+### Template (nifti or string)
+
+For the template you can supply any nifti file or template name for any template on templateflow.org.
+The T1w brain mask will then be automatically downloaded (if not already present on your computer) and used as the background.
+Here we will plot the MNI152NLin2009cAsym template.
+"""
+
+netplotbrain.plot(template='MNI152NLin2009cAsym')
+
+# + [markdown]
+"""
+However we can use TemplateFlow to get a different template
+"""
+
+netplotbrain.plot(template='WHS')
+
+# + [markdown]
+"""
+With the tempalte we can change its style, its transparency, and its background color.
+
+Here you see that all keyword arguments in NetPlotBrain are prefixed with the component they modify (there are other keyword arguments too thoguh).
+
+See the end of the tutorial for more information about template styles. 
+"""
+
+# Modify color and alpha
+netplotbrain.plot(template='MNI152NLin2009cAsym', template_alpha=0.5, template_color='lightgray')
+# Surface style
+netplotbrain.plot(template='MNI152NLin2009cAsym', template_style='surface')
 
 # + [markdown]
 """
@@ -44,9 +87,7 @@ If we create this dataframe with the two nodes above, we will just plot two circ
 """
 # -
 
-# Import packages
-import netplotbrain
-import pandas as pd
+
 # Define the nodes
 nodes_df = pd.DataFrame({'x': [40, 10, 30, -15, -25], 
                          'y': [50, 40, -10, -20, 20], 
@@ -213,21 +254,9 @@ netplotbrain.plot(
 
 # + [markdown]
 """
-## Specifying Templates
-### Template (nifti or string)
-
-For the template you can supply any nifti file.
-
-You can also provide the template name for any template on templateflow.org.
-The T1w brain mask will then be automatically downloaded (if not already present on your computer) and used as the background.
-
-Note, if there are multiple cohorts for the atlas, you should add which cohort it is to the string. This specification follows the format "templatename_cohort-X". So, for example, if you want to use the second cohort for MNIInfant, you specify "MNIInfant_cohort-2". Additionally, if there is a specific templateflow file that you wish to use (that is not one of the default template files) you can specify a dictionary of templateflow keyword-value pairs. 
-
 ### Template Styles
 
-There are currently four background styles: "glass", "surface", "cloudy" and "filled".
-
-The surface quickly renders a surface from the voxels. Additional arguments can be provided in order to modify the resolution of the surface.
+The surface style renders a surface from the voxels. Additional arguments can be provided in order to modify the resolution of the surface.
 
 The cloudy style tries to identify the outline of the mask and plots points along the edges.The cloudy style is quick, but the edge detection is run relative to the specified initial view of the plot.
 
@@ -242,36 +271,44 @@ When `template_voxelsize` is unchanged, the rendering can take time.
 #
 
 # Call netplotbrain to plot
+t = time.now()
 netplotbrain.plot(
     template='MNI152NLin6Asym',
     template_style='filled',
     arrowaxis=None)   
-# renders in ca 156 seconds 
+print('rendered in:' + time.now()-t)   
 
 # + [markdown]
-# In order to notably reduce the rendering speed, you can increase `template_voxelsize`. 
+"""
+In order to notably reduce the rendering speed, you can increase `template_voxelsize`. 
+"""
 
 # +
 #increasing voxelsize
+t = time.now()
 netplotbrain.plot(
     template='MNI152NLin6Asym',
     template_style='filled',
     template_voxelsize=3,
     arrowaxis=None)
-#renders in ca 24 seconds 
+print('rendered in:' + time.now()-t) 
 
-# However, note that an excessive increase of voxelsize can degrade spatial resolution.  
+# + [markdown]
+"""
+However, note that an excessive increase of voxelsize can degrade spatial resolution.  
+"""
 
 # +
 # further increasing voxelsize
+t = time.now()
 netplotbrain.plot(
     template='MNI152NLin6Asym',
     template_style='filled',
     template_voxelsize=7,
     arrowaxis=None)
-    
-# renders in ca. 3 seconds 
-# -
+print('rendered in:' + time.now()-t)    
 
 # + [markdown] 
-# Thus, when using the filled style, we invite you to consider the trade-off between rendering speed and spatial resolution.
+"""
+Thus, when using the filled style, we invite you to consider the trade-off between rendering speed and spatial resolution.
+"""

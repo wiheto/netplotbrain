@@ -1,5 +1,6 @@
 import numpy as np
 from ..utils import _node_scale_vminvmax
+from scipy.spatial.distance import euclidean
 
 def _plot_nodes(ax, nodes, node_columnnames, node_color='salmon', node_size=20, **kwargs):
     """
@@ -93,3 +94,98 @@ def _select_single_hemisphere_nodes(nodes, nodecol, affine, hemisphere):
         sel = nodes[nodecol] * affine[0, 0] > np.abs(affine[0, -1])
         nodes = nodes[sel]
     return nodes
+
+# Function to check if a point is occupied in the plot
+def is_point_occupied(ax, point):
+    result = ax.transData.transform([point[:2]])
+    return ax.contains_point(result[0]) 
+
+def find_empty_spot_around_node(center_coord, ax):
+    max_tries = 100
+    for _ in range(max_tries):
+        random_offset = np.random.uniform(low=-50, high=50, size=3)
+        candidate_coord = center_coord + random_offset
+        if not is_point_occupied(ax, candidate_coord):
+            return candidate_coord
+    return None  # Return None if no unoccupied spot is found after max_tries
+
+def _add_node_text(ax, nodes, node_text, node_colmnnames, node_text_style):
+    """
+    Prints node text around nodes in figure. 
+    
+    Parameters
+    --------------
+    nodes : dataframe
+        node dataframe with x, y, z coordinates.
+    node_text : string
+        column name of node text in nodes.
+    node_columnnames : list of strings
+        column names of x, y, z coordinates
+    node_text_style : string
+        can be center or arrow which determines how the text is plotted.
+    """
+    
+    if node_text_style == 'center':
+        for i, row in nodes.iterrows():
+            if not np.isnan(row[node_text]):
+                ax.text(row[node_colmnnames[0]], row[node_colmnnames[1]],
+                        row[node_colmnnames[2]], row[node_text], fontsize=8, ha='center', va='center')
+    else:
+        raise ValueError('node_text_style must be center or arrow')
+    
+    
+    
+def _add_node_text(ax, nodes, node_text, node_colmnnames, node_text_style):
+    """
+    Prints node text around nodes in figure. 
+    
+    Parameters
+    --------------
+    nodes : dataframe
+        node dataframe with x, y, z coordinates.
+    node_text : string
+        column name of node text in nodes.
+    node_columnnames : list of strings
+        column names of x, y, z coordinates
+    node_text_style : string
+        can be center or arrow which determines how the text is plotted.
+    """
+    if node_text_style == 'center':
+        for i, row in nodes.iterrows():
+            if not np.isnan(row[node_text]):
+                ax.text(row[node_colmnnames[0]], row[node_colmnnames[1]],
+                        row[node_colmnnames[2]], row[node_text], fontsize=8, ha='center', va='center')
+    elif node_text_style == 'arrow':
+        for i, row in nodes.iterrows():
+            if not np.isnan(row[node_text]):
+                # Define a grid of candidate coordinates around center_coord
+                grid_size = 10
+                center_coord = row[node_colmnnames]
+                x_grid, y_grid, z_grid = np.meshgrid(
+                    np.linspace(center_coord[0] - 100, center_coord[0] + 100, grid_size),
+                    np.linspace(center_coord[1] - 100, center_coord[1] + 100, grid_size),
+                    np.linspace(center_coord[2] - 100, center_coord[2] + 100, grid_size),
+                )
+                # Flatten the grid to iterate over each point
+                candidate_coords = list(zip(x_grid.flatten(), y_grid.flatten(), z_grid.flatten()))
+
+                # Find the closest empty spot using scipy's euclidean function
+                min_distance = float('inf')
+                closest_empty_spot = None
+
+                for coord in candidate_coords:
+                    if not is_point_occupied(ax, coord):
+                        distance = euclidean(center_coord, coord)
+                        if distance < min_distance:
+                            min_distance = distance
+                            closest_empty_spot = coord                
+                # Draw a line from center_coord to the empty_spot
+                ax.plot([row[node_colmnnames[0]], closest_empty_spot[0]],
+                        [row[node_colmnnames[1]], closest_empty_spot[1]],
+                        [row[node_colmnnames[2]], closest_empty_spot[2]], color='gray')
+
+                ax.text(*closest_empty_spot, row[node_text], fontsize=8, color='black', ha='center', va='center')
+    else:
+        raise ValueError('node_text_style must be center or arrow')
+         
+    
