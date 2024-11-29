@@ -34,11 +34,11 @@ jobs:
           name: Coveralls
           command: coveralls
       - store_artifacts:
+          path: /home/circleci/project/pytest_images/
+          destination: pytest_images/
+      - store_artifacts:
           path: tests/baseline
           destination: baseline_images
-      - store_artifacts:
-          path: pytest_images/*/*.png
-          destination: pytest_images/
 
 
 
