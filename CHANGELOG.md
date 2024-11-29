@@ -6,8 +6,7 @@
 
 - Text annotations (wiheto) with two styles: 
     - `center` for centered annotations on node
-- Added network ribbons onto cm_boundary and cm_boundaryalpha (seblome) PR72
-- 
+- Added to_numpy() in plot edges to make compatible with pandas (2.2.3)
 
 ## [0.3.1] 
 
