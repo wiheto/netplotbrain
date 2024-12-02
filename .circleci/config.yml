@@ -30,16 +30,28 @@ jobs:
           name: Run pytest tests in parallel
           command: |
             pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) --mpl --mpl-results-path=pytest_images
-      - run:
-          name: Coveralls
-          command: coveralls
       - store_artifacts:
           path: /home/circleci/project/pytest_images/
           destination: pytest_images
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
 
-
+  coveralls-submit:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Submit to Coveralls
+          command: coveralls
 
 workflows:
   sample:
     jobs:
       - build-and-test
+      - coveralls-submit:
+          requires:
+            - build-and-test
