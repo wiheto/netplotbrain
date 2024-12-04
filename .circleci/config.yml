@@ -45,6 +45,9 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Install Coveralls
+          command: pip install coveralls
+      - run:
           name: Submit to Coveralls
           command: coveralls
 
