@@ -2,13 +2,13 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.2
-  coveralls: coveralls/coveralls@1.0.6
+  coveralls: coveralls/coveralls@1.1.0  # Use the latest version
 
 jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.9
-    parallelism: 4  # Run 4 containers in parallel
+    parallelism: 4
     steps:
       - checkout
       - python/install-packages:
@@ -22,22 +22,19 @@ jobs:
           name: Install netplotbrain
           command: pip install ./
       - run:
-          name: Run pytest tests in parallel with coverage
+          name: Run tests with coverage
           command: |
             pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) \
                    --cov=netplotbrain --cov-config=.coveragerc \
                    --mpl --mpl-results-path=pytest_images
-      - store_artifacts:
-          path: ./pytest_images/
-          destination: pytest_images
       - coveralls/upload:
-          parallel: true
+          parallel: true  # Indicate that this is a parallel build
 
   coveralls-finish:
     docker:
       - image: cimg/python:3.9
     steps:
-      - coveralls/wait
+      - coveralls/wait  # Notify Coveralls that the build is finished
 
 workflows:
   sample:
