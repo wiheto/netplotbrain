@@ -2,41 +2,42 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.2
-  coveralls: coveralls/coveralls@1.0.6
 
 jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.9
-    parallelism: 4  # Run 4 containers in parallel
-    resource_class: large  # Optional: Change the resource size for larger workloads
+    parallelism: 4  
+    resource_class: large  
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
       - run:
-          name: additional pip install
+          name: Additional pip install
           command: |
-            pip install pytest pytest-mpl coveralls
+            pip install pytest pytest-mpl coveralls coverage pytest-cov
       - run:
-          name: doc install
+          name: Doc install
           command: |
             pip install mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
       - run:
-          name: install netplotbrain
+          name: Install netplotbrain
           command: |
             pip install ./
       - run:
-          name: Run pytest tests in parallel
+          name: Run pytest tests in parallel with coverage
           command: |
-            pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) --mpl --mpl-results-path=pytest_images
+            pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) \
+            --cov=netplotbrain --cov-config=.coveragerc --mpl --mpl-results-path=pytest_images
       - store_artifacts:
           path: /home/circleci/project/pytest_images/
           destination: pytest_images
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - .coverage.* 
+            - .  
 
   coveralls-submit:
     docker:
@@ -45,8 +46,11 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Install Coveralls
-          command: pip install coveralls
+          name: Install Coveralls and Coverage
+          command: pip install coveralls coverage
+      - run:
+          name: Combine coverage data
+          command: coverage combine
       - run:
           name: Submit to Coveralls
           command: coveralls
