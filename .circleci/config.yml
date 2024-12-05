@@ -2,13 +2,13 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.2
-  coveralls: coverallsapp/coveralls@1.2.0  
+  coveralls: coveralls/coveralls@1.0.6  
 
 jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.9
-    parallelism: 4  
+    parallelism: 4 
     steps:
       - checkout
       - python/install-packages:
@@ -28,13 +28,14 @@ jobs:
                    --cov=netplotbrain --cov-config=.coveragerc \
                    --mpl --mpl-results-path=pytest_images
       - coveralls/upload:
-          parallel: true  
+          parallel: true  # Indicate that this is a parallel build
 
   coveralls-finish:
     docker:
       - image: cimg/python:3.9
     steps:
-      - coveralls/wait  
+      - coveralls/upload:
+          parallel_finished: true  # Indicate that all parallel jobs are finished
 
 workflows:
   sample:
