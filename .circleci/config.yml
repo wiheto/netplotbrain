@@ -1,14 +1,15 @@
+# .circleci/config.yml
+
 version: 2.1
 
 orbs:
   python: circleci/python@1.2
-  coveralls: coveralls/coveralls@1.0.6  
 
 jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.9
-    parallelism: 4 
+    parallelism: 4  # Run 4 containers in parallel
     steps:
       - checkout
       - python/install-packages:
@@ -16,31 +17,50 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            pip install pytest pytest-mpl coverage pytest-cov \
+            pip install pytest pytest-mpl coverage pytest-cov coveralls \
                         mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
       - run:
           name: Install netplotbrain
           command: pip install ./
       - run:
           name: Run Tests with Coverage
+          environment:
+            COVERAGE_FILE: coverage_data/.coverage.$CIRCLE_NODE_INDEX
           command: |
+            mkdir -p coverage_data
             pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) \
                    --cov=netplotbrain --cov-config=.coveragerc \
                    --mpl --mpl-results-path=pytest_images
-      - coveralls/upload:
-          parallel: true  # Indicate that this is a parallel build
+      - store_artifacts:
+          path: pytest_images/
+          destination: pytest_images
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_data
 
-  coveralls-finish:
+  coveralls-submit:
     docker:
       - image: cimg/python:3.9
     steps:
-      - coveralls/upload:
-          parallel_finished: true  # Indicate that all parallel jobs are finished
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install Coveralls and Coverage
+          command: |
+            pip install coveralls coverage
+      - run:
+          name: Combine Coverage Data
+          command: |
+            coverage combine coverage_data
+      - run:
+          name: Submit to Coveralls
+          command: coveralls
 
 workflows:
-  sample:
+  build-and-submit:
     jobs:
       - build-and-test
-      - coveralls-finish:
+      - coveralls-submit:
           requires:
             - build-and-test
