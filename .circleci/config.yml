@@ -24,17 +24,32 @@ jobs:
           name: Install netplotbrain
           command: pip install ./
       - run:
+          name: List Installed Packages
+          command: pip list
+      - run:
           name: Run Tests with Coverage
-          environment:
-            COVERAGE_FILE: coverage_data/.coverage.$CIRCLE_NODE_INDEX
           command: |
-            mkdir -p coverage_data
-            pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) \
+            pytest -v $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) \
                    --cov=netplotbrain --cov-config=.coveragerc \
                    --mpl --mpl-results-path=pytest_images
       - run:
-          name: Show Coverage Data in Parallel Job
+          name: Coverage Debugging Information
           command: |
+            coverage debug sys --data-file=.coverage
+            coverage debug data --data-file=.coverage
+      - run:
+          name: Save Coverage Data
+          command: |
+            if [ -f .coverage ]; then
+              mkdir -p coverage_data
+              cp .coverage coverage_data/.coverage.$CIRCLE_NODE_INDEX
+            else
+              echo "No coverage data file found."
+            fi
+      - run:
+          name: Show Coverage Data File
+          command: |
+            ls -lh coverage_data
             coverage report --rcfile=.coveragerc --data-file=coverage_data/.coverage.$CIRCLE_NODE_INDEX
       - store_artifacts:
           path: pytest_images/
@@ -55,13 +70,16 @@ jobs:
           command: |
             pip install --upgrade coveralls coverage
       - run:
+          name: Install netplotbrain
+          command: pip install ./
+      - run:
           name: List Coverage Data Files
           command: |
             ls -lh coverage_data
       - run:
           name: Combine Coverage Data
           command: |
-            coverage combine coverage_data
+            coverage combine --keep coverage_data
       - run:
           name: Show Combined Coverage Report
           command: |
