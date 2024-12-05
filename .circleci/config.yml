@@ -1,3 +1,4 @@
+# .circleci/config.yml
 
 version: 2.1
 
@@ -8,7 +9,8 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.9
-    parallelism: 4  # Run 4 containers in parallel
+    parallelism: 4
+    resource_class: large
     steps:
       - checkout
       - python/install-packages:
@@ -30,6 +32,10 @@ jobs:
             pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) \
                    --cov=netplotbrain --cov-config=.coveragerc \
                    --mpl --mpl-results-path=pytest_images
+      - run:
+          name: Show Coverage Data in Parallel Job
+          command: |
+            coverage report --rcfile=.coveragerc --data-file=coverage_data/.coverage.$CIRCLE_NODE_INDEX
       - store_artifacts:
           path: pytest_images/
           destination: pytest_images
@@ -42,20 +48,28 @@ jobs:
     docker:
       - image: cimg/python:3.9
     steps:
-      - checkout  
       - attach_workspace:
           at: .
       - run:
           name: Install Coveralls and Coverage
           command: |
-            pip install coveralls coverage
+            pip install --upgrade coveralls coverage
+      - run:
+          name: List Coverage Data Files
+          command: |
+            ls -lh coverage_data
       - run:
           name: Combine Coverage Data
           command: |
             coverage combine coverage_data
       - run:
+          name: Show Combined Coverage Report
+          command: |
+            coverage report
+      - run:
           name: Submit to Coveralls
-          command: coveralls
+          command: |
+            coveralls --service=circle-ci --job_id=$CIRCLE_WORKFLOW_WORKSPACE_ID
 
 workflows:
   build-and-submit:
