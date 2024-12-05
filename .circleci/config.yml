@@ -2,27 +2,27 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.2
-  coveralls: coveralls/coveralls@1.0.6 
+  coveralls: coverallsapp/coveralls@1.2.0  
 
 jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.9
-    parallelism: 4
+    parallelism: 4  
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
       - run:
-          name: Install dependencies
+          name: Install Dependencies
           command: |
-            pip install pytest pytest-mpl coveralls coverage pytest-cov \
+            pip install pytest pytest-mpl coverage pytest-cov \
                         mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
       - run:
           name: Install netplotbrain
           command: pip install ./
       - run:
-          name: Run tests with coverage
+          name: Run Tests with Coverage
           command: |
             pytest $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) \
                    --cov=netplotbrain --cov-config=.coveragerc \
@@ -34,7 +34,7 @@ jobs:
     docker:
       - image: cimg/python:3.9
     steps:
-      - coveralls/wait 
+      - coveralls/wait  
 
 workflows:
   sample:
