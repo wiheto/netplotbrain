@@ -1,48 +1,39 @@
-# .circleci/config.yml
-
 version: 2.1
 
 orbs:
   python: circleci/python@1.2
+  coveralls: coveralls/coveralls@1.0.6
 
 jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.9
-    parallelism: 4
-    resource_class: large
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
       - run:
-          name: Install Dependencies
+          name: additional pip install
           command: |
-            pip install pytest pytest-mpl coverage pytest-cov coveralls \
-                        mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
+            pip install pytest pytest-mpl coverage pytest-cov coveralls
       - run:
-          name: Install netplotbrain
-          command: pip install ./
-      - run:
-          name: List Installed Packages
-          command: pip list
-      - run:
-          name: Run Tests with Coverage
+          name: doc install
           command: |
-            pytest -v $(circleci tests glob "tests/**/*.py" | circleci tests split --split-by=timings) \
-                   --cov=netplotbrain --cov-config=.coveragerc \
-                   --mpl --mpl-results-path=pytest_images
+            pip install mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
       - run:
-          name: Coverage Debugging Information
+          name: install netplotbrain
           command: |
-            coverage debug sys --data-file=.coverage
-            coverage debug data --data-file=.coverage
+            pip install ./
+      - run:
+          name: Run tests
+          command: |
+            coverage run --source=netplotbrain -m pytest --mpl
       - run:
           name: Save Coverage Data
           command: |
             if [ -f .coverage ]; then
               mkdir -p coverage_data
-              cp .coverage coverage_data/.coverage.$CIRCLE_NODE_INDEX
+              cp .coverage coverage_data/.coverage.serial
             else
               echo "No coverage data file found."
             fi
@@ -50,49 +41,15 @@ jobs:
           name: Show Coverage Data File
           command: |
             ls -lh coverage_data
-            coverage report --rcfile=.coveragerc --data-file=coverage_data/.coverage.$CIRCLE_NODE_INDEX
+            coverage report --data-file=coverage_data/.coverage.serial
       - store_artifacts:
           path: pytest_images/
           destination: pytest_images
-      - persist_to_workspace:
-          root: .
-          paths:
-            - coverage_data
-
-  coveralls-submit:
-    docker:
-      - image: cimg/python:3.9
-    steps:
-      - attach_workspace:
-          at: .
       - run:
-          name: Install Coveralls and Coverage
-          command: |
-            pip install --upgrade coveralls coverage
-      - run:
-          name: Install netplotbrain
-          command: pip install ./
-      - run:
-          name: List Coverage Data Files
-          command: |
-            ls -lh coverage_data
-      - run:
-          name: Combine Coverage Data
-          command: |
-            coverage combine --keep coverage_data
-      - run:
-          name: Show Combined Coverage Report
-          command: |
-            coverage report
-      - run:
-          name: Submit to Coveralls
-          command: |
-            coveralls --service=circle-ci --job_id=$CIRCLE_WORKFLOW_WORKSPACE_ID
+          name: Coveralls
+          command: coveralls
 
 workflows:
-  build-and-submit:
+  sample:
     jobs:
       - build-and-test
-      - coveralls-submit:
-          requires:
-            - build-and-test
