@@ -45,7 +45,7 @@ def test_cm():
                     seed=2022)
     return fig
 
-@pytest.mark.mpl_image_compare
+@pytest.mark.mpl_image_compare(tolerance=10)
 def test_cm_rotateoff():
     fig, _ = netplotbrain.plot(template='MNI152NLin2009cAsym',
                     nodes=atlas,

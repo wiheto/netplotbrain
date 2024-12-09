@@ -1,6 +1,14 @@
 # Changelog
 
-## [0.3.1] - in development
+## [0.4.0]
+
+### Added
+
+- Text annotations (wiheto) with two styles: 
+    - `center` for centered annotations on node
+- Added to_numpy() in plot edges to make compatible with pandas (2.2.3)
+
+## [0.3.1] 
 
 ## Added 
 - Added cm_boundary for connectivity matrixes (wiheto) 

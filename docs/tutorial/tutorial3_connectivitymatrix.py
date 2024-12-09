@@ -61,6 +61,8 @@ netplotbrain.plot(edges=cm,
 Now multiple different options can be specified.
 One such opttion is the order of the nodes. Here the nodes are already ordered, but this is not always the case.
 """
+
+# +
 random_order = np.random.permutation(np.arange(30))
 cm = cm[random_order][:, random_order]
 netplotbrain.plot(edges=cm, view='c')

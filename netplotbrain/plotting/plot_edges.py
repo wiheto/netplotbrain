@@ -118,8 +118,8 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edge_color='k', highlight_node
         if row[edgecol[0]] in nodes.index and row[edgecol[1]] in nodes.index:
             ea = _get_edge_highlight_alpha(
                 row[edgecol[0]], row[edgecol[1]], hl_idx, **kwargs)
-            xp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))][nodecol[0]]
-            yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))][nodecol[1]]
-            zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))][nodecol[2]]
+            xp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))][nodecol[0]].to_numpy()
+            yp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))][nodecol[1]].to_numpy()
+            zp = nodes.loc[list((row[edgecol[0]], row[edgecol[1]]))][nodecol[2]].to_numpy()
             ax.plot(xp, yp, zp, color=ec, linewidth=ew, alpha=ea)
         eci += 1

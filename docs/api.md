@@ -27,15 +27,18 @@ node_color | matplotlib coloring | Can be string (default 'black') that points t
 node_type | str | Can be 'spheres', 'circles', or (if nodes is a nifti image) 'parcels'. 
 node_alpha | float | Specify the transparency of the nodes
 node_columnnames | list | Node column names in node dataframe. 'auto' entails the columns are ['x', 'y', 'z'] (specifying coordinates)
+node_label | str | If set, will plot the this column as labels on or near each node (see node_text_style). Any None in the column are ignored.  
+node_text_style | str | Can be 'center'. If 'center', labels are plotted on the node. No other options at the moment.
 node_sizevminvmax | str, list | Scaling alternatives if node_size is given. Alternatives: 'absolute' (default) 'minmax', or 2-tuple list of [min, max]. If minmax, node sizes are scaled between (0 and 1) * node_scale. If absolute, then the default values are used. Absolute can lead to problems with, for example, negative values.
 node_colorvminvmax | str, list | Scales continuous colormap between certain values. Alternatives: 'minmax' (default), 'absmax', , or 2-tuple list of [min, max]. If minmax, colorbar starts at the smallest value to largest value. If absmax, then colorbar goes from -abs(max(value)) to abs(max(value)), ensuring 0 is in the middle.
+node_text | str | Column name in nodes_df that contains text to be displayed on nodes.
 
 ### EDGE keyword arguments
 
 | Argument | Type | Description |
 | --- | --- | --- |
 edges_df | pd.DataFrame | Allows for passing additional edge information if edges is np.array. Behaves like edges when input is dataframe.
-edge_cmap | str |     Matplotlib colormap for node coloring when node_color points to a dataframe. |
+edge_cmap | str |     Matplotlib colormap for edge coloring when edge_color points to a dataframe. |
 edge_alpha | float | Transparency of edges (default: 1).
 edgecolumnames | list | Edge columns names in edge dataframe. Default is i and j (specifying nodes).
 edge_color | matplotlib coloring | Can be string (default 'black') or list of 3D/4D colors for each edge. Can also be a dictionary with keys positive and negative to denote two different colors for positive and negative edges.

@@ -34,7 +34,8 @@ def test_preset4s():
                       template_voxelsize=8,
                       view='preset-4s',
                       nodes=nodes,
-                      edges=edges)
+                      edges=edges,
+                      seed=2024)
     return fig
 
 @pytest.mark.mpl_image_compare
@@ -44,7 +45,8 @@ def test_preset9():
                       template_voxelsize=8,
                       view='preset-9',
                       nodes=nodes,
-                      edges=edges)
+                      edges=edges,
+                      seed=2024)
     return fig
 
 @pytest.mark.mpl_image_compare
@@ -64,6 +66,7 @@ def test_preset6s():
                       view='preset-6spring',
                       template_voxelsize=8,
                       nodes=nodes,
-                      edges=edges)
+                      edges=edges,
+                      seed=2024)
     return fig
 

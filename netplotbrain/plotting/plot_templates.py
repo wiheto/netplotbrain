@@ -3,8 +3,7 @@ import nibabel as nib
 import os
 import json
 import templateflow.api as tf
-from scipy.ndimage import rotate, sobel
-from scipy.ndimage.interpolation import spline_filter1d
+from scipy.ndimage import rotate, sobel, spline_filter1d
 from nibabel.processing import resample_to_output
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from skimage import measure, segmentation
@@ -44,6 +43,16 @@ def _plot_template_style_cloudy(ax, data, azim, elev, **kwargs):
                edgecolors=None, marker='s', alpha=alpha, rasterized=True)
 
 
+def _plot_template_style_surfaceinput(ax, data, **kwargs):
+    """ 
+    Plots the faces of a .gii input
+    
+    """
+    # This could easily be improved in the future
+    alpha = kwargs.get('template_alpha')
+    template_color = kwargs.get('template_color')
+    ax.scatter(data[:, 0], data[:, 1], data[:, 2], marker='s', alpha=alpha, facecolor=None,
+               edgecolors=template_color, rasterized=True)
 
 def _plot_template_style_glass(ax, data, template, **kwargs):
     """
@@ -200,12 +209,21 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
             print(t.name)
         raise ValueError('More than one template found')
 
+    # Get template file format
+    template_fileformat = str(template).split('.')[-1]
+    if template_fileformat == 'gii' and style != 'surface':
+        print('Only surface style available for gii files. Switching to surface style.')
+        style = 'surface'
+    # Load template
     img = nib.load(template)
 
     if voxsize is not None:
         img = resample_to_output(img, [voxsize] * 3)
-    data = img.get_fdata()
-    data = _select_single_hemisphere_template(data, hemisphere)
+    if template_fileformat == 'gii':
+        data = img.agg_data('NIFTI_INTENT_POINTSET')
+    else:
+        data = img.get_fdata()
+        data = _select_single_hemisphere_template(data, hemisphere)
     if style == 'filled':
         if voxsize is None:
             print('WARNING: When the template_style is set to filled and template_voxsize argument is not manually set, plotting can take time.\n\
@@ -215,12 +233,18 @@ def _plot_template(ax, style='filled', template='MNI152NLin2009cAsym',
         _plot_template_style_cloudy(
             ax, data, azim, elev, **kwargs)
     elif style == 'surface':
-        _plot_template_style_surface(
-            ax, data, template, **kwargs)
+        if template_fileformat == 'gii':
+            _plot_template_style_surfaceinput(ax, data, **kwargs)
+        else:
+            _plot_template_style_surface(
+                ax, data, template, **kwargs)
     elif style == 'glass':
         _plot_template_style_glass(ax, data, template_stylename,**kwargs)
-    # Set xyz lim (for regardless of template_style)
-    ax.set_xlim(0, data.shape[0])
-    ax.set_ylim(0, data.shape[1])
-    ax.set_zlim(0, data.shape[2])
+    # Set xyz lim (for regardless of template_style) for non gii
+    if template_fileformat != 'gii':
+        ax.set_xlim(0, data.shape[0])
+        ax.set_ylim(0, data.shape[1])
+        ax.set_zlim(0, data.shape[2])
+    else:
+        img.affine = None
     return img.affine
