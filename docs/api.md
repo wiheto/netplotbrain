@@ -76,9 +76,10 @@ See also node_highlight* and edge_highlight* keyword arguments.
 | Argument | Type | Description |
 | --- | --- | --- |
 cm_border | bool | If true prints a border around the connectivity matrix. Default True.
-cm_bordercolor | str | Matplotlib color for border around connectivity matrix. Default gray.
+cm_bordercolor | str | Matplotlib color for border around connectivity matrix. If "networks", unique colors will be given to each community. Default gray.
 cm_borderwidth | float | Width of border around connectivity matrix. Default 0.5.
-cm_boundary | str | Can be "auto" (default) or None. Plots a boundrary around communities in connectivity matrix. Auto behaviour defaults to node_color if specified. 
+cm_boundary | str | Can be "auto" (default) or None. Plots a boundrary around communities in connectivity matrix. Auto behaviour defaults to node_color if specified.
+cm_boundaryalpha | float | Transparency of boundary. Default 1
 cm_boundarywidth | float | Width of boundary around communities in connectivity matrix. Default 2.
 cm_order | Str | Specify which variable to group and order nodes in connectivity matrix by. Default is "auto". Auto entails that if node_color is a column in the data and if cm_order is unspecified use node_color column. Otherwise if None will plot in list order. 
 cm_rotate | Bool | If True, rotates the connectivity matrix 45 degrees. Default True.
