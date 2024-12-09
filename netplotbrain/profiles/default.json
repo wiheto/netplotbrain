@@ -6,6 +6,7 @@
     "cm_bordercolor": "gray",
     "cm_borderwidth": 0.5,
     "cm_boundary": "auto",
+    "cm_boundaryalpha": 1,
     "cm_boundarywidth": 2,
     "cm_rotate": true,
     "cm_order": "auto",
