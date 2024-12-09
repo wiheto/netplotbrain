@@ -7,6 +7,7 @@
 - Text annotations (wiheto) with two styles: 
     - `center` for centered annotations on node
 - Added to_numpy() in plot edges to make compatible with pandas (2.2.3)
+- Network Boundaries on connectivity matrix plot added (__seblome__) 
 
 ## [0.3.1] 
 
