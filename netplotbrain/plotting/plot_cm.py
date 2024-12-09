@@ -79,8 +79,8 @@ def _plot_connectivitymatrix(ax, edges, nodes=None, node_color=None, node_colorb
             line_fill = np.zeros(number_of_nodes+1)
             for i in range(number_of_nodes+1):
                 line_fill[i] = i-0.5
-            points_x = np.array([line_fill, line_blank]).T.reshape(-1, 1, 2)
-            points_y = np.array([line_blank, line_fill]).T.reshape(-1, 1, 2)
+            points_x = np.array([line_fill, line_blank]).T.reshape((-1, 1, 2))
+            points_y = np.array([line_blank, line_fill]).T.reshape((-1, 1, 2))
             segments_x  = np.concatenate([points_x[:-1], points_x[1:]], axis=1)
             segments_y  = np.concatenate([points_y[:-1], points_y[1:]], axis=1)
             lc_x = LineCollection   (segments_x,
