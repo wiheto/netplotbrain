@@ -105,7 +105,7 @@ def _plot_connectivitymatrix(ax, edges, nodes=None, node_color=None, node_colorb
     if cm_boundary:
         for coms in np.unique(communities):
             no = np.where(communities[nodeorder] == coms)[0]
-            ax.plot([no[0], no[0]], [no[0], no[-1]+1], color=node_color[nodeorder[no[0]]][:3], linewidth=cm_boundarywidth, transform=tr,zorder=10, alpha = cm_boundaryalpha)
-            ax.plot([no[-1]+1, no[0]], [no[-1]+1, no[-1]+1], color=node_color[nodeorder[no[0]]][:3], linewidth=cm_boundarywidth, transform=tr,zorder=10, alpha = cm_boundaryalpha)
-            ax.plot([no[0], no[-1]+1], [no[0], no[0]], color=node_color[nodeorder[no[0]]][:3], linewidth=cm_boundarywidth, transform=tr,zorder=10, alpha = cm_boundaryalpha)
-            ax.plot([no[-1]+1, no[-1]+1], [no[0], no[-1]+1], color=node_color[nodeorder[no[0]]][:3], linewidth=cm_boundarywidth, transform=tr,zorder=10, alpha = cm_boundaryalpha)
+            ax.plot([no[0], no[0]], [no[0], no[-1]+1], color=node_color[nodeorder[no[0]]], linewidth=cm_boundarywidth, transform=tr,zorder=10, alpha = cm_boundaryalpha)
+            ax.plot([no[-1]+1, no[0]], [no[-1]+1, no[-1]+1], color=node_color[nodeorder[no[0]]], linewidth=cm_boundarywidth, transform=tr,zorder=10, alpha = cm_boundaryalpha)
+            ax.plot([no[0], no[-1]+1], [no[0], no[0]], color=node_color[nodeorder[no[0]]], linewidth=cm_boundarywidth, transform=tr,zorder=10, alpha = cm_boundaryalpha)
+            ax.plot([no[-1]+1, no[-1]+1], [no[0], no[-1]+1], color=node_color[nodeorder[no[0]]], linewidth=cm_boundarywidth, transform=tr,zorder=10, alpha = cm_boundaryalpha)
