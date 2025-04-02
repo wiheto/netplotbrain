@@ -93,7 +93,10 @@ def _plot_edges(ax, nodes, edges, edgewidth=None, edge_color='k', highlight_node
     nodecol = kwargs.get('node_columnnames')
     edge_widthscale = kwargs.get('edge_widthscale')
     # Convert highlight_nodes binary list to index list
-    hl_idx = np.where(np.array(highlight_nodes) == 1)[0]
+    if highlight_nodes is not None:
+        hl_idx = np.where(np.atleast_1d(np.array(highlight_nodes)) == 1)[0]
+    else: 
+        hl_idx = []
     # if set as a string
     ec = edge_color
     # Because while edge_color (when array) and edges can be same size, if edge_threshold is set, indicies can be off due to merge
