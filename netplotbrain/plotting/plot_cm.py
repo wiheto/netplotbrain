@@ -85,14 +85,16 @@ def _plot_connectivitymatrix(ax, edges, nodes=None, node_color=None, node_colorb
             segments_y  = np.concatenate([points_y[:-1], points_y[1:]], axis=1)
             lc_x = LineCollection   (segments_x,
                                     colors      = node_color[nodeorder],
-                                    linewidth   = cm_borderwidth,
+                                    linewidth   = cm_borderwidth*2,
                                     transform   = tr,
-                                    clip_on     = True)
+                                    clip_on     = False,
+                                    zorder      = -1)
             lc_y = LineCollection   (segments_y,
                                     colors      = node_color[nodeorder],
-                                    linewidth   = cm_borderwidth,
+                                    linewidth   = cm_borderwidth*2,
                                     transform   = tr,
-                                    clip_on     = True)
+                                    clip_on     = False,
+                                    zorder      = -1)
             ax.add_collection(lc_x)
             ax.add_collection(lc_y)
 
