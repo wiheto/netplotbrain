@@ -139,10 +139,11 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
 
     # Init figure, if not given as input
     if ax is None:
-        fig, gridspec = _init_figure(frames, nrows, legendrows)
+        fig, gridspec = _init_figure(frames, nrows, legendrows, profile['legend_width'])
     else:
         expected_ax_len = (nrows * frames)
-        ax, gridspec = _check_axinput(ax, expected_ax_len)
+        gridspec = {}
+        ax, gridspec['brain'] = _check_axinput(ax, expected_ax_len)
 
     # Set node_color to colorby argument
     if node_colorby is not None:
@@ -185,9 +186,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             if ax_in is None:
                 # Dont use 3d projection for connectivity matrices
                 if viewtype[fi] == 'c':
-                    ax = fig.add_subplot(gridspec[ri, fi])
+                    ax = fig.add_subplot(gridspec['brain'][ri, fi])
                 else:
-                    ax = fig.add_subplot(gridspec[ri, fi], projection='3d')
+                    ax = fig.add_subplot(gridspec['brain'][ri, fi], projection='3d')
             elif isinstance(ax_in, list):
                 # here ax can only be a 1d list, not 2d list.
                 ax = ax_in[axind]
@@ -261,28 +262,12 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # Add legends to plot
     if legends is not None and profile['gif'] is False:
         for li, legend in enumerate(legends):
-            # setup legend subplot. Goes in centre or centre2 subplots
-            spind = gridspec.ncols
-            legend_span = profile['legend_span']
-            if legend_span is not None:
-                if legend_span is int:
-                    legend_subplotp_colind = legend_span
-                else:
-                    legend_subplotp_colind= slice(legend_span[0], legend_span[1])
-            elif np.remainder(spind, 2) == 0:
-                # if number of columns is even, center it over the middle two columns
-                # by using slice() on the GridSpec.
-                legend_subplotp_colind = slice(int((spind / 2) - 1), int(spind / 2) + 1)
-            else:
-                legend_subplotp_colind = int(np.round(spind / 2) - 1)
-            ax = fig.add_subplot(gridspec[nrows + li, legend_subplotp_colind])
+            ax = fig.add_subplot(gridspec['legend'][li, 1])
             if legend == 'node_size':
                 ax = _add_node_size_legend(ax, nodes, node_size, **profile)
             if legend == 'node_color':
-                ax = _add_node_color_legend(
-                    ax, nodes, node_colorby, node_color, **profile)
+                ax = _add_node_color_legend(ax, nodes, node_colorby, node_color, **profile)
             ax.axis('off')
-            #ax = _add_size_legend(ax, nodes, node_size, node_scale)
             ax_out.append(ax)
 
     # Title on top of the figure

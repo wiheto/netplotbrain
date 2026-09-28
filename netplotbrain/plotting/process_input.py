@@ -105,16 +105,17 @@ def _process_edge_input(edges, edge_weights, **kwargs):
     return edges, edge_weights
 
 
-def _init_figure(frames, nrows, legendrow):
-    widths = [6] * frames
-    heights = [6] * nrows
-    if legendrow > 0:
-        heights += [1] * legendrow
-    fig = plt.figure(figsize=(frames * 3, (3 * nrows) + (0.5 * legendrow)))
-    gridspec = fig.add_gridspec(ncols=frames,
-                                nrows=nrows+legendrow,
-                                width_ratios=widths,
-                                height_ratios=heights)
+def _init_figure(frames, nrows, legendrow, legend_width):
+
+    fig = plt.figure(figsize=(frames * 3, 3 * nrows + 0.5 * legendrow))
+    # Create a (2, 1) figure separating brain and legend    
+    outer = fig.add_gridspec(nrows=2, ncols=1, height_ratios=[6 * nrows, legendrow])
+    # Separate brain and legend grids
+    side = (1 - legend_width) / 2
+    gridspec = {
+        'brain': outer[0].subgridspec(nrows=nrows, ncols=frames),
+        'legend': outer[1].subgridspec(nrows=legendrow, ncols=3, width_ratios=[side, legend_width, side]),
+    }
     return fig, gridspec
 
 def _check_axinput(ax, expected_ax_len):

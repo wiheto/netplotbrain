@@ -96,7 +96,12 @@ node_colorlegend | Bool | If the colorlegend is plotted or not. Default True.
 node_sizelegend | Bool | If the sizelegend is plotted or not. Default True.
 node_colorlegendstyle | str | Alternatives: auto (default), discrete, continuous. If the color legend should show the entire colormap or discrete colors. If auto, plots discrete if less than 8 unique values are detected.
 showlegend | bool, list | If size or colour have been set, generates a legend for that property at bottom of figure. If True, plots all the legends that can be plotted. If list, can contain 'node_size' and 'node_color' to plot those in the legend.
+legend_width | float | Default 0.5, span of the legend (centered in the middle). 0.5 implies legend covers middle 50%. 
 legend_span | list | Range of subplot columns for the legend to span.
+legend_title_visible | Bool | Default: true; if false, does not display a title above the legend
+legend_title | str | Default None; if set, replaces the column name with custom title
+legend_node_scale | float | scalar for nodes in figure legends to increase or decrease
+legend_tick_distance | float | Default 0. Increases or decreases distance between nodes in legend and text. Jitter small amount such as +/-0.01-0.1 
 
 ### ARROW keyword arguments
 

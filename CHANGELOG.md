@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0]
+
+### Improvements
+
+- Reworked figure init to separate brain and legend to make legends easier to edits (wiheto)
+
+### Added
+
+- legend_width, legend_tick_distance and legend_node_scale to help customize legends (wiheto) 
+- legend_title_visible to turn title off (wiheto)
+- legend_title can override column name (wiheto). 
+
 ## [0.4.0]
 
 ### Added
