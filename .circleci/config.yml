@@ -10,7 +10,14 @@ jobs:
       - image: cimg/python:3.9
     resource_class: medium
     steps:
-      - checkout
+      - run:
+          name: Checkout code
+          no_output_timeout: 10m
+          command: |
+            git init .
+            git remote add origin https://github.com/wiheto/netplotbrain.git
+            git fetch --depth=1 origin "$CIRCLE_SHA1"
+            git checkout FETCH_HEAD
       - python/install-packages:
           pkg-manager: pip
       - run:
