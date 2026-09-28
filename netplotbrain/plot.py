@@ -124,6 +124,9 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             view, hemisphere = _get_presetviews(view)
     # Get number of non-legend rowsnon
     nrows, view, frames = _nrows_in_fig(view, frames)
+    print(nrows)
+    print(view)
+    print(frames)
 
     # if neither title nor subtitles are set, only view name(s) is/are shown
     if profile['subtitles'] == 'auto' and profile['title'] == 'auto':
@@ -144,6 +147,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
         expected_ax_len = (nrows * frames)
         gridspec = {}
         ax, gridspec['brain'] = _check_axinput(ax, expected_ax_len)
+        gridspec['legend'] = None # legend currently turned off if giving custom ax.  
 
     # Set node_color to colorby argument
     if node_colorby is not None:
@@ -260,7 +264,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             ax_out.append(ax)
 
     # Add legends to plot
-    if legends is not None and profile['gif'] is False:
+    if legends is not None and profile['gif'] is False and gridspec['legend'] is not None:
         for li, legend in enumerate(legends):
             ax = fig.add_subplot(gridspec['legend'][li, 1])
             if legend == 'node_size':

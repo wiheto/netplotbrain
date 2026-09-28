@@ -35,7 +35,7 @@
     "legend_title_visible": true,
     "legend_width": 0.5,
     "legend_node_scale": 1,
-    "legend_tick_distance": 1,
+    "legend_tick_distance": 0,
     "nodes_df": null,
     "node_alpha": null,
     "node_cmap": "Dark2",

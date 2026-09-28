@@ -112,10 +112,16 @@ def _init_figure(frames, nrows, legendrow, legend_width):
     outer = fig.add_gridspec(nrows=2, ncols=1, height_ratios=[6 * nrows, legendrow])
     # Separate brain and legend grids
     side = (1 - legend_width) / 2
-    gridspec = {
-        'brain': outer[0].subgridspec(nrows=nrows, ncols=frames),
-        'legend': outer[1].subgridspec(nrows=legendrow, ncols=3, width_ratios=[side, legend_width, side]),
-    }
+    if legendrow > 0:
+        gridspec = {
+            'brain': outer[0].subgridspec(nrows=nrows, ncols=frames),
+            'legend': outer[1].subgridspec(nrows=legendrow, ncols=3, width_ratios=[side, legend_width, side]),
+        }
+    else:
+        gridspec = {
+            'brain': outer[0].subgridspec(nrows=nrows, ncols=frames),
+            'legend': None,
+        } 
     return fig, gridspec
 
 def _check_axinput(ax, expected_ax_len):
