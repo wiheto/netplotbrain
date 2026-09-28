@@ -8,16 +8,19 @@ jobs:
   build-and-test:
     docker:
       - image: cimg/python:3.9
+    resource_class: medium
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
       - run:
           name: additional pip install
+          no_output_timeout: 5m
           command: |
             pip install pytest pytest-mpl coverage pytest-cov coveralls
       - run:
           name: doc install
+          no_output_timeout: 5m
           command: |
             pip install mkdocs-awesome-pages-plugin pheasant mkdocstrings mkdocs-material
       - run:
@@ -26,6 +29,7 @@ jobs:
             pip install ./
       - run:
           name: Run tests
+          no_output_timeout: 15m
           command: |
             coverage run --source=netplotbrain -m pytest --mpl
       - run:
