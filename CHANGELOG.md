@@ -9,8 +9,14 @@
 ### Added
 
 - legend_width, legend_tick_distance and legend_node_scale to help customize legends (wiheto) 
-- legend_title_visible to turn title off (wiheto)
-- legend_title can override column name (wiheto). 
+- show_legend_title to turn title off (wiheto)
+- legend_title can override column name (wiheto).
+- Added "Show" section to api. (wiheto)
+- Added show_arrows to turn arrows on/off (wiheto) 
+
+## Updates
+
+- Renamed showlegend to show_legend
 
 ## [0.4.0]
 

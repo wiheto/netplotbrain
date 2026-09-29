@@ -81,7 +81,7 @@ def _add_node_color_legend_discrete(ax, nodes, node_colorby, node_color, **kwarg
     fontcolor = kwargs.get('fontcolor')
     legend_tick_fontsize = kwargs.get('legend_tick_fontsize')
     legend_title_fontsize = kwargs.get('legend_title_fontsize')
-    legend_title_visible = kwargs.get('legend_title_visible')
+    show_title_visible = kwargs.get('show_title_visible')
     legend_title = kwargs.get('legend_title')
     legend_tick_distance = kwargs.get('legend_tick_distance')
     # Create list of discrete colors
@@ -97,7 +97,7 @@ def _add_node_color_legend_discrete(ax, nodes, node_colorby, node_color, **kwarg
     ax.set_ylim([0.85, 1.1])
     ax.set_xlim([-2, len(uniquenode_colorby) + 1])
     # Plot title
-    if legend_title_visible:
+    if show_title_visible:
         if legend_title is None:
             legend_title = node_colorby
         ax.text(np.mean(np.arange(len(uniquenode_colorby))), 1.05, legend_title,
@@ -117,7 +117,7 @@ def add_node_color_legend_continuous(ax, nodes, node_colorby, **kwargs):
     legend_tickfontsize = kwargs.get('legend_tick_fontsize')
     legendtitle_fontsize = kwargs.get('legend_title_fontsize')
     node_colorvminvmax = kwargs.get('node_colorvminvmax')
-    legend_title_visible = kwargs.get('legend_title_visible')
+    show_title_visible = kwargs.get('show_title_visible')
     legend_title = kwargs.get('legend_title')
     legend_tick_distance = kwargs.get('legend_tick_distance')
     # Create continuous scale
@@ -142,7 +142,7 @@ def add_node_color_legend_continuous(ax, nodes, node_colorby, **kwargs):
         ax.text(xtick, 0.75 + legend_tick_distance, np.round(xticklabels[i], 3), color=fontcolor, ha='center',
                 font=font, fontsize=legend_tickfontsize, transform=ax.transData)
     # Plot title
-    if legend_title_visible:
+    if show_title_visible:
         if legend_title is None:
             legend_title = node_colorby
         ax.text(0, 1.4, legend_title,

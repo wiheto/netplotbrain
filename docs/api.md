@@ -7,6 +7,7 @@ Here is the full list of keyword arguments (otherwise called KWARGS) that can be
 1. __Node keyword arguments__ - modify the nodes.
 2. __Edge keyword arguments__ - modify the edges.
 3. __Template keyword arguments__ - modify the template.
+4. __Show keyword arguments__ - turn on/off certain parts of the figure.
 4. __Highlighting keyword arguments__ - modify the highlighting.
 5. __Connectivity matrix keyword arguments__ - modify the connectivity matrix.
 6. __Template keyword arguments__ - modify the template.
@@ -65,8 +66,17 @@ template_glass_compactness | float | Default 0.3. Compactness argument for skima
 temlate_glass_nsegments | int | n_segments argument for skimage.segementations.slic. Approx number of segments. 3 seems to work well. Increase if not enough detail, reduce if too much detail.
 template_glass_maxalpha | float | Default is 0.01. To make the smokey effect the alpha is relative to template intensity value This value sets the alpha scalar factor. The value will be the largest possible alpha value, where all other values scale between 0 and template_glass_max_alpha.
 
+## SHOW keyword arguments
+
+| Argument | Type | Description |
+show_arrow | Bool | Default: true; if false, does not display titles at all
+show_legend_title | Bool | Default: true; if false, does not display a title above the legend
+show_legend | bool, list | If size or colour have been set, generates a legend for that property at bottom of figure. If True, plots all the legends that can be plotted. If list, can contain 'node_size' and 'node_color' to plot those in the legend.
+
+
 ### HIGHLIGHTING keyword arguments
 
+| Argument | Type | Description |
 highlight_level | float | Intensity of the highlighting (opposite of alpha). Controls both nods and edges together. Value between 0 and 1, if 1, non-highlighted nodes are fully transparent. If 0, non-highlighted nodes are same alpha level as highlighted nodes. Default 0.85.
 
 See also node_highlight* and edge_highlight* keyword arguments.
@@ -90,15 +100,15 @@ cm_vmax | float | Maximum value for connectivity matrix colormap. Default 1.
 
 | Argument | Type | Description |
 | --- | --- | --- |    
+show_legend_title | Bool | Default: true; if false, does not display a title above the legend
 legend_tick_fontsize | str, int | Matplotlib fontsize for title in figure legends
 legend_title_fontsize | str, int | Matplotlib fontsize for ticks in figure legends
 node_colorlegend | Bool | If the colorlegend is plotted or not. Default True.
 node_sizelegend | Bool | If the sizelegend is plotted or not. Default True.
 node_colorlegendstyle | str | Alternatives: auto (default), discrete, continuous. If the color legend should show the entire colormap or discrete colors. If auto, plots discrete if less than 8 unique values are detected.
-showlegend | bool, list | If size or colour have been set, generates a legend for that property at bottom of figure. If True, plots all the legends that can be plotted. If list, can contain 'node_size' and 'node_color' to plot those in the legend.
+show_legend | bool, list | If size or colour have been set, generates a legend for that property at bottom of figure. If True, plots all the legends that can be plotted. If list, can contain 'node_size' and 'node_color' to plot those in the legend.
 legend_width | float | Default 0.5, span of the legend (centered in the middle). 0.5 implies legend covers middle 50%. 
 legend_span | list | Range of subplot columns for the legend to span.
-legend_title_visible | Bool | Default: true; if false, does not display a title above the legend
 legend_title | str | Default None; if set, replaces the column name with custom title
 legend_node_scale | float | scalar for nodes in figure legends to increase or decrease
 legend_tick_distance | float | Default 0. Increases or decreases distance between nodes in legend and text. Jitter small amount such as +/-0.01-0.1 
@@ -107,6 +117,7 @@ legend_tick_distance | float | Default 0. Increases or decreases distance betwee
 
 | Argument | Type | Description |
 | --- | --- | --- |
+show_arrow | Bool | Default: true; if false, does not display titles at all
 arrowaxis | list or str | Adds axis arrows onto plot. Alternatives are: LR, AP, SI, 'all'
 arrowlength | int, float | Length of arrow
 arroworigin | list | x,y,z coordinates of arrowaxis. Note 0,0,0 is bottom left.

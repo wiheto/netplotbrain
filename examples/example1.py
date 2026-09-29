@@ -46,7 +46,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   node_size='centrality_measure1',
                   node_color='red',
                   edges=edges,
-                  showlegend=False)
+                  show_legend=False)
 
 ax_m2 = fig.add_subplot(122, projection='3d')
 netplotbrain.plot(template='MNI152NLin2009cAsym',
@@ -59,7 +59,7 @@ netplotbrain.plot(template='MNI152NLin2009cAsym',
                   node_size='centrality_measure2',
                   node_color='blue',
                   edges=edges,
-                  showlegend=False)
+                  show_legend=False)
 
 fig.savefig('./examples/figures/measures.png', dpi=150)
 plt.close('all')

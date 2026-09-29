@@ -99,10 +99,10 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
     # TODO compact code into subfunction
     legends = None
     legendrows = 0
-    if isinstance(profile['showlegend'], list):
-        legends = profile['showlegend']
+    if isinstance(profile['show_legend'], list):
+        legends = profile['show_legend']
         legendrows = len(legends)
-    elif profile['showlegend'] is True:
+    elif profile['show_legend'] is True:
         # Only plot size legend is sphere/circle and string or list input
         # TODO setup_legend is a little clunky and could be fixed
         if node_type != 'parcel' and not isinstance(node_size, (float, int)):
@@ -124,9 +124,6 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
             view, hemisphere = _get_presetviews(view)
     # Get number of non-legend rowsnon
     nrows, view, frames = _nrows_in_fig(view, frames)
-    print(nrows)
-    print(view)
-    print(frames)
 
     # if neither title nor subtitles are set, only view name(s) is/are shown
     if profile['subtitles'] == 'auto' and profile['title'] == 'auto':
@@ -234,7 +231,7 @@ def plot(nodes=None, fig: Optional[plt.Figure] = None, ax=None, view: str = 'L',
                 edges_frame = edges.copy()
                 _plot_edges(ax, nodes_frame, edges_frame, edgewidth=edge_weights,
                             edge_color=edge_color, highlight_nodes=highlight_nodes, **profile)
-            if arrowaxis_row is not None and viewtype[fi]=='b':
+            if arrowaxis_row is not None and viewtype[fi]=='b' and profile['show_arrows']:
                 _add_axis_arrows(ax, dims=arrowaxis_row,
                                  origin=profile['arroworigin'],
                                  azim=azim[fi], elev=elev[fi], **profile)

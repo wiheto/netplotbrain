@@ -52,6 +52,6 @@ ax2 = fig.add_subplot(132, projection='3d')
 ax3 = fig.add_subplot(133, projection='3d')
 # Plot the three figures changing only the node_color column and node_cmap
 # The additional information from atkas_df is added into nodes_df keyword argument.
-fig, ax1 = netplotbrain.plot(nodes=nodes, nodes_df=atlas_df, node_type='parcels', node_color='color', view='S', fig=fig, ax=ax1, showlegend=False)
-fig, ax2 = netplotbrain.plot(nodes=nodes, nodes_df=atlas_df, node_type='parcels', node_color='network', node_cmap='Pastel1', view='S', fig=fig, ax=ax2, showlegend=False)
-fig, ax3 = netplotbrain.plot(nodes=nodes, nodes_df=atlas_df, node_type='parcels', node_color='centrality', node_cmap='inferno', view='S', fig=fig, ax=ax3, showlegend=False)
+fig, ax1 = netplotbrain.plot(nodes=nodes, nodes_df=atlas_df, node_type='parcels', node_color='color', view='S', fig=fig, ax=ax1, show_legend=False)
+fig, ax2 = netplotbrain.plot(nodes=nodes, nodes_df=atlas_df, node_type='parcels', node_color='network', node_cmap='Pastel1', view='S', fig=fig, ax=ax2, show_legend=False)
+fig, ax3 = netplotbrain.plot(nodes=nodes, nodes_df=atlas_df, node_type='parcels', node_color='centrality', node_cmap='inferno', view='S', fig=fig, ax=ax3, show_legend=False)
