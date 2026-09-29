@@ -36,7 +36,8 @@ jobs:
           name: Show test environment (for debugging local pass/ci failure)
           command: |
             python --version
-            python -c "import matplotlib, numpy; from matplotlib import ft2font; print('Matplotlib:', matplotlib.__version__); print('NumPy:', numpy.__version__); print('backend:', matplotlib.get_backend()); print('FreeType:', ft2font.__freetype_version__)"      - run:
+            python -c "import matplotlib, numpy; from matplotlib import ft2font; print('Matplotlib:', matplotlib.__version__); print('NumPy:', numpy.__version__); print('backend:', matplotlib.get_backend()); print('FreeType:', ft2font.__freetype_version__)"      
+        - run:
           name: install netplotbrain
           command: |
             pip install ./
